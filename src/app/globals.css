@@ -1,0 +1,407 @@
+@import "tailwindcss";
+
+/* ============================================
+   NYC Clinic — Global Theme (Tailwind v4)
+
+   Brand palette: navy-deep + rose-gold on cream.
+   Sharp/square aesthetic — no rounded corners.
+
+   Fonts injected by next/font in root layout;
+   variables here just reference them.
+
+   --font-display   → Playfair Display
+   --font-body      → Montserrat
+   --font-accent    → Cormorant Garamond
+   --font-thai-head → Taviraj
+   --font-thai-serif→ Noto Serif Thai
+   --font-thai-body → Prompt
+   ============================================ */
+
+@theme {
+  /* ─── Colors ─── */
+
+  /* Navy — header, hero, dark sections, key surfaces */
+  --color-primary: #0f1225;
+  --color-primary-mid: #1a1f3a;
+  --color-primary-light: #252b4d;
+
+  /* Rose-gold — CTAs, highlights, active states */
+  --color-accent: #c4956a;
+  --color-accent-hover: #d4aa82;
+  --color-accent-pale: #e8cdb5;
+  --color-accent-dark: #a87a52;
+  --color-accent-subtle: rgba(196, 149, 106, 0.12);
+  --color-accent-border: rgba(196, 149, 106, 0.25);
+
+  /* Surface — page background, cards */
+  --color-surface: #faf6f1;
+  --color-surface-dim: #f0e8df;
+  --color-surface-white: #ffffff;
+
+  /* Text on light backgrounds */
+  --color-text: #2a2a2a;
+  --color-text-muted: rgba(42, 42, 42, 0.65);
+  --color-text-subtle: rgba(42, 42, 42, 0.45);
+
+  /* Text on dark backgrounds */
+  --color-on-primary: #ffffff;
+  --color-on-primary-muted: rgba(255, 255, 255, 0.75);
+  --color-on-primary-warm: #e8cdb5;
+
+  /* Borders / dividers */
+  --color-border: rgba(42, 42, 42, 0.1);
+  --color-border-strong: rgba(42, 42, 42, 0.22);
+  --color-border-accent: rgba(196, 149, 106, 0.35);
+
+  /* Footer */
+  --color-footer-bg: #0a0d1a;
+  --color-footer-text: rgba(255, 255, 255, 0.65);
+
+  /* Hero image overlay gradient stops */
+  --color-overlay-start: rgba(15, 18, 37, 0.15);
+  --color-overlay-mid: rgba(15, 18, 37, 0.45);
+  --color-overlay-end: rgba(15, 18, 37, 0.85);
+
+  /* LINE brand */
+  --color-line: #06c755;
+  --color-line-hover: #05b34a;
+
+  /* ─── Fonts ─── */
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-accent: var(--font-accent);
+  --font-thai-head: var(--font-thai-head);
+  --font-thai-serif: var(--font-thai-serif);
+  --font-thai-body: var(--font-thai-body);
+
+  /* ─── Layout ─── */
+  --header-height: 80px;
+  --header-height-mobile: 64px;
+  --section-py: clamp(3.5rem, 8vw, 7rem);
+  --container-max: 1280px;
+  --container-narrow: 960px;
+}
+
+/* ============================================
+   Base styles
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sharp / square aesthetic — no rounded corners anywhere */
+*,
+*::before,
+*::after {
+  border-radius: 0;
+}
+
+/* Accessible focus — visible for keyboard, hidden for mouse */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   Reusable component classes
+
+   Kept small and generic. Everything else is
+   Tailwind utilities in the JSX. Add here only
+   when a pattern repeats 3+ times.
+   ============================================ */
+
+/* Section eyebrow — small caps above headings */
+.section-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Section heading — display type */
+.section-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+/* Thai section subtitle */
+.section-heading-th {
+  font-family: var(--font-thai-head);
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+/* Tagline — EN italic accent face */
+.tagline {
+  font-family: var(--font-accent);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+/* Tagline — TH italic */
+.tagline-th {
+  font-family: var(--font-thai-head);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Stat numbers — trust bar, badges */
+.stat-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Thai body text */
+.text-thai {
+  font-family: var(--font-thai-body);
+  line-height: 1.8;
+}
+
+/* Thai editorial / serif */
+.text-thai-serif {
+  font-family: var(--font-thai-serif);
+  line-height: 1.8;
+}
+
+/* ─── Dividers ─── */
+
+/* Accent bar divider */
+.divider-accent {
+  width: 48px;
+  height: 2px;
+  background-color: var(--color-accent);
+}
+
+/* ◇ Diamond divider with gradient lines */
+.divider-diamond {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-block: 1.5rem;
+}
+.divider-diamond::before,
+.divider-diamond::after {
+  content: "";
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+}
+.divider-diamond span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--color-accent);
+  transform: rotate(45deg);
+  margin-inline: 1rem;
+  flex-shrink: 0;
+}
+
+/* Gradient horizontal rule */
+.hr-gradient {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+}
+
+/* ─── Buttons ─── */
+
+/* Primary CTA — rose-gold fill */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-accent);
+  color: var(--color-on-primary);
+  padding: 0.9rem 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.25s ease;
+}
+.btn-cta:hover {
+  background-color: var(--color-accent-hover);
+}
+.btn-cta:active {
+  background-color: var(--color-accent-dark);
+}
+
+/* Ghost CTA — outline on dark backgrounds */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-accent-pale);
+  padding: 0.9rem 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--color-accent);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+.btn-ghost:hover {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-on-primary);
+  border-color: var(--color-accent-hover);
+}
+
+/* LINE CTA — brand green */
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-line);
+  color: var(--color-on-primary);
+  padding: 0.9rem 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.25s ease;
+}
+.btn-line:hover {
+  background-color: var(--color-line-hover);
+}
+
+/* ─── Badge ─── */
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-dark),
+    var(--color-accent),
+    var(--color-accent-pale)
+  );
+  color: white;
+}
+
+/* ─── Hero utilities ─── */
+
+/* Overlay gradient — for hero images */
+.overlay-gradient {
+  background: linear-gradient(
+    180deg,
+    var(--color-overlay-start) 0%,
+    var(--color-overlay-mid) 50%,
+    var(--color-overlay-end) 100%
+  );
+}
+
+/* Hero text shadow — for text over photographic backgrounds */
+.hero-text-shadow {
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.6),
+    0 4px 40px rgba(0, 0, 0, 0.4);
+}
+.hero-text-shadow-sm {
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.55),
+    0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Shimmer text — rose-gold gradient sweep on hero type */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-dark) 0%,
+    var(--color-accent-pale) 40%,
+    var(--color-accent-dark) 80%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+/* Scroll cue — hidden on short viewports */
+@media (max-height: 700px) {
+  .scroll-indicator {
+    display: none !important;
+  }
+}
