@@ -16,6 +16,7 @@ const SERVICES = [
     titleEn: "Facial Thread Lift",
     titleTh: "ร้อยไหมหน้า",
     desc: "ยกกระชับ ปรับรูปหน้า V-Shape กระตุ้นคอลลาเจน",
+    signature: false,
   },
   {
     href: "/services/facial-design",
@@ -23,6 +24,7 @@ const SERVICES = [
     titleEn: "Facial Design",
     titleTh: "ปรับรูปหน้า",
     desc: "Filler เติมเต็ม · SMAS-X กระตุ้นคอลลาเจน · Botox",
+    signature: false,
   },
   {
     href: "/services/surgery",
@@ -30,6 +32,7 @@ const SERVICES = [
     titleEn: "Surgery",
     titleTh: "ศัลยกรรม",
     desc: "เสริมจมูก ตาสองชั้น เสริมคาง ดูดไขมัน ฉีดไขมัน",
+    signature: false,
   },
   {
     href: "/services/skin-treatments",
@@ -37,6 +40,7 @@ const SERVICES = [
     titleEn: "Skin Treatments",
     titleTh: "ฟื้นฟูผิว",
     desc: "Sculptra · Meso Glass Skin · PRP · Placenta · Vitamin Drip",
+    signature: false,
   },
 ] as const;
 
@@ -58,7 +62,7 @@ export default function ServicesOverview() {
         {/* Grid — top row: 2 cards, bottom row: 3 cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map(
-            ({ href, image, titleEn, titleTh, desc, signature }) => (
+            ({ href, image, titleEn, titleTh, desc, signature = false }) => (
               <Link
                 key={href}
                 href={href}
