@@ -1,4 +1,5 @@
 import Hero from "@/components/home/Hero";
+import TrustBar from "@/components/home/TrustBar";
 import SignatureSpotlight from "@/components/home/SignatureSpotlight";
 import ServicesOverview from "@/components/home/ServicesOverview";
 import BeforeAfter from "@/components/home/BeforeAfter";
@@ -7,7 +8,8 @@ import Testimonials from "@/components/home/Testimonials";
 import PromotionsBanner, {
   type Promotion,
 } from "@/components/home/PromotionsBanner";
-import TrustBar from "@/components/home/TrustBar";
+import BlogPreview from "@/components/home/BlogPreview";
+import ContactCTA from "@/components/home/ContactCTA";
 
 // TODO: fetch from WP Promotions CPT
 const ACTIVE_PROMO: Promotion | null = {
@@ -29,6 +31,8 @@ export default function HomePage() {
       <Doctors />
       <Testimonials />
       <PromotionsBanner promo={ACTIVE_PROMO} />
+      <BlogPreview />
+      <ContactCTA />
     </>
   );
 }
