@@ -7,6 +7,7 @@ import Testimonials from "@/components/home/Testimonials";
 import PromotionsBanner, {
   type Promotion,
 } from "@/components/home/PromotionsBanner";
+import TrustBar from "@/components/home/TrustBar";
 
 // TODO: fetch from WP Promotions CPT
 const ACTIVE_PROMO: Promotion | null = {
@@ -21,6 +22,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <TrustBar />
       <SignatureSpotlight />
       <ServicesOverview />
       <BeforeAfter />
