@@ -6,43 +6,11 @@ import {
   YoutubeIcon,
   LineIcon,
 } from "@/components/shared/SocialIcons";
+import type { Dictionary } from "@/i18n/get-dictionary";
+import type { Locale } from "@/i18n/config";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE_HREF = "tel:+66880087870";
-
-const NAV_COLS = [
-  {
-    title: "Services",
-    titleTh: "บริการ",
-    links: [
-      { href: "/services/nose-thread-lift", label: "Nose Thread Lift" },
-      { href: "/services/facial-thread-lift", label: "Facial Thread Lift" },
-      { href: "/services/facial-design", label: "Facial Design" },
-      { href: "/services/surgery", label: "Surgery" },
-      { href: "/services/skin-treatments", label: "Skin Treatments" },
-    ],
-  },
-  {
-    title: "Clinic",
-    titleTh: "คลินิก",
-    links: [
-      { href: "/about", label: "About Us" },
-      { href: "/doctors", label: "Doctors" },
-      { href: "/before-after", label: "Before & After" },
-      { href: "/blog", label: "Blog" },
-    ],
-  },
-  {
-    title: "Support",
-    titleTh: "ช่วยเหลือ",
-    links: [
-      { href: "/contact", label: "Contact" },
-      { href: "/promotions", label: "Promotions" },
-      { href: "/faq", label: "FAQ" },
-      { href: "/reviews", label: "Reviews" },
-    ],
-  },
-] as const;
 
 const SOCIALS = [
   {
@@ -62,27 +30,65 @@ const SOCIALS = [
   },
 ];
 
-export default function Footer() {
+type Props = {
+  locale: Locale;
+  t: Dictionary["footer"];
+  navT: Dictionary["nav"];
+};
+
+export default function Footer({ locale, t, navT }: Props) {
+  const l = (path: string) => `/${locale}${path}`;
+
+  const NAV_COLS = [
+    {
+      title: t.services,
+      links: [
+        { href: l("/services/nose-thread-lift"), label: "Nose Thread Lift" },
+        {
+          href: l("/services/facial-thread-lift"),
+          label: "Facial Thread Lift",
+        },
+        { href: l("/services/facial-design"), label: "Facial Design" },
+        { href: l("/services/surgery"), label: "Surgery" },
+        { href: l("/services/skin-treatments"), label: "Skin Treatments" },
+      ],
+    },
+    {
+      title: t.clinic,
+      links: [
+        { href: l("/about"), label: navT.about },
+        { href: l("/doctors"), label: navT.doctors },
+        { href: l("/before-after"), label: navT.beforeAfter },
+        { href: l("/blog"), label: navT.blog },
+      ],
+    },
+    {
+      title: t.support,
+      links: [
+        { href: l("/contact"), label: navT.contact },
+        { href: l("/promotions"), label: "Promotions" },
+        { href: l("/faq"), label: "FAQ" },
+        { href: l("/reviews"), label: "Reviews" },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-[var(--color-footer-bg)] text-[var(--color-footer-text)]">
-      {/* Main grid */}
       <div className="max-w-[var(--container-max)] mx-auto px-6 pt-16 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-          {/* Brand column */}
+          {/* Brand */}
           <div className="lg:col-span-2 space-y-5">
             <Image
               src="/images/nyc-clinic-logo.jpg"
               alt="NYC — New York Clinic, GR"
               width={140}
-              height={140}
+              height={56}
               className="h-20 w-auto"
             />
 
-            <p className="text-sm leading-relaxed max-w-xs">
-              ศูนย์ความงามครบวงจร โดยทีมแพทย์ผู้เชี่ยวชาญเฉพาะทาง กว่า 15 ปี
-            </p>
+            <p className="text-sm leading-relaxed max-w-xs">{t.description}</p>
 
-            {/* Contact */}
             <div className="space-y-2 text-sm">
               <a
                 href={PHONE_HREF}
@@ -102,7 +108,6 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Socials */}
             <div className="flex items-center gap-4 pt-1">
               {SOCIALS.map(({ href, icon: Icon, label }) => (
                 <a
@@ -120,16 +125,10 @@ export default function Footer() {
           </div>
 
           {/* Nav columns */}
-          {NAV_COLS.map(({ title, titleTh, links }) => (
+          {NAV_COLS.map(({ title, links }) => (
             <div key={title}>
               <h4 className="font-[var(--font-body)] text-[11px] font-semibold tracking-[0.15em] uppercase text-white mb-4">
                 {title}
-                <span className="text-[var(--color-on-primary-muted)] font-normal mx-2">
-                  ·
-                </span>
-                <span className="font-[var(--font-thai-body)] text-xs font-normal tracking-normal normal-case text-[var(--color-on-primary-muted)]">
-                  {titleTh}
-                </span>
               </h4>
               <ul className="space-y-2.5">
                 {links.map(({ href, label }) => (
@@ -152,18 +151,21 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-[var(--container-max)] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--color-on-primary-muted)]">
           <p>
-            &copy; {new Date().getFullYear()} NYC Clinic. All rights reserved.
+            &copy; {new Date().getFullYear()} NYC Clinic. {t.rights}.
           </p>
           <div className="flex items-center gap-4">
             <Link
-              href="/privacy-policy"
+              href={l("/privacy-policy")}
               className="hover:text-white transition-colors"
             >
-              Privacy Policy
+              {t.privacy}
             </Link>
             <span className="w-px h-3 bg-white/20" />
-            <Link href="/terms" className="hover:text-white transition-colors">
-              Terms
+            <Link
+              href={l("/terms")}
+              className="hover:text-white transition-colors"
+            >
+              {t.terms}
             </Link>
           </div>
         </div>

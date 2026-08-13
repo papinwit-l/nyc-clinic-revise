@@ -6,53 +6,56 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { LineIcon } from "@/components/shared/SocialIcons";
+import type { Dictionary } from "@/i18n/get-dictionary";
+import type { Locale } from "@/i18n/config";
 
-// ─── Navigation Data ────────────────────────────────
+// ─── Constants ──────────────────────────────────────
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
 const PHONE_HREF = "tel:+66880087870";
 
-const NAV_ITEMS = [
-  { href: "/", label: "Home", labelTh: "หน้าแรก" },
-  { href: "/services", label: "Services", labelTh: "บริการ" },
-  { href: "/before-after", label: "Before & After", labelTh: "ผลงาน" },
-  { href: "/doctors", label: "Doctors", labelTh: "ทีมแพทย์" },
-  { href: "/about", label: "About Us", labelTh: "เกี่ยวกับเรา" },
-  { href: "/blog", label: "Blog", labelTh: "บทความ" },
-  { href: "/contact", label: "Contact", labelTh: "ติดต่อเรา" },
-] as const;
+const NAV_KEYS = [
+  { key: "home" as const, path: "" },
+  { key: "services" as const, path: "/services" },
+  { key: "beforeAfter" as const, path: "/before-after" },
+  { key: "doctors" as const, path: "/doctors" },
+  { key: "about" as const, path: "/about" },
+  { key: "blog" as const, path: "/blog" },
+  { key: "contact" as const, path: "/contact" },
+];
 
 // ─── Component ──────────────────────────────────────
 
-export default function Header() {
+type Props = {
+  locale: Locale;
+  t: Dictionary["nav"];
+};
+
+export default function Header({ locale, t }: Props) {
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Scroll → toggle data attribute directly on the DOM (no state, no re-render)
+  // Scroll → data attribute (no re-render)
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
-
     const check = () => {
       const isScrolled = window.scrollY > 40;
       if (el.dataset.scrolled !== String(isScrolled)) {
         el.dataset.scrolled = String(isScrolled);
       }
     };
-
     check();
     window.addEventListener("scroll", check, { passive: true });
     return () => window.removeEventListener("scroll", check);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Toggle mobile menu — handles body lock in the same callback
   const openMobile = useCallback(() => {
     setMobileOpen(true);
     document.body.style.overflow = "hidden";
@@ -63,15 +66,17 @@ export default function Header() {
     document.body.style.overflow = "";
   }, []);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const localePath = (path: string) => `/${locale}${path}`;
+
+  const isActive = (path: string) => {
+    const full = localePath(path);
+    return full === `/${locale}` && path === ""
+      ? pathname === `/${locale}` || pathname === `/${locale}/`
+      : pathname.startsWith(full);
+  };
 
   return (
     <>
-      {/* ────────────────────────────────────────────
-          Scroll styles — driven by data-scrolled
-          No JS re-render, pure CSS transitions
-          ──────────────────────────────────────────── */}
       <style>{`
         .site-header {
           background: transparent;
@@ -85,8 +90,6 @@ export default function Header() {
           border-bottom-color: var(--color-accent-border);
           box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
-
-        /* Top bar collapses on scroll */
         .site-header__topbar {
           max-height: 2.25rem;
           opacity: 1;
@@ -103,7 +106,7 @@ export default function Header() {
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-50"
       >
-        {/* ── Top bar — phone + LINE (desktop only) ── */}
+        {/* Top bar */}
         <div className="site-header__topbar hidden lg:block">
           <div className="max-w-[var(--container-max)] mx-auto px-6 flex items-center justify-end gap-6 h-9 text-[11px] tracking-[0.12em] uppercase">
             <a
@@ -125,10 +128,9 @@ export default function Header() {
           </div>
         </div>
 
-        {/* ── Main nav bar ── */}
+        {/* Main nav */}
         <div className="max-w-[var(--container-max)] mx-auto px-6 flex items-center justify-between h-[var(--header-height)]">
-          {/* Logo */}
-          <Link href="/" className="shrink-0">
+          <Link href={localePath("")} className="shrink-0">
             <Image
               src="/images/nyc-clinic-logo.jpg"
               alt="NYC — New York Clinic, GR"
@@ -139,32 +141,32 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop nav links */}
+          {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {NAV_ITEMS.map(({ href, label }) => (
+            {NAV_KEYS.map(({ key, path }) => (
               <Link
-                key={href}
-                href={href}
+                key={key}
+                href={localePath(path)}
                 className={`
                   relative px-3 xl:px-4 py-2
                   text-[0.75rem] font-medium tracking-[0.1em] uppercase
                   transition-colors duration-200
                   ${
-                    isActive(href)
+                    isActive(path)
                       ? "text-[var(--color-accent)]"
                       : "text-white/80 hover:text-white"
                   }
                 `}
               >
-                {label}
-                {isActive(href) && (
+                {t[key]}
+                {isActive(path) && (
                   <span className="absolute bottom-0 left-3 right-3 xl:left-4 xl:right-4 h-px bg-[var(--color-accent)]" />
                 )}
               </Link>
             ))}
           </nav>
 
-          {/* Desktop CTA + Mobile hamburger */}
+          {/* Desktop CTA + hamburger */}
           <div className="flex items-center gap-4">
             <a
               href={LINE_URL}
@@ -173,9 +175,8 @@ export default function Header() {
               className="btn-line hidden lg:inline-flex !py-2.5 !px-5 !text-[0.7rem]"
             >
               <LineIcon className="w-4 h-4" />
-              Add LINE
+              {t.addLine}
             </a>
-
             <button
               type="button"
               onClick={openMobile}
@@ -188,25 +189,17 @@ export default function Header() {
         </div>
       </header>
 
-      {/* ── Mobile overlay menu ── */}
+      {/* Mobile overlay */}
       <div
         className={`
-          fixed inset-0 z-[60] lg:hidden
-          transition-opacity duration-300
-          ${
-            mobileOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          }
+          fixed inset-0 z-[60] lg:hidden transition-opacity duration-300
+          ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
       >
-        {/* Backdrop */}
         <div className="absolute inset-0 bg-black/60" onClick={closeMobile} />
-
-        {/* Panel */}
         <div
           className={`
             absolute top-0 right-0 bottom-0 w-full max-w-sm
@@ -215,7 +208,6 @@ export default function Header() {
             ${mobileOpen ? "translate-x-0" : "translate-x-full"}
           `}
         >
-          {/* Close row */}
           <div className="flex items-center justify-between px-6 h-[var(--header-height-mobile)]">
             <Image
               src="/images/nyc-clinic-logo.png"
@@ -236,30 +228,26 @@ export default function Header() {
 
           <div className="mx-6 h-px bg-[var(--color-accent-border)]" />
 
-          {/* Nav links */}
           <nav className="flex-1 overflow-y-auto px-6 py-8">
             <ul className="space-y-1">
-              {NAV_ITEMS.map(({ href, label, labelTh }) => (
-                <li key={href}>
+              {NAV_KEYS.map(({ key, path }) => (
+                <li key={key}>
                   <Link
-                    href={href}
+                    href={localePath(path)}
                     onClick={closeMobile}
                     className={`
-                      flex items-center justify-between py-3.5
+                      flex items-center py-3.5
                       border-b border-[var(--color-accent-border)]/30
                       transition-colors duration-200
                       ${
-                        isActive(href)
+                        isActive(path)
                           ? "text-[var(--color-accent)]"
                           : "text-[var(--color-on-primary-muted)] hover:text-white"
                       }
                     `}
                   >
                     <span className="text-sm font-medium tracking-[0.1em] uppercase">
-                      {label}
-                    </span>
-                    <span className="font-[var(--font-thai-body)] text-sm opacity-60">
-                      {labelTh}
+                      {t[key]}
                     </span>
                   </Link>
                 </li>
@@ -267,7 +255,6 @@ export default function Header() {
             </ul>
           </nav>
 
-          {/* Bottom — contact + LINE */}
           <div className="px-6 pb-8 space-y-4">
             <div className="h-px bg-[var(--color-accent-border)]" />
             <a
@@ -284,7 +271,7 @@ export default function Header() {
               className="btn-line w-full !text-[0.75rem]"
             >
               <LineIcon className="w-4 h-4" />
-              แอดไลน์ปรึกษาฟรี
+              {t.addLine}
             </a>
           </div>
         </div>
@@ -292,8 +279,6 @@ export default function Header() {
     </>
   );
 }
-
-// ─── Phone Icon (small inline, no extra dep) ───────
 
 function PhoneIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
