@@ -44,8 +44,8 @@ export default function DoctorsPage() {
             >
               {/* Portrait */}
               <div
-                className={`relative aspect-[3/4] max-w-[280px] mx-auto lg:mx-0 overflow-hidden bg-[var(--color-surface-dim)] ${
-                  idx % 2 === 1 ? "lg:order-2" : ""
+                className={`relative aspect-[3/4] w-full max-w-[280px] mx-auto lg:mx-0 overflow-hidden bg-[var(--color-surface-dim)] ${
+                  idx % 2 === 1 ? "lg:order-2 lg:ml-auto" : ""
                 }`}
               >
                 <Image
