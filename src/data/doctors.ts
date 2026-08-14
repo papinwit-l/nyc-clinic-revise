@@ -142,3 +142,8 @@ export const DOCTORS: Doctor[] = [
 export function getDoctorBySlug(slug: string): Doctor | undefined {
   return DOCTORS.find((d) => d.slug === slug);
 }
+
+// TODO: replace with WP fetch
+export async function getDoctors(): Promise<Doctor[]> {
+  return DOCTORS;
+}

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { LineIcon } from "@/components/shared/SocialIcons";
+import LangSwitcher from "@/components/shared/LangSwitcher";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 
@@ -166,8 +167,11 @@ export default function Header({ locale, t }: Props) {
             ))}
           </nav>
 
-          {/* Desktop CTA + hamburger */}
-          <div className="flex items-center gap-4">
+          {/* Desktop CTA + Lang + hamburger */}
+          <div className="flex items-center gap-3">
+            <div className="hidden lg:block">
+              <LangSwitcher locale={locale} />
+            </div>
             <a
               href={LINE_URL}
               target="_blank"
@@ -257,6 +261,12 @@ export default function Header({ locale, t }: Props) {
 
           <div className="px-6 pb-8 space-y-4">
             <div className="h-px bg-[var(--color-accent-border)]" />
+            <div className="flex items-center justify-between py-2">
+              <span className="text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-primary-muted)]">
+                Language
+              </span>
+              <LangSwitcher locale={locale} />
+            </div>
             <a
               href={PHONE_HREF}
               className="flex items-center gap-2.5 py-2 text-[var(--color-on-primary-muted)] hover:text-white transition-colors"

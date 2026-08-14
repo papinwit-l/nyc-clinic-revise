@@ -1,3 +1,11 @@
+import { getDictionary } from "@/i18n/get-dictionary";
+import type { Locale } from "@/i18n/config";
+import { getServices } from "@/data/services";
+import { getCases } from "@/data/cases";
+import { getDoctors } from "@/data/doctors";
+import { getTestimonials } from "@/data/testimonials";
+import { getLatestPosts } from "@/data/posts";
+import { getActivePromotion } from "@/data/promotions";
 import Hero from "@/components/home/Hero";
 import TrustBar from "@/components/home/TrustBar";
 import SignatureSpotlight from "@/components/home/SignatureSpotlight";
@@ -5,34 +13,55 @@ import ServicesOverview from "@/components/home/ServicesOverview";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import Doctors from "@/components/home/Doctors";
 import Testimonials from "@/components/home/Testimonials";
-import PromotionsBanner, {
-  type Promotion,
-} from "@/components/home/PromotionsBanner";
+import PromotionsBanner from "@/components/home/PromotionsBanner";
 import BlogPreview from "@/components/home/BlogPreview";
 import ContactCTA from "@/components/home/ContactCTA";
 
-// TODO: fetch from WP Promotions CPT
-const ACTIVE_PROMO: Promotion | null = {
-  slug: "summer-nose-thread-2026",
-  titleEn: "Summer Special — Nose Thread Lift",
-  titleTh: "โปรร้อยไหมจมูก ต้อนรับซัมเมอร์",
-  offer: "ลด 20% สำหรับร้อยไหมจมูกกึ่งศัลยกรรม",
-  validUntil: "2026-09-30",
-};
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getDictionary(locale as Locale);
 
-export default function HomePage() {
+  const [services, cases, doctors, testimonials, posts, promo] =
+    await Promise.all([
+      getServices(locale),
+      getCases(locale, { limit: 6 }),
+      getDoctors(),
+      getTestimonials(locale, 3),
+      getLatestPosts(locale, 3),
+      getActivePromotion(locale),
+    ]);
+
   return (
     <>
-      <Hero />
-      <TrustBar />
-      <SignatureSpotlight />
-      <ServicesOverview />
-      <BeforeAfter />
-      <Doctors />
-      <Testimonials />
-      <PromotionsBanner promo={ACTIVE_PROMO} />
-      <BlogPreview />
-      <ContactCTA />
+      <Hero t={t.home.hero} locale={locale} />
+      <TrustBar t={t.home.trust} />
+      <SignatureSpotlight
+        t={t.home.signature}
+        tCommon={t.common}
+        locale={locale}
+        data={services.find((s) => s.signature) ?? services[0]}
+      />
+      <ServicesOverview
+        t={t.home.services}
+        tCommon={t.common}
+        locale={locale}
+        data={services}
+      />
+      <BeforeAfter
+        t={t.home.results}
+        tCommon={t.common}
+        locale={locale}
+        data={cases}
+      />
+      <Doctors t={t.home.doctors} locale={locale} data={doctors} />
+      <Testimonials t={t.home.testimonials} data={testimonials} />
+      <PromotionsBanner t={t.home.promotion} data={promo} />
+      <BlogPreview t={t.home.blog} locale={locale} data={posts} />
+      <ContactCTA t={t.home.contact} tCommon={t.common} />
     </>
   );
 }
