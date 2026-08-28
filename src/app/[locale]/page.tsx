@@ -39,12 +39,13 @@ export default async function HomePage({
     <>
       <Hero t={t.home.hero} locale={locale} />
       <TrustBar t={t.home.trust} />
-      <SignatureSpotlight
+      <Doctors t={t.home.doctors} locale={locale} data={doctors} />
+      {/* <SignatureSpotlight
         t={t.home.signature}
         tCommon={t.common}
         locale={locale}
         data={services.find((s) => s.signature) ?? services[0]}
-      />
+      /> */}
       <ServicesOverview
         t={t.home.services}
         tCommon={t.common}
@@ -57,7 +58,6 @@ export default async function HomePage({
         locale={locale}
         data={cases}
       />
-      <Doctors t={t.home.doctors} locale={locale} data={doctors} />
       <Testimonials t={t.home.testimonials} data={testimonials} />
       <PromotionsBanner t={t.home.promotion} data={promo} />
       <BlogPreview t={t.home.blog} locale={locale} data={posts} />

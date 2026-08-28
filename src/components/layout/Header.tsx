@@ -18,10 +18,10 @@ const PHONE_HREF = "tel:+66880087870";
 
 const NAV_KEYS = [
   { key: "home" as const, path: "" },
+  { key: "about" as const, path: "/about" },
+  { key: "doctors" as const, path: "/doctors" },
   { key: "services" as const, path: "/services" },
   { key: "beforeAfter" as const, path: "/before-after" },
-  { key: "doctors" as const, path: "/doctors" },
-  { key: "about" as const, path: "/about" },
   { key: "blog" as const, path: "/blog" },
   { key: "contact" as const, path: "/contact" },
 ];
