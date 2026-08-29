@@ -87,13 +87,14 @@
   --radius-sharp: 0px;
   --radius-soft: 7px;
 
-  /* ─── Fonts ─── */
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
-  --font-accent: var(--font-accent);
-  --font-thai-head: var(--font-thai-head);
-  --font-thai-serif: var(--font-thai-serif);
-  --font-thai-body: var(--font-thai-body);
+  /* ─── Fonts ───
+     Deliberately NOT redeclared here. next/font sets --font-display,
+     --font-body, --font-accent, --font-thai-head, --font-thai-serif,
+     and --font-thai-body directly on <html> in layout.tsx; components
+     reference them with plain var(--font-display) etc. Redeclaring
+     them here as `--font-display: var(--font-display)` is circular
+     and previously caused Playfair Display to silently fall back to
+     a generic serif. */
 
   /* ─── Layout ─── */
   --header-height: 80px;

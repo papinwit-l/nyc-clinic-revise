@@ -4,8 +4,8 @@ import {
   Playfair_Display,
   Montserrat,
   Cormorant_Garamond,
-  Taviraj,
-  Noto_Serif_Thai,
+  Anuphan,
+  Mitr,
   Prompt,
 } from "next/font/google";
 import { isValidLocale, type Locale } from "@/i18n/config";
@@ -38,17 +38,18 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-const taviraj = Taviraj({
+// Thai headings — pairs with Playfair Display
+const anuphan = Anuphan({
   subsets: ["thai", "latin"],
-  weight: ["200", "300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-thai-head",
   display: "swap",
 });
 
-const notoSerifThai = Noto_Serif_Thai({
-  subsets: ["thai"],
-  weight: ["200", "300", "400", "500", "600", "700"],
+// Thai taglines / pull quotes — pairs with Cormorant Garamond
+const mitr = Mitr({
+  subsets: ["thai", "latin"],
+  weight: ["200", "300", "400"],
   variable: "--font-thai-serif",
   display: "swap",
 });
@@ -95,8 +96,8 @@ export default async function LocaleLayout({
         ${playfair.variable}
         ${montserrat.variable}
         ${cormorant.variable}
-        ${taviraj.variable}
-        ${notoSerifThai.variable}
+        ${anuphan.variable}
+        ${mitr.variable}
         ${prompt.variable}
       `}
     >

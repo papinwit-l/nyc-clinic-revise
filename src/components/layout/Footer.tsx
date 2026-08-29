@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/shared/Logo";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -79,13 +79,7 @@ export default function Footer({ locale, t, navT }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-2 space-y-5">
-            <Image
-              src="/images/nyc-clinic-logo.jpg"
-              alt="NYC — New York Clinic, GR"
-              width={140}
-              height={56}
-              className="h-20 w-auto"
-            />
+            <Logo variant="primary" size="lg" />
 
             <p className="text-sm leading-relaxed max-w-xs">{t.description}</p>
 
