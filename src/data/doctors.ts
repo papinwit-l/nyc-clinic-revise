@@ -34,6 +34,13 @@ export const DOCTORS: Doctor[] = [
       },
     ],
     services: ["nose-thread-lift", "facial-thread-lift", "facial-design"],
+    featured: true,
+    // Placeholder bio — rephrased from credential bullets on nycclinic.net/doctor/.
+    // Nothing invented. Flag for client edit/approval before final build.
+    bioEn:
+      "Dr. Jing specializes in nose thread lift and facial design, with over 15 years of experience in aesthetic medicine and more than 10,000 documented nose thread lift cases performed to date.",
+    bioTh:
+      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 15 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 10,000 เคส",
   },
   {
     slug: "dr-beer",

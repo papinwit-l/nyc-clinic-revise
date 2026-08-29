@@ -38,6 +38,8 @@ const home = {
   doctors: {
     label: "ทีมแพทย์",
     heading: "แพทย์ผู้เชี่ยวชาญ",
+    badge: "แพทย์ผู้เชี่ยวชาญหลัก",
+    teamHeading: "ทีมแพทย์ของเรา",
     cta: "ดูแพทย์ทั้งหมด →",
   },
   testimonials: {

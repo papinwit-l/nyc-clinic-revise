@@ -38,6 +38,8 @@ const home = {
   doctors: {
     label: "Meet the Doctors",
     heading: "Our Specialists",
+    badge: "Lead Specialist",
+    teamHeading: "Also On Our Team",
     cta: "View All Doctors →",
   },
   testimonials: {
