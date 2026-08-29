@@ -45,26 +45,29 @@ export default function Doctors({ t, locale, data }: Props) {
           <div className="text-center lg:text-left">
             <span className="badge">{t.badge}</span>
 
+            {/* EN name — always Playfair Display */}
             <h3
-              className="font-[var(--font-display)] text-2xl sm:text-3xl font-semibold mt-4"
+              className="text-2xl sm:text-3xl font-semibold mt-4"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {featured.fullNameEn}
             </h3>
+            {/* TH name — always Anuphan */}
             <p
-              className={`text-[var(--color-accent)] text-base sm:text-lg mt-1 ${
-                isTH ? "font-[var(--font-thai-head)]" : ""
-              }`}
-              style={isTH ? { fontFamily: "var(--font-thai-head)" } : undefined}
+              className="text-[var(--color-accent)] text-base sm:text-lg mt-1"
+              style={{ fontFamily: "var(--font-thai-head)" }}
             >
               {featured.fullNameTh}
             </p>
 
             <div className="divider-accent mt-4 mb-4 mx-auto lg:mx-0" />
 
+            {/* Bio — font follows the text's language */}
             <p
               className="text-[var(--color-text-muted)] text-sm sm:text-base leading-relaxed max-w-lg mx-auto lg:mx-0"
-              style={isTH ? { fontFamily: "var(--font-thai-body)" } : undefined}
+              style={{
+                fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+              }}
             >
               {isTH
                 ? (featured.bioTh ?? featured.specialtyTh)
@@ -77,7 +80,14 @@ export default function Doctors({ t, locale, data }: Props) {
                 <p className="stat-number text-2xl text-[var(--color-accent)]">
                   15+
                 </p>
-                <p className="text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-muted)] mt-1 font-medium">
+                <p
+                  className="text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-muted)] mt-1 font-medium"
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                  }}
+                >
                   {isTH ? "ปีประสบการณ์" : "yrs experience"}
                 </p>
               </div>
@@ -86,7 +96,14 @@ export default function Doctors({ t, locale, data }: Props) {
                 <p className="stat-number text-2xl text-[var(--color-accent)]">
                   10,000+
                 </p>
-                <p className="text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-muted)] mt-1 font-medium">
+                <p
+                  className="text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-muted)] mt-1 font-medium"
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                  }}
+                >
                   {isTH ? "เคส" : "cases"}
                 </p>
               </div>
@@ -117,25 +134,28 @@ export default function Doctors({ t, locale, data }: Props) {
                   />
                 </div>
                 <div className="mt-3">
+                  {/* EN name — always Playfair */}
                   <h3
                     className="text-sm sm:text-base font-semibold"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
                     {doc.nameEn}
                   </h3>
+                  {/* TH name — always Anuphan */}
                   <p
                     className="text-[var(--color-accent)] text-xs sm:text-sm mt-0.5"
-                    style={
-                      isTH ? { fontFamily: "var(--font-thai-head)" } : undefined
-                    }
+                    style={{ fontFamily: "var(--font-thai-head)" }}
                   >
                     {doc.nameTh}
                   </p>
+                  {/* Specialty — font follows text language */}
                   <p
                     className="text-[var(--color-text-muted)] text-[11px] sm:text-xs mt-1"
-                    style={
-                      isTH ? { fontFamily: "var(--font-thai-body)" } : undefined
-                    }
+                    style={{
+                      fontFamily: isTH
+                        ? "var(--font-thai-body)"
+                        : "var(--font-body)",
+                    }}
                   >
                     {isTH ? doc.specialtyTh : doc.specialty}
                   </p>
