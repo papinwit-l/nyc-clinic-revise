@@ -38,7 +38,7 @@ export default async function HomePage({
   return (
     <>
       <Hero t={t.home.hero} locale={locale} />
-      <TrustBar t={t.home.trust} />
+      <TrustBar t={t.home.trust} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />
       {/* <SignatureSpotlight
         t={t.home.signature}
