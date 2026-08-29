@@ -11,6 +11,8 @@ type Props = {
 };
 
 export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
+  const isTH = locale === "th";
+
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
@@ -19,7 +21,12 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
           <h2 className="section-heading text-3xl sm:text-4xl mt-3">
             {t.heading}
           </h2>
-          <p className="text-[var(--color-text-muted)] mt-3 max-w-md mx-auto">
+          <p
+            className="text-[var(--color-text-muted)] mt-3 max-w-md mx-auto"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
+          >
             {t.subtitle}
           </p>
         </div>
@@ -29,7 +36,7 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
             <Link
               key={slug}
               href={`/${locale}/before-after/${slug}`}
-              className="group bg-white shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[0_4px_28px_rgba(15,18,37,0.12)] hover:-translate-y-1 transition-all duration-300"
+              className="group bg-white radius-soft overflow-hidden hover:-translate-y-1 transition-all duration-300"
             >
               <div className="relative aspect-square overflow-hidden">
                 <Image
@@ -41,10 +48,21 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
                 />
               </div>
               <div className="p-5">
-                <h3 className="font-[var(--font-body)] text-sm font-semibold tracking-[0.05em]">
+                {/* Treatment name — font follows text language */}
+                <h3
+                  className="text-sm font-semibold tracking-[0.05em]"
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                  }}
+                >
                   {treatment}
                 </h3>
-                <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+                <p
+                  className="text-xs text-[var(--color-text-subtle)] mt-2"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
                   {tCommon.by} {doctor}
                 </p>
               </div>
