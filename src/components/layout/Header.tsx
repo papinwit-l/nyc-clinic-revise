@@ -78,7 +78,15 @@ export default function Header({ locale, t }: Props) {
     <>
       <style>{`
         .site-header {
-          background: transparent;
+          /* Permanent scrim, not just on scroll — nav text needs to stay
+             legible over whatever the hero media happens to be (dark
+             portrait photo, bright interior render, video frame, etc.),
+             not only after the solid background kicks in. */
+          background: linear-gradient(
+            180deg,
+            rgba(26, 31, 58, 0.30) 0%,
+            rgba(26, 31, 58, 0.55) 100%
+          );
           border-bottom: 1px solid transparent;
           transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }

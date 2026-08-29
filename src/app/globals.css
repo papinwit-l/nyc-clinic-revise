@@ -69,10 +69,14 @@
   --color-footer-bg: var(--color-primary);
   --color-footer-text: rgba(255, 255, 255, 0.65);
 
-  /* Hero image overlay gradient stops — derived from --color-primary (26,31,58) */
-  --color-overlay-start: rgba(26, 31, 58, 0.15);
-  --color-overlay-mid: rgba(26, 31, 58, 0.45);
-  --color-overlay-end: rgba(26, 31, 58, 0.85);
+  /* Hero image overlay gradient stops — derived from --color-primary (26,31,58).
+     Strengthened (Aug 2026): the old 0.15 top-stop only worked on already-dark
+     photos (e.g. the portrait shot); it left header nav text unreadable over
+     brighter images (e.g. the white/cream clinic interior). This now
+     guarantees a readable floor of contrast regardless of source brightness. */
+  --color-overlay-start: rgba(26, 31, 58, 0.35);
+  --color-overlay-mid: rgba(26, 31, 58, 0.58);
+  --color-overlay-end: rgba(26, 31, 58, 0.88);
 
   /* LINE brand */
   --color-line: #06c755;
