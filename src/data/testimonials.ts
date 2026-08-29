@@ -13,6 +13,9 @@ const DATA = [
     name: "คุณปิยาภรณ์",
     treatment: "Nose Thread Lift",
     rating: 5,
+    // avatar: "/images/reviewers/reviewer-01.jpg",
+    // reviewImage: "/images/reviews/review-01.jpg",
+    reviewImage: "/images/cases/case-01.jpg",
   },
   {
     id: "2",
@@ -49,5 +52,11 @@ export async function getTestimonials(
     name: item.name,
     treatment: item.treatment,
     rating: item.rating,
+    avatar:
+      "avatar" in item ? (item as Record<string, string>).avatar : undefined,
+    reviewImage:
+      "reviewImage" in item
+        ? (item as Record<string, string>).reviewImage
+        : undefined,
   }));
 }

@@ -58,7 +58,11 @@ export default async function HomePage({
         locale={locale}
         data={cases}
       />
-      <Testimonials t={t.home.testimonials} data={testimonials} />
+      <Testimonials
+        t={t.home.testimonials}
+        locale={locale}
+        data={testimonials}
+      />
       <PromotionsBanner t={t.home.promotion} data={promo} />
       <BlogPreview t={t.home.blog} locale={locale} data={posts} />
       <ContactCTA t={t.home.contact} tCommon={t.common} />

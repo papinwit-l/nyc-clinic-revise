@@ -1,51 +1,112 @@
+import Image from "next/image";
 import { Star } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { TestimonialCard } from "@/types/testimonial";
 
 type Props = {
   t: Dictionary["home"]["testimonials"];
+  locale: string;
   data: TestimonialCard[];
 };
 
-export default function Testimonials({ t, data }: Props) {
+export default function Testimonials({ t, locale, data }: Props) {
+  const isTH = locale === "th";
+
   return (
-    <section className="bg-[var(--color-primary)] py-[var(--section-py)]">
+    <section
+      className="py-[var(--section-py)]"
+      style={{ backgroundColor: "var(--color-accent-pale)" }}
+    >
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         <div className="text-center mb-12">
           <span className="section-label">{t.label}</span>
-          <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl font-semibold text-white mt-3">
+          <h2 className="section-heading text-3xl sm:text-4xl mt-3 text-[var(--color-primary)]">
             {t.heading}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {data.map(({ quote, name, treatment, rating }) => (
-            <div
-              key={name}
-              className="bg-[var(--color-primary-mid)] p-6 sm:p-8 flex flex-col border border-[var(--color-accent-border)]"
-            >
-              <div className="flex gap-0.5">
-                {Array.from({ length: rating }, (_, i) => (
-                  <Star
-                    key={i}
-                    size={14}
-                    className="fill-[var(--color-accent)] text-[var(--color-accent)]"
-                  />
-                ))}
+          {data.map(
+            ({ id, quote, name, treatment, rating, avatar, reviewImage }) => (
+              <div
+                key={id}
+                className="bg-white radius-soft p-6 sm:p-8 flex flex-col"
+              >
+                {/* Review photo — optional */}
+                {reviewImage && (
+                  <div className="relative aspect-[4/3] -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 mb-6 overflow-hidden rounded-t-[var(--radius-soft)]">
+                    <Image
+                      src={reviewImage}
+                      alt={`${name} — ${treatment}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
+                )}
+
+                {/* Stars — rose-gold */}
+                <div className="flex gap-0.5">
+                  {Array.from({ length: rating }, (_, i) => (
+                    <Star
+                      key={i}
+                      size={14}
+                      className="fill-[var(--color-accent)] text-[var(--color-accent)]"
+                    />
+                  ))}
+                </div>
+
+                {/* Quote — font follows text language */}
+                <blockquote
+                  className="text-[var(--color-text-muted)] text-sm leading-relaxed mt-5 flex-1"
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                  }}
+                >
+                  &ldquo;{quote}&rdquo;
+                </blockquote>
+
+                {/* Reviewer info */}
+                <div className="mt-6 pt-5 border-t border-[var(--color-border)] flex items-center gap-3">
+                  {/* Avatar or initial */}
+                  {avatar ? (
+                    <Image
+                      src={avatar}
+                      alt={name}
+                      width={40}
+                      height={40}
+                      className="w-10 h-10 rounded-full object-cover shrink-0"
+                    />
+                  ) : (
+                    <span
+                      className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center text-sm font-semibold text-white"
+                      style={{ backgroundColor: "var(--color-accent)" }}
+                    >
+                      {name.replace(/^คุณ/, "").charAt(0)}
+                    </span>
+                  )}
+                  <div>
+                    {/* Name — always Thai font (names are Thai) */}
+                    <p
+                      className="text-[var(--color-primary)] text-sm font-medium"
+                      style={{ fontFamily: "var(--font-thai-body)" }}
+                    >
+                      {name}
+                    </p>
+                    {/* Treatment — always English */}
+                    <p
+                      className="text-[11px] tracking-[0.1em] uppercase text-[var(--color-accent)] mt-0.5"
+                      style={{ fontFamily: "var(--font-body)" }}
+                    >
+                      {treatment}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <blockquote className="font-[var(--font-thai-body)] text-[var(--color-on-primary-muted)] text-sm leading-relaxed mt-5 flex-1">
-                &ldquo;{quote}&rdquo;
-              </blockquote>
-              <div className="mt-6 pt-5 border-t border-[var(--color-accent-border)]">
-                <p className="font-[var(--font-thai-body)] text-white text-sm font-medium">
-                  {name}
-                </p>
-                <p className="text-[11px] tracking-[0.1em] uppercase text-[var(--color-accent)] mt-1">
-                  {treatment}
-                </p>
-              </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       </div>
     </section>
