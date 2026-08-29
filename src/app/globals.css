@@ -2,9 +2,19 @@
 
 /* ============================================
    NYC Clinic — Global Theme (Tailwind v4)
+   REVISED — Aug 2026
 
-   Brand palette: navy-deep + rose-gold on cream.
-   Sharp/square aesthetic — no rounded corners.
+   Brand palette: single Deep Navy + rose-gold
+   on a white/cream base (60-70% cream/white,
+   20% navy, 10% rose-gold ratio).
+
+   Radius system: sharp by default (structure,
+   buttons, nav, badges). Soft (--radius-soft)
+   is an intentional exception applied only to
+   patient-facing/emotional content — see the
+   .radius-soft utility below and apply it to:
+   Doctors photos, Services cards, Before &
+   After cards, Testimonials cards.
 
    Fonts injected by next/font in root layout;
    variables here just reference them.
@@ -12,28 +22,28 @@
    --font-display   → Playfair Display
    --font-body      → Montserrat
    --font-accent    → Cormorant Garamond
-   --font-thai-head → Taviraj
-   --font-thai-serif→ Noto Serif Thai
+   --font-thai-head → (Anuphan — pending layout.tsx update)
+   --font-thai-serif→ (Mitr — pending layout.tsx update, var name kept for now)
    --font-thai-body → Prompt
    ============================================ */
 
 @theme {
   /* ─── Colors ─── */
 
-  /* Navy — header, hero, dark sections, key surfaces */
-  --color-primary: #0f1225;
-  --color-primary-mid: #1a1f3a;
+  /* Primary — single dark tone. No darker variant exists.
+     Used for: headings, nav text, primary buttons, Footer bg, Trust Bar bg. */
+  --color-primary: #1a1f3a;
   --color-primary-light: #252b4d;
 
-  /* Rose-gold — CTAs, highlights, active states */
+  /* Accent — rose-gold: CTAs, highlights, active states */
   --color-accent: #c4956a;
   --color-accent-hover: #d4aa82;
-  --color-accent-pale: #e8cdb5;
+  --color-accent-pale: #f2e2d0;
   --color-accent-dark: #a87a52;
   --color-accent-subtle: rgba(196, 149, 106, 0.12);
   --color-accent-border: rgba(196, 149, 106, 0.25);
 
-  /* Surface — page background, cards */
+  /* Surface — page background, cards. Primary background (60-70% of the page). */
   --color-surface: #faf6f1;
   --color-surface-dim: #f0e8df;
   --color-surface-white: #ffffff;
@@ -46,25 +56,36 @@
   /* Text on dark backgrounds */
   --color-on-primary: #ffffff;
   --color-on-primary-muted: rgba(255, 255, 255, 0.75);
-  --color-on-primary-warm: #e8cdb5;
+  --color-on-primary-warm: #f2e2d0;
 
   /* Borders / dividers */
   --color-border: rgba(42, 42, 42, 0.1);
   --color-border-strong: rgba(42, 42, 42, 0.22);
   --color-border-accent: rgba(196, 149, 106, 0.35);
 
-  /* Footer */
-  --color-footer-bg: #0a0d1a;
+  /* Footer — aliased to --color-primary, no separate darker value.
+     Structurally impossible for the footer to drift darker than the
+     agreed ceiling again. */
+  --color-footer-bg: var(--color-primary);
   --color-footer-text: rgba(255, 255, 255, 0.65);
 
-  /* Hero image overlay gradient stops */
-  --color-overlay-start: rgba(15, 18, 37, 0.15);
-  --color-overlay-mid: rgba(15, 18, 37, 0.45);
-  --color-overlay-end: rgba(15, 18, 37, 0.85);
+  /* Hero image overlay gradient stops — derived from --color-primary (26,31,58) */
+  --color-overlay-start: rgba(26, 31, 58, 0.15);
+  --color-overlay-mid: rgba(26, 31, 58, 0.45);
+  --color-overlay-end: rgba(26, 31, 58, 0.85);
 
   /* LINE brand */
   --color-line: #06c755;
   --color-line-hover: #05b34a;
+
+  /* ─── Radius ───
+     Sharp is the default across the site. --radius-soft is an
+     intentional, limited exception — apply via .radius-soft only
+     to: Doctors photos, Services cards, Before & After cards,
+     Testimonials cards. Everything else (Hero, Trust Bar, Blog,
+     Contact, Footer, buttons, badges, nav) stays sharp. */
+  --radius-sharp: 0px;
+  --radius-soft: 7px;
 
   /* ─── Fonts ─── */
   --font-display: var(--font-display);
@@ -100,11 +121,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Sharp / square aesthetic — no rounded corners anywhere */
-*,
-*::before,
-*::after {
-  border-radius: 0;
+/* Sharp is the default state for structural/interactive elements.
+   This is intentionally narrower than the old blanket "*" reset —
+   it no longer fights Tailwind's rounded-* utilities or the
+   .radius-soft class below on cards/photos. */
+button,
+input,
+select,
+textarea {
+  border-radius: var(--radius-sharp);
 }
 
 /* Accessible focus — visible for keyboard, hidden for mouse */
@@ -168,7 +193,7 @@ h6 {
 /* Thai section subtitle */
 .section-heading-th {
   font-family: var(--font-thai-head);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.35;
 }
 
@@ -183,9 +208,8 @@ h6 {
 
 /* Tagline — TH italic */
 .tagline-th {
-  font-family: var(--font-thai-head);
+  font-family: var(--font-thai-serif);
   font-weight: 300;
-  font-style: italic;
   line-height: 1.5;
 }
 
@@ -203,10 +227,18 @@ h6 {
   line-height: 1.8;
 }
 
-/* Thai editorial / serif */
+/* Thai editorial / accent */
 .text-thai-serif {
   font-family: var(--font-thai-serif);
   line-height: 1.8;
+}
+
+/* ─── Radius exception ───
+   Apply ONLY to: Doctors photos, Services cards,
+   Before & After cards, Testimonials cards. */
+.radius-soft {
+  border-radius: var(--radius-soft);
+  box-shadow: 0 8px 22px rgba(26, 31, 58, 0.08);
 }
 
 /* ─── Dividers ─── */
@@ -261,10 +293,35 @@ h6 {
   );
 }
 
-/* ─── Buttons ─── */
+/* ─── Buttons ─── (stay sharp — structural, not content) */
 
-/* Primary CTA — rose-gold fill */
+/* Primary CTA — navy fill */
 .btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-accent-pale);
+  padding: 0.9rem 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-sharp);
+  transition: background-color 0.25s ease;
+}
+.btn-cta:hover {
+  background-color: var(--color-primary-light);
+}
+.btn-cta:active {
+  background-color: var(--color-primary);
+}
+
+/* Accent CTA — rose-gold fill, high-priority actions */
+.btn-accent {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -278,17 +335,44 @@ h6 {
   text-transform: uppercase;
   cursor: pointer;
   border: none;
+  border-radius: var(--radius-sharp);
   transition: background-color 0.25s ease;
 }
-.btn-cta:hover {
+.btn-accent:hover {
   background-color: var(--color-accent-hover);
 }
-.btn-cta:active {
+.btn-accent:active {
   background-color: var(--color-accent-dark);
 }
 
-/* Ghost CTA — outline on dark backgrounds */
+/* Ghost CTA — outline, works on light or dark backgrounds */
 .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 0.9rem 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sharp);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+.btn-ghost:hover {
+  background-color: var(--color-accent-subtle);
+  border-color: var(--color-accent-hover);
+}
+
+/* Ghost CTA — on dark backgrounds (Trust Bar, Footer) */
+.btn-ghost-on-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -302,12 +386,13 @@ h6 {
   text-transform: uppercase;
   cursor: pointer;
   border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sharp);
   transition:
     background-color 0.25s ease,
     color 0.25s ease,
     border-color 0.25s ease;
 }
-.btn-ghost:hover {
+.btn-ghost-on-primary:hover {
   background-color: var(--color-accent-subtle);
   color: var(--color-on-primary);
   border-color: var(--color-accent-hover);
@@ -328,13 +413,14 @@ h6 {
   text-transform: uppercase;
   cursor: pointer;
   border: none;
+  border-radius: var(--radius-sharp);
   transition: background-color 0.25s ease;
 }
 .btn-line:hover {
   background-color: var(--color-line-hover);
 }
 
-/* ─── Badge ─── */
+/* ─── Badge ─── (stays sharp — structural label, not content) */
 
 .badge {
   display: inline-block;
@@ -343,6 +429,7 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sharp);
   background: linear-gradient(
     135deg,
     var(--color-accent-dark),
