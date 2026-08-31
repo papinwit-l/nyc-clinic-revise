@@ -46,6 +46,11 @@ const home = {
     label: "เสียงจากลูกค้า",
     heading: "รีวิวจากลูกค้า",
   },
+  instagram: {
+    label: "ติดตามเรา",
+    heading: "@nycclinic",
+    cta: "ติดตาม @nycclinic →",
+  },
   promotion: {
     label: "โปรโมชัน",
     validUntil: "ถึงวันที่",

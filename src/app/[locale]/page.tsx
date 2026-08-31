@@ -6,6 +6,7 @@ import { getDoctors } from "@/data/doctors";
 import { getTestimonials } from "@/data/testimonials";
 import { getLatestPosts } from "@/data/posts";
 import { getActivePromotion } from "@/data/promotions";
+import { getInstagramPosts } from "@/data/instagram";
 import Hero from "@/components/home/Hero";
 import TrustBar from "@/components/home/TrustBar";
 import SignatureSpotlight from "@/components/home/SignatureSpotlight";
@@ -14,6 +15,7 @@ import BeforeAfter from "@/components/home/BeforeAfter";
 import Doctors from "@/components/home/Doctors";
 import Testimonials from "@/components/home/Testimonials";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
+import InstagramFeed from "@/components/home/InstagramFeed";
 import BlogPreview from "@/components/home/BlogPreview";
 import ContactCTA from "@/components/home/ContactCTA";
 
@@ -25,7 +27,7 @@ export default async function HomePage({
   const { locale } = await params;
   const t = await getDictionary(locale as Locale);
 
-  const [services, cases, doctors, testimonials, posts, promo] =
+  const [services, cases, doctors, testimonials, posts, promo, igPosts] =
     await Promise.all([
       getServices(locale),
       getCases(locale, { limit: 6 }),
@@ -33,6 +35,7 @@ export default async function HomePage({
       getTestimonials(locale, 3),
       getLatestPosts(locale, 3),
       getActivePromotion(locale),
+      getInstagramPosts(8),
     ]);
 
   return (
@@ -63,6 +66,7 @@ export default async function HomePage({
         locale={locale}
         data={testimonials}
       />
+      <InstagramFeed t={t.home.instagram} data={igPosts} />
       <PromotionsBanner t={t.home.promotion} data={promo} />
       <BlogPreview t={t.home.blog} locale={locale} data={posts} />
       <ContactCTA t={t.home.contact} tCommon={t.common} />

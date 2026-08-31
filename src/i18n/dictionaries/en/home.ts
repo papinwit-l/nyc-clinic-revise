@@ -46,6 +46,11 @@ const home = {
     label: "What They Say",
     heading: "Client Reviews",
   },
+  instagram: {
+    label: "Follow Us",
+    heading: "@nycclinic",
+    cta: "Follow @nycclinic →",
+  },
   promotion: {
     label: "Promotion",
     validUntil: "Valid until",
