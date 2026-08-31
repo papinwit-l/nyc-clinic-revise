@@ -33,7 +33,7 @@ export default async function HomePage({
       getCases(locale, { limit: 6 }),
       getDoctors(),
       getTestimonials(locale, 3),
-      getLatestPosts(locale, 3),
+      getLatestPosts(locale, 6),
       getActivePromotion(locale),
       getInstagramPosts(8),
     ]);

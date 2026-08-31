@@ -10,8 +10,14 @@ type Props = {
 };
 
 export default function BlogPreview({ t, locale, data }: Props) {
+  const isTH = locale === "th";
+
+  // Title follows locale language, subtitle is the other language
+  const titleFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const subtitleFont = isTH ? "var(--font-body)" : "var(--font-thai-body)";
+
   return (
-    <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
+    <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         <div className="text-center mb-12">
           <span className="section-label">{t.label}</span>
@@ -25,7 +31,7 @@ export default function BlogPreview({ t, locale, data }: Props) {
             <Link
               key={slug}
               href={`/${locale}/blog/${slug}`}
-              className="group bg-white shadow-[var(--shadow-card)] overflow-hidden hover:shadow-[0_4px_28px_rgba(15,18,37,0.12)] hover:-translate-y-1 transition-all duration-300"
+              className="group bg-white overflow-hidden hover:-translate-y-1 transition-all duration-300"
             >
               <div className="relative aspect-[16/9] overflow-hidden">
                 <Image
@@ -35,21 +41,34 @@ export default function BlogPreview({ t, locale, data }: Props) {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <span className="absolute top-3 left-3 text-[9px] font-semibold tracking-[0.15em] uppercase bg-[var(--color-accent)] text-white px-2.5 py-1">
+                <span
+                  className="absolute top-3 left-3 text-[9px] font-semibold tracking-[0.15em] uppercase bg-[var(--color-accent)] text-white px-2.5 py-1"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
                   {category}
                 </span>
               </div>
               <div className="p-5 sm:p-6">
-                <p className="text-[11px] text-[var(--color-text-subtle)]">
-                  {new Date(date).toLocaleDateString(
-                    locale === "th" ? "th-TH" : "en-US",
-                    { day: "numeric", month: "short", year: "numeric" },
-                  )}
+                <p
+                  className="text-[11px] text-[var(--color-text-subtle)]"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {new Date(date).toLocaleDateString(isTH ? "th-TH" : "en-US", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </p>
-                <h3 className="font-[var(--font-thai-body)] text-sm font-medium leading-relaxed mt-2 group-hover:text-[var(--color-accent)] transition-colors">
+                <h3
+                  className="text-sm font-medium leading-relaxed mt-2 group-hover:text-[var(--color-accent)] transition-colors"
+                  style={{ fontFamily: titleFont }}
+                >
                   {title}
                 </h3>
-                <p className="font-[var(--font-body)] text-xs text-[var(--color-text-muted)] mt-1">
+                <p
+                  className="text-xs text-[var(--color-text-muted)] mt-1"
+                  style={{ fontFamily: subtitleFont }}
+                >
                   {subtitle}
                 </p>
               </div>

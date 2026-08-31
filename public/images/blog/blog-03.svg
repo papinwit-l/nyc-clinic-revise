@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="b3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2e2d0"/>
+      <stop offset="100%" stop-color="#faf6f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#b3)"/>
+  <!-- Checklist -->
+  <rect x="310" y="120" width="180" height="200" fill="none" stroke="#1a1f3a" stroke-width="0.8" opacity="0.15" rx="4"/>
+  <line x1="330" y1="155" x2="470" y2="155" stroke="#1a1f3a" stroke-width="0.5" opacity="0.1"/>
+  <!-- Check items -->
+  <circle cx="345" cy="180" r="6" fill="none" stroke="#c4956a" stroke-width="1" opacity="0.4"/>
+  <path d="M342 180 L344 183 L349 177" fill="none" stroke="#c4956a" stroke-width="1" opacity="0.4"/>
+  <line x1="360" y1="180" x2="460" y2="180" stroke="#1a1f3a" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="345" cy="210" r="6" fill="none" stroke="#c4956a" stroke-width="1" opacity="0.4"/>
+  <path d="M342 210 L344 213 L349 207" fill="none" stroke="#c4956a" stroke-width="1" opacity="0.4"/>
+  <line x1="360" y1="210" x2="440" y2="210" stroke="#1a1f3a" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="345" cy="240" r="6" fill="none" stroke="#c4956a" stroke-width="1" opacity="0.4"/>
+  <line x1="360" y1="240" x2="450" y2="240" stroke="#1a1f3a" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="345" cy="270" r="6" fill="none" stroke="#c4956a" stroke-width="1" opacity="0.4"/>
+  <line x1="360" y1="270" x2="430" y2="270" stroke="#1a1f3a" stroke-width="0.5" opacity="0.12"/>
+  <!-- Heading -->
+  <text x="400" y="140" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1f3a" opacity="0.4" letter-spacing="2">AFTERCARE</text>
+  <!-- Label -->
+  <text x="400" y="390" text-anchor="middle" font-family="serif" font-size="14" fill="#1a1f3a" opacity="0.5" letter-spacing="3">POST THREAD LIFT CARE</text>
+  <text x="400" y="415" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#c4956a" opacity="0.6" letter-spacing="1">NYC CLINIC BLOG</text>
+</svg>
