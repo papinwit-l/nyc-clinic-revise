@@ -67,7 +67,7 @@ export default async function HomePage({
         data={testimonials}
       />
       <InstagramFeed t={t.home.instagram} data={igPosts} />
-      <PromotionsBanner t={t.home.promotion} data={promo} />
+      <PromotionsBanner t={t.home.promotion} locale={locale} data={promo} />
       <BlogPreview t={t.home.blog} locale={locale} data={posts} />
       <ContactCTA t={t.home.contact} tCommon={t.common} />
     </>
