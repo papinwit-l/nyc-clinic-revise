@@ -12,6 +12,7 @@ import { isValidLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ContactWidget from "@/components/shared/ContactWidget";
 import "../globals.css";
 
 // ─── Fonts ──────────────────────────────────────────
@@ -105,6 +106,7 @@ export default async function LocaleLayout({
         <Header locale={locale as Locale} t={t.nav} />
         <main>{children}</main>
         <Footer locale={locale as Locale} t={t.footer} navT={t.nav} />
+        <ContactWidget locale={locale} />
       </body>
     </html>
   );
