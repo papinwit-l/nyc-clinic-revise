@@ -32,6 +32,7 @@ type Props = {
 };
 
 export default function Header({ locale, t }: Props) {
+  const isTH = locale === "th";
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -130,7 +131,16 @@ export default function Header({ locale, t }: Props) {
                   }
                 `}
               >
-                {t[key]}
+                <span
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                    fontSize: isTH ? "0.9rem" : "0.75rem",
+                  }}
+                >
+                  {t[key]}
+                </span>
                 {isActive(path) && (
                   <span className="absolute bottom-0 left-3 right-3 xl:left-4 xl:right-4 h-px bg-[var(--color-accent)]" />
                 )}
@@ -206,7 +216,14 @@ export default function Header({ locale, t }: Props) {
                       }
                     `}
                   >
-                    <span className="text-sm font-medium tracking-[0.1em] uppercase">
+                    <span
+                      className="text-sm font-medium tracking-[0.1em] uppercase"
+                      style={{
+                        fontFamily: isTH
+                          ? "var(--font-thai-body)"
+                          : "var(--font-body)",
+                      }}
+                    >
                       {t[key]}
                     </span>
                   </Link>
@@ -218,13 +235,23 @@ export default function Header({ locale, t }: Props) {
           <div className="px-6 pb-8 space-y-4">
             <div className="h-px bg-[var(--color-accent-border)]" />
             <div className="flex items-center justify-between py-2">
-              <span className="text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-primary-muted)]">
+              <span
+                className="text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-primary-muted)]"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
                 Language
               </span>
               <LangSwitcher locale={locale} />
             </div>
-            <p className="text-xs text-[var(--color-on-primary-muted)]/70 leading-relaxed">
-              Use the LINE / call button in the corner to reach us anytime.
+            <p
+              className="text-xs text-[var(--color-on-primary-muted)]/70 leading-relaxed"
+              style={{
+                fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+              }}
+            >
+              {isTH
+                ? "ใช้ปุ่ม LINE / โทร ที่มุมหน้าจอเพื่อติดต่อเราได้ตลอดเวลา"
+                : "Use the LINE / call button in the corner to reach us anytime."}
             </p>
           </div>
         </div>

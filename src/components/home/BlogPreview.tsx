@@ -20,8 +20,22 @@ export default function BlogPreview({ t, locale, data }: Props) {
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         <div className="text-center mb-12">
-          <span className="section-label">{t.label}</span>
-          <h2 className="section-heading text-3xl sm:text-4xl mt-3">
+          <span
+            className="section-label"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
+          >
+            {t.label}
+          </span>
+          <h2
+            className="section-heading text-3xl sm:text-4xl mt-3"
+            style={{
+              fontFamily: isTH
+                ? "var(--font-thai-head)"
+                : "var(--font-display)",
+            }}
+          >
             {t.heading}
           </h2>
         </div>
@@ -80,6 +94,9 @@ export default function BlogPreview({ t, locale, data }: Props) {
           <Link
             href={`/${locale}/blog`}
             className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
           >
             {t.cta}
           </Link>

@@ -19,8 +19,22 @@ export default function Doctors({ t, locale, data }: Props) {
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-12 sm:mb-16">
-          <span className="section-label">{t.label}</span>
-          <h2 className="section-heading text-3xl sm:text-4xl mt-3">
+          <span
+            className="section-label"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
+          >
+            {t.label}
+          </span>
+          <h2
+            className="section-heading text-3xl sm:text-4xl mt-3"
+            style={{
+              fontFamily: isTH
+                ? "var(--font-thai-head)"
+                : "var(--font-display)",
+            }}
+          >
             {t.heading}
           </h2>
         </div>
@@ -170,6 +184,9 @@ export default function Doctors({ t, locale, data }: Props) {
           <Link
             href={`/${locale}/doctors`}
             className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
           >
             {t.cta}
           </Link>

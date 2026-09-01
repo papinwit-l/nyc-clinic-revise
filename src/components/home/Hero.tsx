@@ -32,6 +32,7 @@ type Props = {
 };
 
 export default function Hero({ t, locale }: Props) {
+  const isTH = locale === "th";
   // Server/first client render always renders the slideshow — this
   // avoids any hydration mismatch. The video is only swapped in
   // client-side, after mount, on desktop viewports.
@@ -124,10 +125,16 @@ export default function Hero({ t, locale }: Props) {
 
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
         <h1 className="hero-text-shadow">
-          <span className="block font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl font-bold tracking-[0.1em] text-white leading-none shimmer-text">
+          <span
+            className="block text-6xl sm:text-7xl md:text-8xl font-bold tracking-[0.1em] text-white leading-none shimmer-text"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
             NYC
           </span>
-          <span className="block font-[var(--font-body)] text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[var(--color-on-primary-muted)] mt-3">
+          <span
+            className="block text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[var(--color-on-primary-muted)] mt-3"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
             New York Clinic, GR
           </span>
         </h1>
@@ -136,7 +143,15 @@ export default function Hero({ t, locale }: Props) {
           <span />
         </div>
 
-        <p className="tagline text-lg sm:text-xl md:text-2xl text-[var(--color-accent-pale)] hero-text-shadow-sm">
+        <p
+          className="text-lg sm:text-xl md:text-2xl text-[var(--color-accent-pale)] hero-text-shadow-sm"
+          style={{
+            fontFamily: isTH ? "var(--font-thai-serif)" : "var(--font-accent)",
+            fontWeight: 300,
+            fontStyle: isTH ? "normal" : "italic",
+            letterSpacing: "0.03em",
+          }}
+        >
           {t.tagline}
         </p>
 
@@ -146,6 +161,9 @@ export default function Hero({ t, locale }: Props) {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-cta w-full sm:w-auto"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
           >
             <LineIcon className="w-4 h-4" />
             {t.ctaLine}
@@ -153,6 +171,9 @@ export default function Hero({ t, locale }: Props) {
           <Link
             href={`/${locale}/services`}
             className="btn-ghost-on-primary w-full sm:w-auto"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
           >
             {t.ctaServices}
           </Link>

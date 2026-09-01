@@ -95,9 +95,7 @@ export default function TrustBar({ t, locale }: Props) {
                   )}
                 </p>
                 <p
-                  className={`text-[11px] tracking-[0.12em] uppercase mt-2 font-medium text-[var(--color-on-primary-muted)] ${
-                    isTH ? "font-[var(--font-thai-body)]" : ""
-                  }`}
+                  className={`text-[11px] tracking-[0.12em] uppercase mt-2 font-medium text-[var(--color-on-primary-muted)] ${""}`}
                 >
                   {label}
                 </p>

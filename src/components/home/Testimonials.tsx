@@ -19,8 +19,22 @@ export default function Testimonials({ t, locale, data }: Props) {
     >
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         <div className="text-center mb-12">
-          <span className="section-label">{t.label}</span>
-          <h2 className="section-heading text-3xl sm:text-4xl mt-3 text-[var(--color-primary)]">
+          <span
+            className="section-label"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
+          >
+            {t.label}
+          </span>
+          <h2
+            className="section-heading text-3xl sm:text-4xl mt-3 text-[var(--color-primary)]"
+            style={{
+              fontFamily: isTH
+                ? "var(--font-thai-head)"
+                : "var(--font-display)",
+            }}
+          >
             {t.heading}
           </h2>
         </div>

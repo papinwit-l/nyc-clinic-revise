@@ -121,7 +121,10 @@ export default function Footer({ locale, t, navT }: Props) {
           {/* Nav columns */}
           {NAV_COLS.map(({ title, links }) => (
             <div key={title}>
-              <h4 className="font-[var(--font-body)] text-[11px] font-semibold tracking-[0.15em] uppercase text-white mb-4">
+              <h4
+                className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white mb-4"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
                 {title}
               </h4>
               <ul className="space-y-2.5">
