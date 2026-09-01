@@ -1,5 +1,6 @@
 import { LineIcon } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import Image from "next/image";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
@@ -124,8 +125,23 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
               </p>
             </div>
 
-            {/* CTA block */}
-            <div className="bg-[var(--color-primary)] p-6 sm:p-8 text-center">
+            <div>
+              <h3
+                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                Instagram
+              </h3>
+              <p
+                className="text-[var(--color-text-muted)] text-sm"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                @nycclinic
+              </p>
+            </div>
+
+            {/* CTA block - hide for now */}
+            {/* <div className="bg-[var(--color-primary)] p-6 sm:p-8 text-center">
               <p
                 className="text-lg text-white font-medium"
                 style={{ fontFamily: headFont }}
@@ -148,11 +164,11 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
                 <LineIcon className="w-5 h-5" />
                 {t.ctaLine}
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Right — Google Maps */}
-          <div className="aspect-square lg:aspect-auto lg:min-h-[500px] bg-[var(--color-surface-dim)]">
+          <div className="aspect-square lg:aspect-auto lg:min-h-[250px] bg-[var(--color-surface-dim)]">
             <iframe
               src={MAP_EMBED}
               width="100%"
@@ -166,6 +182,14 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
                   ? "แผนที่ NYC Clinic ทองหล่อ"
                   : "NYC Clinic Thonglor Location"
               }
+            />
+          </div>
+
+          <div className="col-span-2 relative aspect-[16/9] overflow-hidden">
+            <Image
+              src={"/images/contact-clinic-image.jpg"}
+              alt="contact-clinic-image"
+              fill
             />
           </div>
         </div>
