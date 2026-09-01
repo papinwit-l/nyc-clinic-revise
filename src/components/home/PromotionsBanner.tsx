@@ -33,7 +33,7 @@ export default function PromotionsBanner({ t, locale, data }: Props) {
         fill
         className="object-cover object-left"
         sizes="100vw"
-        quality={100}
+        quality={70}
         priority
       />
 

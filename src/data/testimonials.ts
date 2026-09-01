@@ -3,7 +3,16 @@ import type { TestimonialCard } from "@/types/testimonial";
 // TODO: replace with WP fetch
 // e.g. const res = await fetch(`${WP_API}/wp/v2/testimonial?per_page=${limit}`);
 
-const DATA = [
+const DATA: {
+  id: string;
+  quote_th: string;
+  quote_en: string;
+  name: string;
+  treatment: string;
+  rating: number;
+  avatar?: string;
+  reviewImage?: string;
+}[] = [
   {
     id: "1",
     quote_th:
@@ -14,7 +23,6 @@ const DATA = [
     treatment: "Nose Thread Lift",
     rating: 5,
     // avatar: "/images/reviewers/reviewer-01.jpg",
-    // reviewImage: "/images/reviews/review-01.jpg",
     reviewImage: "/images/cases/case-01.jpg",
   },
   {
@@ -45,18 +53,13 @@ export async function getTestimonials(
 ): Promise<TestimonialCard[]> {
   const count = limit ?? DATA.length;
 
-  // TODO: fetch from WP and map bilingual fields
   return DATA.slice(0, count).map((item) => ({
     id: item.id,
     quote: locale === "th" ? item.quote_th : item.quote_en,
     name: item.name,
     treatment: item.treatment,
     rating: item.rating,
-    avatar:
-      "avatar" in item ? (item as Record<string, string>).avatar : undefined,
-    reviewImage:
-      "reviewImage" in item
-        ? (item as Record<string, string>).reviewImage
-        : undefined,
+    avatar: item.avatar,
+    reviewImage: item.reviewImage,
   }));
 }

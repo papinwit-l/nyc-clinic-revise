@@ -32,6 +32,7 @@ export async function getInstagramPosts(
       console.error(
         `[Instagram] API returned ${res.status}: ${res.statusText}`,
       );
+      console.error(res);
       return [];
     }
 
