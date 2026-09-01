@@ -3,7 +3,7 @@ import type { Doctor } from "@/types/doctor";
 export const DOCTORS: Doctor[] = [
   {
     slug: "dr-jing",
-    image: "/images/doctors/dr-jing.png",
+    image: "/images/doctors/dr-jing.jpg",
     nameEn: "Dr. Jing",
     nameTh: "หมอจิ๋ง",
     fullNameEn: "Isreey Muangmanee M.D.",
@@ -44,7 +44,7 @@ export const DOCTORS: Doctor[] = [
   },
   {
     slug: "dr-beer",
-    image: "/images/doctors/dr-beer.png",
+    image: "/images/doctors/dr-beer.jpg",
     nameEn: "Dr. Beer",
     nameTh: "หมอเบียร์",
     fullNameEn: "Pattaya Tanthanatip M.D.",
@@ -78,7 +78,7 @@ export const DOCTORS: Doctor[] = [
   },
   {
     slug: "dr-lulu",
-    image: "/images/doctors/dr-lulu.png",
+    image: "/images/doctors/dr-lulu.jpg",
     nameEn: "Dr. Lulu",
     nameTh: "หมอลู่ลู่",
     fullNameEn: "Rangrong Sriworarak M.D.",
@@ -112,7 +112,7 @@ export const DOCTORS: Doctor[] = [
   },
   {
     slug: "dr-pek",
-    image: "/images/doctors/dr-pek.png",
+    image: "/images/doctors/dr-pek.jpg",
     nameEn: "Dr. Pek",
     nameTh: "หมอเป๊ก",
     fullNameEn: "Pichit Sooksaranjit M.D.",

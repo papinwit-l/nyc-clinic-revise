@@ -4,15 +4,26 @@ import type { Dictionary } from "@/i18n/get-dictionary";
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
 const PHONE_HREF = "tel:+66880087870";
+
+// NYC Clinic Thonglor — 136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110
 const MAP_EMBED =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.5!2d100.56!3d13.74!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQ0JzI0LjAiTiAxMDDCsDMzJzM2LjAiRQ!5e0!3m2!1sth!2sth!4v1";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6!2d100.5794!3d13.7367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ee114e6b9a1%3A0x2b5e5c94e4a8b8a0!2sNYC+Clinic!5e0!3m2!1sth!2sth!4v1";
 
 type Props = {
   t: Dictionary["home"]["contact"];
   tCommon: Dictionary["common"];
+  locale: string;
 };
 
-export default function ContactCTA({ t, tCommon }: Props) {
+export default function ContactCTA({ t, tCommon, locale }: Props) {
+  const isTH = locale === "th";
+
+  // Font follows text language
+  const labelFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
+  const accentFont = isTH ? "var(--font-thai-serif)" : "var(--font-accent)";
+
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
@@ -24,50 +35,93 @@ export default function ContactCTA({ t, tCommon }: Props) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+          {/* Left — contact info */}
           <div className="space-y-8">
             <div>
-              <h3 className="font-[var(--font-body)] text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2">
+              <h3
+                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                style={{ fontFamily: labelFont }}
+              >
                 {tCommon.location}
               </h3>
+              {/* Address: EN line always Montserrat, TH line always Prompt */}
               <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
-                NYC Clinic (New York Clinic, GR)
+                <span style={{ fontFamily: "var(--font-body)" }}>
+                  NYC Clinic (New York Clinic, GR)
+                </span>
                 <br />
-                กรุงเทพมหานคร
+                <span
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                  }}
+                >
+                  {isTH
+                    ? "136/2 ซ.สุขุมวิท 53 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110"
+                    : "136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110"}
+                </span>
               </p>
             </div>
+
             <div>
-              <h3 className="font-[var(--font-body)] text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2">
+              <h3
+                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                style={{ fontFamily: labelFont }}
+              >
                 {tCommon.phone}
               </h3>
               <a
                 href={PHONE_HREF}
                 className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-sm font-medium transition-colors"
+                style={{ fontFamily: "var(--font-body)" }}
               >
                 {PHONE}
               </a>
             </div>
+
             <div>
-              <h3 className="font-[var(--font-body)] text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2">
+              <h3
+                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                style={{ fontFamily: labelFont }}
+              >
                 {tCommon.hours}
               </h3>
-              <p className="text-[var(--color-text-muted)] text-sm leading-relaxed whitespace-pre-line">
+              <p
+                className="text-[var(--color-text-muted)] text-sm leading-relaxed whitespace-pre-line"
+                style={{ fontFamily: bodyFont }}
+              >
                 {t.hoursValue}
               </p>
             </div>
+
             <div>
-              <h3 className="font-[var(--font-body)] text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2">
+              <h3
+                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
                 LINE Official
               </h3>
-              <p className="text-[var(--color-text-muted)] text-sm">
-                @nyc-clinic
+              <p
+                className="text-[var(--color-text-muted)] text-sm"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                @nycclinic
               </p>
             </div>
 
+            {/* CTA block */}
             <div className="bg-[var(--color-primary)] p-6 sm:p-8 text-center">
-              <p className="font-[var(--font-thai-head)] text-lg text-white font-medium">
+              <p
+                className="text-lg text-white font-medium"
+                style={{ fontFamily: headFont }}
+              >
                 {t.readyTitle}
               </p>
-              <p className="font-[var(--font-accent)] text-[var(--color-accent-pale)] italic text-sm mt-1">
+              <p
+                className="text-[var(--color-accent-pale)] italic text-sm mt-1"
+                style={{ fontFamily: accentFont }}
+              >
                 {t.readySubtitle}
               </p>
               <a
@@ -75,6 +129,7 @@ export default function ContactCTA({ t, tCommon }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-line mt-5 inline-flex"
+                style={{ fontFamily: bodyFont }}
               >
                 <LineIcon className="w-5 h-5" />
                 {t.ctaLine}
@@ -82,6 +137,7 @@ export default function ContactCTA({ t, tCommon }: Props) {
             </div>
           </div>
 
+          {/* Right — Google Maps */}
           <div className="aspect-square lg:aspect-auto lg:min-h-[500px] bg-[var(--color-surface-dim)]">
             <iframe
               src={MAP_EMBED}
@@ -91,7 +147,11 @@ export default function ContactCTA({ t, tCommon }: Props) {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="NYC Clinic Location"
+              title={
+                isTH
+                  ? "แผนที่ NYC Clinic ทองหล่อ"
+                  : "NYC Clinic Thonglor Location"
+              }
             />
           </div>
         </div>
