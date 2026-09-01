@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import Image from "next/image";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
@@ -19,22 +19,14 @@ type Props = {
 export default function ContactCTA({ t, tCommon, locale }: Props) {
   const isTH = locale === "th";
 
-  // Font follows text language
   const labelFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
-  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
-  const accentFont = isTH ? "var(--font-thai-serif)" : "var(--font-accent)";
 
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         <div className="text-center mb-12">
-          <span
-            className="section-label"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
-          >
+          <span className="section-label" style={{ fontFamily: labelFont }}>
             {t.label}
           </span>
           <h2
@@ -59,7 +51,6 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
               >
                 {tCommon.location}
               </h3>
-              {/* Address: EN line always Montserrat, TH line always Prompt */}
               <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
                 <span style={{ fontFamily: "var(--font-body)" }}>
                   NYC Clinic (New York Clinic, GR)
@@ -117,12 +108,16 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
               >
                 LINE Official
               </h3>
-              <p
-                className="text-[var(--color-text-muted)] text-sm"
+              <a
+                href={LINE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-sm font-medium transition-colors inline-flex items-center gap-1.5"
                 style={{ fontFamily: "var(--font-body)" }}
               >
+                <LineIcon className="w-3.5 h-3.5" />
                 @nycclinic
-              </p>
+              </a>
             </div>
 
             <div>
@@ -132,39 +127,16 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
               >
                 Instagram
               </h3>
-              <p
-                className="text-[var(--color-text-muted)] text-sm"
+              <a
+                href="https://www.instagram.com/nycclinic/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-sm font-medium transition-colors"
                 style={{ fontFamily: "var(--font-body)" }}
               >
                 @nycclinic
-              </p>
-            </div>
-
-            {/* CTA block - hide for now */}
-            {/* <div className="bg-[var(--color-primary)] p-6 sm:p-8 text-center">
-              <p
-                className="text-lg text-white font-medium"
-                style={{ fontFamily: headFont }}
-              >
-                {t.readyTitle}
-              </p>
-              <p
-                className="text-[var(--color-accent-pale)] italic text-sm mt-1"
-                style={{ fontFamily: accentFont }}
-              >
-                {t.readySubtitle}
-              </p>
-              <a
-                href={LINE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-line mt-5 inline-flex"
-                style={{ fontFamily: bodyFont }}
-              >
-                <LineIcon className="w-5 h-5" />
-                {t.ctaLine}
               </a>
-            </div> */}
+            </div>
           </div>
 
           {/* Right — Google Maps */}
@@ -185,11 +157,18 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
             />
           </div>
 
-          <div className="col-span-2 relative aspect-[16/9] overflow-hidden">
+          {/* Full-width clinic photo */}
+          <div className="lg:col-span-2 relative aspect-[16/9] overflow-hidden">
             <Image
-              src={"/images/contact-clinic-image.jpg"}
-              alt="contact-clinic-image"
+              src="/images/contact-clinic-image.jpg"
+              alt={
+                isTH
+                  ? "บรรยากาศภายใน NYC Clinic ทองหล่อ"
+                  : "NYC Clinic Thonglor interior"
+              }
               fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, var(--container-max)"
             />
           </div>
         </div>
