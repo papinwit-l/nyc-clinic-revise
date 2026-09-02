@@ -18,6 +18,8 @@ import PromotionsBanner from "@/components/home/PromotionsBanner";
 import InstagramFeed from "@/components/home/InstagramFeed";
 import BlogPreview from "@/components/home/BlogPreview";
 import ContactCTA from "@/components/home/ContactCTA";
+import DoctorsV2 from "@/components/home/DoctorsV2";
+import ServicesOverviewV2 from "@/components/home/ServicesOverviewV2";
 
 export default async function HomePage({
   params,
@@ -43,6 +45,7 @@ export default async function HomePage({
       <Hero t={t.home.hero} locale={locale} />
       <TrustBar t={t.home.trust} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />
+      <DoctorsV2 t={t.home.doctors} locale={locale} data={doctors} />
       {/* <SignatureSpotlight
         t={t.home.signature}
         tCommon={t.common}
@@ -50,6 +53,12 @@ export default async function HomePage({
         data={services.find((s) => s.signature) ?? services[0]}
       /> */}
       <ServicesOverview
+        t={t.home.services}
+        tCommon={t.common}
+        locale={locale}
+        data={services}
+      />
+      <ServicesOverviewV2
         t={t.home.services}
         tCommon={t.common}
         locale={locale}
