@@ -20,6 +20,9 @@ import BlogPreview from "@/components/home/BlogPreview";
 import ContactCTA from "@/components/home/ContactCTA";
 import DoctorsV2 from "@/components/home/DoctorsV2";
 import ServicesOverviewV2 from "@/components/home/ServicesOverviewV2";
+import BeforeAfterV2 from "@/components/home/BeforeAfterV2";
+import TestimonialsV2 from "@/components/home/TestimonialsV2";
+import BeforeAfterRevealContainer from "@/components/home/BeforeAfterRevealContainer";
 
 export default async function HomePage({
   params,
@@ -70,7 +73,33 @@ export default async function HomePage({
         locale={locale}
         data={cases}
       />
+      <BeforeAfterV2
+        t={t.home.results}
+        tCommon={t.common}
+        locale={locale}
+        data={cases}
+      />
+      {/* <BeforeAfterRevealContainer
+        t={t.home.results}
+        tCommon={t.common}
+        locale={locale}
+        data={[
+          {
+            beforeImage: { src: "/images/cases/case-01.jpg", alt: "case-01" },
+            afterImage: { src: "/images/cases/case-02.jpg", alt: "case-02" },
+          },
+          {
+            beforeImage: { src: "/images/cases/case-03.jpg", alt: "case-03" },
+            afterImage: { src: "/images/cases/case-04.jpg", alt: "case-04" },
+          },
+        ]}
+      /> */}
       <Testimonials
+        t={t.home.testimonials}
+        locale={locale}
+        data={testimonials}
+      />
+      <TestimonialsV2
         t={t.home.testimonials}
         locale={locale}
         data={testimonials}
