@@ -23,6 +23,9 @@ import ServicesOverviewV2 from "@/components/home/ServicesOverviewV2";
 import BeforeAfterV2 from "@/components/home/BeforeAfterV2";
 import TestimonialsV2 from "@/components/home/TestimonialsV2";
 import BeforeAfterRevealContainer from "@/components/home/BeforeAfterRevealContainer";
+import ContactCTAV2 from "@/components/home/ContactCTAV2";
+import InstagramFeedV2 from "@/components/home/InstagramFeedV2";
+import BlogPreviewV2 from "@/components/home/BlogPreviewV2";
 
 export default async function HomePage({
   params,
@@ -105,9 +108,12 @@ export default async function HomePage({
         data={testimonials}
       />
       <InstagramFeed t={t.home.instagram} locale={locale} data={igPosts} />
+      <InstagramFeedV2 t={t.home.instagram} locale={locale} data={igPosts} />
       <PromotionsBanner t={t.home.promotion} locale={locale} data={promo} />
       <BlogPreview t={t.home.blog} locale={locale} data={posts} />
+      <BlogPreviewV2 t={t.home.blog} locale={locale} data={posts} />
       <ContactCTA t={t.home.contact} tCommon={t.common} locale={locale} />
+      <ContactCTAV2 t={t.home.contact} tCommon={t.common} locale={locale} />
     </>
   );
 }
