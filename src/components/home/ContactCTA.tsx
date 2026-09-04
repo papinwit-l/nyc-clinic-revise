@@ -1,10 +1,35 @@
 import Image from "next/image";
-import { LineIcon } from "@/components/shared/SocialIcons";
+import {
+  LineIcon,
+  InstagramIcon,
+  FacebookIcon,
+  YoutubeIcon,
+} from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
 const PHONE_HREF = "tel:+66880087870";
+
+// Match the Footer's social set + URLs exactly.
+const SOCIALS = [
+  {
+    label: "Facebook",
+    href: "https://web.facebook.com/nycclinic",
+    Icon: FacebookIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/nycclinic/",
+    Icon: InstagramIcon,
+  },
+  { label: "LINE", href: LINE_URL, Icon: LineIcon },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/user/nycnewyorkclinic",
+    Icon: YoutubeIcon,
+  },
+];
 
 // NYC Clinic Thonglor — 136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110
 const MAP_EMBED =
@@ -18,134 +43,128 @@ type Props = {
 
 export default function ContactCTA({ t, tCommon, locale }: Props) {
   const isTH = locale === "th";
-
-  const labelFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span className="section-label" style={{ fontFamily: labelFont }}>
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+          {/* LEFT — the pitch + the action (left-aligned, conversion-first) */}
+          <div className="flex flex-col">
+            <span className="section-label" style={{ fontFamily: bodyFont }}>
+              {t.label}
+            </span>
+            <h2
+              className="section-heading text-3xl sm:text-4xl mt-3 text-[var(--color-primary)]"
+              style={{ fontFamily: headFont }}
+            >
+              {t.readyTitle}
+            </h2>
+            <p
+              className="text-[var(--color-text-muted)] mt-3 max-w-md"
+              style={{ fontFamily: bodyFont }}
+            >
+              {t.readySubtitle}
+            </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-          {/* Left — contact info */}
-          <div className="space-y-8">
-            <div>
-              <h3
-                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
-                style={{ fontFamily: labelFont }}
-              >
-                {tCommon.location}
-              </h3>
-              <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
-                <span style={{ fontFamily: "var(--font-body)" }}>
-                  NYC Clinic (New York Clinic, GR)
-                </span>
-                <br />
-                <span
-                  style={{
-                    fontFamily: isTH
-                      ? "var(--font-thai-body)"
-                      : "var(--font-body)",
-                  }}
-                >
-                  {isTH
-                    ? "136/2 ซ.สุขุมวิท 53 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110"
-                    : "136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110"}
-                </span>
-              </p>
-            </div>
-
-            <div>
-              <h3
-                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
-                style={{ fontFamily: labelFont }}
-              >
-                {tCommon.phone}
-              </h3>
-              <a
-                href={PHONE_HREF}
-                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-sm font-medium transition-colors"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                {PHONE}
-              </a>
-            </div>
-
-            <div>
-              <h3
-                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
-                style={{ fontFamily: labelFont }}
-              >
-                {tCommon.hours}
-              </h3>
-              <p
-                className="text-[var(--color-text-muted)] text-sm leading-relaxed whitespace-pre-line"
-                style={{ fontFamily: bodyFont }}
-              >
-                {t.hoursValue}
-              </p>
-            </div>
-
-            <div>
-              <h3
-                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                LINE Official
-              </h3>
+            {/* Primary CTA — rose-gold accent, the section's focal action */}
+            <div className="mt-7">
               <a
                 href={LINE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-sm font-medium transition-colors inline-flex items-center gap-1.5"
-                style={{ fontFamily: "var(--font-body)" }}
+                className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 text-sm font-semibold tracking-[0.12em] uppercase transition-colors"
+                style={{ fontFamily: bodyFont }}
               >
-                <LineIcon className="w-3.5 h-3.5" />
-                @nycclinic
+                <LineIcon className="w-5 h-5" />
+                {t.ctaLine}
               </a>
+              <p
+                className="text-sm text-[var(--color-text-subtle)] mt-3"
+                style={{ fontFamily: bodyFont }}
+              >
+                {isTH ? "หรือโทร " : "or call "}
+                <a
+                  href={PHONE_HREF}
+                  className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] font-medium transition-colors"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {PHONE}
+                </a>
+              </p>
             </div>
 
-            <div>
-              <h3
-                className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                Instagram
-              </h3>
-              <a
-                href="https://www.instagram.com/nycclinic/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] text-sm font-medium transition-colors"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                @nycclinic
-              </a>
+            {/* Supporting details — demoted below the action */}
+            <div className="mt-auto pt-8 border-t border-[var(--color-border)]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <h3
+                    className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                    style={{ fontFamily: bodyFont }}
+                  >
+                    {tCommon.location}
+                  </h3>
+                  <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
+                    <span style={{ fontFamily: "var(--font-body)" }}>
+                      NYC Clinic (New York Clinic, GR)
+                    </span>
+                    <br />
+                    <span style={{ fontFamily: bodyFont }}>
+                      {isTH
+                        ? "136/2 ซ.สุขุมวิท 53 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110"
+                        : "136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110"}
+                    </span>
+                  </p>
+                </div>
+
+                <div>
+                  <h3
+                    className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mb-2"
+                    style={{ fontFamily: bodyFont }}
+                  >
+                    {tCommon.hours}
+                  </h3>
+                  <p
+                    className="text-[var(--color-text-muted)] text-sm leading-relaxed whitespace-pre-line"
+                    style={{ fontFamily: bodyFont }}
+                  >
+                    {t.hoursValue}
+                  </p>
+                </div>
+              </div>
+
+              {/* Social channels */}
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <span
+                  className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--color-text)] mr-1"
+                  style={{ fontFamily: bodyFont }}
+                >
+                  {isTH ? "ติดตามเรา" : "Follow us"}
+                </span>
+                {SOCIALS.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="w-10 h-10 flex items-center justify-center border border-[var(--color-border)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-white hover:border-[var(--color-accent)] transition-colors"
+                  >
+                    <Icon className="w-[18px] h-[18px]" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Right — Google Maps */}
-          <div className="aspect-square lg:aspect-auto lg:min-h-[250px] bg-[var(--color-surface-dim)]">
+          {/* RIGHT — Google Maps, fills the column height on desktop */}
+          <div className="min-h-[360px] lg:min-h-full bg-[var(--color-surface-dim)]">
             <iframe
               src={MAP_EMBED}
               width="100%"
               height="100%"
-              style={{ border: 0, minHeight: 400 }}
+              style={{ border: 0, minHeight: 360 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

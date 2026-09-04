@@ -110,9 +110,13 @@ export default function Hero({ t, locale }: Props) {
 
       <div
         className="absolute inset-0 pointer-events-none"
+        // style={{
+        //   background:
+        //     "radial-gradient(ellipse 55% 60% at 50% 55%, rgba(26,31,58,0.5) 0%, rgba(26,31,58,0.2) 55%, transparent 80%)",
+        // }}
         style={{
           background:
-            "radial-gradient(ellipse 55% 60% at 50% 55%, rgba(26,31,58,0.5) 0%, rgba(26,31,58,0.2) 55%, transparent 80%)",
+            "radial-gradient(ellipse 55% 60% at 50% 55%, rgba(26,31,58,0.5) 0%, rgba(26,31,58,0.2) 10%, transparent 20%)",
         }}
       />
 

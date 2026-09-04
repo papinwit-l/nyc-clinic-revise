@@ -9,6 +9,15 @@ type Props = {
   afterImage: { src: string; alt: string };
   locale: string;
   index: number;
+  /** Frame aspect ratio. Defaults to square. */
+  aspect?: "square" | "4/3" | "3/4" | "16/9";
+};
+
+const ASPECT: Record<NonNullable<Props["aspect"]>, string> = {
+  square: "aspect-square",
+  "4/3": "aspect-square sm:aspect-[4/3]", // responsive default
+  "3/4": "aspect-square sm:aspect-[3/4]",
+  "16/9": "aspect-square sm:aspect-[16/9]",
 };
 
 export default function BeforeAfterRevealSlide({
@@ -16,6 +25,7 @@ export default function BeforeAfterRevealSlide({
   afterImage,
   locale,
   index,
+  aspect = "square",
 }: Props) {
   const isTH = locale === "th";
   const beforeLabel = isTH ? "ก่อน" : "Before";
@@ -63,7 +73,7 @@ export default function BeforeAfterRevealSlide({
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      className="relative w-full aspect-square overflow-hidden radius-soft bg-[var(--color-accent-pale)] cursor-ew-resize select-none"
+      className={`relative w-full ${ASPECT[aspect]} overflow-hidden radius-soft bg-[var(--color-accent-pale)] cursor-ew-resize select-none`}
       style={{ touchAction: "pan-y" }}
     >
       {/* AFTER — base layer, fills the frame */}
@@ -73,7 +83,7 @@ export default function BeforeAfterRevealSlide({
         fill
         draggable={false}
         className="object-cover pointer-events-none select-none"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        sizes="(max-width: 768px) 100vw, 700px"
       />
 
       {/* BEFORE — overlay, clipped to the left of the handle */}
@@ -87,7 +97,7 @@ export default function BeforeAfterRevealSlide({
           fill
           draggable={false}
           className="object-cover pointer-events-none select-none"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 768px) 100vw, 700px"
         />
       </div>
 

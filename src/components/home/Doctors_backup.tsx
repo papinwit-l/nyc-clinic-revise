@@ -18,7 +18,7 @@ type Props = {
 // conflict flagged for the client to reconcile. Hardcoded here, as the old card was.
 const CASE_COUNT = 10000;
 
-export default function DoctorsV2({ t, locale, data }: Props) {
+export default function Doctors({ t, locale, data }: Props) {
   const isTH = locale === "th";
   const featured = data.find((d) => d.featured) ?? data[0];
   const team = data.filter((d) => d.slug !== featured.slug);

@@ -9,7 +9,7 @@ type Props = {
   data: TestimonialCard[];
 };
 
-export default function TestimonialsV2({ t, locale, data }: Props) {
+export default function Testimonials({ t, locale, data }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   // Quote face follows the text's language — the brand's quote pairing:

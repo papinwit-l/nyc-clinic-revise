@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { InstagramPost } from "@/types/instagram";
+import Logo from "../shared/Logo";
 
 function InstagramIcon({
   size = 16,
@@ -39,36 +40,81 @@ type Props = {
 
 export default function InstagramFeed({ t, locale, data }: Props) {
   const isTH = locale === "th";
+  const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   if (data.length === 0) return null;
 
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span
-            className="section-label"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
+        {/* Profile-style header — reads as a real IG presence, not a generic
+            "Follow Us" band. Avatar + handle left, Follow action right. */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            {/* Avatar — story-ring style. Circular is the IG convention
+                (intentional exception to the sharp-edge rule). */}
+            {/* <div
+              className="shrink-0 rounded-full p-[2px]"
+              style={{
+                background:
+                  "linear-gradient(135deg, var(--color-accent-dark), var(--color-accent), var(--color-accent-pale))",
+              }}
+            >
+              <div className="rounded-full bg-white p-[2px]">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-white">
+                  <Image
+                    src="/images/nyc-clinic-logo.jpg"
+                    alt="NYC Clinic"
+                    fill
+                    className="object-contain p-1"
+                    sizes="56px"
+                  />
+                </div>
+              </div>
+            </div> */}
+
+            {/* Logo — NYC Clinic branding, not a raster image */}
+            <div className="shrink-0 p-4 rounded-md bg-[var(--color-primary)]">
+              <Logo variant="primary" size="sm" layout="full" />
+            </div>
+            {/* <div
+              className="shrink-0 p-4 rounded-md"
+              style={{
+                background:
+                  "linear-gradient(160deg, var(--color-accent) 0%, var(--color-accent-dark) 100%)",
+              }}
+            >
+              <Logo variant="reversed" size="md" layout="full" />
+            </div> */}
+
+            <div>
+              <span className="section-label" style={{ fontFamily: bodyFont }}>
+                {t.label}
+              </span>
+              <p
+                className="text-xl sm:text-2xl font-semibold text-[var(--color-primary)] mt-0.5"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                {t.heading}
+              </p>
+            </div>
+          </div>
+
+          {/* Follow — secondary outline button (LINE is the primary CTA sitewide) */}
+          <a
+            href={IG_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 inline-flex items-center gap-2 border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-white px-5 py-2.5 text-xs font-semibold tracking-[0.12em] uppercase transition-colors"
+            style={{ fontFamily: bodyFont }}
           >
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
+            <InstagramIcon size={15} />
+            {isTH ? "ติดตาม" : "Follow"}
+          </a>
         </div>
 
-        {/* Grid — 4 columns on desktop, 2 on mobile */}
+        {/* Grid — uniform (authentic IG feel); 4 cols desktop, 2 mobile */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           {data.map((post) => {
-            // Use thumbnail for videos, media_url for images
             const imgSrc =
               post.media_type === "VIDEO"
                 ? (post.thumbnail_url ?? post.media_url)
@@ -95,12 +141,13 @@ export default function InstagramFeed({ t, locale, data }: Props) {
                   sizes="(max-width: 640px) 50vw, 25vw"
                   unoptimized
                 />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-[var(--color-primary)]/0 group-hover:bg-[var(--color-primary)]/50 transition-colors duration-300 flex items-center justify-center">
-                  <InstagramIcon
-                    size={28}
-                    className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  />
+                {/* Hover overlay — explicit rgba (reliable, unlike /opacity on a
+                    CSS-variable colour in Tailwind v4) */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "rgba(26,31,58,0.5)" }}
+                >
+                  <InstagramIcon size={28} className="text-white" />
                 </div>
                 {/* Video indicator */}
                 {post.media_type === "VIDEO" && (
@@ -118,22 +165,6 @@ export default function InstagramFeed({ t, locale, data }: Props) {
               </a>
             );
           })}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-8 sm:mt-10">
-          <a
-            href={IG_PROFILE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
-          >
-            <InstagramIcon size={16} />
-            {t.cta}
-          </a>
         </div>
       </div>
     </section>

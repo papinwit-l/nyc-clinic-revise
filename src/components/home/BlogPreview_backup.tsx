@@ -9,7 +9,7 @@ type Props = {
   data: PostCard[];
 };
 
-export default function BlogPreviewV2({ t, locale, data }: Props) {
+export default function BlogPreview({ t, locale, data }: Props) {
   const isTH = locale === "th";
 
   // Title follows locale language, subtitle is the other language
