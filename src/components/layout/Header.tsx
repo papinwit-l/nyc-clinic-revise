@@ -2,19 +2,17 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { LineIcon } from "@/components/shared/SocialIcons";
+import Logo from "@/components/shared/Logo";
 import LangSwitcher from "@/components/shared/LangSwitcher";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 
 // ─── Constants ──────────────────────────────────────
-
-const LINE_URL = "https://lin.ee/7oJgymx";
-const PHONE = "088-008-7870";
-const PHONE_HREF = "tel:+66880087870";
+// No LINE/phone CTA in the header — that's handled by the
+// persistent floating widget (see header-widget-mockup.html).
+// Header is nav-only.
 
 const NAV_KEYS = [
   { key: "home" as const, path: "" },
@@ -34,6 +32,7 @@ type Props = {
 };
 
 export default function Header({ locale, t }: Props) {
+  const isTH = locale === "th";
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -80,7 +79,15 @@ export default function Header({ locale, t }: Props) {
     <>
       <style>{`
         .site-header {
-          background: transparent;
+          /* Permanent scrim, not just on scroll — nav text needs to stay
+             legible over whatever the hero media happens to be (dark
+             portrait photo, bright interior render, video frame, etc.),
+             not only after the solid background kicks in. */
+          background: linear-gradient(
+            180deg,
+            rgba(26, 31, 58, 0.30) 0%,
+            rgba(26, 31, 58, 0.55) 100%
+          );
           border-bottom: 1px solid transparent;
           transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -91,55 +98,20 @@ export default function Header({ locale, t }: Props) {
           border-bottom-color: var(--color-accent-border);
           box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
-        .site-header__topbar {
-          max-height: 2.25rem;
-          opacity: 1;
-          overflow: hidden;
-          transition: max-height 0.3s ease, opacity 0.2s ease;
-        }
-        .site-header[data-scrolled="true"] .site-header__topbar {
-          max-height: 0;
-          opacity: 0;
-        }
       `}</style>
 
       <header
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-50"
       >
-        {/* Top bar */}
-        <div className="site-header__topbar hidden lg:block">
-          <div className="max-w-[var(--container-max)] mx-auto px-6 flex items-center justify-end gap-6 h-9 text-[11px] tracking-[0.12em] uppercase">
-            <a
-              href={PHONE_HREF}
-              className="flex items-center gap-1.5 text-[var(--color-on-primary-muted)] hover:text-[var(--color-accent-pale)] transition-colors"
-            >
-              <PhoneIcon className="w-3 h-3" />
-              {PHONE}
-            </a>
-            <span className="w-px h-3 bg-[var(--color-on-primary-muted)]/30" />
-            <a
-              href={LINE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-            >
-              @nyc-clinic
-            </a>
-          </div>
-        </div>
-
         {/* Main nav */}
         <div className="max-w-[var(--container-max)] mx-auto px-6 flex items-center justify-between h-[var(--header-height)]">
-          <Link href={localePath("")} className="shrink-0">
-            <Image
-              src="/images/nyc-clinic-logo.jpg"
-              alt="NYC — New York Clinic, GR"
-              width={120}
-              height={120}
-              className="h-16 w-auto"
-              priority
-            />
+          <Link
+            href={localePath("")}
+            className="shrink-0"
+            aria-label="NYC Clinic — home"
+          >
+            <Logo variant="primary" size="md" />
           </Link>
 
           {/* Desktop nav */}
@@ -159,7 +131,16 @@ export default function Header({ locale, t }: Props) {
                   }
                 `}
               >
-                {t[key]}
+                <span
+                  style={{
+                    fontFamily: isTH
+                      ? "var(--font-thai-body)"
+                      : "var(--font-body)",
+                    fontSize: isTH ? "0.9rem" : "0.75rem",
+                  }}
+                >
+                  {t[key]}
+                </span>
                 {isActive(path) && (
                   <span className="absolute bottom-0 left-3 right-3 xl:left-4 xl:right-4 h-px bg-[var(--color-accent)]" />
                 )}
@@ -167,20 +148,11 @@ export default function Header({ locale, t }: Props) {
             ))}
           </nav>
 
-          {/* Desktop CTA + Lang + hamburger */}
+          {/* Lang + hamburger */}
           <div className="flex items-center gap-3">
             <div className="hidden lg:block">
               <LangSwitcher locale={locale} />
             </div>
-            <a
-              href={LINE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-line hidden lg:inline-flex !py-2.5 !px-5 !text-[0.7rem]"
-            >
-              <LineIcon className="w-4 h-4" />
-              {t.addLine}
-            </a>
             <button
               type="button"
               onClick={openMobile}
@@ -213,13 +185,7 @@ export default function Header({ locale, t }: Props) {
           `}
         >
           <div className="flex items-center justify-between px-6 h-[var(--header-height-mobile)]">
-            <Image
-              src="/images/nyc-clinic-logo.png"
-              alt="NYC"
-              width={80}
-              height={32}
-              className="h-7 w-auto"
-            />
+            <Logo variant="primary" size="sm" layout="mark" />
             <button
               type="button"
               onClick={closeMobile}
@@ -250,7 +216,14 @@ export default function Header({ locale, t }: Props) {
                       }
                     `}
                   >
-                    <span className="text-sm font-medium tracking-[0.1em] uppercase">
+                    <span
+                      className="text-sm font-medium tracking-[0.1em] uppercase"
+                      style={{
+                        fontFamily: isTH
+                          ? "var(--font-thai-body)"
+                          : "var(--font-body)",
+                      }}
+                    >
                       {t[key]}
                     </span>
                   </Link>
@@ -262,47 +235,27 @@ export default function Header({ locale, t }: Props) {
           <div className="px-6 pb-8 space-y-4">
             <div className="h-px bg-[var(--color-accent-border)]" />
             <div className="flex items-center justify-between py-2">
-              <span className="text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-primary-muted)]">
+              <span
+                className="text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-primary-muted)]"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
                 Language
               </span>
               <LangSwitcher locale={locale} />
             </div>
-            <a
-              href={PHONE_HREF}
-              className="flex items-center gap-2.5 py-2 text-[var(--color-on-primary-muted)] hover:text-white transition-colors"
+            <p
+              className="text-xs text-[var(--color-on-primary-muted)]/70 leading-relaxed"
+              style={{
+                fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+              }}
             >
-              <PhoneIcon className="w-4 h-4" />
-              <span className="text-sm tracking-wider">{PHONE}</span>
-            </a>
-            <a
-              href={LINE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-line w-full !text-[0.75rem]"
-            >
-              <LineIcon className="w-4 h-4" />
-              {t.addLine}
-            </a>
+              {isTH
+                ? "ใช้ปุ่ม LINE / โทร ที่มุมหน้าจอเพื่อติดต่อเราได้ตลอดเวลา"
+                : "Use the LINE / call button in the corner to reach us anytime."}
+            </p>
           </div>
         </div>
       </div>
     </>
-  );
-}
-
-function PhoneIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
   );
 }

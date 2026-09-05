@@ -3,4 +3,6 @@ export type CaseCard = {
   image: string;
   treatment: string;
   doctor: string;
+  beforeImage?: string;
+  afterImage?: string;
 };

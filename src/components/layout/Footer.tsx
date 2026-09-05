@@ -1,5 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Phone } from "lucide-react";
+import Logo from "@/components/shared/Logo";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -37,7 +38,12 @@ type Props = {
 };
 
 export default function Footer({ locale, t, navT }: Props) {
+  const isTH = locale === "th";
   const l = (path: string) => `/${locale}${path}`;
+
+  // Font helpers — footer labels/links are a mix of EN-only and translated text
+  const localeFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const enFont = "var(--font-body)";
 
   const NAV_COLS = [
     {
@@ -52,6 +58,8 @@ export default function Footer({ locale, t, navT }: Props) {
         { href: l("/services/surgery"), label: "Surgery" },
         { href: l("/services/skin-treatments"), label: "Skin Treatments" },
       ],
+      // Service names are always English
+      linkFont: enFont,
     },
     {
       title: t.clinic,
@@ -61,6 +69,8 @@ export default function Footer({ locale, t, navT }: Props) {
         { href: l("/before-after"), label: navT.beforeAfter },
         { href: l("/blog"), label: navT.blog },
       ],
+      // Nav labels are translated
+      linkFont: localeFont,
     },
     {
       title: t.support,
@@ -70,6 +80,8 @@ export default function Footer({ locale, t, navT }: Props) {
         { href: l("/faq"), label: "FAQ" },
         { href: l("/reviews"), label: "Reviews" },
       ],
+      // Mix of translated and English — use locale font (Montserrat handles English fine)
+      linkFont: localeFont,
     },
   ];
 
@@ -79,22 +91,22 @@ export default function Footer({ locale, t, navT }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-2 space-y-5">
-            <Image
-              src="/images/nyc-clinic-logo.jpg"
-              alt="NYC — New York Clinic, GR"
-              width={140}
-              height={56}
-              className="h-20 w-auto"
-            />
+            <Logo variant="primary" size="lg" />
 
-            <p className="text-sm leading-relaxed max-w-xs">{t.description}</p>
+            <p
+              className="text-sm leading-relaxed max-w-xs"
+              style={{ fontFamily: localeFont }}
+            >
+              {t.description}
+            </p>
 
             <div className="space-y-2 text-sm">
               <a
                 href={PHONE_HREF}
                 className="flex items-center gap-2 hover:text-white transition-colors"
+                style={{ fontFamily: enFont }}
               >
-                <PhoneIcon />
+                <Phone size={14} strokeWidth={1.5} />
                 088-008-7870
               </a>
               <a
@@ -102,9 +114,10 @@ export default function Footer({ locale, t, navT }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+                style={{ fontFamily: enFont }}
               >
                 <LineIcon className="w-3.5 h-3.5" />
-                @nyc-clinic
+                @nycclinic
               </a>
             </div>
 
@@ -125,9 +138,12 @@ export default function Footer({ locale, t, navT }: Props) {
           </div>
 
           {/* Nav columns */}
-          {NAV_COLS.map(({ title, links }) => (
+          {NAV_COLS.map(({ title, links, linkFont }) => (
             <div key={title}>
-              <h4 className="font-[var(--font-body)] text-[11px] font-semibold tracking-[0.15em] uppercase text-white mb-4">
+              <h4
+                className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white mb-4"
+                style={{ fontFamily: localeFont }}
+              >
                 {title}
               </h4>
               <ul className="space-y-2.5">
@@ -136,6 +152,7 @@ export default function Footer({ locale, t, navT }: Props) {
                     <Link
                       href={href}
                       className="text-sm hover:text-white transition-colors"
+                      style={{ fontFamily: linkFont }}
                     >
                       {label}
                     </Link>
@@ -150,13 +167,14 @@ export default function Footer({ locale, t, navT }: Props) {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-[var(--container-max)] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--color-on-primary-muted)]">
-          <p>
+          <p style={{ fontFamily: localeFont }}>
             &copy; {new Date().getFullYear()} NYC Clinic. {t.rights}.
           </p>
           <div className="flex items-center gap-4">
             <Link
               href={l("/privacy-policy")}
               className="hover:text-white transition-colors"
+              style={{ fontFamily: localeFont }}
             >
               {t.privacy}
             </Link>
@@ -164,6 +182,7 @@ export default function Footer({ locale, t, navT }: Props) {
             <Link
               href={l("/terms")}
               className="hover:text-white transition-colors"
+              style={{ fontFamily: localeFont }}
             >
               {t.terms}
             </Link>
@@ -171,22 +190,5 @@ export default function Footer({ locale, t, navT }: Props) {
         </div>
       </div>
     </footer>
-  );
-}
-
-function PhoneIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
   );
 }

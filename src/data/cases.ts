@@ -1,7 +1,7 @@
-import type { CaseCard } from "@/types/case";
-
 // TODO: replace with WP fetch
 // e.g. const res = await fetch(`${WP_API}/wp/v2/case?per_page=${limit}`);
+
+import { CaseCard } from "@/types/case";
 
 const DATA = [
   {
@@ -10,40 +10,42 @@ const DATA = [
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
+    beforeImage: "/images/cases/case-01.jpg",
+    afterImage: "/images/cases/case-02.jpg",
   },
   {
     slug: "nose-thread-wing-reduction",
     image: "/images/cases/case-02.jpg",
     treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · เก็บปีกจมูก",
+    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
   },
   {
     slug: "nose-thread-hump-correction",
     image: "/images/cases/case-03.jpg",
     treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · แก้ทรงจมูกมีฮัมพ์",
+    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
   },
   {
     slug: "nose-thread-male",
     image: "/images/cases/case-04.jpg",
-    treatment_en: "Nose Thread Lift — Male",
-    treatment_th: "ร้อยไหมจมูก · ทรงจมูกผู้ชาย",
+    treatment_en: "Nose Thread Lift",
+    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
   },
   {
     slug: "nose-thread-semi-surgery",
     image: "/images/cases/case-05.jpg",
-    treatment_en: "Semi Surgery Thread Nose",
-    treatment_th: "ร้อยไหมจมูกกึ่งศัลยกรรม",
+    treatment_en: "Nose Thread Lift",
+    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
   },
   {
     slug: "nose-thread-low-tissue",
     image: "/images/cases/case-06.jpg",
     treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ทรงจมูกเนื้อน้อย",
+    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
   },
 ];
@@ -60,5 +62,7 @@ export async function getCases(
     image: item.image,
     treatment: locale === "th" ? item.treatment_th : item.treatment_en,
     doctor: item.doctor,
+    beforeImage: item.beforeImage,
+    afterImage: item.afterImage,
   }));
 }

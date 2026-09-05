@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#faf6f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="280" fill="url(#bg4)" rx="0"/>
+  <rect x="12" y="12" width="376" height="256" fill="none" stroke="#1a1f3a" stroke-width="1"/>
+  <rect x="17" y="17" width="366" height="246" fill="none" stroke="#c4956a" stroke-width="0.5"/>
+  <!-- Logo -->
+  <rect x="183" y="34" width="34" height="34" fill="none" stroke="#1a1f3a" stroke-width="1" rx="0"/>
+  <text x="200" y="55" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1f3a" font-weight="700">SMMT</text>
+  <!-- Title -->
+  <text x="200" y="92" text-anchor="middle" font-family="serif" font-size="10" fill="#1a1f3a" letter-spacing="3">CERTIFICATE OF MEMBERSHIP</text>
+  <line x1="110" y1="99" x2="290" y2="99" stroke="#c4956a" stroke-width="0.5"/>
+  <!-- Institution -->
+  <text x="200" y="122" text-anchor="middle" font-family="serif" font-size="12" fill="#1a1f3a" font-weight="600">Society of Mesotherapy</text>
+  <text x="200" y="138" text-anchor="middle" font-family="serif" font-size="12" fill="#1a1f3a" font-weight="600">Management Thailand</text>
+  <text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#8a8a96" letter-spacing="1">สมาคมเวชศาสตร์ชะลอวัยเมโสบำบัดแห่งประเทศไทย</text>
+  <!-- Body -->
+  <text x="200" y="178" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#4a4a56">Awarded to recognize expertise in</text>
+  <text x="200" y="193" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#4a4a56">mesotherapy and injectable techniques</text>
+  <!-- Name -->
+  <line x1="130" y1="218" x2="270" y2="218" stroke="#1a1f3a" stroke-width="0.5"/>
+  <text x="200" y="215" text-anchor="middle" font-family="serif" font-size="13" fill="#1a1f3a" font-style="italic">Dr. Placeholder</text>
+  <text x="200" y="232" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#8a8a96" letter-spacing="1">ACTIVE MEMBER</text>
+  <text x="200" y="254" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#8a8a96">Issued: September 2023</text>
+</svg>

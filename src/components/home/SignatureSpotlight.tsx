@@ -38,7 +38,10 @@ export default function SignatureSpotlight({
 
           <div>
             <span className="section-label">{t.label}</span>
-            <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl font-semibold text-white mt-3 leading-tight">
+            <h2
+              className="text-3xl sm:text-4xl font-semibold text-white mt-3 leading-tight"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
               {t.title}
             </h2>
             <p className="text-[var(--color-accent)] text-lg mt-1">
@@ -67,6 +70,12 @@ export default function SignatureSpotlight({
             <Link
               href={`/${locale}/services/${data.slug}`}
               className="btn-cta mt-10 inline-flex"
+              style={{
+                fontFamily:
+                  locale === "th"
+                    ? "var(--font-thai-body)"
+                    : "var(--font-body)",
+              }}
             >
               {tCommon.learnMore}
             </Link>

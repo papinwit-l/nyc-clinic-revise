@@ -3,7 +3,7 @@ import type { Doctor } from "@/types/doctor";
 export const DOCTORS: Doctor[] = [
   {
     slug: "dr-jing",
-    image: "/images/doctors/dr-jing.png",
+    image: "/images/doctors/dr-jing.jpg",
     nameEn: "Dr. Jing",
     nameTh: "หมอจิ๋ง",
     fullNameEn: "Isreey Muangmanee M.D.",
@@ -34,10 +34,17 @@ export const DOCTORS: Doctor[] = [
       },
     ],
     services: ["nose-thread-lift", "facial-thread-lift", "facial-design"],
+    featured: true,
+    // Placeholder bio — rephrased from credential bullets on nycclinic.net/doctor/.
+    // Nothing invented. Flag for client edit/approval before final build.
+    bioEn:
+      "Dr. Jing specializes in nose thread lift and facial design, with over 15 years of experience in aesthetic medicine and more than 10,000 documented nose thread lift cases performed to date.",
+    bioTh:
+      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 15 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 10,000 เคส",
   },
   {
     slug: "dr-beer",
-    image: "/images/doctors/dr-beer.png",
+    image: "/images/doctors/dr-beer.jpg",
     nameEn: "Dr. Beer",
     nameTh: "หมอเบียร์",
     fullNameEn: "Pattaya Tanthanatip M.D.",
@@ -71,7 +78,7 @@ export const DOCTORS: Doctor[] = [
   },
   {
     slug: "dr-lulu",
-    image: "/images/doctors/dr-lulu.png",
+    image: "/images/doctors/dr-lulu.jpg",
     nameEn: "Dr. Lulu",
     nameTh: "หมอลู่ลู่",
     fullNameEn: "Rangrong Sriworarak M.D.",
@@ -105,7 +112,7 @@ export const DOCTORS: Doctor[] = [
   },
   {
     slug: "dr-pek",
-    image: "/images/doctors/dr-pek.png",
+    image: "/images/doctors/dr-pek.jpg",
     nameEn: "Dr. Pek",
     nameTh: "หมอเป๊ก",
     fullNameEn: "Pichit Sooksaranjit M.D.",
