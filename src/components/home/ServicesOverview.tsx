@@ -15,12 +15,12 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
   const isTH = locale === "th";
 
   // Font follows the TEXT's language, not the page locale.
-  const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-body)";
+  // Card titles use the DISPLAY face (Playfair / Anuphan), per the guide's
+  // Card Title role. Flagship vs rest is signalled by SIZE, not by giving the
+  // small cards a different typeface.
+  const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
   const subtitleFont = isTH ? "var(--font-body)" : "var(--font-thai-head)";
   const descFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
-  // Hero tile uses the DISPLAY face for its title (Playfair / Anuphan) —
-  // the small cards keep the compact uppercase label. That scale gap is
-  // what signals "flagship" vs "the rest".
   const heroTitleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
 
@@ -30,7 +30,7 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
 
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         <SectionHeader section="services" className="mb-12" />
 
         {/* Bento: signature hero tile (1/2) + 2×2 of the rest (1/2) on desktop.
@@ -62,20 +62,24 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
 
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
               <h3
-                className="text-2xl font-semibold leading-tight text-white"
-                style={{ fontFamily: heroTitleFont }}
+                className="text-[clamp(1.7rem,2.9vw,2.35rem)] leading-[1.15] text-white"
+                style={{
+                  fontFamily: heroTitleFont,
+                  fontWeight: isTH ? 600 : 400,
+                  letterSpacing: isTH ? "0" : "-0.005em",
+                }}
               >
                 {hero.title}
               </h3>
               <p
-                className="text-[var(--color-accent-pale)] text-sm sm:text-base mt-1"
-                style={{ fontFamily: subtitleFont }}
+                className="text-[var(--color-accent-pale)] text-sm sm:text-base mt-1.5"
+                style={{ fontFamily: subtitleFont, fontWeight: 400 }}
               >
                 {hero.subtitle}
               </p>
               <p
-                className="text-white/75 text-sm mt-3 leading-relaxed max-w-sm line-clamp-2"
-                style={{ fontFamily: descFont }}
+                className="text-white/80 text-sm mt-3.5 leading-[1.75] max-w-sm line-clamp-2"
+                style={{ fontFamily: descFont, fontWeight: 300 }}
               >
                 {hero.desc}
               </p>
@@ -107,20 +111,27 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
                 </div>
                 <div className="p-5 sm:p-6 flex flex-col flex-1">
                   <h3
-                    className="text-sm font-semibold tracking-[0.1em] uppercase"
-                    style={{ fontFamily: titleFont }}
+                    className={`leading-[1.3] ${
+                      isTH ? "text-[1.05rem]" : "text-[1.15rem]"
+                    }`}
+                    style={{
+                      fontFamily: titleFont,
+                      fontWeight: isTH ? 600 : 500,
+                    }}
                   >
                     {title}
                   </h3>
                   <p
-                    className="text-[var(--color-accent)] text-sm mt-0.5"
-                    style={{ fontFamily: subtitleFont }}
+                    className="text-[var(--color-accent)] text-sm mt-1"
+                    style={{ fontFamily: subtitleFont, fontWeight: 400 }}
                   >
                     {subtitle}
                   </p>
                   <p
-                    className="text-[var(--color-text-muted)] text-sm mt-3 leading-relaxed"
-                    style={{ fontFamily: descFont }}
+                    className={`text-[var(--color-text-warm)] text-sm mt-3 ${
+                      isTH ? "leading-[1.9]" : "leading-[1.75]"
+                    }`}
+                    style={{ fontFamily: descFont, fontWeight: 300 }}
                   >
                     {desc}
                   </p>
