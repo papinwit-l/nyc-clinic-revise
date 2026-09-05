@@ -6,6 +6,7 @@ import Image from "next/image";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import { ChevronDown } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import HeroLogo from "@/components/shared/HeroLogo";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -128,19 +129,8 @@ export default function Hero({ t, locale }: Props) {
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-        <h1 className="hero-text-shadow">
-          <span
-            className="block text-6xl sm:text-7xl md:text-8xl font-bold tracking-[0.1em] text-white leading-none shimmer-text"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            NYC
-          </span>
-          <span
-            className="block text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[var(--color-on-primary-muted)] mt-3"
-            style={{ fontFamily: "var(--font-body)" }}
-          >
-            New York Clinic, GR
-          </span>
+        <h1>
+          <HeroLogo className="hero-text-shadow" />
         </h1>
 
         <div className="divider-diamond my-6 sm:my-8">
