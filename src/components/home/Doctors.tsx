@@ -44,15 +44,19 @@ export default function Doctors({ t, locale, data }: Props) {
 
             {/* EN name — always Playfair Display */}
             <h3
-              className="text-2xl sm:text-3xl font-semibold mt-4"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-[clamp(1.9rem,3.4vw,2.6rem)] leading-[1.15] mt-5"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 400,
+                letterSpacing: "-0.005em",
+              }}
             >
               {featured.fullNameEn}
             </h3>
             {/* TH name — always Anuphan */}
             <p
-              className="text-[var(--color-accent)] text-base sm:text-lg mt-1"
-              style={{ fontFamily: "var(--font-thai-head)" }}
+              className="text-[var(--color-accent)] text-base sm:text-lg mt-1.5"
+              style={{ fontFamily: "var(--font-thai-head)", fontWeight: 500 }}
             >
               {featured.fullNameTh}
             </p>
@@ -61,9 +65,12 @@ export default function Doctors({ t, locale, data }: Props) {
 
             {/* Bio — font follows the text's language */}
             <p
-              className="text-[var(--color-text-muted)] text-sm sm:text-base leading-relaxed max-w-lg mx-auto lg:mx-0"
+              className={`text-[var(--color-text-warm)] text-[0.95rem] sm:text-base max-w-lg mx-auto lg:mx-0 ${
+                isTH ? "leading-[1.95]" : "leading-[1.85]"
+              }`}
               style={{
                 fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+                fontWeight: 300,
               }}
             >
               {isTH
@@ -74,15 +81,19 @@ export default function Doctors({ t, locale, data }: Props) {
             {/* Quick stats */}
             <div className="flex items-center justify-center lg:justify-start gap-6 mt-6">
               <div className="text-center">
-                <p className="stat-number text-2xl text-[var(--color-accent)]">
+                <p
+                  className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
+                  style={{ fontWeight: 400 }}
+                >
                   15+
                 </p>
                 <p
-                  className="text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-muted)] mt-1 font-medium"
+                  className="text-xs text-[var(--color-text-warm)] mt-2"
                   style={{
                     fontFamily: isTH
                       ? "var(--font-thai-body)"
                       : "var(--font-body)",
+                    fontWeight: 400,
                   }}
                 >
                   {isTH ? "ปีประสบการณ์" : "yrs experience"}
@@ -90,15 +101,19 @@ export default function Doctors({ t, locale, data }: Props) {
               </div>
               <div className="w-px h-8 bg-[var(--color-border)]" />
               <div className="text-center">
-                <p className="stat-number text-2xl text-[var(--color-accent)]">
+                <p
+                  className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
+                  style={{ fontWeight: 400 }}
+                >
                   10,000+
                 </p>
                 <p
-                  className="text-[10px] tracking-[0.1em] uppercase text-[var(--color-text-muted)] mt-1 font-medium"
+                  className="text-xs text-[var(--color-text-warm)] mt-2"
                   style={{
                     fontFamily: isTH
                       ? "var(--font-thai-body)"
                       : "var(--font-body)",
+                    fontWeight: 400,
                   }}
                 >
                   {isTH ? "เคส" : "cases"}
@@ -110,7 +125,10 @@ export default function Doctors({ t, locale, data }: Props) {
 
         {/* ── Secondary doctors ── */}
         <div>
-          <p className="text-center text-[11px] tracking-[0.15em] uppercase text-[var(--color-text-subtle)] font-semibold mb-8">
+          <p
+            className="text-center text-[1.15rem] text-[var(--color-text-warm)] mb-8"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
+          >
             {sectionHeadings.doctors.teamHeading}
           </p>
 
@@ -133,8 +151,11 @@ export default function Doctors({ t, locale, data }: Props) {
                 <div className="mt-3">
                   {/* EN name — always Playfair */}
                   <h3
-                    className="text-sm sm:text-base font-semibold"
-                    style={{ fontFamily: "var(--font-display)" }}
+                    className="text-base sm:text-lg leading-tight"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 400,
+                    }}
                   >
                     {doc.nameEn}
                   </h3>
@@ -147,7 +168,7 @@ export default function Doctors({ t, locale, data }: Props) {
                   </p>
                   {/* Specialty — font follows text language */}
                   <p
-                    className="text-[var(--color-text-muted)] text-[11px] sm:text-xs mt-1"
+                    className="text-[var(--color-text-warm)] text-[11px] sm:text-xs mt-1.5 leading-relaxed"
                     style={{
                       fontFamily: isTH
                         ? "var(--font-thai-body)"
