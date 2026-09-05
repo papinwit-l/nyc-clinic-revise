@@ -4,6 +4,7 @@ import { ChevronsLeftRight } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { CaseCard } from "@/types/case";
 import BeforeAfterRevealSlide from "./BeforeAfterRevealSlide";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 type Props = {
   t: Dictionary["home"]["results"];
@@ -15,7 +16,6 @@ type Props = {
 export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
-  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   if (!data.length) return null;
 
@@ -29,15 +29,7 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
         {/* Magazine header row — heading left, CTA top-right on desktop. */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
           <div className="max-w-xl">
-            <span className="section-label" style={{ fontFamily: bodyFont }}>
-              {t.label}
-            </span>
-            <h2
-              className="section-heading text-3xl sm:text-4xl mt-3"
-              style={{ fontFamily: headFont }}
-            >
-              {t.heading}
-            </h2>
+            <SectionHeader section="results" align="left" />
             <p
               className="text-[var(--color-text-muted)] mt-3"
               style={{ fontFamily: bodyFont }}

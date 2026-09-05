@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 type Props = {
   t: Dictionary["home"]["about"];
@@ -26,9 +27,7 @@ export default function About({ t, locale }: Props) {
       />
 
       <div className="relative z-10 max-w-[var(--container-max)] mx-auto px-6">
-        <span className="section-label" style={{ fontFamily: bodyFont }}>
-          {t.label}
-        </span>
+        <SectionHeader section="about" align="left" />
         <div className="divider-accent mt-4" />
 
         {/* Two even columns, vertically centred so neither side is top-heavy */}

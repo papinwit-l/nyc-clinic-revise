@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Sparkles, Clock, ShieldCheck, Repeat } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { ServiceCard } from "@/types/service";
+import { sectionHeadings } from "@/i18n/section-headings";
 
 const ICONS = [Sparkles, Clock, ShieldCheck, Repeat];
 
@@ -37,7 +38,7 @@ export default function SignatureSpotlight({
           </div>
 
           <div>
-            <span className="section-label">{t.label}</span>
+            <span className="section-label">{sectionHeadings.signature.label}</span>
             <h2
               className="text-3xl sm:text-4xl font-semibold text-white mt-3 leading-tight"
               style={{ fontFamily: "var(--font-display)" }}

@@ -12,7 +12,6 @@ const home = {
     certified: "Board-Certified",
   },
   about: {
-    label: "About NYC Clinic",
     // Quote is DRAFT — pending Dr. Jing's approval (it's attributed to her).
     quote:
       "Every face is unique — so nose thread lift takes real experience, from a specialist of more than 15 years.",
@@ -38,7 +37,6 @@ const home = {
     ],
   },
   signature: {
-    label: "Signature Service",
     title: "Nose Thread Lift",
     subtitle: "Semi-Surgery Nose Thread Technique",
     description:
@@ -51,46 +49,25 @@ const home = {
     ],
   },
   services: {
-    label: "Our Services",
-    heading: "What We Offer",
     cta: "View All Services →",
   },
   results: {
-    label: "Real Results",
-    heading: "Before & After",
     subtitle: "Real results from our patients, by our specialist team.",
     cta: "View Full Gallery →",
   },
   doctors: {
-    label: "Meet the Doctors",
-    heading: "Our Specialists",
     badge: "Lead Specialist",
-    teamHeading: "Also On Our Team",
     cta: "View All Doctors →",
   },
-  testimonials: {
-    label: "What They Say",
-    heading: "Client Reviews",
-  },
-  instagram: {
-    label: "Follow Us",
-    heading: "@nycclinic",
-    cta: "Follow @nycclinic →",
-  },
   promotion: {
-    label: "Promotion",
     validUntil: "Valid until",
     cta: "Get Promotion",
     details: "View Details",
   },
   blog: {
-    label: "Latest Articles",
-    heading: "From Our Blog",
     cta: "Read More →",
   },
   contact: {
-    label: "Contact Us",
-    heading: "Get in Touch",
     hoursValue: "Mon – Sat 10:00 AM – 7:00 PM\nSun 10:00 AM – 5:00 PM",
     readyTitle: "Ready to Transform?",
     readySubtitle: "Free consultation — no obligation",

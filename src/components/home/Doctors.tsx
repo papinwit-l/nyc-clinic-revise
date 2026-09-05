@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Doctor } from "@/types/doctor";
+import SectionHeader from "@/components/shared/SectionHeader";
+import { sectionHeadings } from "@/i18n/section-headings";
 
 type Props = {
   t: Dictionary["home"]["doctors"];
@@ -18,26 +20,7 @@ export default function Doctors({ t, locale, data }: Props) {
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         {/* Section header */}
-        <div className="text-center mb-12 sm:mb-16">
-          <span
-            className="section-label"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
-          >
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
-        </div>
+        <SectionHeader section="doctors" className="mb-12 sm:mb-16" />
 
         {/* ── Featured doctor (Dr. Jing) ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
@@ -128,7 +111,7 @@ export default function Doctors({ t, locale, data }: Props) {
         {/* ── Secondary doctors ── */}
         <div>
           <p className="text-center text-[11px] tracking-[0.15em] uppercase text-[var(--color-text-subtle)] font-semibold mb-8">
-            {t.teamHeading}
+            {sectionHeadings.doctors.teamHeading}
           </p>
 
           <div className="grid grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto">

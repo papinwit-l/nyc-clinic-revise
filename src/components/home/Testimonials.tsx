@@ -1,15 +1,14 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
-import type { Dictionary } from "@/i18n/get-dictionary";
 import type { TestimonialCard } from "@/types/testimonial";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 type Props = {
-  t: Dictionary["home"]["testimonials"];
   locale: string;
   data: TestimonialCard[];
 };
 
-export default function Testimonials({ t, locale, data }: Props) {
+export default function Testimonials({ locale, data }: Props) {
   const isTH = locale === "th";
 
   return (
@@ -18,26 +17,7 @@ export default function Testimonials({ t, locale, data }: Props) {
       style={{ backgroundColor: "var(--color-accent-pale)" }}
     >
       <div className="max-w-[var(--container-max)] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span
-            className="section-label"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
-          >
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3 text-[var(--color-primary)]"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
-        </div>
+        <SectionHeader section="testimonials" className="mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {data.map(

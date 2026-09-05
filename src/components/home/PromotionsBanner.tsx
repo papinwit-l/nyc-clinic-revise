@@ -2,6 +2,7 @@ import Image from "next/image";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Promotion } from "@/types/promotion";
+import { sectionHeadings } from "@/i18n/section-headings";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -55,7 +56,7 @@ export default function PromotionsBanner({ t, locale, data }: Props) {
               fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
             }}
           >
-            {t.label}
+            {sectionHeadings.promotion.label}
           </p>
 
           <h2

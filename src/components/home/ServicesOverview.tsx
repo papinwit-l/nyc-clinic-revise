@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { ServiceCard } from "@/types/service";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 type Props = {
   t: Dictionary["home"]["services"];
@@ -30,21 +31,7 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span className="section-label" style={{ fontFamily: bodyFont }}>
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
-        </div>
+        <SectionHeader section="services" className="mb-12" />
 
         {/* Bento: signature hero tile (1/2) + 2×2 of the rest (1/2) on desktop.
             On mobile the hero stacks above a 2-col grid of the rest. */}

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { PostCard } from "@/types/post";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 type Props = {
   t: Dictionary["home"]["blog"];
@@ -19,26 +20,7 @@ export default function BlogPreview({ t, locale, data }: Props) {
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span
-            className="section-label"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
-          >
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
-        </div>
+        <SectionHeader section="blog" className="mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {data.map(({ slug, image, title, subtitle, category, date }) => (
