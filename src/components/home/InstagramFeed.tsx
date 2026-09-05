@@ -44,7 +44,7 @@ export default function InstagramFeed({ locale, data }: Props) {
 
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         {/* Profile-style header — reads as a real IG presence, not a generic
             "Follow Us" band. Avatar + handle left, Follow action right. */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">

@@ -28,8 +28,13 @@ export default function SectionHeader({
   const resolved = heading ?? ("heading" in s ? s.heading : undefined);
 
   return (
-    <div className={`${align === "center" ? "text-center" : "text-left"} ${className}`}>
-      <span className="section-label" style={{ fontFamily: "var(--font-body)" }}>
+    <div
+      className={`${align === "center" ? "text-center" : "text-left"} ${className}`}
+    >
+      <span
+        className="section-label"
+        style={{ fontFamily: "var(--font-body)" }}
+      >
         {s.label}
       </span>
 

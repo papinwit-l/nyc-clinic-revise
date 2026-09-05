@@ -18,12 +18,12 @@ export default function Testimonials({ locale, data }: Props) {
   return (
     <section
       className="py-[var(--section-py)]"
-      // surface-dim, not accent-pale: a full-bleed section in the rose-gold
-      // family spent most of the 10% accent budget in one place. Rose-gold now
-      // reads where the guide wants it — stars, treatment labels, CTAs.
-      style={{ backgroundColor: "var(--color-surface-dim)" }}
+      // surface-deep, not accent-pale: a full-bleed section in the rose-gold
+      // family spent most of the 10% accent budget in one place. One step
+      // below surface-dim so it reads against Before & After's gallery band.
+      style={{ backgroundColor: "var(--color-surface-deep)" }}
     >
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         <SectionHeader section="testimonials" className="mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -13,13 +13,16 @@ type Props = {
 export default function BlogPreview({ t, locale, data }: Props) {
   const isTH = locale === "th";
 
-  // Title follows locale language, subtitle is the other language
-  const titleFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
-  const subtitleFont = isTH ? "var(--font-body)" : "var(--font-thai-body)";
+  // Post titles are Card Titles — display face (Playfair / Anuphan), per the
+  // guide. They were set in the body face at 14px, smaller than the page's
+  // body copy. Subtitle takes the opposite language's face, as elsewhere.
+  const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
+  const subtitleFont = isTH ? "var(--font-body)" : "var(--font-thai-head)";
+  const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
 
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         <SectionHeader section="blog" className="mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -38,16 +41,16 @@ export default function BlogPreview({ t, locale, data }: Props) {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <span
-                  className="absolute top-3 left-3 text-[9px] font-semibold tracking-[0.15em] uppercase bg-[var(--color-accent)] text-white px-2.5 py-1"
-                  style={{ fontFamily: "var(--font-body)" }}
+                  className="absolute top-3 left-3 text-[10px] font-semibold tracking-[0.14em] uppercase bg-[var(--color-accent)] text-white px-3 py-1.5"
+                  style={{ fontFamily: bodyFont }}
                 >
                   {category}
                 </span>
               </div>
               <div className="p-5 sm:p-6">
                 <p
-                  className="text-[11px] text-[var(--color-text-subtle)]"
-                  style={{ fontFamily: "var(--font-body)" }}
+                  className="text-xs text-[var(--color-text-subtle)]"
+                  style={{ fontFamily: bodyFont }}
                 >
                   {new Date(date).toLocaleDateString(isTH ? "th-TH" : "en-US", {
                     day: "numeric",
@@ -56,14 +59,19 @@ export default function BlogPreview({ t, locale, data }: Props) {
                   })}
                 </p>
                 <h3
-                  className="text-sm font-medium leading-relaxed mt-2 group-hover:text-[var(--color-accent)] transition-colors"
-                  style={{ fontFamily: titleFont }}
+                  className={`text-[var(--color-primary)] mt-2.5 leading-[1.3] group-hover:text-[var(--color-accent)] transition-colors ${
+                    isTH ? "text-[1.1rem]" : "text-[1.2rem]"
+                  }`}
+                  style={{
+                    fontFamily: titleFont,
+                    fontWeight: isTH ? 600 : 500,
+                  }}
                 >
                   {title}
                 </h3>
                 <p
-                  className="text-xs text-[var(--color-text-muted)] mt-1"
-                  style={{ fontFamily: subtitleFont }}
+                  className="text-sm text-[var(--color-text-warm)] mt-1.5 leading-relaxed"
+                  style={{ fontFamily: subtitleFont, fontWeight: 400 }}
                 >
                   {subtitle}
                 </p>
@@ -76,9 +84,7 @@ export default function BlogPreview({ t, locale, data }: Props) {
           <Link
             href={`/${locale}/blog`}
             className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
+            style={{ fontFamily: bodyFont }}
           >
             {t.cta}
           </Link>

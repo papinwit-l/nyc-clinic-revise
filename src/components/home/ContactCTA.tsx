@@ -48,7 +48,7 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
 
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
           {/* LEFT — the pitch + the action (left-aligned, conversion-first) */}
           <div className="flex flex-col">
