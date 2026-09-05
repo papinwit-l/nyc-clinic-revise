@@ -11,6 +11,32 @@ const home = {
     specialists: "Specialists",
     certified: "Board-Certified",
   },
+  about: {
+    label: "About NYC Clinic",
+    // Quote is DRAFT — pending Dr. Jing's approval (it's attributed to her).
+    quote:
+      "Every face is unique — so nose thread lift takes real experience, from a specialist of more than 15 years.",
+    quoteName: "Dr. Jing (Isreey Muangmanee, M.D.)",
+    quoteRole:
+      "Lead Specialist · Pioneer of NYC Clinic's semi-surgical nose thread technique",
+    // Bio paraphrased from the old site's About page — placeholder for marketing.
+    bio: "NYC Clinic has practiced aesthetic medicine in Thonglor, led by specialists in skin, facial design, and cosmetic surgery. Care is unhurried and meticulous at every step, in a space kept to hospital-grade sterile standards — for results that look natural and genuinely your own.",
+    cta: "Read our story →",
+    pillars: [
+      {
+        title: "Semi-surgical technique",
+        desc: "Our own method, exclusive to NYC Clinic.",
+      },
+      {
+        title: "No surgery, no downtime",
+        desc: "Around 20 minutes — back to life the same day.",
+      },
+      {
+        title: "Natural, tailored results",
+        desc: "Designed to suit each individual face.",
+      },
+    ],
+  },
   signature: {
     label: "Signature Service",
     title: "Nose Thread Lift",

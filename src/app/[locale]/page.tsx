@@ -9,6 +9,7 @@ import { getActivePromotion } from "@/data/promotions";
 import { getInstagramPosts } from "@/data/instagram";
 import Hero from "@/components/home/Hero";
 import TrustBar from "@/components/home/TrustBar";
+import About from "@/components/home/About";
 import Doctors from "@/components/home/Doctors";
 import Testimonials from "@/components/home/Testimonials";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
@@ -41,6 +42,7 @@ export default async function HomePage({
     <>
       <Hero t={t.home.hero} locale={locale} />
       <TrustBar t={t.home.trust} locale={locale} />
+      <About t={t.home.about} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />
       <ServicesOverview
         t={t.home.services}
