@@ -15,6 +15,10 @@ import type { CSSProperties } from "react";
  *
  * Guide rule: "Never place the rose gold [primary] logo on a light
  * rose-gold background" — use `reversed` there instead.
+ *
+ * Fonts are pinned to --font-logo / --font-logo-sub, NOT --font-display /
+ * --font-body. The wordmark must not change when the heading or body
+ * typeface changes. Both resolve to Playfair Display / Montserrat.
  */
 
 type Variant = "primary" | "light" | "reversed" | "monochrome";
@@ -49,7 +53,7 @@ const SUBLINE_GAP: Record<Size, string> = {
 };
 
 function lettersStyle(variant: Variant): CSSProperties {
-  const base: CSSProperties = { fontFamily: "var(--font-display)" };
+  const base: CSSProperties = { fontFamily: "var(--font-logo)" };
   switch (variant) {
     case "primary":
       // .logo-text-lockup.on-dark .letters
@@ -76,7 +80,7 @@ function lettersStyle(variant: Variant): CSSProperties {
 }
 
 function sublineStyle(variant: Variant): CSSProperties {
-  const base: CSSProperties = { fontFamily: "var(--font-body)" };
+  const base: CSSProperties = { fontFamily: "var(--font-logo-sub)" };
   switch (variant) {
     case "primary":
       // .logo-text-lockup.on-dark .subline

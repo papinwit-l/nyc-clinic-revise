@@ -37,14 +37,16 @@ const montserrat = Montserrat({
 // restyle the logo. Same families, so no extra font files are fetched.
 const playfairLogo = Playfair_Display({
   subsets: ["latin"],
-  weight: ["700"],
+  // 400 = Logo.tsx letters (font-normal), 700 = HeroLogo (font-bold)
+  weight: ["400", "700"],
   variable: "--font-logo",
   display: "swap",
 });
 
 const montserratLogo = Montserrat({
   subsets: ["latin"],
-  weight: ["400"],
+  // 300 = Logo.tsx subline (font-light), 400 = HeroLogo subline
+  weight: ["300", "400"],
   variable: "--font-logo-sub",
   display: "swap",
 });
