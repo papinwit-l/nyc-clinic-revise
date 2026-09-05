@@ -23,7 +23,7 @@ export default function Doctors({ t, locale, data }: Props) {
         <SectionHeader section="doctors" className="mb-12 sm:mb-16" />
 
         {/* ── Featured doctor (Dr. Jing) ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
           {/* Photo */}
           <Link
             href={`/${locale}/doctors#${featured.slug}`}
@@ -39,7 +39,7 @@ export default function Doctors({ t, locale, data }: Props) {
           </Link>
 
           {/* Info */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left lg:col-span-2">
             <span className="badge">{t.badge}</span>
 
             {/* EN name — always Playfair Display */}
@@ -65,7 +65,7 @@ export default function Doctors({ t, locale, data }: Props) {
 
             {/* Bio — font follows the text's language */}
             <p
-              className={`text-[var(--color-text-warm)] text-[0.95rem] sm:text-base max-w-lg mx-auto lg:mx-0 ${
+              className={`text-[var(--color-text-warm)] text-[0.95rem] sm:text-base mx-auto lg:mx-0 ${
                 isTH ? "leading-[1.95]" : "leading-[1.85]"
               }`}
               style={{
