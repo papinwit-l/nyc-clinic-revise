@@ -10,11 +10,18 @@ type Props = {
 
 export default function Testimonials({ locale, data }: Props) {
   const isTH = locale === "th";
+  // The guide's Pull Quote role: Cormorant Garamond Light Italic (EN) /
+  // Mitr Light (TH — no italic in Thai, so weight and leading carry it).
+  const quoteFont = isTH ? "var(--font-thai-serif)" : "var(--font-accent)";
+  const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
 
   return (
     <section
       className="py-[var(--section-py)]"
-      style={{ backgroundColor: "var(--color-accent-pale)" }}
+      // surface-dim, not accent-pale: a full-bleed section in the rose-gold
+      // family spent most of the 10% accent budget in one place. Rose-gold now
+      // reads where the guide wants it — stars, treatment labels, CTAs.
+      style={{ backgroundColor: "var(--color-surface-dim)" }}
     >
       <div className="max-w-[var(--container-max)] mx-auto px-6">
         <SectionHeader section="testimonials" className="mb-12" />
@@ -52,11 +59,15 @@ export default function Testimonials({ locale, data }: Props) {
 
                 {/* Quote — font follows text language */}
                 <blockquote
-                  className="text-[var(--color-text-muted)] text-sm leading-relaxed mt-5 flex-1"
+                  className={`text-[var(--color-primary)] mt-5 flex-1 ${
+                    isTH
+                      ? "text-[1.05rem] leading-[1.85]"
+                      : "text-[1.25rem] leading-[1.5]"
+                  }`}
                   style={{
-                    fontFamily: isTH
-                      ? "var(--font-thai-body)"
-                      : "var(--font-body)",
+                    fontFamily: quoteFont,
+                    fontStyle: isTH ? "normal" : "italic",
+                    fontWeight: 300,
                   }}
                 >
                   &ldquo;{quote}&rdquo;
@@ -78,21 +89,24 @@ export default function Testimonials({ locale, data }: Props) {
                       className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center text-sm font-semibold text-white"
                       style={{ backgroundColor: "var(--color-accent)" }}
                     >
-                      {name.replace(/^คุณ/, "").charAt(0)}
+                      {name.replace(/^(คุณ|นางสาว|นาง|นาย)\s*/, "").charAt(0)}
                     </span>
                   )}
                   <div>
                     {/* Name — always Thai font (names are Thai) */}
                     <p
-                      className="text-[var(--color-primary)] text-sm font-medium"
-                      style={{ fontFamily: "var(--font-thai-body)" }}
+                      className="text-[var(--color-primary)] text-sm"
+                      style={{
+                        fontFamily: "var(--font-thai-body)",
+                        fontWeight: 600,
+                      }}
                     >
                       {name}
                     </p>
                     {/* Treatment — always English */}
                     <p
-                      className="text-[11px] tracking-[0.1em] uppercase text-[var(--color-accent)] mt-0.5"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      className="text-xs text-[var(--color-accent-dark)] mt-1"
+                      style={{ fontFamily: bodyFont, fontWeight: 500 }}
                     >
                       {treatment}
                     </p>
