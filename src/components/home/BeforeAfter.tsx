@@ -16,12 +16,17 @@ type Props = {
 export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  // Treatment names are Card Titles — display face, per the guide. Previously
+  // every name in this section was set in the body face.
+  const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   if (!data.length) return null;
 
   // First case leads as the interactive reveal; the rest fill the gallery.
   const featured = data[0];
-  const gallery = data.slice(1);
+  // One full row of three. More reads as too much unless the cases span
+  // several services — revisit when the gallery genuinely diversifies.
+  const gallery = data.slice(1, 4);
 
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
@@ -31,8 +36,10 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
           <div className="max-w-xl">
             <SectionHeader section="results" align="left" />
             <p
-              className="text-[var(--color-text-muted)] mt-3"
-              style={{ fontFamily: bodyFont }}
+              className={`text-[var(--color-text-warm)] text-[1.05rem] mt-3.5 ${
+                isTH ? "leading-[1.95]" : "leading-[1.85]"
+              }`}
+              style={{ fontFamily: bodyFont, fontWeight: 300 }}
             >
               {t.subtitle}
             </p>
@@ -52,7 +59,7 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
             in a link (dragging must not navigate); the "view case" link lives
             in the copy. ── */}
         <div className="flex flex-col items-center text-center mb-16 sm:mb-20 gap-8">
-          <div className="w-full max-w-2xl">
+          <div className="w-full max-w-3xl">
             {featured.beforeImage && featured.afterImage && (
               <BeforeAfterRevealSlide
                 beforeImage={{
@@ -65,12 +72,12 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
                 }}
                 locale={locale}
                 index={0}
-                aspect="16/9"
+                aspect="4/3"
               />
             )}
           </div>
 
-          <div className="max-w-xl">
+          <div className="max-w-2xl">
             <span
               className="inline-flex items-center gap-2 text-[0.72rem] font-semibold tracking-[0.14em] uppercase text-[var(--color-accent-dark)]"
               style={{ fontFamily: bodyFont }}
@@ -80,8 +87,10 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
             </span>
 
             <p
-              className="text-[var(--color-text-muted)] text-base sm:text-lg leading-relaxed mt-4"
-              style={{ fontFamily: bodyFont }}
+              className={`text-[var(--color-text-warm)] text-base sm:text-lg mt-4 ${
+                isTH ? "leading-[1.95]" : "leading-[1.8]"
+              }`}
+              style={{ fontFamily: bodyFont, fontWeight: 300 }}
             >
               {isTH
                 ? "เลื่อนแถบเพื่อดูความเปลี่ยนแปลงก่อนและหลังจากผลงานจริง"
@@ -89,18 +98,24 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
             </p>
 
             <div className="mt-6">
+              {/* Focus leads — it's what differs between cases. Treatment and
+                  doctor sit beneath: currently near-constant, but the card
+                  stays self-describing and needs no rework as data varies. */}
               <h3
-                className="text-lg font-medium text-[var(--color-primary)]"
-                style={{ fontFamily: bodyFont }}
+                className={`text-[var(--color-primary)] leading-[1.2] ${
+                  isTH ? "text-[1.45rem]" : "text-[clamp(1.5rem,2.4vw,1.95rem)]"
+                }`}
+                style={{ fontFamily: titleFont, fontWeight: isTH ? 600 : 400 }}
               >
-                {featured.treatment}
+                {featured.focus ?? featured.treatment}
               </h3>
-              <div className="flex items-center gap-2.5 mt-1.5 justify-center">
+              <div className="flex items-center gap-2.5 mt-2 justify-center">
                 <span className="h-px w-4 bg-[var(--color-accent)]" />
                 <p
                   className="text-xs text-[var(--color-text-subtle)]"
-                  style={{ fontFamily: "var(--font-body)" }}
+                  style={{ fontFamily: bodyFont }}
                 >
+                  {featured.focus ? `${featured.treatment} · ` : ""}
                   {tCommon.by} {featured.doctor}
                 </p>
               </div>
@@ -119,13 +134,13 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
         {/* Airy lookbook gallery — image-forward, no card chrome */}
         {gallery.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-            {gallery.map(({ slug, image, treatment, doctor }) => (
+            {gallery.map(({ slug, image, treatment, focus, doctor }) => (
               <Link
                 key={slug}
                 href={`/${locale}/before-after/${slug}`}
                 className="group block relative transition-transform duration-300 hover:-translate-y-1 hover:z-10"
               >
-                <div className="relative aspect-square overflow-hidden radius-soft bg-[var(--color-surface-dim)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
+                <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:ring-[var(--color-border-accent)] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
                   <Image
                     src={image}
                     alt={`${treatment} — Before & After`}
@@ -133,27 +148,27 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
                     className="object-cover"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  <span
-                    className="absolute top-3 left-3 text-[10px] font-semibold tracking-[0.14em] uppercase text-white/90 bg-[rgba(26,31,58,0.55)] backdrop-blur-sm px-2.5 py-1"
-                    style={{ fontFamily: "var(--font-body)" }}
-                  >
-                    Before / After
-                  </span>
                 </div>
 
                 <div className="pt-4">
                   <h3
-                    className="text-base font-medium text-[var(--color-primary)] transition-colors group-hover:text-[var(--color-accent)]"
-                    style={{ fontFamily: bodyFont }}
+                    className={`text-[var(--color-primary)] leading-[1.3] transition-colors group-hover:text-[var(--color-accent)] ${
+                      isTH ? "text-[1.05rem]" : "text-[1.15rem]"
+                    }`}
+                    style={{
+                      fontFamily: titleFont,
+                      fontWeight: isTH ? 600 : 500,
+                    }}
                   >
-                    {treatment}
+                    {focus ?? treatment}
                   </h3>
-                  <div className="flex items-center gap-2.5 mt-1.5">
-                    <span className="h-px w-4 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8" />
+                  <div className="flex items-center gap-2.5 mt-2">
+                    <span className="h-px w-4 shrink-0 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8" />
                     <p
                       className="text-xs text-[var(--color-text-subtle)]"
-                      style={{ fontFamily: "var(--font-body)" }}
+                      style={{ fontFamily: bodyFont }}
                     >
+                      {focus ? `${treatment} · ` : ""}
                       {tCommon.by} {doctor}
                     </p>
                   </div>
