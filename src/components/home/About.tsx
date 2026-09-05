@@ -33,7 +33,7 @@ export default function About({ t, locale }: Props) {
           column are carrying the section on their own. Panel + gradient-line
           variant preserved in git history if this reads as too bare. */}
 
-      <div className="relative z-10 max-w-[var(--container-max)] mx-auto px-6">
+      <div className="relative z-10 max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         <SectionHeader section="about" align="left" />
         <div className="divider-accent mt-4" />
 
@@ -105,7 +105,7 @@ export default function About({ t, locale }: Props) {
 
           {/* Facility image — 2:3 portrait. Sharp corners: the radius system
               reserves soft/7px for Doctors, Services, B&A and Testimonials. */}
-          <div className="lg:col-span-1 lg:order-2">
+          <div className="lg:col-span-1 lg:order-2 px-16 lg:px-0 ">
             <div
               aria-hidden
               className="relative w-full aspect-[2/3] overflow-hidden bg-[var(--color-surface-dim)] border border-[var(--color-border)]"

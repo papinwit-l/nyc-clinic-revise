@@ -18,7 +18,7 @@ export default function Doctors({ t, locale, data }: Props) {
 
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         {/* Section header */}
         <SectionHeader section="doctors" className="mb-12 sm:mb-16" />
 
