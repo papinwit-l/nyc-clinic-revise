@@ -129,7 +129,7 @@ export default function ContactWidget({ locale }: Props) {
           onClick={() =>
             setState(state === "expanded" ? "collapsed" : "minimized")
           }
-          className="absolute top-0 right-0 w-6 h-6 !rounded-full bg-[var(--color-accent-dark)] text-white/80 hover:text-white hover:bg-[var(--color-accent)] flex items-center justify-center shadow-md transition-colors duration-200 z-20"
+          className="absolute top-2 right-2 w-6 h-6 !rounded-full bg-[var(--color-primary)] ring-1 ring-[var(--color-accent-border)] text-[var(--color-on-primary-warm)] hover:text-white hover:bg-[var(--color-primary-light)] flex items-center justify-center shadow-md transition-colors duration-200 z-20"
           aria-label={
             state === "expanded"
               ? isTH
@@ -152,7 +152,7 @@ export default function ContactWidget({ locale }: Props) {
           onClick={() =>
             setState((s) => (s === "expanded" ? "collapsed" : "expanded"))
           }
-          className="block relative transition-transform duration-300 hover:-translate-y-[0.125rem] hover:scale-105"
+          className="block relative transition-transform duration-300 hover:-translate-y-0.5 hover:scale-105"
           aria-label={
             state === "expanded"
               ? isTH
@@ -175,7 +175,7 @@ export default function ContactWidget({ locale }: Props) {
           {/* Bubble — collapsed only; the pills say it when expanded.
               Navy echoes her top rather than spending accent budget. */}
           <span
-            className={`absolute top-1 right-[76%] whitespace-nowrap bg-[var(--color-primary)] text-[var(--color-on-primary-warm)] px-3 py-1.5 rounded-full shadow-md text-[11px] sm:text-xs transition-all duration-300 ${
+            className={`absolute top-1 right-[76%] whitespace-nowrap bg-[var(--color-primary)] ring-1 ring-[var(--color-accent-border)] text-[var(--color-on-primary-warm)] px-3 py-1.5 rounded-full shadow-md text-[11px] sm:text-xs transition-all duration-300 ${
               state === "collapsed"
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-1 pointer-events-none"
@@ -186,7 +186,7 @@ export default function ContactWidget({ locale }: Props) {
             }}
           >
             {isTH ? "ติดต่อสอบถามได้เลย" : "Questions? Ask us"}
-            <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2.5 h-2.5 rotate-45 bg-[var(--color-primary)]" />
+            <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2.5 h-2.5 rotate-45 bg-[var(--color-primary)] border-r border-t border-[var(--color-accent-border)]" />
           </span>
         </button>
       </div>
