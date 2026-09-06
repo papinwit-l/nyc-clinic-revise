@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { Phone, MessageCircle, X, Minus } from "lucide-react";
 import { LineIcon } from "@/components/shared/SocialIcons";
 
@@ -118,44 +119,75 @@ export default function ContactWidget({ locale }: Props) {
         </a>
       </div>
 
-      {/* Main floating button + minimize */}
+      {/* Dr. Jing die-cut IS the control — the circular button is gone.
+          The rounded-shape exception no longer applies here; the tap target
+          is the figure itself. Three-state logic is unchanged. */}
       <div className="relative">
-        {/* Minimize badge — only visible in collapsed state */}
-        <button
-          type="button"
-          onClick={() => setState("minimized")}
-          className={`absolute -top-1.5 -right-1.5 w-5 h-5 !rounded-full bg-[var(--color-accent-dark)] text-white/70 hover:text-white hover:bg-[var(--color-accent)] flex items-center justify-center shadow-md transition-all duration-200 z-10 ${
-            state === "collapsed"
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-75 pointer-events-none"
-          }`}
-          aria-label={isTH ? "ย่อ" : "Minimize"}
-        >
-          <Minus size={10} strokeWidth={3} />
-        </button>
-
-        {/* Main button — full rounded */}
+        {/* Badge — minimize when collapsed, close when expanded */}
         <button
           type="button"
           onClick={() =>
-            setState((s) => (s === "expanded" ? "collapsed" : "expanded"))
+            setState(state === "expanded" ? "collapsed" : "minimized")
           }
-          className={`flex items-center justify-center w-14 h-14 !rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${
-            state === "expanded"
-              ? "bg-[var(--color-accent-dark)] text-white"
-              : "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)]"
-          }`}
+          className="absolute top-0 right-0 w-6 h-6 !rounded-full bg-[var(--color-accent-dark)] text-white/80 hover:text-white hover:bg-[var(--color-accent)] flex items-center justify-center shadow-md transition-colors duration-200 z-20"
           aria-label={
             state === "expanded"
               ? isTH
                 ? "ปิด"
                 : "Close"
               : isTH
+                ? "ย่อ"
+                : "Minimize"
+          }
+        >
+          {state === "expanded" ? (
+            <X size={12} strokeWidth={2.5} />
+          ) : (
+            <Minus size={12} strokeWidth={3} />
+          )}
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            setState((s) => (s === "expanded" ? "collapsed" : "expanded"))
+          }
+          className="block relative transition-transform duration-300 hover:-translate-y-[0.125rem] hover:scale-105"
+          aria-label={
+            state === "expanded"
+              ? isTH
+                ? "ปิดช่องทางติดต่อ"
+                : "Close contact options"
+              : isTH
                 ? "ติดต่อเรา"
                 : "Contact us"
           }
         >
-          {state === "expanded" ? <X size={20} /> : <MessageCircle size={24} />}
+          <Image
+            src="/images/dr-jing_die-cut.png"
+            alt=""
+            width={1216}
+            height={1860}
+            sizes="(max-width: 640px) 120px, 170px"
+            className="w-[120px] sm:w-[170px] h-auto select-none drop-shadow-[0_10px_24px_rgba(26,31,58,0.18)]"
+          />
+
+          {/* Bubble — collapsed only; the pills say it when expanded.
+              Navy echoes her top rather than spending accent budget. */}
+          <span
+            className={`absolute top-1 right-[76%] whitespace-nowrap bg-[var(--color-primary)] text-[var(--color-on-primary-warm)] px-3 py-1.5 rounded-full shadow-md text-[11px] sm:text-xs transition-all duration-300 ${
+              state === "collapsed"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-1 pointer-events-none"
+            }`}
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+              fontWeight: 500,
+            }}
+          >
+            {isTH ? "ติดต่อสอบถามได้เลย" : "Questions? Ask us"}
+            <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2.5 h-2.5 rotate-45 bg-[var(--color-primary)]" />
+          </span>
         </button>
       </div>
     </div>
