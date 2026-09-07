@@ -41,7 +41,7 @@ export default function ContactWidget({ locale }: Props) {
       <button
         type="button"
         onClick={() => setState("collapsed")}
-        className="fixed bottom-0 right-6 z-50 flex items-center gap-1.5 px-4 py-2 bg-[var(--color-accent)] text-white text-[10px] font-semibold tracking-[0.15em] uppercase shadow-lg hover:bg-[var(--color-accent-hover)] transition-all duration-300"
+        className="fixed bottom-0 right-6 z-50 flex items-center gap-1.5 px-4 py-2 bg-[var(--color-primary)] text-[var(--color-on-primary-warm)] ring-1 ring-[var(--color-accent-border)] text-[10px] font-semibold tracking-[0.15em] uppercase shadow-lg hover:text-white hover:bg-[var(--color-primary-light)] transition-all duration-300"
         style={{
           fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
           borderRadius: "8px 8px 0 0",
@@ -164,7 +164,7 @@ export default function ContactWidget({ locale }: Props) {
           }
         >
           <Image
-            src="/images/dr-jing_die-cut.png"
+            src="/images/dr-jing_die-cut-2.png"
             alt=""
             width={1216}
             height={1860}
