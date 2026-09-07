@@ -1,5 +1,6 @@
 import type { Dictionary } from "@/i18n/get-dictionary";
 import AwardsShelf from "@/components/shared/AwardsShelf";
+import TrustStats from "./TrustStats";
 
 type Props = {
   t: Dictionary["home"]["trust"];
@@ -7,41 +8,12 @@ type Props = {
 };
 
 export default function TrustBarV2({ t, locale }: Props) {
-  const isTH = locale === "th";
-
-  const stats = [
-    { value: "15+", label: t.experience, suffix: isTH ? "ปี" : "yrs" },
-    { value: "10,000+", label: t.cases },
-    { value: "4", label: t.specialists },
-    { value: "✓", label: t.certified },
-  ];
-
   return (
     <section>
-      {/* ── Stats strip (navy) ── */}
-      <div className="bg-[var(--color-primary)] border-y border-[var(--color-accent-border)]">
-        <div className="max-w-[var(--container-max)] mx-auto px-6 py-8 sm:py-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-[var(--color-accent-border)]">
-            {stats.map(({ value, label, suffix }) => (
-              <div key={label} className="text-center lg:px-6">
-                <p className="stat-number text-3xl sm:text-4xl text-[var(--color-accent)]">
-                  {value}
-                  {suffix && (
-                    <span className="text-lg sm:text-xl font-normal ml-1 tracking-normal">
-                      {suffix}
-                    </span>
-                  )}
-                </p>
-                <p
-                  className={`text-[11px] tracking-[0.12em] uppercase mt-2 font-medium text-[var(--color-on-primary-muted)] ${""}`}
-                >
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Stats strip — own client component: the count-up needs an
+          IntersectionObserver, and keeping it isolated leaves the rest of
+          TrustBar on the server. */}
+      <TrustStats t={t} locale={locale} />
 
       {/* ── Industry recognition (white band) ──
           Replaces the certificate marquee. Those SVGs were invented

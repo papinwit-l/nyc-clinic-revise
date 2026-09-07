@@ -43,7 +43,7 @@ export default async function HomePage({
   return (
     <>
       <Hero t={t.home.hero} locale={locale} />
-      <TrustBar t={t.home.trust} locale={locale} />
+      {/* <TrustBar t={t.home.trust} locale={locale} /> */}
       <TrustBarV2 t={t.home.trust} locale={locale} />
       <About t={t.home.about} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />
