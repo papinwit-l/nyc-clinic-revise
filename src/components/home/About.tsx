@@ -1,6 +1,18 @@
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import SectionHeader from "@/components/shared/SectionHeader";
+import Image from "next/image";
+
+const isImagePlaceholder = false;
+const aboutImageSrc = [
+  "/images/about-image.jpg",
+  "/images/about-image-ai-1.png",
+  "/images/about-image-ai-2.png",
+];
+const aboutImage = aboutImageSrc[2];
+
+/** Navy block offset behind the image. Toggle to compare with the frame alone. */
+const showNavyBlock = true;
 
 type Props = {
   t: Dictionary["home"]["about"];
@@ -103,17 +115,52 @@ export default function About({ t, locale }: Props) {
             </div>
           </div>
 
-          {/* Facility image — 2:3 portrait. Sharp corners: the radius system
-              reserves soft/7px for Doctors, Services, B&A and Testimonials. */}
-          <div className="lg:col-span-1 lg:order-2 px-16 lg:px-0 ">
-            <div
-              aria-hidden
-              className="relative w-full aspect-[2/3] overflow-hidden bg-[var(--color-surface-dim)] border border-[var(--color-border)]"
-            >
-              {/* TODO: swap for <Image src="/about-facility.jpg" fill sizes="(min-width:1024px) 33vw, 100vw" alt="" className="object-cover" /> */}
-              <span className="absolute inset-0 grid place-items-center text-[var(--color-text-subtle)] text-xs tracking-[0.2em] uppercase">
-                Facility 2:3
-              </span>
+          {/* Facility image — three depths, deliberately at different scales
+              so they read as layers rather than competing frames:
+                back   solid navy block, offset down-right into the outer
+                       margin — offsetting left would crowd the bio column,
+                       and the container's px-6/px-12 absorbs the overhang
+                mid    the photograph
+                front  rose-gold hairline mat, tight to the image so it stays
+                       attached rather than becoming a third floating shape
+              Sharp corners throughout — soft/7px is reserved for Doctors,
+              Services, B&A and Testimonials. */}
+          <div className="lg:col-span-1 lg:order-2 px-16 lg:px-0">
+            <div className="relative">
+              {showNavyBlock && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0 translate-y-4 translate-x-4 bg-[var(--color-primary)]"
+                />
+              )}
+
+              <div className="relative p-2 sm:p-2.5">
+                <span
+                  aria-hidden
+                  className="absolute inset-0 border border-[var(--color-border-accent)]"
+                />
+                {/* Diamond sits top-left, clear of the navy showing bottom-right */}
+                <span
+                  aria-hidden
+                  className="absolute -top-[5px] -left-[5px] w-2.5 h-2.5 rotate-45 border border-[var(--color-accent)] bg-[var(--color-surface-dim)]"
+                />
+
+                <div className="relative w-full aspect-[2/3] overflow-hidden bg-[var(--color-surface-dim)]">
+                  {isImagePlaceholder ? (
+                    <span className="absolute inset-0 grid place-items-center text-[var(--color-text-subtle)] text-xs tracking-[0.2em] uppercase">
+                      Facility 2:3
+                    </span>
+                  ) : (
+                    <Image
+                      src={aboutImage}
+                      fill
+                      sizes="(min-width:1024px) 33vw, 100vw"
+                      alt=""
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
