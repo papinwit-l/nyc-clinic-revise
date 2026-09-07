@@ -19,6 +19,7 @@ import InstagramFeed from "@/components/home/InstagramFeed";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import ServicesOverview from "@/components/home/ServicesOverview";
 import BeforeAfterV2 from "@/components/home/BeforeAfterV2";
+import TrustBarV2 from "@/components/home/TrustBarV2";
 
 export default async function HomePage({
   params,
@@ -43,6 +44,7 @@ export default async function HomePage({
     <>
       <Hero t={t.home.hero} locale={locale} />
       <TrustBar t={t.home.trust} locale={locale} />
+      <TrustBarV2 t={t.home.trust} locale={locale} />
       <About t={t.home.about} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />
       <ServicesOverview

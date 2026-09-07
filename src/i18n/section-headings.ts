@@ -21,6 +21,8 @@ export const sectionHeadings = {
   testimonials: { label: "What They Say", heading: "Client Reviews" },
   instagram: { label: "Follow Us", heading: "@nycclinic" },
   promotion: { label: "Promotion" },
+  // "Recognition", not "Certifications" — see src/data/awards.ts on wording.
+  awards: { label: "Industry Recognition" },
   blog: { label: "Latest Articles", heading: "From Our Blog" },
   contact: { label: "Contact Us" },
 } as const;
