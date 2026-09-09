@@ -7,6 +7,30 @@ import BeforeAfterRevealSlide from "./BeforeAfterRevealSlide";
 import SectionHeader from "@/components/shared/SectionHeader";
 import { sectionHeadings } from "@/i18n/section-headings";
 
+/**
+ * Backing plate behind the reveal.
+ *   tone      "navy" matches About's block · "dim" is quieter · "none" off
+ *   offset    "down" reads as the frame lifting off the page — right for a
+ *             centred element · "diagonal" matches About, but About's image
+ *             sits in a right-hand column so the direction means something
+ *             there and less here
+ */
+const REVEAL_BACKING: {
+  tone: "navy" | "dim" | "none";
+  offset: "down" | "diagonal";
+  goldCounter?: boolean;
+} = {
+  tone: "navy",
+  offset: "diagonal",
+  goldCounter: false,
+};
+
+const BACKING_BG = {
+  navy: "bg-[var(--color-primary)]",
+  dim: "bg-[var(--color-surface-dim)]",
+  none: "",
+};
+
 type Props = {
   t: Dictionary["home"]["results"];
   tCommon: Dictionary["common"];
@@ -17,20 +41,43 @@ type Props = {
 export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
-  // Treatment names are Card Titles — display face, per the guide. Previously
-  // every name in this section was set in the body face.
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   if (!data.length) return null;
 
-  // First case leads as the interactive reveal; the rest fill the gallery.
   const featured = data[0];
-  // One full row of three. More reads as too much unless the cases span
-  // several services — revisit when the gallery genuinely diversifies.
   const gallery = data.slice(1, 4);
 
   return (
     <section className="relative overflow-hidden bg-[var(--color-surface)] py-[var(--section-py)]">
+      {/* Vertical gradient lines — the guide's third design element, unused
+          until now. They sit at z-0, so the gallery band (which paints inside
+          the z-10 content wrapper) covers them: the lines show only in the
+          cream reveal half, the part of the section with no furniture of its
+          own. Desktop only — below lg there is no margin to put them in. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 hidden lg:block"
+      >
+        {[
+          { left: "11%", opacity: 0.8 },
+          { left: "14.5%", opacity: 0.5 },
+          { left: "85.5%", opacity: 0.5 },
+          { left: "89%", opacity: 0.8 },
+        ].map((line) => (
+          <span
+            key={line.left}
+            className="absolute top-[8%] bottom-[30%] w-px"
+            style={{
+              left: line.left,
+              opacity: line.opacity,
+              background:
+                "linear-gradient(180deg, transparent 0%, var(--color-border-accent) 22%, var(--color-border-accent) 62%, transparent 100%)",
+            }}
+          />
+        ))}
+      </div>
+
       <div className="relative z-10 max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         {/* Magazine header row — heading left, CTA top-right on desktop. */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
@@ -57,13 +104,52 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
 
         {/* TODO: the reveal is showing a placeholder pair (two different
             patients). See src/data/cases.ts header. */}
-        {/* ── Featured interactive reveal — slider on top, copy beneath,
-            centered as the section's focal moment. The slider is NOT wrapped
-            in a link (dragging must not navigate); the "view case" link lives
-            in the copy. ── */}
         {featured.beforeImage && featured.afterImage && (
           <div className="flex flex-col items-center text-center mb-16 sm:mb-20 gap-8">
-            <div className="w-full max-w-3xl">
+            {/* Diamond divider — marks the reveal as the section's focal
+                moment, and reuses the mark from the gallery sub-heading. */}
+            <div aria-hidden className="flex items-center gap-3 -mb-2">
+              <span
+                className="h-px w-16"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, var(--color-accent))",
+                }}
+              />
+              <span className="w-2 h-2 rotate-45 border border-[var(--color-accent)]" />
+              <span
+                className="h-px w-16"
+                style={{
+                  background:
+                    "linear-gradient(90deg, var(--color-accent), transparent)",
+                }}
+              />
+            </div>
+
+            <div className="relative w-full max-w-3xl">
+              {REVEAL_BACKING.goldCounter &&
+                REVEAL_BACKING.offset === "diagonal" && (
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -translate-y-3 -translate-x-3"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, var(--color-accent-dark) 0%, var(--color-accent) 45%, var(--color-accent-pale) 100%)",
+                    }}
+                  />
+                )}
+
+              {REVEAL_BACKING.tone !== "none" && (
+                <span
+                  aria-hidden
+                  className={`absolute inset-0 ${BACKING_BG[REVEAL_BACKING.tone]} ${
+                    REVEAL_BACKING.offset === "diagonal"
+                      ? "translate-y-4 translate-x-4"
+                      : "translate-y-5"
+                  }`}
+                />
+              )}
+
               <BeforeAfterRevealSlide
                 beforeImage={{
                   src: featured.beforeImage,
@@ -76,6 +162,15 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
                 locale={locale}
                 index={0}
                 aspect="4/3"
+              />
+
+              {/* Border as an overlay, not a prop on the slide — the slide is
+                  shared and stays visually neutral. Rose-gold hairline rather
+                  than navy: navy would merge into the plate behind it. */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-40 ring-1 ring-[var(--color-border-accent)]"
+                style={{ borderRadius: "var(--radius-soft)" }}
               />
             </div>
 
@@ -100,9 +195,6 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
               </p>
 
               <div className="mt-6">
-                {/* Focus leads — it's what differs between cases. Treatment and
-                  doctor sit beneath: currently near-constant, but the card
-                  stays self-describing and needs no rework as data varies. */}
                 <h3
                   className={`text-[var(--color-primary)] leading-[1.2] ${
                     isTH
@@ -137,9 +229,6 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
               </Link>
             </div>
 
-            {/* CTA — mobile only (desktop CTA lives in the header row).
-                Lives INSIDE the band wrapper: as a sibling after it, the band
-                ran past this link and the CTA straddled the tonal edge. */}
             <div className="relative z-10 lg:hidden text-center mt-10">
               <Link
                 href={`/${locale}/before-after`}
@@ -153,19 +242,14 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
         )}
 
         {/* Airy lookbook gallery — image-forward, no card chrome.
-            Full-bleed surface-dim band behind the gallery only: the reveal
-            stays on cream, the gallery sits on the darker tone where the
-            white card frames read strongest. Tone, not ornament. */}
+            Full-bleed surface-dim band behind the gallery only. */}
         {gallery.length > 0 && (
           <div className="relative">
             <div
               aria-hidden
               className="absolute left-1/2 -translate-x-1/2 w-screen top-[-3rem] bottom-[calc(-1*var(--section-py))] bg-[var(--color-surface-dim)]"
             />
-            {/* Sub-heading, not a second SectionHeader — the band gives the
-                gallery its own ground, so it needs a label, but an eyebrow +
-                h2 stack here would undo consolidating them. Same treatment as
-                Doctors' "Also On Our Team". */}
+
             <div className="relative z-10 flex items-center gap-4 mb-8">
               <span
                 aria-hidden
@@ -183,8 +267,6 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
               >
                 {sectionHeadings.results.galleryHeading}
               </h3>
-              {/* Rule runs to the container edge — marks the band's start and
-                  reuses the accent-hairline language from the card captions. */}
               <span
                 aria-hidden
                 className="h-px flex-1"
