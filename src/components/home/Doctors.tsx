@@ -23,11 +23,35 @@ export default function Doctors({ t, locale, data }: Props) {
         <SectionHeader section="doctors" className="mb-12 sm:mb-16" />
 
         {/* ── Featured doctor (Dr. Jing) ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
+        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 lg:items-start mb-14 sm:mb-16">
+          {/* Concentric rings — behind the portrait, bleeding off the
+              top-left. A ring behind a face reads as a halo, not the spa
+              ripple that got them removed from About.
+
+              Three nested elements, each a 1px border. NOT inset box-shadows:
+              those stack rather than mask, so a "transparent" inner shadow
+              doesn't cut a hole — it renders as a solid band. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute z-0 hidden lg:block left-[-9rem] top-[-6rem] w-[26rem] aspect-square"
+          >
+            {[
+              { inset: "0", opacity: 0.55 },
+              { inset: "14%", opacity: 0.38 },
+              { inset: "30%", opacity: 0.24 },
+            ].map((ring) => (
+              <span
+                key={ring.inset}
+                className="absolute rounded-full border border-[var(--color-accent)]"
+                style={{ inset: ring.inset, opacity: ring.opacity }}
+              />
+            ))}
+          </div>
+
           {/* Photo */}
           <Link
             href={`/${locale}/doctors#${featured.slug}`}
-            className="group relative aspect-[3/4] max-w-md mx-auto lg:mx-0 w-full overflow-hidden bg-[var(--color-surface-dim)] radius-soft"
+            className="group relative z-10 aspect-[3/4] max-w-md mx-auto lg:mx-0 w-full overflow-hidden bg-[var(--color-surface-dim)] radius-soft"
           >
             <Image
               src={featured.image}
@@ -39,7 +63,7 @@ export default function Doctors({ t, locale, data }: Props) {
           </Link>
 
           {/* Info */}
-          <div className="text-center lg:text-left lg:col-span-2">
+          <div className="relative z-10 text-center lg:text-left lg:col-span-2 lg:pt-4">
             <span className="badge">{t.badge}</span>
 
             {/* EN name — always Playfair Display */}
@@ -65,7 +89,7 @@ export default function Doctors({ t, locale, data }: Props) {
 
             {/* Bio — font follows the text's language */}
             <p
-              className={`text-[var(--color-text-warm)] text-[0.95rem] sm:text-base mx-auto lg:mx-0 ${
+              className={`text-[var(--color-text-warm)] text-[0.95rem] sm:text-base mx-auto lg:mx-0 max-w-[54ch] ${
                 isTH ? "leading-[1.95]" : "leading-[1.85]"
               }`}
               style={{
@@ -126,7 +150,7 @@ export default function Doctors({ t, locale, data }: Props) {
         {/* ── Secondary doctors ── */}
         <div>
           <p
-            className="text-center text-[1.15rem] text-[var(--color-text-warm)] mb-8"
+            className="text-center text-[1.15rem] text-[var(--color-text-warm)] mb-6"
             style={{ fontFamily: "var(--font-display)", fontWeight: 400 }}
           >
             {sectionHeadings.doctors.teamHeading}
