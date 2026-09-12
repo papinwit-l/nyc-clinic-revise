@@ -18,7 +18,6 @@ import ContactCTA from "@/components/home/ContactCTA";
 import InstagramFeed from "@/components/home/InstagramFeed";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import ServicesOverview from "@/components/home/ServicesOverview";
-import BeforeAfterV2 from "@/components/home/BeforeAfterV2";
 
 export default async function HomePage({
   params,
@@ -51,13 +50,7 @@ export default async function HomePage({
         locale={locale}
         data={services}
       />
-      {/* <BeforeAfter
-        t={t.home.results}
-        tCommon={t.common}
-        locale={locale}
-        data={cases}
-      /> */}
-      <BeforeAfterV2
+      <BeforeAfter
         t={t.home.results}
         tCommon={t.common}
         locale={locale}
