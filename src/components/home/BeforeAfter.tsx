@@ -18,11 +18,11 @@ import { sectionHeadings } from "@/i18n/section-headings";
 const REVEAL_BACKING: {
   tone: "navy" | "dim" | "none";
   offset: "down" | "diagonal";
-  goldCounter?: boolean;
+  goldCounter: boolean;
 } = {
   tone: "navy",
   offset: "diagonal",
-  goldCounter: false,
+  goldCounter: true,
 };
 
 const BACKING_BG = {
@@ -38,7 +38,7 @@ type Props = {
   data: CaseCard[];
 };
 
-export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
+export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
@@ -60,14 +60,14 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
         className="pointer-events-none absolute inset-0 z-0 hidden lg:block"
       >
         {[
-          { left: "11%", opacity: 0.8 },
-          { left: "14.5%", opacity: 0.5 },
-          { left: "85.5%", opacity: 0.5 },
-          { left: "89%", opacity: 0.8 },
+          { left: "11%", opacity: 0.5 },
+          { left: "14.5%", opacity: 0.26 },
+          { left: "85.5%", opacity: 0.26 },
+          { left: "89%", opacity: 0.5 },
         ].map((line) => (
           <span
             key={line.left}
-            className="absolute top-[8%] bottom-[30%] w-px"
+            className="absolute top-0 bottom-0 w-px"
             style={{
               left: line.left,
               opacity: line.opacity,
@@ -228,16 +228,6 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
                 {isTH ? "ดูเคสนี้ →" : "View this case →"}
               </Link>
             </div>
-
-            <div className="relative z-10 lg:hidden text-center mt-10">
-              <Link
-                href={`/${locale}/before-after`}
-                className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-                style={{ fontFamily: bodyFont }}
-              >
-                {t.cta}
-              </Link>
-            </div>
           </div>
         )}
 
@@ -319,6 +309,36 @@ export default function BeforeAfter({ t, tCommon, locale, data }: Props) {
                   </div>
                 </Link>
               ))}
+            </div>
+
+            {/* Closing CTA — inside the band wrapper so it sits on the dim
+                ground with the cards rather than straddling the tonal edge.
+                Replaces the old mobile-only link in the reveal block; this one
+                shows at every breakpoint. */}
+            <div className="relative z-10 mt-12 flex items-center gap-4">
+              <span
+                aria-hidden
+                className="h-px flex-1"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, var(--color-border-accent))",
+                }}
+              />
+              <Link
+                href={`/${locale}/before-after`}
+                className="shrink-0 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+                style={{ fontFamily: bodyFont }}
+              >
+                {t.cta}
+              </Link>
+              <span
+                aria-hidden
+                className="h-px flex-1"
+                style={{
+                  background:
+                    "linear-gradient(90deg, var(--color-border-accent), transparent)",
+                }}
+              />
             </div>
           </div>
         )}
