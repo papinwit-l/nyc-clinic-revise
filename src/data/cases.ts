@@ -4,8 +4,12 @@
 // PLACEHOLDER DATA — all six images are Nose Thread Lift composites. The
 // treatments below are varied deliberately so the layout is exercised against
 // mixed services; the imagery does NOT match the stated treatment yet.
-// focus_en / focus_th are drafted from the slugs and need marketing review
-// before this is shown to anyone outside the team.
+// focus_en / focus_th: marketing moved the gallery cards to LOOK-based names
+// ("Natural look", "European look") rather than clinical concerns — patients
+// choose by the look they want. The remaining entries still carry
+// concern-style values, so the field currently holds two vocabularies. Worth
+// settling one way before this becomes a Pods field, or content editors will
+// mix them. All values still need marketing sign-off.
 
 import { CaseCard } from "@/types/case";
 
@@ -24,21 +28,21 @@ const DATA = [
     afterImage: "/images/cases/case-02.jpg",
   },
   {
-    slug: "nose-thread-wing-reduction",
+    slug: "nose-thread-natural-look",
     image: "/images/cases/case-02.jpg",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
-    focus_en: "Wing reduction",
-    focus_th: "ปีกจมูกกระชับ",
+    focus_en: "Natural look",
+    focus_th: "ทรงธรรมชาติ",
     doctor: "Dr. Jing",
   },
   {
-    slug: "nose-thread-hump-correction",
+    slug: "nose-thread-european-look",
     image: "/images/cases/case-03.jpg",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
-    focus_en: "Hump correction",
-    focus_th: "ปรับสันจมูกให้เรียบ",
+    focus_en: "European look",
+    focus_th: "ทรงยุโรป",
     doctor: "Dr. Jing",
   },
   {
