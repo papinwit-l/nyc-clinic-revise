@@ -3,11 +3,12 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Phone, MessageCircle, X, Minus } from "lucide-react";
-import { LineIcon } from "@/components/shared/SocialIcons";
+import { LineIcon, TiktokIcon } from "@/components/shared/SocialIcons";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
 const PHONE_HREF = "tel:+66880087870";
+const TIKTOK_URL = "https://www.tiktok.com/@nycclinic";
 
 type WidgetState = "collapsed" | "expanded" | "minimized";
 
@@ -41,7 +42,7 @@ export default function ContactWidget({ locale }: Props) {
       <button
         type="button"
         onClick={() => setState("collapsed")}
-        className="fixed bottom-0 right-6 z-50 flex items-center gap-1.5 px-4 py-2 bg-[var(--color-primary)] text-[var(--color-on-primary-warm)] ring-1 ring-[var(--color-accent-border)] text-[10px] font-semibold tracking-[0.15em] uppercase shadow-lg hover:text-white hover:bg-[var(--color-primary-light)] transition-all duration-300"
+        className="fixed bottom-0 right-6 z-50 flex items-center gap-1.5 px-4 py-2 bg-[var(--color-accent)] text-white text-[10px] font-semibold tracking-[0.15em] uppercase shadow-lg hover:bg-[var(--color-accent-hover)] transition-all duration-300"
         style={{
           fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
           borderRadius: "8px 8px 0 0",
@@ -92,6 +93,34 @@ export default function ContactWidget({ locale }: Props) {
           </span>
         </a>
 
+        {/* TikTok — social discovery channel, below the two direct-contact
+            pills. Brand black rather than the palette: a platform pill reads
+            as that platform, same reasoning as LINE's green. */}
+        <a
+          href={TIKTOK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-3 bg-[#111111] pl-4 pr-5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+          style={{ fontFamily: "var(--font-body)" }}
+        >
+          <span className="flex items-center justify-center w-9 h-9 rounded-full bg-white/15 text-white shrink-0">
+            <TiktokIcon className="w-5 h-5" />
+          </span>
+          <span className="flex flex-col">
+            <span
+              className="text-[9px] font-medium tracking-[0.1em] uppercase text-white/70"
+              style={{
+                fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+              }}
+            >
+              {isTH ? "ดูผลงานจริง" : "See our work"}
+            </span>
+            <span className="text-sm font-semibold text-white tracking-wide">
+              @nycclinic
+            </span>
+          </span>
+        </a>
+
         {/* LINE */}
         <a
           href={LINE_URL}
@@ -129,7 +158,7 @@ export default function ContactWidget({ locale }: Props) {
           onClick={() =>
             setState(state === "expanded" ? "collapsed" : "minimized")
           }
-          className="absolute top-2 right-2 w-6 h-6 !rounded-full bg-[var(--color-primary)] ring-1 ring-[var(--color-accent-border)] text-[var(--color-on-primary-warm)] hover:text-white hover:bg-[var(--color-primary-light)] flex items-center justify-center shadow-md transition-colors duration-200 z-20"
+          className="absolute top-0 right-0 w-6 h-6 !rounded-full bg-[var(--color-primary)] ring-1 ring-[var(--color-accent-border)] text-[var(--color-on-primary-warm)] hover:text-white hover:bg-[var(--color-primary-light)] flex items-center justify-center shadow-md transition-colors duration-200 z-20"
           aria-label={
             state === "expanded"
               ? isTH
@@ -152,7 +181,7 @@ export default function ContactWidget({ locale }: Props) {
           onClick={() =>
             setState((s) => (s === "expanded" ? "collapsed" : "expanded"))
           }
-          className="block relative transition-transform duration-300 hover:-translate-y-0.5 hover:scale-105"
+          className="block relative transition-transform duration-300 hover:-translate-y-0.5"
           aria-label={
             state === "expanded"
               ? isTH

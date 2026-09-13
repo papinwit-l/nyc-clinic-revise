@@ -4,6 +4,7 @@ import {
   InstagramIcon,
   FacebookIcon,
   YoutubeIcon,
+  TiktokIcon,
 } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import SectionHeader from "@/components/shared/SectionHeader";
@@ -23,6 +24,11 @@ const SOCIALS = [
     label: "Instagram",
     href: "https://www.instagram.com/nycclinic/",
     Icon: InstagramIcon,
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@nycclinic",
+    Icon: TiktokIcon,
   },
   { label: "LINE", href: LINE_URL, Icon: LineIcon },
   {

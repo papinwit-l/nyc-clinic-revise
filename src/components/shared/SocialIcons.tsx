@@ -188,3 +188,21 @@ export function YoutubeIcon(props: Props) {
     </svg>
   );
 }
+
+export function TiktokIcon(props: Props) {
+  const { className = "w-4 h-4", ...rest } = props;
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...rest}
+    >
+      <path
+        d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1 0-5.18c.27 0 .52.04.76.12v-3.2a5.86 5.86 0 0 0-.76-.05A5.72 5.72 0 0 0 4.14 15.3 5.72 5.72 0 0 0 9.86 21a5.72 5.72 0 0 0 5.72-5.72V9.01a7.35 7.35 0 0 0 4.28 1.38V7.3a4.3 4.3 0 0 1-3.26-1.48Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}

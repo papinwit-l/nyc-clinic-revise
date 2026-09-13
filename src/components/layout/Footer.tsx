@@ -6,6 +6,7 @@ import {
   InstagramIcon,
   YoutubeIcon,
   LineIcon,
+  TiktokIcon,
 } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
@@ -23,6 +24,11 @@ const SOCIALS = [
     href: "https://www.instagram.com/nycclinic/",
     icon: InstagramIcon,
     label: "Instagram",
+  },
+  {
+    href: "https://www.tiktok.com/@nycclinic",
+    icon: TiktokIcon,
+    label: "TikTok",
   },
   {
     href: "https://www.youtube.com/user/nycnewyorkclinic",
