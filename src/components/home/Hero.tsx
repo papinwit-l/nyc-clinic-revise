@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { LineIcon } from "@/components/shared/SocialIcons";
@@ -26,6 +26,29 @@ const HERO_SLIDES = [
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
 const SLIDE_INTERVAL_MS = 6000;
+
+/**
+ * Thai has no spaces between words, so a browser breaks Thai text at its own
+ * algorithmic boundaries — which split "ทางการแพทย์" across two lines here.
+ * The spaces in our Thai strings are deliberate PHRASE separators, so make
+ * them the only break opportunity: each phrase becomes an inline-block, which
+ * can't be broken internally unless it alone exceeds the line.
+ *
+ * Latin text is returned untouched — normal word wrapping is correct there.
+ */
+function phraseWrap(text: string, isTH: boolean) {
+  if (!isTH) return text;
+  const parts = text.split(/\s+/).filter(Boolean);
+  return parts.map((phrase, i) => (
+    <Fragment key={`${phrase}-${i}`}>
+      {/* Space BETWEEN the boxes, not inside one — a trailing space within an
+          inline-block is trimmed, so it renders no gap and creates no break
+          opportunity. */}
+      {i > 0 && " "}
+      <span className="inline-block">{phrase}</span>
+    </Fragment>
+  ));
+}
 
 type Props = {
   t: Dictionary["home"]["hero"];
@@ -138,15 +161,17 @@ export default function Hero({ t, locale }: Props) {
         </div>
 
         <p
-          className="text-lg sm:text-xl md:text-2xl text-[var(--color-accent-pale)] hero-text-shadow-sm"
+          className={`text-lg sm:text-xl md:text-2xl text-[var(--color-accent-pale)] hero-text-shadow-sm text-balance ${
+            isTH ? "leading-[1.7]" : ""
+          }`}
           style={{
             fontFamily: isTH ? "var(--font-thai-serif)" : "var(--font-accent)",
             fontWeight: 300,
             fontStyle: isTH ? "normal" : "italic",
-            letterSpacing: "0.03em",
+            letterSpacing: isTH ? "0.01em" : "0.03em",
           }}
         >
-          {t.tagline}
+          {phraseWrap(t.tagline, isTH)}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 sm:mt-10">
