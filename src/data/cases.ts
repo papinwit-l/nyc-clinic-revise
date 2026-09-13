@@ -1,15 +1,23 @@
-// TODO: replace with WP fetch
-// e.g. const res = await fetch(`${WP_API}/wp/v2/case?per_page=${limit}`);
+// ─────────────────────────────────────────────────────────────────────────
+// TODO — BEFORE THIS SECTION GOES TO CLIENT / MARKETING REVIEW
 //
-// PLACEHOLDER DATA — all six images are Nose Thread Lift composites. The
-// treatments below are varied deliberately so the layout is exercised against
-// mixed services; the imagery does NOT match the stated treatment yet.
-// focus_en / focus_th: marketing moved the gallery cards to LOOK-based names
-// ("Natural look", "European look") rather than clinical concerns — patients
-// choose by the look they want. The remaining entries still carry
-// concern-style values, so the field currently holds two vocabularies. Worth
-// settling one way before this becomes a Pods field, or content editors will
-// mix them. All values still need marketing sign-off.
+// 1. IMAGERY MISMATCH. All six images are Nose Thread Lift composites. The
+//    treatments below (Facial Thread Lift, Surgery) are placeholders used to
+//    exercise the layout against mixed services. The photos do NOT show the
+//    treatment named. Must not ship as-is.
+//
+// 2. SUB-CATEGORY TERMS UNVERIFIED. Values below are drafted, not supplied by
+//    the clinic. Marketing owes the real term list per treatment AND its
+//    deliberate order — order is functional: the FIRST child term on a case
+//    decides which group it renders in (project reference §5).
+//
+// 3. WP FETCH. Replace with:
+//    const res = await fetch(`${WP_API}/wp/v2/case?per_page=${limit}`);
+//    REST returns term IDs only — fetch /wp/v2/case_treatment separately for
+//    terms + their `parent`, and assemble the grouping here, not in the page.
+//    Also needs ?orderby=menu_order&order=asc plus the
+//    rest_case_collection_params filter (project reference §5).
+// ─────────────────────────────────────────────────────────────────────────
 
 import { CaseCard } from "@/types/case";
 
@@ -17,60 +25,74 @@ const DATA = [
   {
     slug: "nose-thread-tip-extension",
     image: "/images/cases/case-01.jpg",
+    treatmentSlug: "nose-thread-lift",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
-    focus_en: "Tip extension",
-    focus_th: "ยืดปลายพุ่ง",
+    subcategorySlug: "tip-extension",
+    subcategory_en: "Tip extension",
+    subcategory_th: "ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
-    // Placeholder pair — these are two different patients' composites.
-    // Needs two single-shot photos of ONE patient, matched framing/lighting.
-    beforeImage: "/images/cases/case-01.jpg",
-    afterImage: "/images/cases/case-02.jpg",
+    order: 1,
   },
   {
     slug: "nose-thread-natural-look",
     image: "/images/cases/case-02.jpg",
+    treatmentSlug: "nose-thread-lift",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
-    focus_en: "Natural look",
-    focus_th: "ทรงธรรมชาติ",
+    subcategorySlug: "natural-look",
+    subcategory_en: "Natural look",
+    subcategory_th: "ทรงธรรมชาติ",
     doctor: "Dr. Jing",
+    order: 2,
   },
   {
     slug: "nose-thread-european-look",
     image: "/images/cases/case-03.jpg",
+    treatmentSlug: "nose-thread-lift",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
-    focus_en: "European look",
-    focus_th: "ทรงยุโรป",
+    subcategorySlug: "european-look",
+    subcategory_en: "European look",
+    subcategory_th: "ทรงยุโรป",
     doctor: "Dr. Jing",
+    order: 3,
   },
   {
     slug: "facial-thread-v-shape",
     image: "/images/cases/case-04.jpg",
+    treatmentSlug: "facial-thread-lift",
     treatment_en: "Facial Thread Lift",
     treatment_th: "ร้อยไหมหน้า",
-    focus_en: "V-shape lifting",
-    focus_th: "ยกกระชับรูปหน้าวี",
+    subcategorySlug: "v-shape",
+    subcategory_en: "V-shape lifting",
+    subcategory_th: "ยกกระชับรูปหน้าวี",
     doctor: "Dr. Jing",
+    order: 4,
   },
   {
     slug: "rhinoplasty-profile",
     image: "/images/cases/case-05.jpg",
+    treatmentSlug: "surgery",
     treatment_en: "Surgery",
     treatment_th: "ศัลยกรรม",
-    focus_en: "Rhinoplasty",
-    focus_th: "เสริมจมูก",
+    subcategorySlug: "rhinoplasty",
+    subcategory_en: "Rhinoplasty",
+    subcategory_th: "เสริมจมูก",
     doctor: "Dr. Beer",
+    order: 5,
   },
   {
     slug: "blepharoplasty-double-eyelid",
     image: "/images/cases/case-06.jpg",
+    treatmentSlug: "surgery",
     treatment_en: "Surgery",
     treatment_th: "ศัลยกรรม",
-    focus_en: "Double eyelid",
-    focus_th: "ตาสองชั้น",
+    subcategorySlug: "blepharoplasty",
+    subcategory_en: "Double eyelid",
+    subcategory_th: "ตาสองชั้น",
     doctor: "Dr. Lulu",
+    order: 6,
   },
 ];
 
@@ -81,14 +103,14 @@ export async function getCases(
   const limit = opts?.limit ?? DATA.length;
   const isTH = locale === "th";
 
-  // TODO: fetch from WP and map bilingual fields
   return DATA.slice(0, limit).map((item) => ({
     slug: item.slug,
     image: item.image,
     treatment: isTH ? item.treatment_th : item.treatment_en,
-    focus: isTH ? item.focus_th : item.focus_en,
+    treatmentSlug: item.treatmentSlug,
+    subcategory: isTH ? item.subcategory_th : item.subcategory_en,
+    subcategorySlug: item.subcategorySlug,
     doctor: item.doctor,
-    beforeImage: item.beforeImage,
-    afterImage: item.afterImage,
+    order: item.order,
   }));
 }

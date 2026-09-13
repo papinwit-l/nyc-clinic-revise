@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronsLeftRight } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { CaseCard } from "@/types/case";
+import type { Reveal } from "@/types/reveal";
 import BeforeAfterRevealSlide from "./BeforeAfterRevealSlide";
 import SectionHeader from "@/components/shared/SectionHeader";
 import { sectionHeadings } from "@/i18n/section-headings";
@@ -22,7 +23,7 @@ const REVEAL_BACKING: {
 } = {
   tone: "navy",
   offset: "diagonal",
-  goldCounter: true,
+  goldCounter: false,
 };
 
 const BACKING_BG = {
@@ -36,17 +37,27 @@ type Props = {
   tCommon: Dictionary["common"];
   locale: string;
   data: CaseCard[];
+  /** Editor's homepage pick. `null` renders the section with no reveal — see
+   *  getFeaturedReveal(); there is deliberately no fallback to "any reveal". */
+  reveal: Reveal | null;
 };
 
-export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
+export default function BeforeAfter({
+  t,
+  tCommon,
+  locale,
+  data,
+  reveal,
+}: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   if (!data.length) return null;
 
-  const featured = data[0];
-  const gallery = data.slice(1, 4);
+  // The reveal is its own CPT now, so it no longer consumes a case — the
+  // gallery starts at index 0.
+  const gallery = data.slice(0, 3);
 
   return (
     <section className="relative overflow-hidden bg-[var(--color-surface)] py-[var(--section-py)]">
@@ -60,14 +71,14 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
         className="pointer-events-none absolute inset-0 z-0 hidden lg:block"
       >
         {[
-          { left: "11%", opacity: 0.5 },
-          { left: "14.5%", opacity: 0.26 },
-          { left: "85.5%", opacity: 0.26 },
-          { left: "89%", opacity: 0.5 },
+          { left: "11%", opacity: 0.8 },
+          { left: "14.5%", opacity: 0.5 },
+          { left: "85.5%", opacity: 0.5 },
+          { left: "89%", opacity: 0.8 },
         ].map((line) => (
           <span
             key={line.left}
-            className="absolute top-0 bottom-0 w-px"
+            className="absolute top-[8%] bottom-[30%] w-px"
             style={{
               left: line.left,
               opacity: line.opacity,
@@ -102,9 +113,9 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
           </Link>
         </div>
 
-        {/* TODO: the reveal is showing a placeholder pair (two different
-            patients). See src/data/cases.ts header. */}
-        {featured.beforeImage && featured.afterImage && (
+        {/* TODO: the reveal pair is a placeholder — two different patients.
+            See src/data/reveals.ts header. */}
+        {reveal && (
           <div className="flex flex-col items-center text-center mb-16 sm:mb-20 gap-8">
             {/* Diamond divider — marks the reveal as the section's focal
                 moment, and reuses the mark from the gallery sub-heading. */}
@@ -152,12 +163,12 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
 
               <BeforeAfterRevealSlide
                 beforeImage={{
-                  src: featured.beforeImage,
-                  alt: `${featured.treatment} — ${isTH ? "ก่อน" : "Before"}`,
+                  src: reveal.beforeImage,
+                  alt: `${reveal.title ?? ""} — ${isTH ? "ก่อน" : "Before"}`,
                 }}
                 afterImage={{
-                  src: featured.afterImage,
-                  alt: `${featured.treatment} — ${isTH ? "หลัง" : "After"}`,
+                  src: reveal.afterImage,
+                  alt: `${reveal.title ?? ""} — ${isTH ? "หลัง" : "After"}`,
                 }}
                 locale={locale}
                 index={0}
@@ -206,26 +217,29 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
                     fontWeight: isTH ? 600 : 400,
                   }}
                 >
-                  {featured.focus ?? featured.treatment}
+                  {reveal.title}
                 </h3>
-                <div className="flex items-center gap-2.5 mt-2 justify-center">
-                  <span className="h-px w-4 bg-[var(--color-accent)]" />
-                  <p
-                    className="text-xs text-[var(--color-text-subtle)]"
-                    style={{ fontFamily: bodyFont }}
-                  >
-                    {featured.focus ? `${featured.treatment} · ` : ""}
-                    {tCommon.by} {featured.doctor}
-                  </p>
-                </div>
+                {reveal.doctor && (
+                  <div className="flex items-center gap-2.5 mt-2 justify-center">
+                    <span className="h-px w-4 bg-[var(--color-accent)]" />
+                    <p
+                      className="text-xs text-[var(--color-text-subtle)]"
+                      style={{ fontFamily: bodyFont }}
+                    >
+                      {tCommon.by} {reveal.doctor}
+                    </p>
+                  </div>
+                )}
               </div>
 
+              {/* A reveal is not a case and has no route of its own — this
+                  points at the treatment gallery instead. */}
               <Link
-                href={`/${locale}/before-after/${featured.slug}`}
+                href={`/${locale}/before-after/${reveal.treatmentSlug}`}
                 className="inline-flex items-center mt-6 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                 style={{ fontFamily: bodyFont }}
               >
-                {isTH ? "ดูเคสนี้ →" : "View this case →"}
+                {isTH ? "ดูผลงานทั้งหมด →" : "See all results →"}
               </Link>
             </div>
           </div>
@@ -268,47 +282,49 @@ export default function BeforeAfterV2({ t, tCommon, locale, data }: Props) {
             </div>
 
             <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-              {gallery.map(({ slug, image, treatment, focus, doctor }) => (
-                <Link
-                  key={slug}
-                  href={`/${locale}/before-after/${slug}`}
-                  className="group block relative transition-transform duration-300 hover:-translate-y-1 hover:z-10"
-                >
-                  <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:ring-[var(--color-border-accent)] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
-                    <Image
-                      src={image}
-                      alt={`${treatment} — Before & After`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  </div>
-
-                  <div className="pt-4">
-                    <h4
-                      className={`text-[var(--color-primary)] leading-[1.3] transition-colors group-hover:text-[var(--color-accent)] ${
-                        isTH ? "text-[1.05rem]" : "text-[1.15rem]"
-                      }`}
-                      style={{
-                        fontFamily: titleFont,
-                        fontWeight: isTH ? 600 : 500,
-                      }}
-                    >
-                      {focus ?? treatment}
-                    </h4>
-                    <div className="flex items-center gap-2.5 mt-2">
-                      <span className="h-px w-4 shrink-0 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8" />
-                      <p
-                        className="text-xs text-[var(--color-text-subtle)]"
-                        style={{ fontFamily: bodyFont }}
-                      >
-                        {focus ? `${treatment} · ` : ""}
-                        {tCommon.by} {doctor}
-                      </p>
+              {gallery.map(
+                ({ slug, image, treatment, subcategory, doctor }) => (
+                  <Link
+                    key={slug}
+                    href={`/${locale}/before-after/${slug}`}
+                    className="group block relative transition-transform duration-300 hover:-translate-y-1 hover:z-10"
+                  >
+                    <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:ring-[var(--color-border-accent)] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
+                      <Image
+                        src={image}
+                        alt={`${treatment} — Before & After`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
                     </div>
-                  </div>
-                </Link>
-              ))}
+
+                    <div className="pt-4">
+                      <h4
+                        className={`text-[var(--color-primary)] leading-[1.3] transition-colors group-hover:text-[var(--color-accent)] ${
+                          isTH ? "text-[1.05rem]" : "text-[1.15rem]"
+                        }`}
+                        style={{
+                          fontFamily: titleFont,
+                          fontWeight: isTH ? 600 : 500,
+                        }}
+                      >
+                        {subcategory ?? treatment}
+                      </h4>
+                      <div className="flex items-center gap-2.5 mt-2">
+                        <span className="h-px w-4 shrink-0 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8" />
+                        <p
+                          className="text-xs text-[var(--color-text-subtle)]"
+                          style={{ fontFamily: bodyFont }}
+                        >
+                          {subcategory ? `${treatment} · ` : ""}
+                          {tCommon.by} {doctor}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ),
+              )}
             </div>
 
             {/* Closing CTA — inside the band wrapper so it sits on the dim

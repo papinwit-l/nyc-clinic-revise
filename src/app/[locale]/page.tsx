@@ -18,6 +18,7 @@ import ContactCTA from "@/components/home/ContactCTA";
 import InstagramFeed from "@/components/home/InstagramFeed";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import ServicesOverview from "@/components/home/ServicesOverview";
+import { getFeaturedReveal } from "@/data/reveal";
 
 export default async function HomePage({
   params,
@@ -27,16 +28,25 @@ export default async function HomePage({
   const { locale } = await params;
   const t = await getDictionary(locale as Locale);
 
-  const [services, cases, doctors, testimonials, posts, promo, igPosts] =
-    await Promise.all([
-      getServices(locale),
-      getCases(locale, { limit: 6 }),
-      getDoctors(),
-      getTestimonials(locale, 3),
-      getLatestPosts(locale, 3),
-      getActivePromotion(locale),
-      getInstagramPosts(8),
-    ]);
+  const [
+    services,
+    cases,
+    featuredReveal,
+    doctors,
+    testimonials,
+    posts,
+    promo,
+    igPosts,
+  ] = await Promise.all([
+    getServices(locale),
+    getCases(locale, { limit: 6 }),
+    getFeaturedReveal(locale),
+    getDoctors(),
+    getTestimonials(locale, 3),
+    getLatestPosts(locale, 3),
+    getActivePromotion(locale),
+    getInstagramPosts(8),
+  ]);
 
   return (
     <>
@@ -55,6 +65,7 @@ export default async function HomePage({
         tCommon={t.common}
         locale={locale}
         data={cases}
+        reveal={featuredReveal}
       />
       <Testimonials locale={locale} data={testimonials} />
       <InstagramFeed locale={locale} data={igPosts} />
