@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ChevronsLeftRight } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
@@ -6,6 +5,7 @@ import type { CaseCard } from "@/types/case";
 import type { Reveal } from "@/types/reveal";
 import BeforeAfterRevealSlide from "./BeforeAfterRevealSlide";
 import SectionHeader from "@/components/shared/SectionHeader";
+import CaseGallery from "./CaseGallery";
 import { sectionHeadings } from "@/i18n/section-headings";
 
 /**
@@ -281,51 +281,7 @@ export default function BeforeAfter({
               />
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-              {gallery.map(
-                ({ slug, image, treatment, subcategory, doctor }) => (
-                  <Link
-                    key={slug}
-                    href={`/${locale}/before-after/${slug}`}
-                    className="group block relative transition-transform duration-300 hover:-translate-y-1 hover:z-10"
-                  >
-                    <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:ring-[var(--color-border-accent)] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
-                      <Image
-                        src={image}
-                        alt={`${treatment} — Before & After`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    </div>
-
-                    <div className="pt-4">
-                      <h4
-                        className={`text-[var(--color-primary)] leading-[1.3] transition-colors group-hover:text-[var(--color-accent)] ${
-                          isTH ? "text-[1.05rem]" : "text-[1.15rem]"
-                        }`}
-                        style={{
-                          fontFamily: titleFont,
-                          fontWeight: isTH ? 600 : 500,
-                        }}
-                      >
-                        {subcategory ?? treatment}
-                      </h4>
-                      <div className="flex items-center gap-2.5 mt-2">
-                        <span className="h-px w-4 shrink-0 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8" />
-                        <p
-                          className="text-xs text-[var(--color-text-subtle)]"
-                          style={{ fontFamily: bodyFont }}
-                        >
-                          {subcategory ? `${treatment} · ` : ""}
-                          {tCommon.by} {doctor}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                ),
-              )}
-            </div>
+            <CaseGallery tCommon={tCommon} locale={locale} cases={gallery} />
 
             {/* Closing CTA — inside the band wrapper so it sits on the dim
                 ground with the cards rather than straddling the tonal edge.

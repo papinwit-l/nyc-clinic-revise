@@ -23,18 +23,6 @@ import { CaseCard } from "@/types/case";
 
 const DATA = [
   {
-    slug: "nose-thread-tip-extension",
-    image: "/images/cases/case-01.jpg",
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "tip-extension",
-    subcategory_en: "Tip extension",
-    subcategory_th: "ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
-    order: 1,
-  },
-  {
     slug: "nose-thread-natural-look",
     image: "/images/cases/case-02.jpg",
     treatmentSlug: "nose-thread-lift",
@@ -44,7 +32,7 @@ const DATA = [
     subcategory_en: "Natural look",
     subcategory_th: "ทรงธรรมชาติ",
     doctor: "Dr. Jing",
-    order: 2,
+    order: 1,
   },
   {
     slug: "nose-thread-european-look",
@@ -56,7 +44,7 @@ const DATA = [
     subcategory_en: "European look",
     subcategory_th: "ทรงยุโรป",
     doctor: "Dr. Jing",
-    order: 3,
+    order: 2,
   },
   {
     slug: "facial-thread-v-shape",
@@ -67,6 +55,18 @@ const DATA = [
     subcategorySlug: "v-shape",
     subcategory_en: "V-shape lifting",
     subcategory_th: "ยกกระชับรูปหน้าวี",
+    doctor: "Dr. Jing",
+    order: 3,
+  },
+  {
+    slug: "nose-thread-tip-extension",
+    image: "/images/cases/case-01.jpg",
+    treatmentSlug: "nose-thread-lift",
+    treatment_en: "Nose Thread Lift",
+    treatment_th: "ร้อยไหมจมูก",
+    subcategorySlug: "tip-extension",
+    subcategory_en: "Tip extension",
+    subcategory_th: "ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
     order: 4,
   },
