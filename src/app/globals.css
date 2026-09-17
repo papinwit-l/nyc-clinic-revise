@@ -51,6 +51,10 @@
   --color-surface: #faf6f1;
   --color-surface-dim: #f0e8df;
   --color-surface-white: #ffffff;
+  /* One step below surface-dim, same warm family. Added so Testimonials can
+     sit darker than Before & After's gallery band — otherwise the two meet at
+     the same value and the section seam disappears. */
+  --color-surface-deep: #e6dacd;
 
   /* Text on light backgrounds */
   --color-text: #2a2a2a;
@@ -220,6 +224,74 @@ h6 {
 .radius-soft {
   border-radius: var(--radius-soft);
   box-shadow: 0 8px 22px rgba(26, 31, 58, 0.08);
+}
+
+/* ─── Entrance animation (see components/shared/InView.tsx) ───
+   Only opacity + transform: both composite on the GPU, so scroll stays
+   smooth on mid-range Android. The default (no .is-hidden) is the VISIBLE
+   state — InView adds .is-hidden on the client after mount, so content is
+   never invisible if JS fails.
+
+   The global prefers-reduced-motion rule above already flattens these
+   transitions; InView also skips arming entirely in that case. */
+
+.in-view-fade,
+.in-view-rise,
+.in-view-scale {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.in-view-fade.is-hidden {
+  opacity: 0;
+}
+
+.in-view-rise.is-hidden {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.in-view-scale.is-hidden {
+  opacity: 0;
+  transform: scale(0.985);
+}
+
+/* ─── Entrance animation (see components/shared/InView.tsx) ───
+   Only opacity + transform: both composite on the GPU, so scroll stays
+   smooth on mid-range Android. The default (no .is-hidden) is the VISIBLE
+   state — InView adds .is-hidden on the client after mount, so content is
+   never invisible if JS fails or is slow.
+
+   The global prefers-reduced-motion rule above already flattens these
+   transitions; InView also skips arming entirely in that case. */
+
+.in-view-fade,
+.in-view-rise,
+.in-view-scale {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.in-view-fade.is-hidden {
+  opacity: 0;
+}
+
+.in-view-rise.is-hidden {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.in-view-scale.is-hidden {
+  opacity: 0;
+  transform: scale(0.985);
 }
 
 /* ─── Dividers ─── */
@@ -455,7 +527,34 @@ h6 {
   animation: shimmer 6s ease-in-out infinite;
 }
 
-/* Scroll cue — hidden on short viewports */
+/* Scroll cue.
+   Had no base styles at all: the label inherited body colour (near-black)
+   over a dark hero, and .scroll-indicator__arrow matched nothing.
+   NOTE: uppercase/tracking is Latin-only — Hero applies the Thai branch. */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-accent-pale);
+  opacity: 0.85;
+}
+
+.scroll-indicator__arrow {
+  animation: scroll-bob 2.2s ease-in-out infinite;
+}
+
+@keyframes scroll-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+/* Hidden on short viewports */
 @media (max-height: 700px) {
   .scroll-indicator {
     display: none !important;
