@@ -1,119 +1,147 @@
-import Image from "next/image";
+import type { Metadata } from "next";
 import { DOCTORS } from "@/data/doctors";
+import { getDictionary } from "@/i18n/get-dictionary";
+import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
+import PageHeader from "@/components/shared/PageHeader";
+import DoctorLead from "@/components/doctors/DoctorLead";
+import DoctorCard from "@/components/doctors/DoctorCard";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
-export const metadata = {
-  title: "Doctors — ทีมแพทย์ผู้เชี่ยวชาญ",
-  description: "ทีมแพทย์ผู้เชี่ยวชาญเฉพาะทาง NYC Clinic ประสบการณ์กว่า 15 ปี",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getDictionary(locale as Locale);
+  return {
+    title: `${t.doctor.hero.heading} — NYC Clinic`,
+    description: t.doctor.hero.description,
+  };
+}
 
-export default function DoctorsPage() {
+export default async function DoctorsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getDictionary(locale as Locale);
+  const isTH = locale === "th";
+
+  const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
+
+  const lead = DOCTORS.find((d) => d.featured) ?? DOCTORS[0];
+  // Dr. Jing does not repeat in the team section — decided Sept 2026.
+  const team = DOCTORS.filter((d) => d.slug !== lead.slug);
+
   return (
     <>
-      {/* Hero */}
-      <section className="bg-[var(--color-primary)] pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div className="max-w-[var(--container-max)] mx-auto px-6 text-center">
-          <span className="section-label">Our Team</span>
-          <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl font-semibold text-white mt-3">
-            Meet the Doctors
-          </h1>
-          <p className="font-[var(--font-thai-head)] text-xl text-[var(--color-accent-pale)] mt-2">
-            ทีมแพทย์ผู้เชี่ยวชาญ
-          </p>
-          <p className="text-[var(--color-on-primary-muted)] text-sm mt-4 max-w-lg mx-auto">
-            ทีมแพทย์ผู้เชี่ยวชาญเฉพาะทาง ประสบการณ์กว่า 15 ปี
-            พร้อมให้คำปรึกษาและดูแลคุณ
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        label={t.doctor.hero.label}
+        heading={t.doctor.hero.heading}
+        description={t.doctor.hero.description}
+        locale={locale}
+      />
 
-      {/* Doctor profiles */}
+      {/* Lead specialist — on --color-surface, the brighter ground */}
       <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
-        <div className="max-w-[var(--container-max)] mx-auto px-6 space-y-16">
-          {DOCTORS.map((doc, idx) => (
-            <article
-              key={doc.slug}
-              id={doc.slug}
-              className={`grid grid-cols-1 gap-8 lg:gap-14 items-start ${
-                idx % 2 === 0
-                  ? "lg:grid-cols-[280px_1fr]"
-                  : "lg:grid-cols-[1fr_280px]"
-              }`}
-            >
-              {/* Portrait */}
-              <div
-                className={`relative aspect-[3/4] w-full max-w-[280px] mx-auto lg:mx-0 overflow-hidden bg-[var(--color-surface-dim)] ${
-                  idx % 2 === 1 ? "lg:order-2 lg:ml-auto" : ""
-                }`}
-              >
-                <Image
-                  src={doc.image}
-                  alt={`${doc.nameEn} — ${doc.nameTh}`}
-                  fill
-                  className="object-cover object-top"
-                  sizes="280px"
-                />
-              </div>
-
-              {/* Info */}
-              <div>
-                <span className="section-label">{doc.experience}</span>
-
-                <h2 className="font-[var(--font-display)] text-2xl sm:text-3xl font-semibold mt-2">
-                  {doc.nameEn}
-                </h2>
-                <p className="font-[var(--font-thai-head)] text-lg text-[var(--color-accent)] mt-0.5">
-                  {doc.nameTh}
-                </p>
-
-                <p className="text-sm text-[var(--color-text-muted)] mt-1">
-                  {doc.fullNameEn}
-                </p>
-                <p className="font-[var(--font-thai-body)] text-sm text-[var(--color-text-muted)]">
-                  {doc.fullNameTh}
-                </p>
-
-                <div className="h-px bg-[var(--color-border)] my-5" />
-
-                <ul className="space-y-3">
-                  {doc.credentials.map(({ en, th }, i) => (
-                    <li key={i} className="flex gap-3 items-start">
-                      <span className="shrink-0 w-6 h-6 flex items-center justify-center bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-[11px] font-semibold mt-0.5">
-                        {i + 1}
-                      </span>
-                      <div>
-                        <p className="font-[var(--font-thai-body)] text-sm">
-                          {th}
-                        </p>
-                        <p className="text-xs text-[var(--color-text-muted)]">
-                          {en}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+          <DoctorLead doctor={lead} t={t.doctor} locale={locale} />
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[var(--color-primary)] py-14 text-center">
-        <div className="max-w-[var(--container-max)] mx-auto px-6">
-          <p className="font-[var(--font-thai-head)] text-lg text-white">
-            ปรึกษาแพทย์ผู้เชี่ยวชาญ ฟรี ไม่มีค่าใช้จ่าย
-          </p>
+      {/* Rest of the team — surface-dim, so the lead block above reads as the
+          primary moment */}
+      <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+          {/* A mark, not another line. The blocks below already carry a
+              gradient separator and a vertical rule each; a third rule
+              treatment here would tip the section into line work. */}
+          <div className="flex items-center gap-5 sm:gap-8 mb-14">
+            <span
+              aria-hidden
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, var(--color-accent))",
+              }}
+            />
+            <p
+              className={`text-[var(--color-text-warm)] ${
+                isTH ? "text-[1.1rem]" : "text-[1.2rem]"
+              }`}
+              style={{ fontFamily: headFont, fontWeight: isTH ? 600 : 400 }}
+            >
+              {isTH ? "ทีมแพทย์ของเรา" : "Also On Our Team"}
+            </p>
+            <span
+              aria-hidden
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, var(--color-accent), transparent)",
+              }}
+            />
+          </div>
+
+          <div className="space-y-14 sm:space-y-16">
+            {team.map((doc, i) => (
+              <DoctorCard
+                key={doc.slug}
+                doctor={doc}
+                locale={locale}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Closing CTA — flanking hairlines rather than the diamond divider:
+          the page header already uses the diamond, and twice on one page makes
+          it a tic. This is the same rule–text–rule treatment as the homepage's
+          Before & After closing CTA, so "closing CTA" gets one pattern. */}
+      <section className="bg-[var(--color-primary)] py-16 text-center">
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+          <div className="flex items-center gap-5 sm:gap-8">
+            <span
+              aria-hidden
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, var(--color-accent))",
+              }}
+            />
+            <p
+              className={`shrink-0 text-[var(--color-on-primary-warm)] ${
+                isTH ? "text-[1.15rem]" : "text-[1.25rem]"
+              }`}
+              style={{ fontFamily: headFont, fontWeight: isTH ? 600 : 400 }}
+            >
+              {t.doctor.cta.consult}
+            </p>
+            <span
+              aria-hidden
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, var(--color-accent), transparent)",
+              }}
+            />
+          </div>
           <a
             href={LINE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-line mt-5 inline-flex"
+            className="btn-line mt-6 inline-flex"
+            style={{ fontFamily: bodyFont }}
           >
             <LineIcon className="w-5 h-5" />
-            แอดไลน์ปรึกษาฟรี
+            {t.doctor.cta.ctaLine}
           </a>
         </div>
       </section>
