@@ -31,6 +31,15 @@ export default function BeforeAfterRevealSlide({
   const beforeLabel = isTH ? "ก่อน" : "Before";
   const afterLabel = isTH ? "หลัง" : "After";
 
+  // These labels are Thai on the TH locale, so they need the Thai face —
+  // Montserrat has no Thai glyphs and would fall back to a system font.
+  // Uppercase/tracking are dropped for Thai: uppercase is a no-op and
+  // tracking pulls apart vowel and tone-mark clusters.
+  const labelFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const labelType = isTH
+    ? "text-[11px] sm:text-xs font-medium"
+    : "text-[10px] sm:text-[11px] font-semibold tracking-[0.14em] uppercase";
+
   // Handle position, 0–100. Left of the handle shows BEFORE, right shows AFTER.
   const [percent, setPercent] = useState(50);
   const [dragging, setDragging] = useState(false);
@@ -83,7 +92,7 @@ export default function BeforeAfterRevealSlide({
         fill
         draggable={false}
         className="object-cover pointer-events-none select-none"
-        sizes="(max-width: 768px) 100vw, 700px"
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 780px"
       />
 
       {/* BEFORE — overlay, clipped to the left of the handle */}
@@ -97,23 +106,25 @@ export default function BeforeAfterRevealSlide({
           fill
           draggable={false}
           className="object-cover pointer-events-none select-none"
-          sizes="(max-width: 768px) 100vw, 700px"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 780px"
         />
       </div>
 
       {/* Labels — each fades out as the handle nears its own edge, so neither
           shows on the wrong side (and no half-clipped label mid-drag) */}
       <span
-        className={`absolute bottom-3 left-3 z-20 text-[10px] font-semibold tracking-[0.14em] uppercase text-white/90 bg-[rgba(26,31,58,0.55)] backdrop-blur-sm px-2.5 py-1 pointer-events-none transition-opacity duration-200 ${
+        className={`absolute bottom-3 sm:bottom-4 left-3 sm:left-4 z-20 ${labelType} text-white/90 bg-[rgba(26,31,58,0.55)] backdrop-blur-sm px-2.5 py-1 pointer-events-none transition-opacity duration-200 ${
           percent > 14 ? "opacity-100" : "opacity-0"
         }`}
+        style={{ fontFamily: labelFont }}
       >
         {beforeLabel}
       </span>
       <span
-        className={`absolute bottom-3 right-3 z-20 text-[10px] font-semibold tracking-[0.14em] uppercase text-white/90 bg-[rgba(26,31,58,0.55)] backdrop-blur-sm px-2.5 py-1 pointer-events-none transition-opacity duration-200 ${
+        className={`absolute bottom-3 sm:bottom-4 right-3 sm:right-4 z-20 ${labelType} text-white/90 bg-[rgba(26,31,58,0.55)] backdrop-blur-sm px-2.5 py-1 pointer-events-none transition-opacity duration-200 ${
           percent < 86 ? "opacity-100" : "opacity-0"
         }`}
+        style={{ fontFamily: labelFont }}
       >
         {afterLabel}
       </span>
@@ -140,9 +151,9 @@ export default function BeforeAfterRevealSlide({
         {/* vertical divider */}
         <div className="absolute inset-y-0 w-0.5 bg-white/90 shadow-[0_0_6px_rgba(0,0,0,0.3)]" />
         {/* knob */}
-        <div className="relative w-9 h-9 rounded-full bg-white shadow-[0_2px_10px_rgba(26,31,58,0.35)] flex items-center justify-center ring-2 ring-white/70 group-focus-visible/handle:ring-[var(--color-accent)] transition-[box-shadow]">
+        <div className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white shadow-[0_2px_10px_rgba(26,31,58,0.35)] flex items-center justify-center ring-2 ring-white/70 group-focus-visible/handle:ring-[var(--color-accent)] transition-[box-shadow]">
           <ChevronsLeftRight
-            size={18}
+            size={20}
             className="text-[var(--color-primary)]"
           />
         </div>

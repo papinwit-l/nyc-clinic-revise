@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Dictionary } from "@/i18n/get-dictionary";
+import { sectionHeadings } from "@/i18n/section-headings";
 import type { InstagramPost } from "@/types/instagram";
 import Logo from "../shared/Logo";
 
@@ -33,19 +33,18 @@ function InstagramIcon({
 const IG_PROFILE_URL = "https://www.instagram.com/nycclinic/";
 
 type Props = {
-  t: Dictionary["home"]["instagram"];
   locale: string;
   data: InstagramPost[];
 };
 
-export default function InstagramFeed({ t, locale, data }: Props) {
+export default function InstagramFeed({ locale, data }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   if (data.length === 0) return null;
 
   return (
     <section className="bg-[var(--color-surface-white)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         {/* Profile-style header — reads as a real IG presence, not a generic
             "Follow Us" band. Avatar + handle left, Follow action right. */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
@@ -88,13 +87,13 @@ export default function InstagramFeed({ t, locale, data }: Props) {
 
             <div>
               <span className="section-label" style={{ fontFamily: bodyFont }}>
-                {t.label}
+                {sectionHeadings.instagram.label}
               </span>
               <p
                 className="text-xl sm:text-2xl font-semibold text-[var(--color-primary)] mt-0.5"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                {t.heading}
+                {sectionHeadings.instagram.heading}
               </p>
             </div>
           </div>

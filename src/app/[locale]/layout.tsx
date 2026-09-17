@@ -31,6 +31,26 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+// ─── Logo faces (PINNED) ────────────────────────────
+// The wordmark must not follow the heading/body typeface. These are
+// separate instances so a change of --font-display or --font-body cannot
+// restyle the logo. Same families, so no extra font files are fetched.
+const playfairLogo = Playfair_Display({
+  subsets: ["latin"],
+  // 400 = Logo.tsx letters (font-normal), 700 = HeroLogo (font-bold)
+  weight: ["400", "700"],
+  variable: "--font-logo",
+  display: "swap",
+});
+
+const montserratLogo = Montserrat({
+  subsets: ["latin"],
+  // 300 = Logo.tsx subline (font-light), 400 = HeroLogo subline
+  weight: ["300", "400"],
+  variable: "--font-logo-sub",
+  display: "swap",
+});
+
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400"],
@@ -96,6 +116,8 @@ export default async function LocaleLayout({
       className={`
         ${playfair.variable}
         ${montserrat.variable}
+        ${playfairLogo.variable}
+        ${montserratLogo.variable}
         ${cormorant.variable}
         ${anuphan.variable}
         ${mitr.variable}

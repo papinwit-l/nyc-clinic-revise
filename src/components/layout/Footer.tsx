@@ -6,6 +6,7 @@ import {
   InstagramIcon,
   YoutubeIcon,
   LineIcon,
+  TiktokIcon,
 } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
@@ -23,6 +24,11 @@ const SOCIALS = [
     href: "https://www.instagram.com/nycclinic/",
     icon: InstagramIcon,
     label: "Instagram",
+  },
+  {
+    href: "https://www.tiktok.com/@nycclinic",
+    icon: TiktokIcon,
+    label: "TikTok",
   },
   {
     href: "https://www.youtube.com/user/nycnewyorkclinic",
@@ -94,7 +100,9 @@ export default function Footer({ locale, t, navT }: Props) {
             <Logo variant="primary" size="lg" />
 
             <p
-              className="text-sm leading-relaxed max-w-xs"
+              className={`text-sm max-w-xs ${
+                isTH ? "leading-[1.9]" : "leading-relaxed"
+              }`}
               style={{ fontFamily: localeFont }}
             >
               {t.description}
@@ -141,12 +149,16 @@ export default function Footer({ locale, t, navT }: Props) {
           {NAV_COLS.map(({ title, links, linkFont }) => (
             <div key={title}>
               <h4
-                className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white mb-4"
+                className={`text-white mb-4 ${
+                  isTH
+                    ? "text-[0.9rem] font-semibold"
+                    : "text-[11px] font-semibold tracking-[0.15em] uppercase"
+                }`}
                 style={{ fontFamily: localeFont }}
               >
                 {title}
               </h4>
-              <ul className="space-y-2.5">
+              <ul className={isTH ? "space-y-3" : "space-y-2.5"}>
                 {links.map(({ href, label }) => (
                   <li key={href}>
                     <Link

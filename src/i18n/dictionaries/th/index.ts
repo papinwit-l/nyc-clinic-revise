@@ -33,6 +33,7 @@ const th = {
     phone: "โทรศัพท์",
     location: "ที่อยู่",
     hours: "เวลาทำการ",
+    close: "ปิด",
   },
   home,
   doctor,

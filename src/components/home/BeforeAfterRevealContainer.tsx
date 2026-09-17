@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { CaseCard } from "@/types/case";
 import BeforeAfterRevealSlide from "./BeforeAfterRevealSlide";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 type ImageData = {
   src: string;
@@ -32,27 +33,10 @@ export default function BeforeAfterRevealContainer({
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
       <div className="max-w-[var(--container-max)] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span
-            className="section-label"
-            style={{
-              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-            }}
-          >
-            {t.label}
-          </span>
-          <h2
-            className="section-heading text-3xl sm:text-4xl mt-3"
-            style={{
-              fontFamily: isTH
-                ? "var(--font-thai-head)"
-                : "var(--font-display)",
-            }}
-          >
-            {t.heading}
-          </h2>
+        <div className="mb-12">
+          <SectionHeader section="results" />
           <p
-            className="text-[var(--color-text-muted)] mt-3 max-w-md mx-auto"
+            className="text-[var(--color-text-muted)] mt-3 max-w-md mx-auto text-center"
             style={{
               fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
             }}

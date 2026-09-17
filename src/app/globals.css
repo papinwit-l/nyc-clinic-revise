@@ -22,9 +22,13 @@
    --font-display   → Playfair Display
    --font-body      → Montserrat
    --font-accent    → Cormorant Garamond
-   --font-thai-head → (Anuphan — pending layout.tsx update)
-   --font-thai-serif→ (Mitr — pending layout.tsx update, var name kept for now)
+   --font-thai-head → Anuphan
+   --font-thai-serif→ Mitr (var name kept for continuity)
    --font-thai-body → Prompt
+
+   PINNED — must not follow a change of heading/body typeface:
+   --font-logo      → Playfair Display (Logo.tsx, HeroLogo.tsx)
+   --font-logo-sub  → Montserrat       (logo subline)
    ============================================ */
 
 @theme {
@@ -52,6 +56,9 @@
   --color-text: #2a2a2a;
   --color-text-muted: rgba(42, 42, 42, 0.65);
   --color-text-subtle: rgba(42, 42, 42, 0.45);
+  /* Warm-neutral body text. --color-text is a cool near-black that fights the
+     warm cream surfaces. Used by About, Doctors, Services, Before & After. */
+  --color-text-warm: rgba(56, 48, 40, 0.78);
 
   /* Text on dark backgrounds */
   --color-on-primary: #ffffff;
@@ -156,7 +163,8 @@ h5,
 h6 {
   margin: 0;
   font-family: var(--font-display);
-  line-height: 1.2;
+  /* Guide: H1 1.3, H2 1.35. Components may tighten locally for display sizes. */
+  line-height: 1.3;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -188,34 +196,14 @@ h6 {
 }
 
 /* Section heading — display type */
+/* Guide H2: 32px / 1.35. Playfair's thick/thin contrast is what makes it
+   worth using; weight 600 with positive tracking flattens it. NOTE: this
+   class is used by every SectionHeader, so this affects all sections. */
 .section-heading {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-}
-
-/* Thai section subtitle */
-.section-heading-th {
-  font-family: var(--font-thai-head);
-  font-weight: 600;
-  line-height: 1.35;
-}
-
-/* Tagline — EN italic accent face */
-.tagline {
-  font-family: var(--font-accent);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: 0.03em;
-  line-height: 1.5;
-}
-
-/* Tagline — TH italic */
-.tagline-th {
-  font-family: var(--font-thai-serif);
-  font-weight: 300;
-  line-height: 1.5;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
 }
 
 /* Stat numbers — trust bar, badges */
@@ -224,18 +212,6 @@ h6 {
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
-}
-
-/* Thai body text */
-.text-thai {
-  font-family: var(--font-thai-body);
-  line-height: 1.8;
-}
-
-/* Thai editorial / accent */
-.text-thai-serif {
-  font-family: var(--font-thai-serif);
-  line-height: 1.8;
 }
 
 /* ─── Radius exception ───
@@ -284,18 +260,6 @@ h6 {
   transform: rotate(45deg);
   margin-inline: 1rem;
   flex-shrink: 0;
-}
-
-/* Gradient horizontal rule */
-.hr-gradient {
-  border: none;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-accent),
-    transparent
-  );
 }
 
 /* ─── Buttons ─── (stay sharp — structural, not content) */

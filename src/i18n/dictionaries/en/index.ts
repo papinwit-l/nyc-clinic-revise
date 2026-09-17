@@ -33,6 +33,7 @@ const en = {
     phone: "Phone",
     location: "Location",
     hours: "Hours",
+    close: "Close",
   },
   home,
   doctor,

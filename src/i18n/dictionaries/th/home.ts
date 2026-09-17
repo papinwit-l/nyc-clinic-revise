@@ -12,7 +12,6 @@ const home = {
     certified: "แพทย์เฉพาะทาง",
   },
   about: {
-    label: "เกี่ยวกับ NYC Clinic",
     // Quote is DRAFT — pending Dr. Jing's approval (it's attributed to her).
     quote:
       "แต่ละใบหน้ามีเอกลักษณ์ การร้อยไหมจมูกจึงต้องอาศัยประสบการณ์ โดยแพทย์ผู้เชี่ยวชาญมากกว่า 15 ปี",
@@ -38,7 +37,6 @@ const home = {
     ],
   },
   signature: {
-    label: "บริการเด่น",
     title: "ร้อยไหมเสริมจมูก",
     subtitle: "เทคนิคกึ่งศัลยกรรม ร้อยไหมจมูก",
     description:
@@ -51,46 +49,25 @@ const home = {
     ],
   },
   services: {
-    label: "บริการของเรา",
-    heading: "บริการทั้งหมด",
     cta: "ดูบริการทั้งหมด →",
   },
   results: {
-    label: "ผลงานจริง",
-    heading: "ก่อน & หลัง",
     subtitle: "ผลลัพธ์จริงจากคนไข้ของเรา โดยทีมแพทย์ผู้เชี่ยวชาญ",
     cta: "ดูแกลเลอรี่ทั้งหมด →",
   },
   doctors: {
-    label: "ทีมแพทย์",
-    heading: "แพทย์ผู้เชี่ยวชาญ",
     badge: "แพทย์ผู้เชี่ยวชาญหลัก",
-    teamHeading: "ทีมแพทย์ของเรา",
     cta: "ดูแพทย์ทั้งหมด →",
   },
-  testimonials: {
-    label: "เสียงจากลูกค้า",
-    heading: "รีวิวจากลูกค้า",
-  },
-  instagram: {
-    label: "ติดตามเรา",
-    heading: "@nycclinic",
-    cta: "ติดตาม @nycclinic →",
-  },
   promotion: {
-    label: "โปรโมชัน",
     validUntil: "ถึงวันที่",
     cta: "รับโปรโมชัน",
     details: "ดูรายละเอียด",
   },
   blog: {
-    label: "บทความล่าสุด",
-    heading: "บทความ",
     cta: "อ่านต่อ →",
   },
   contact: {
-    label: "ติดต่อเรา",
-    heading: "ติดต่อ",
     hoursValue: "จันทร์ – เสาร์ 10:00 – 19:00 น.\nอาทิตย์ 10:00 – 17:00 น.",
     readyTitle: "พร้อมเปลี่ยนแปลงตัวเอง?",
     readySubtitle: "แอดไลน์เพื่อปรึกษาฟรี ไม่มีค่าใช้จ่าย",

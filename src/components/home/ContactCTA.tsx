@@ -4,8 +4,10 @@ import {
   InstagramIcon,
   FacebookIcon,
   YoutubeIcon,
+  TiktokIcon,
 } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 const PHONE = "088-008-7870";
@@ -22,6 +24,11 @@ const SOCIALS = [
     label: "Instagram",
     href: "https://www.instagram.com/nycclinic/",
     Icon: InstagramIcon,
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@nycclinic",
+    Icon: TiktokIcon,
   },
   { label: "LINE", href: LINE_URL, Icon: LineIcon },
   {
@@ -44,23 +51,18 @@ type Props = {
 export default function ContactCTA({ t, tCommon, locale }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
-  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   return (
     <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
-      <div className="max-w-[var(--container-max)] mx-auto px-6">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
           {/* LEFT — the pitch + the action (left-aligned, conversion-first) */}
           <div className="flex flex-col">
-            <span className="section-label" style={{ fontFamily: bodyFont }}>
-              {t.label}
-            </span>
-            <h2
-              className="section-heading text-3xl sm:text-4xl mt-3 text-[var(--color-primary)]"
-              style={{ fontFamily: headFont }}
-            >
-              {t.readyTitle}
-            </h2>
+            <SectionHeader
+              section="contact"
+              align="left"
+              heading={t.readyTitle}
+            />
             <p
               className="text-[var(--color-text-muted)] mt-3 max-w-md"
               style={{ fontFamily: bodyFont }}

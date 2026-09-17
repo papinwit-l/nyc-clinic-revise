@@ -1,52 +1,98 @@
-// TODO: replace with WP fetch
-// e.g. const res = await fetch(`${WP_API}/wp/v2/case?per_page=${limit}`);
+// ─────────────────────────────────────────────────────────────────────────
+// TODO — BEFORE THIS SECTION GOES TO CLIENT / MARKETING REVIEW
+//
+// 1. IMAGERY MISMATCH. All six images are Nose Thread Lift composites. The
+//    treatments below (Facial Thread Lift, Surgery) are placeholders used to
+//    exercise the layout against mixed services. The photos do NOT show the
+//    treatment named. Must not ship as-is.
+//
+// 2. SUB-CATEGORY TERMS UNVERIFIED. Values below are drafted, not supplied by
+//    the clinic. Marketing owes the real term list per treatment AND its
+//    deliberate order — order is functional: the FIRST child term on a case
+//    decides which group it renders in (project reference §5).
+//
+// 3. WP FETCH. Replace with:
+//    const res = await fetch(`${WP_API}/wp/v2/case?per_page=${limit}`);
+//    REST returns term IDs only — fetch /wp/v2/case_treatment separately for
+//    terms + their `parent`, and assemble the grouping here, not in the page.
+//    Also needs ?orderby=menu_order&order=asc plus the
+//    rest_case_collection_params filter (project reference §5).
+// ─────────────────────────────────────────────────────────────────────────
 
 import { CaseCard } from "@/types/case";
 
 const DATA = [
   {
+    slug: "nose-thread-natural-look",
+    image: "/images/cases/case-02.jpg",
+    treatmentSlug: "nose-thread-lift",
+    treatment_en: "Nose Thread Lift",
+    treatment_th: "ร้อยไหมจมูก",
+    subcategorySlug: "natural-look",
+    subcategory_en: "Natural look",
+    subcategory_th: "ทรงธรรมชาติ",
+    doctor: "Dr. Jing",
+    order: 1,
+  },
+  {
+    slug: "nose-thread-european-look",
+    image: "/images/cases/case-03.jpg",
+    treatmentSlug: "nose-thread-lift",
+    treatment_en: "Nose Thread Lift",
+    treatment_th: "ร้อยไหมจมูก",
+    subcategorySlug: "european-look",
+    subcategory_en: "European look",
+    subcategory_th: "ทรงยุโรป",
+    doctor: "Dr. Jing",
+    order: 2,
+  },
+  {
+    slug: "facial-thread-v-shape",
+    image: "/images/cases/case-04.jpg",
+    treatmentSlug: "facial-thread-lift",
+    treatment_en: "Facial Thread Lift",
+    treatment_th: "ร้อยไหมหน้า",
+    subcategorySlug: "v-shape",
+    subcategory_en: "V-shape lifting",
+    subcategory_th: "ยกกระชับรูปหน้าวี",
+    doctor: "Dr. Jing",
+    order: 3,
+  },
+  {
     slug: "nose-thread-tip-extension",
     image: "/images/cases/case-01.jpg",
+    treatmentSlug: "nose-thread-lift",
     treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
+    treatment_th: "ร้อยไหมจมูก",
+    subcategorySlug: "tip-extension",
+    subcategory_en: "Tip extension",
+    subcategory_th: "ยืดปลายพุ่ง",
     doctor: "Dr. Jing",
-    beforeImage: "/images/cases/case-01.jpg",
-    afterImage: "/images/cases/case-02.jpg",
+    order: 4,
   },
   {
-    slug: "nose-thread-wing-reduction",
-    image: "/images/cases/case-02.jpg",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
-  },
-  {
-    slug: "nose-thread-hump-correction",
-    image: "/images/cases/case-03.jpg",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
-  },
-  {
-    slug: "nose-thread-male",
-    image: "/images/cases/case-04.jpg",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
-  },
-  {
-    slug: "nose-thread-semi-surgery",
+    slug: "rhinoplasty-profile",
     image: "/images/cases/case-05.jpg",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
+    treatmentSlug: "surgery",
+    treatment_en: "Surgery",
+    treatment_th: "ศัลยกรรม",
+    subcategorySlug: "rhinoplasty",
+    subcategory_en: "Rhinoplasty",
+    subcategory_th: "เสริมจมูก",
+    doctor: "Dr. Beer",
+    order: 5,
   },
   {
-    slug: "nose-thread-low-tissue",
+    slug: "blepharoplasty-double-eyelid",
     image: "/images/cases/case-06.jpg",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก · ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
+    treatmentSlug: "surgery",
+    treatment_en: "Surgery",
+    treatment_th: "ศัลยกรรม",
+    subcategorySlug: "blepharoplasty",
+    subcategory_en: "Double eyelid",
+    subcategory_th: "ตาสองชั้น",
+    doctor: "Dr. Lulu",
+    order: 6,
   },
 ];
 
@@ -55,14 +101,16 @@ export async function getCases(
   opts?: { limit?: number },
 ): Promise<CaseCard[]> {
   const limit = opts?.limit ?? DATA.length;
+  const isTH = locale === "th";
 
-  // TODO: fetch from WP and map bilingual fields
   return DATA.slice(0, limit).map((item) => ({
     slug: item.slug,
     image: item.image,
-    treatment: locale === "th" ? item.treatment_th : item.treatment_en,
+    treatment: isTH ? item.treatment_th : item.treatment_en,
+    treatmentSlug: item.treatmentSlug,
+    subcategory: isTH ? item.subcategory_th : item.subcategory_en,
+    subcategorySlug: item.subcategorySlug,
     doctor: item.doctor,
-    beforeImage: item.beforeImage,
-    afterImage: item.afterImage,
+    order: item.order,
   }));
 }

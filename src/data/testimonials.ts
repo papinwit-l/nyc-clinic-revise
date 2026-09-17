@@ -23,7 +23,7 @@ const DATA: {
     treatment: "Nose Thread Lift",
     rating: 5,
     // avatar: "/images/reviewers/reviewer-01.jpg",
-    reviewImage: "/images/cases/case-01.jpg",
+    reviewImage: "/images/testimonials/WEBSITE-NYC-00.jpg",
   },
   {
     id: "2",
@@ -34,6 +34,7 @@ const DATA: {
     name: "คุณอ้อย",
     treatment: "Nose Thread Lift",
     rating: 5,
+    reviewImage: "/images/testimonials/WEBSITE-NYC-02.jpg",
   },
   {
     id: "3",
@@ -44,6 +45,7 @@ const DATA: {
     name: "คุณวราลี",
     treatment: "Nose Thread Lift",
     rating: 5,
+    reviewImage: "/images/testimonials/WEBSITE-NYC-03.jpg",
   },
 ];
 
