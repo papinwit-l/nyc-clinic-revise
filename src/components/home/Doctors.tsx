@@ -4,6 +4,8 @@ import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Doctor } from "@/types/doctor";
 import SectionHeader from "@/components/shared/SectionHeader";
 import { sectionHeadings } from "@/i18n/section-headings";
+import CountUp from "@/components/shared/CountUp";
+import InView from "../shared/InView";
 
 type Props = {
   t: Dictionary["home"]["doctors"];
@@ -31,7 +33,8 @@ export default function Doctors({ t, locale, data }: Props) {
               Three nested elements, each a 1px border. NOT inset box-shadows:
               those stack rather than mask, so a "transparent" inner shadow
               doesn't cut a hole — it renders as a solid band. */}
-          <div
+          <InView
+            variant="fade"
             aria-hidden
             className="pointer-events-none absolute z-0 hidden lg:block left-[-9rem] top-[-6rem] w-[26rem] aspect-square"
           >
@@ -46,7 +49,7 @@ export default function Doctors({ t, locale, data }: Props) {
                 style={{ inset: ring.inset, opacity: ring.opacity }}
               />
             ))}
-          </div>
+          </InView>
 
           {/* Photo */}
           <Link
@@ -109,7 +112,7 @@ export default function Doctors({ t, locale, data }: Props) {
                   className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
                   style={{ fontWeight: 400 }}
                 >
-                  15+
+                  <CountUp to={15} suffix="+" />
                 </p>
                 <p
                   className="text-xs text-[var(--color-text-warm)] mt-2"
@@ -129,7 +132,7 @@ export default function Doctors({ t, locale, data }: Props) {
                   className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
                   style={{ fontWeight: 400 }}
                 >
-                  10,000+
+                  <CountUp to={10000} suffix="+" />
                 </p>
                 <p
                   className="text-xs text-[var(--color-text-warm)] mt-2"
