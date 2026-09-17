@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import SectionHeader from "@/components/shared/SectionHeader";
+import InView from "@/components/shared/InView";
 import Image from "next/image";
 
 const isImagePlaceholder = false;
@@ -9,7 +10,7 @@ const aboutImageSrc = [
   "/images/about-image-ai-1.png",
   "/images/about-image-ai-2.png",
 ];
-const aboutImage = aboutImageSrc[0];
+const aboutImage = aboutImageSrc[2];
 
 /** Navy block offset behind the image. Toggle to compare with the frame alone. */
 const showNavyBlock = true;
@@ -52,49 +53,58 @@ export default function About({ t, locale }: Props) {
         {/* Editorial column spans 2 of 3; the image column fills the third. */}
         <div className="mt-10 sm:mt-12 grid gap-10 lg:gap-14 lg:grid-cols-3 lg:items-start">
           <div className="lg:col-span-2 lg:order-1">
-            <figure className="relative">
-              <span
-                aria-hidden
-                className="absolute -top-9 -left-1.5 text-[4.5rem] leading-none text-[var(--color-border-accent)] select-none"
-                style={{ fontFamily: "var(--font-accent)" }}
-              >
-                &ldquo;
-              </span>
-              <blockquote
-                className={`relative text-[var(--color-primary)] ${
-                  isTH
-                    ? "text-[clamp(1.55rem,3.6vw,2.1rem)] leading-[1.65]"
-                    : "text-[clamp(1.8rem,4.4vw,2.7rem)] leading-[1.22]"
-                }`}
-                style={{
-                  fontFamily: quoteFont,
-                  fontStyle: isTH ? "normal" : "italic",
-                  fontWeight: 300,
-                  letterSpacing: isTH ? "0.01em" : "0.005em",
-                }}
-              >
-                {t.quote}
-              </blockquote>
+            <InView variant="fade" className="relative">
+              <figure className="relative">
+                <span
+                  aria-hidden
+                  className="absolute -top-9 -left-1.5 text-[4.5rem] leading-none text-[var(--color-border-accent)] select-none"
+                  style={{ fontFamily: "var(--font-accent)" }}
+                >
+                  &ldquo;
+                </span>
+                <blockquote
+                  className={`relative text-[var(--color-primary)] ${
+                    isTH
+                      ? "text-[clamp(1.55rem,3.6vw,2.1rem)] leading-[1.65]"
+                      : "text-[clamp(1.8rem,4.4vw,2.7rem)] leading-[1.22]"
+                  }`}
+                  style={{
+                    fontFamily: quoteFont,
+                    fontStyle: isTH ? "normal" : "italic",
+                    fontWeight: 300,
+                    letterSpacing: isTH ? "0.01em" : "0.005em",
+                  }}
+                >
+                  {t.quote}
+                </blockquote>
 
-              <figcaption className="mt-6 pt-4 border-t border-[var(--color-border)]">
-                <p
-                  className={`text-[var(--color-primary)] ${
-                    isTH ? "text-[0.95rem]" : "text-[0.9rem] tracking-[0.04em]"
-                  }`}
-                  style={{ fontFamily: bodyFont, fontWeight: 600 }}
-                >
-                  {t.quoteName}
-                </p>
-                <p
-                  className={`text-[var(--color-accent-dark)] leading-relaxed mt-1.5 ${
-                    isTH ? "text-[0.82rem]" : "text-[0.78rem] tracking-[0.05em]"
-                  }`}
-                  style={{ fontFamily: bodyFont, fontWeight: isTH ? 400 : 500 }}
-                >
-                  {t.quoteRole}
-                </p>
-              </figcaption>
-            </figure>
+                <figcaption className="mt-6 pt-4 border-t border-[var(--color-border)]">
+                  <p
+                    className={`text-[var(--color-primary)] ${
+                      isTH
+                        ? "text-[0.95rem]"
+                        : "text-[0.9rem] tracking-[0.04em]"
+                    }`}
+                    style={{ fontFamily: bodyFont, fontWeight: 600 }}
+                  >
+                    {t.quoteName}
+                  </p>
+                  <p
+                    className={`text-[var(--color-accent-dark)] leading-relaxed mt-1.5 ${
+                      isTH
+                        ? "text-[0.82rem]"
+                        : "text-[0.78rem] tracking-[0.05em]"
+                    }`}
+                    style={{
+                      fontFamily: bodyFont,
+                      fontWeight: isTH ? 400 : 500,
+                    }}
+                  >
+                    {t.quoteRole}
+                  </p>
+                </figcaption>
+              </figure>
+            </InView>
 
             <div className="mt-9 sm:mt-11">
               <p
@@ -126,7 +136,7 @@ export default function About({ t, locale }: Props) {
               Sharp corners throughout — soft/7px is reserved for Doctors,
               Services, B&A and Testimonials. */}
           <div className="lg:col-span-1 lg:order-2 px-16 lg:px-0">
-            <div className="relative">
+            <InView variant="rise" index={2} className="relative">
               {showNavyBlock && (
                 <span
                   aria-hidden
@@ -161,7 +171,7 @@ export default function About({ t, locale }: Props) {
                   )}
                 </div>
               </div>
-            </div>
+            </InView>
           </div>
         </div>
 
