@@ -24,7 +24,7 @@ import { CaseCard } from "@/types/case";
 const DATA = [
   {
     slug: "nose-thread-natural-look",
-    image: "/images/cases/case-02.jpg",
+    image: "/images/cases/case-nose-thread-natural.jpg",
     treatmentSlug: "nose-thread-lift",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
@@ -36,7 +36,7 @@ const DATA = [
   },
   {
     slug: "nose-thread-european-look",
-    image: "/images/cases/case-03.jpg",
+    image: "/images/cases/case-nose-thread-european.jpg",
     treatmentSlug: "nose-thread-lift",
     treatment_en: "Nose Thread Lift",
     treatment_th: "ร้อยไหมจมูก",
@@ -48,7 +48,7 @@ const DATA = [
   },
   {
     slug: "facial-thread-v-shape",
-    image: "/images/cases/case-04.jpg",
+    image: "/images/cases/case-facial-thread.jpg",
     treatmentSlug: "facial-thread-lift",
     treatment_en: "Facial Thread Lift",
     treatment_th: "ร้อยไหมหน้า",

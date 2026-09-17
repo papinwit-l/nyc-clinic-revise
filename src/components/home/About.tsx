@@ -10,7 +10,7 @@ const aboutImageSrc = [
   "/images/about-image-ai-1.png",
   "/images/about-image-ai-2.png",
 ];
-const aboutImage = aboutImageSrc[2];
+const aboutImage = aboutImageSrc[0];
 
 /** Navy block offset behind the image. Toggle to compare with the frame alone. */
 const showNavyBlock = true;
