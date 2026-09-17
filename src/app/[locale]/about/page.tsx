@@ -6,8 +6,11 @@ import Image from "next/image";
 import { ABOUT_STORY, FACILITY } from "@/data/about";
 import { DOCTORS } from "@/data/doctors";
 import PageHeader from "@/components/shared/PageHeader";
+import { LineIcon } from "@/components/shared/SocialIcons";
 import InView from "@/components/shared/InView";
 import SectionIntro from "@/components/shared/SectionIntro";
+
+const LINE_URL = "https://lin.ee/7oJgymx";
 import FacilityGallery from "@/components/about/FacilityGallery";
 import AwardsShelf from "@/components/shared/AwardsShelf";
 
@@ -183,6 +186,55 @@ export default async function AboutPage({
               }}
             />
           </div>
+        </div>
+      </section>
+
+      {/* Closing CTA — same rule–text–rule construction as /doctors, so the
+          pattern is one thing across inner pages rather than per-page
+          invention. */}
+      <section className="bg-[var(--color-primary)] py-16 text-center">
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+          <div className="flex items-center gap-5 sm:gap-8">
+            <span
+              aria-hidden
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, var(--color-accent))",
+              }}
+            />
+            <p
+              className={`shrink-0 text-[var(--color-on-primary-warm)] ${
+                isTH ? "text-[1.15rem]" : "text-[1.25rem]"
+              }`}
+              style={{
+                fontFamily: isTH
+                  ? "var(--font-thai-head)"
+                  : "var(--font-display)",
+                fontWeight: isTH ? 600 : 400,
+              }}
+            >
+              {t.about.cta.consult}
+            </p>
+            <span
+              aria-hidden
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, var(--color-accent), transparent)",
+              }}
+            />
+          </div>
+          <a
+            href={LINE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-line mt-6 inline-flex"
+            style={{ fontFamily: bodyFont }}
+          >
+            <LineIcon className="w-5 h-5" />
+            {t.about.cta.ctaLine}
+          </a>
         </div>
       </section>
     </>

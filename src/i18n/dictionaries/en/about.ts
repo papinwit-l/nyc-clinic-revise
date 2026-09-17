@@ -18,6 +18,10 @@ const about = {
     heading: "Specialists you'll meet",
     cta: "Meet the doctors",
   },
+  cta: {
+    consult: "Free consultation — no obligation",
+    ctaLine: "Add LINE for Free Consult",
+  },
   story: {
     heading: "Fifteen years in Thonglor",
     label: "Our Story",
