@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { AWARDS, type Award } from "@/data/awards";
+import InView from "@/components/shared/InView";
 import { sectionHeadings } from "@/i18n/section-headings";
 
 /**
@@ -133,26 +134,32 @@ export default function AwardsShelf({
       ) : (
         /* Shelf — static grid from sm up, swipeable row below it */
         <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 lg:grid-cols-6 sm:gap-8 sm:overflow-visible sm:pb-0 sm:items-end">
-          {AWARDS.map((a) => (
-            <button
+          {AWARDS.map((a, i) => (
+            <InView
               key={a.slug}
-              type="button"
-              onClick={() => setOpen(a)}
-              className="shrink-0 w-[38%] snap-center sm:w-auto group text-left"
-              aria-label={`${isTH ? a.titleTh : a.titleEn} — ${isTH ? "ดูรายละเอียด" : "view detail"}`}
+              index={i}
+              variant="rise"
+              className="shrink-0 w-[38%] snap-center sm:w-auto"
             >
-              <span className="flex items-end justify-center h-[110px] sm:h-[130px]">
-                <Image
-                  src={a.src}
-                  alt={a.engravedEn}
-                  width={a.width}
-                  height={a.height}
-                  sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 180px"
-                  className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                />
-              </span>
-              <AwardsLabel award={a} isTH={isTH} />
-            </button>
+              <button
+                type="button"
+                onClick={() => setOpen(a)}
+                className="w-full group text-left"
+                aria-label={`${isTH ? a.titleTh : a.titleEn} — ${isTH ? "ดูรายละเอียด" : "view detail"}`}
+              >
+                <span className="flex items-end justify-center h-[110px] sm:h-[130px]">
+                  <Image
+                    src={a.src}
+                    alt={a.engravedEn}
+                    width={a.width}
+                    height={a.height}
+                    sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 180px"
+                    className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  />
+                </span>
+                <AwardsLabel award={a} isTH={isTH} />
+              </button>
+            </InView>
           ))}
         </div>
       )}
