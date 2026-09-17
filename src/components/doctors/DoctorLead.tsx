@@ -29,9 +29,38 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
   return (
     <article
       id={doctor.slug}
-      className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 lg:items-start scroll-mt-28"
+      className="relative grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 lg:items-start scroll-mt-28"
     >
-      <InView variant="rise" className="lg:col-span-2">
+      {/* Concentric rings — kept as Dr. Jing's marker, the same as the
+          homepage Doctors section. Deliberately NOT used in the team blocks:
+          spreading them would dilute the thing that sets her apart.
+
+          Offset up-left so they read as a halo behind the portrait rather
+          than a frame around it — she already has a navy plate and a ringed
+          photo, and a concentric ring sitting on those edges would be a third
+          treatment on the same object.
+
+          Three nested elements, each a 1px border. NOT inset box-shadows:
+          those stack rather than mask, so a "transparent" inner shadow
+          renders as a solid band. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute z-0 hidden lg:block left-[-8rem] top-[-5rem] w-[24rem] aspect-square"
+      >
+        {[
+          { inset: "0", opacity: 0.5 },
+          { inset: "14%", opacity: 0.34 },
+          { inset: "30%", opacity: 0.2 },
+        ].map((ring) => (
+          <span
+            key={ring.inset}
+            className="absolute rounded-full border border-[var(--color-accent)]"
+            style={{ inset: ring.inset, opacity: ring.opacity }}
+          />
+        ))}
+      </div>
+
+      <InView variant="rise" className="relative z-10 lg:col-span-2">
         <div className="relative max-w-md mx-auto lg:mx-0">
           <span
             aria-hidden
@@ -50,7 +79,7 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
         </div>
       </InView>
 
-      <div className="lg:col-span-3">
+      <div className="relative z-10 lg:col-span-3">
         <span className="badge">
           {isTH ? "แพทย์ผู้เชี่ยวชาญหลัก" : "Lead Specialist"}
         </span>
