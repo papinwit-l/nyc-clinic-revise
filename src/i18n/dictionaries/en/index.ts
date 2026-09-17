@@ -1,6 +1,7 @@
 import home from "./home";
 import doctor from "./doctor";
 import about from "./about";
+import services from "./services";
 
 const en = {
   nav: {
@@ -39,6 +40,7 @@ const en = {
   home,
   doctor,
   about,
+  services,
 } as const;
 
 export default en;
