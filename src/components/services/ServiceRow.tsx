@@ -32,7 +32,7 @@ export default function ServiceRow({
 
   return (
     <InView variant="rise">
-      <article className="relative grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-6 sm:gap-10 items-start pt-12! first:pt-0 group">
+      <article className="relative grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-6 sm:gap-10 items-start pt-12! first:pt-0">
         {index > 0 && (
           <span
             aria-hidden
