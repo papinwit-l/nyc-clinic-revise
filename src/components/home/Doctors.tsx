@@ -68,7 +68,6 @@ export default function Doctors({ t, locale, data }: Props) {
           {/* Info */}
           <div className="relative z-10 text-center lg:text-left lg:col-span-2 lg:pt-4">
             <span className="badge">{t.badge}</span>
-
             {/* EN name — always Playfair Display */}
             <h3
               className="text-[clamp(1.9rem,3.4vw,2.6rem)] leading-[1.15] mt-5"
@@ -80,16 +79,14 @@ export default function Doctors({ t, locale, data }: Props) {
             >
               {featured.fullNameEn}
             </h3>
-            {/* TH name — always Anuphan */}
+            0{/* TH name — always Anuphan */}
             <p
               className="text-[var(--color-accent)] text-base sm:text-lg mt-1.5"
               style={{ fontFamily: "var(--font-thai-head)", fontWeight: 500 }}
             >
               {featured.fullNameTh}
             </p>
-
             <div className="divider-accent mt-4 mb-4 mx-auto lg:mx-0" />
-
             {/* Bio — font follows the text's language */}
             <p
               className={`text-[var(--color-text-warm)] text-[0.95rem] sm:text-base mx-auto lg:mx-0 max-w-[54ch] ${
@@ -104,7 +101,6 @@ export default function Doctors({ t, locale, data }: Props) {
                 ? (featured.bioTh ?? featured.specialtyTh)
                 : (featured.bioEn ?? featured.specialty)}
             </p>
-
             {/* Quick stats */}
             <div className="flex items-center justify-center lg:justify-start gap-6 mt-6">
               <div className="text-center">
@@ -112,7 +108,7 @@ export default function Doctors({ t, locale, data }: Props) {
                   className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
                   style={{ fontWeight: 400 }}
                 >
-                  <CountUp to={15} suffix="+" />
+                  <CountUp to={20} suffix="+" />
                 </p>
                 <p
                   className="text-xs text-[var(--color-text-warm)] mt-2"
@@ -132,7 +128,7 @@ export default function Doctors({ t, locale, data }: Props) {
                   className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
                   style={{ fontWeight: 400 }}
                 >
-                  <CountUp to={10000} suffix="+" />
+                  <CountUp to={40000} suffix="+" />
                 </p>
                 <p
                   className="text-xs text-[var(--color-text-warm)] mt-2"

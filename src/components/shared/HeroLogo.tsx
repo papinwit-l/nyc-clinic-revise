@@ -36,7 +36,7 @@ export default function HeroLogo({ className = "" }: Props) {
         className="block text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[var(--color-on-primary-muted)] mt-3"
         style={{ fontFamily: "var(--font-logo-sub)" }}
       >
-        New York Clinic, GR
+        Wellness Center GR.
       </span>
     </span>
   );

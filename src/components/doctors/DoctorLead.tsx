@@ -123,7 +123,7 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
               className="stat-number text-[clamp(2rem,3.6vw,2.75rem)] text-[var(--color-accent)]"
               style={{ fontWeight: 400 }}
             >
-              <CountUp to={15} suffix="+" />
+              <CountUp to={20} suffix="+" />
             </p>
             <p
               className="text-xs text-[var(--color-text-warm)] mt-1.5"
@@ -138,7 +138,7 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
               className="stat-number text-[clamp(2rem,3.6vw,2.75rem)] text-[var(--color-accent)]"
               style={{ fontWeight: 400 }}
             >
-              <CountUp to={10000} suffix="+" />
+              <CountUp to={40000} suffix="+" />
             </p>
             <p
               className="text-xs text-[var(--color-text-warm)] mt-1.5"

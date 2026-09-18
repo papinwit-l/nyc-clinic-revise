@@ -141,8 +141,8 @@ export default function TrustStats({ t, locale }: Props) {
   }, [active]);
 
   const stats: Stat[] = [
-    { to: 15, suffix: "+", unit: isTH ? "ปี" : "yrs", label: t.experience },
-    { to: 10000, suffix: "+", label: t.cases },
+    { to: 20, suffix: "+", unit: isTH ? "ปี" : "yrs", label: t.experience },
+    { to: 40000, suffix: "+", label: t.cases },
     { to: 4, label: t.specialists },
   ];
 

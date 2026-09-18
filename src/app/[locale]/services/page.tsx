@@ -28,7 +28,7 @@ import InView from "@/components/shared/InView";
  * action. A LINE button here short-circuits the funnel — index converts to a
  * service page, the service page converts to LINE.
  */
-const VERSION: "directory" | "cards" = "directory";
+const VERSION: "directory" | "cards" = "cards";
 
 export async function generateMetadata({
   params,
