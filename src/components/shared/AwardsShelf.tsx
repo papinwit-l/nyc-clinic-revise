@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { AWARDS, type Award } from "@/data/awards";
+import InView from "@/components/shared/InView";
 import { sectionHeadings } from "@/i18n/section-headings";
 
 /**
@@ -28,6 +29,11 @@ type Props = {
   variant?: "shelf" | "featured";
   /** Homepage sits inside TrustBar and supplies its own spacing. */
   className?: string;
+  /**
+   * The built-in centred eyebrow. Inner pages pass false and supply their own
+   * SectionIntro, so /about doesn't carry two heading patterns.
+   */
+  showLabel?: boolean;
 };
 
 function AwardsLabel({
@@ -68,6 +74,7 @@ export default function AwardsShelf({
   locale,
   variant = "shelf",
   className = "",
+  showLabel = true,
 }: Props) {
   const isTH = locale === "th";
   const [open, setOpen] = useState<Award | null>(null);
@@ -89,39 +96,52 @@ export default function AwardsShelf({
 
   return (
     <div className={className}>
-      <p
-        className="text-center text-[11px] tracking-[0.28em] uppercase text-[var(--color-accent-dark)] font-semibold mb-8"
-        style={{ fontFamily: "var(--font-body)" }}
-      >
-        {sectionHeadings.awards.label}
-      </p>
+      {showLabel && (
+        <p
+          className="text-center text-[11px] tracking-[0.28em] uppercase text-[var(--color-accent-dark)] font-semibold mb-8"
+          style={{ fontFamily: "var(--font-body)" }}
+        >
+          {sectionHeadings.awards.label}
+        </p>
+      )}
 
       {variant === "featured" ? (
-        <div className="grid gap-10 lg:grid-cols-5 lg:items-end">
-          <div className="lg:col-span-2">
-            <div className="flex items-end justify-center h-[220px] sm:h-[260px]">
-              <Image
-                src={featured.src}
-                alt={featured.engravedEn}
-                width={featured.width}
-                height={featured.height}
-                sizes="(max-width: 1024px) 60vw, 320px"
-                className="max-h-full w-auto object-contain"
-              />
-            </div>
-            <AwardsLabel award={featured} isTH={isTH} />
+        /* Stacked, not side by side: the /about page is a single column and a
+           split layout here competes with the facility gallery above it. The
+           featured award leads at full size; the rest sit in a row beneath,
+           separated by a rule so the two tiers read as lead and supporting. */
+        <div>
+          <div className="flex items-end justify-center h-[260px] sm:h-[320px]">
+            <Image
+              src={featured.src}
+              alt={featured.engravedEn}
+              width={featured.width}
+              height={featured.height}
+              sizes="(max-width: 640px) 70vw, 400px"
+              className="max-h-full w-auto object-contain"
+            />
           </div>
+          <AwardsLabel award={featured} isTH={isTH} />
 
-          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6 lg:items-end">
+          <div
+            aria-hidden
+            className="h-px mx-auto max-w-sm mt-12"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, var(--color-border-accent), transparent)",
+            }}
+          />
+
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 lg:items-end">
             {rest.map((a) => (
               <div key={a.slug}>
-                <div className="flex items-end justify-center h-[92px] sm:h-[108px]">
+                <div className="flex items-end justify-center h-[100px] sm:h-[120px]">
                   <Image
                     src={a.src}
                     alt={a.engravedEn}
                     width={a.width}
                     height={a.height}
-                    sizes="140px"
+                    sizes="160px"
                     className="max-h-full w-auto object-contain"
                   />
                 </div>
@@ -133,26 +153,32 @@ export default function AwardsShelf({
       ) : (
         /* Shelf — static grid from sm up, swipeable row below it */
         <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 lg:grid-cols-6 sm:gap-8 sm:overflow-visible sm:pb-0 sm:items-end">
-          {AWARDS.map((a) => (
-            <button
+          {AWARDS.map((a, i) => (
+            <InView
               key={a.slug}
-              type="button"
-              onClick={() => setOpen(a)}
-              className="shrink-0 w-[38%] snap-center sm:w-auto group text-left"
-              aria-label={`${isTH ? a.titleTh : a.titleEn} — ${isTH ? "ดูรายละเอียด" : "view detail"}`}
+              index={i}
+              variant="rise"
+              className="shrink-0 w-[38%] snap-center sm:w-auto"
             >
-              <span className="flex items-end justify-center h-[110px] sm:h-[130px]">
-                <Image
-                  src={a.src}
-                  alt={a.engravedEn}
-                  width={a.width}
-                  height={a.height}
-                  sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 180px"
-                  className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                />
-              </span>
-              <AwardsLabel award={a} isTH={isTH} />
-            </button>
+              <button
+                type="button"
+                onClick={() => setOpen(a)}
+                className="w-full group text-left"
+                aria-label={`${isTH ? a.titleTh : a.titleEn} — ${isTH ? "ดูรายละเอียด" : "view detail"}`}
+              >
+                <span className="flex items-end justify-center h-[110px] sm:h-[130px]">
+                  <Image
+                    src={a.src}
+                    alt={a.engravedEn}
+                    width={a.width}
+                    height={a.height}
+                    sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 180px"
+                    className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  />
+                </span>
+                <AwardsLabel award={a} isTH={isTH} />
+              </button>
+            </InView>
           ))}
         </div>
       )}

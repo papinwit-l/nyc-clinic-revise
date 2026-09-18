@@ -25,12 +25,12 @@ export const DOCTORS: Doctor[] = [
         th: "ชำนาญการด้านผิวพรรณความงาม Aesthetic",
       },
       {
-        en: "15+ years in aesthetic medicine",
-        th: "ประสบการณ์ด้านผิวพรรณความงามมากกว่า 15 ปี",
+        en: "20+ years in aesthetic medicine",
+        th: "ประสบการณ์ด้านผิวพรรณความงามมากกว่า 20 ปี",
       },
       {
-        en: "10,000+ nose thread cases",
-        th: "ประสบการณ์ร้อยไหมจมูกมามากกว่า 10,000 เคส",
+        en: "40,000+ nose thread cases",
+        th: "ประสบการณ์ร้อยไหมจมูกมามากกว่า 40,000 เคส",
       },
     ],
     services: ["nose-thread-lift", "facial-thread-lift", "facial-design"],
@@ -38,9 +38,9 @@ export const DOCTORS: Doctor[] = [
     // Placeholder bio — rephrased from credential bullets on nycclinic.net/doctor/.
     // Nothing invented. Flag for client edit/approval before final build.
     bioEn:
-      "Dr. Jing specializes in nose thread lift and facial design, with over 15 years of experience in aesthetic medicine and more than 10,000 documented nose thread lift cases performed to date.",
+      "Dr. Jing specializes in nose thread lift and facial design, with over 20 years of experience in aesthetic medicine and more than 40,000 documented nose thread lift cases performed to date.",
     bioTh:
-      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 15 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 10,000 เคส",
+      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 20 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 40,000 เคส",
   },
   {
     slug: "dr-beer",

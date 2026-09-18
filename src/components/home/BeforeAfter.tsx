@@ -5,6 +5,7 @@ import type { CaseCard } from "@/types/case";
 import type { Reveal } from "@/types/reveal";
 import BeforeAfterRevealSlide from "./BeforeAfterRevealSlide";
 import SectionHeader from "@/components/shared/SectionHeader";
+import InView from "@/components/shared/InView";
 import CaseGallery from "./CaseGallery";
 import { sectionHeadings } from "@/i18n/section-headings";
 
@@ -137,7 +138,7 @@ export default function BeforeAfter({
               />
             </div>
 
-            <div className="relative w-full max-w-3xl">
+            <InView variant="scale" className="relative w-full max-w-3xl">
               {REVEAL_BACKING.goldCounter &&
                 REVEAL_BACKING.offset === "diagonal" && (
                   <span
@@ -183,7 +184,7 @@ export default function BeforeAfter({
                 className="pointer-events-none absolute inset-0 z-40 ring-1 ring-[var(--color-border-accent)]"
                 style={{ borderRadius: "var(--radius-soft)" }}
               />
-            </div>
+            </InView>
 
             <div className="max-w-2xl">
               <span

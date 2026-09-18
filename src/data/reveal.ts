@@ -16,8 +16,8 @@ import type { Reveal } from "@/types/reveal";
 const DATA = [
   {
     slug: "nose-thread-signature",
-    beforeImage: "/images/cases/case-01.jpg",
-    afterImage: "/images/cases/case-02.jpg",
+    beforeImage: "/images/cases/reveal/case-01-before.jpg",
+    afterImage: "/images/cases/reveal/case-01-after.jpg",
     treatmentSlug: "nose-thread-lift",
     title_en: "Nose Thread Lift",
     title_th: "ร้อยไหมจมูก",

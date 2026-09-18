@@ -119,7 +119,7 @@ export default function Logo({
           style={sublineStyle(variant)}
           className={`font-light tracking-[0.45em] uppercase whitespace-nowrap ${SUBLINE_SIZE[size]} ${SUBLINE_GAP[size]}`}
         >
-          New York Clinic, GR
+          Wellness Center GR.
         </span>
       )}
     </span>
