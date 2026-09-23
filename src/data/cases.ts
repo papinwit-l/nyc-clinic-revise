@@ -114,3 +114,13 @@ export async function getCases(
     order: item.order,
   }));
 }
+
+/** Cases for one treatment — used by /services/[slug]. */
+export async function getCasesByTreatment(
+  locale: string,
+  treatmentSlug: string,
+  limit = 3,
+): Promise<CaseCard[]> {
+  const all = await getCases(locale);
+  return all.filter((c) => c.treatmentSlug === treatmentSlug).slice(0, limit);
+}
