@@ -7,6 +7,9 @@ const services = {
   },
   signature: "Signature",
   detail: {
+    goodFor: "Who it suits",
+    benefits: "Why it's worth it",
+    faq: "Common questions",
     overview: "Overview",
     treatments: "Treatments",
     results: "Real results",

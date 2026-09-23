@@ -63,6 +63,7 @@ export default async function ServiceDetailPage({
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
   const hasTreatments = (service.treatments?.length ?? 0) > 0;
+  const detail = service.detail;
 
   return (
     <>
@@ -109,6 +110,167 @@ export default async function ServiceDetailPage({
           </div>
         </div>
       </section>
+
+      {/* Detail — intro, facts, who it suits, benefits. A deliberate subset
+          of what the old site publishes; see the note on ServiceDetail. */}
+      {detail && (
+        <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
+          <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+            {detail.intro?.length ? (
+              <div className="max-w-[58ch] space-y-5">
+                {detail.intro.map((p, i) => (
+                  <InView key={i} variant="fade" index={i}>
+                    <p
+                      className={`text-[var(--color-text-warm)] text-[1.05rem] ${
+                        isTH ? "leading-[2]" : "leading-[1.9]"
+                      }`}
+                      style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                    >
+                      {p}
+                    </p>
+                  </InView>
+                ))}
+              </div>
+            ) : null}
+
+            {detail.facts?.length ? (
+              <div className="mt-10 flex flex-wrap gap-x-12 gap-y-6">
+                {detail.facts.map((f) => (
+                  <div key={f.label}>
+                    <p
+                      className="text-[11px] tracking-[0.18em] uppercase text-[var(--color-text-subtle)]"
+                      style={{ fontFamily: bodyFont }}
+                    >
+                      {f.label}
+                    </p>
+                    <p
+                      className={`text-[var(--color-primary)] mt-1.5 ${
+                        isTH ? "text-[1.15rem]" : "text-[1.25rem]"
+                      }`}
+                      style={{
+                        fontFamily: titleFont,
+                        fontWeight: isTH ? 600 : 400,
+                      }}
+                    >
+                      {f.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
+            <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+              {detail.goodFor?.length ? (
+                <div>
+                  <h2
+                    className={`text-[var(--color-primary)] ${
+                      isTH ? "text-[1.2rem]" : "text-[1.3rem]"
+                    }`}
+                    style={{
+                      fontFamily: titleFont,
+                      fontWeight: isTH ? 600 : 500,
+                    }}
+                  >
+                    {t.services.detail.goodFor}
+                  </h2>
+                  <ul className="mt-4 space-y-2.5">
+                    {detail.goodFor.map((item) => (
+                      <li key={item} className="flex gap-3 items-start">
+                        <span
+                          aria-hidden
+                          className="shrink-0 w-1.5 h-1.5 rotate-45 border border-[var(--color-accent)] mt-2"
+                        />
+                        <span
+                          className={`text-[var(--color-text-warm)] text-[0.95rem] ${
+                            isTH ? "leading-[1.9]" : "leading-[1.75]"
+                          }`}
+                          style={{ fontFamily: bodyFont }}
+                        >
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {detail.benefits?.length ? (
+                <div>
+                  <h2
+                    className={`text-[var(--color-primary)] ${
+                      isTH ? "text-[1.2rem]" : "text-[1.3rem]"
+                    }`}
+                    style={{
+                      fontFamily: titleFont,
+                      fontWeight: isTH ? 600 : 500,
+                    }}
+                  >
+                    {t.services.detail.benefits}
+                  </h2>
+                  <ul className="mt-4 space-y-2.5">
+                    {detail.benefits.map((item) => (
+                      <li key={item} className="flex gap-3 items-start">
+                        <span
+                          aria-hidden
+                          className="shrink-0 w-1.5 h-1.5 rotate-45 border border-[var(--color-accent)] mt-2"
+                        />
+                        <span
+                          className={`text-[var(--color-text-warm)] text-[0.95rem] ${
+                            isTH ? "leading-[1.9]" : "leading-[1.75]"
+                          }`}
+                          style={{ fontFamily: bodyFont }}
+                        >
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+
+            {/* Service-specific FAQ. Distinct from the general /faq page —
+                these questions are about this treatment only. */}
+            {detail.faq?.length ? (
+              <div className="mt-14 max-w-[70ch]">
+                <h2
+                  className={`text-[var(--color-primary)] ${
+                    isTH ? "text-[1.2rem]" : "text-[1.3rem]"
+                  }`}
+                  style={{
+                    fontFamily: titleFont,
+                    fontWeight: isTH ? 600 : 500,
+                  }}
+                >
+                  {t.services.detail.faq}
+                </h2>
+                <dl className="mt-5 divide-y divide-[var(--color-border)]">
+                  {detail.faq.map((item) => (
+                    <div key={item.q} className="py-5">
+                      <dt
+                        className={`text-[var(--color-primary)] ${
+                          isTH ? "text-[1rem]" : "text-[1.05rem]"
+                        }`}
+                        style={{ fontFamily: bodyFont, fontWeight: 600 }}
+                      >
+                        {item.q}
+                      </dt>
+                      <dd
+                        className={`text-[var(--color-text-warm)] text-[0.95rem] mt-2 ${
+                          isTH ? "leading-[1.95]" : "leading-[1.8]"
+                        }`}
+                        style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                      >
+                        {item.a}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      )}
 
       {/* Treatments — anchored sections. Skipped entirely for the two leaf
           services, which have no children. */}

@@ -7,6 +7,9 @@ const services = {
   },
   signature: "บริการเด่น",
   detail: {
+    goodFor: "เหมาะกับใคร",
+    benefits: "ข้อดี",
+    faq: "คำถามที่พบบ่อย",
     overview: "ภาพรวม",
     treatments: "บริการในหมวดนี้",
     results: "ผลงานจริง",
