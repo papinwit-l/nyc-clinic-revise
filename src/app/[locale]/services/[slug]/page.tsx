@@ -277,9 +277,12 @@ export default async function ServiceDetailPage({
       {hasTreatments && (
         <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
           <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+            {/* Heading is generic, not the service name — the page header
+                directly above already says it, and repeating it made the
+                section read as a restart. */}
             <SectionIntro
               label={t.services.detail.treatments}
-              heading={service.title}
+              heading={t.services.detail.treatmentsHeading}
               locale={locale}
               className="mb-12"
             />
@@ -313,13 +316,39 @@ export default async function ServiceDetailPage({
                       {tr.title}
                     </h2>
                     <p
-                      className={`text-[var(--color-text-warm)] text-[0.95rem] mt-2.5 max-w-[62ch] ${
-                        isTH ? "leading-[1.95]" : "leading-[1.8]"
+                      className={`text-[var(--color-accent-dark)] text-[0.9rem] mt-1.5 max-w-[62ch] ${
+                        isTH ? "leading-[1.9]" : "leading-[1.75]"
                       }`}
-                      style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                      style={{ fontFamily: bodyFont }}
                     >
                       {tr.desc}
                     </p>
+
+                    {tr.intro?.map((para, pi) => (
+                      <p
+                        key={pi}
+                        className={`text-[var(--color-text-warm)] text-[0.95rem] mt-3 max-w-[62ch] ${
+                          isTH ? "leading-[1.95]" : "leading-[1.8]"
+                        }`}
+                        style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                      >
+                        {para}
+                      </p>
+                    ))}
+
+                    {tr.areas?.length ? (
+                      <ul className="flex flex-wrap gap-2 mt-4">
+                        {tr.areas.map((a) => (
+                          <li
+                            key={a}
+                            className="text-xs px-2.5 py-1 ring-1 ring-[var(--color-border-accent)] text-[var(--color-text-warm)]"
+                            style={{ fontFamily: bodyFont }}
+                          >
+                            {a}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </article>
                 </InView>
               ))}

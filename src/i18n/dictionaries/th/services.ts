@@ -11,6 +11,7 @@ const services = {
     benefits: "ข้อดี",
     faq: "คำถามที่พบบ่อย",
     overview: "ภาพรวม",
+    treatmentsHeading: "บริการที่อยู่ในหมวดนี้",
     treatments: "บริการในหมวดนี้",
     results: "ผลงานจริง",
     resultsCta: "ดูแกลเลอรี่ทั้งหมด",

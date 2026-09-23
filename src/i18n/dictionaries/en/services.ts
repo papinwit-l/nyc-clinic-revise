@@ -11,6 +11,7 @@ const services = {
     benefits: "Why it's worth it",
     faq: "Common questions",
     overview: "Overview",
+    treatmentsHeading: "What's included",
     treatments: "Treatments",
     results: "Real results",
     resultsCta: "View full gallery",

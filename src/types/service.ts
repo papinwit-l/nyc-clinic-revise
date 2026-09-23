@@ -2,7 +2,19 @@
 export type Treatment = {
   slug: string;
   title: string;
+  /** One line, used in the index list and as the section sub-title. */
   desc: string;
+  /**
+   * A short brief — one or two paragraphs. NOT the full article: the old
+   * site's filler page alone runs to an explanation of HA, a treated-areas
+   * list and a four-step lip technique.
+   *
+   * ⚠ When most treatments carry this much, they have outgrown being anchored
+   * sections. See the routing note at the top of src/data/services.ts.
+   */
+  intro?: string[];
+  /** Areas or variants this treats — a short list, not prose. */
+  areas?: string[];
 };
 
 /**
