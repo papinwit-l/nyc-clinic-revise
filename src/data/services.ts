@@ -280,13 +280,64 @@ const DATA = [
   {
     slug: "rhinoplasty",
     parent: "surgery",
+    summary_en:
+      "A permanent result, shaped to the face rather than to a standard.",
+    summary_th: "ผลลัพธ์ถาวร ออกแบบทรงให้เข้ากับใบหน้า ไม่ใช่ทรงสำเร็จรูป",
+    detail_th: {
+      intro: [
+        "การเสริมจมูกด้วยซิลิโคนให้ผลลัพธ์ที่ชัดเจนและอยู่ได้ถาวร เหมาะกับผู้ที่ต้องการปรับโครงสร้างจมูกอย่างแท้จริง ไม่ใช่แค่ปรับรูปทรงชั่วคราว",
+        "ศัลยแพทย์จะประเมินโครงหน้า ความหนาของผิว และความสูงของสันจมูกเดิม ก่อนเลือกทรงและขนาดซิลิโคนที่เหมาะสม เพื่อให้จมูกรับกับใบหน้าโดยรวม",
+      ],
+      facts: [
+        { label: "ประเภท", value: "ศัลยกรรม" },
+        { label: "ผลลัพธ์", value: "ถาวร" },
+      ],
+      goodFor: [
+        "ต้องการผลลัพธ์ที่ชัดเจนและอยู่ได้ถาวร",
+        "สันจมูกแบน ต้องการเพิ่มความโด่ง",
+        "เคยร้อยไหมแล้วต้องการผลลัพธ์ที่มากกว่า",
+      ],
+      faq: [
+        {
+          q: "เสริมจมูกกับร้อยไหม ต่างกันอย่างไร",
+          a: "เสริมซิลิโคนให้ผลถาวรและปรับความโด่งได้มากกว่า แต่ต้องผ่าตัดและพักฟื้น ส่วนร้อยไหมไม่ต้องผ่าตัด ไม่ต้องพักฟื้น แต่ผลลัพธ์อยู่ได้เป็นช่วงเวลา แพทย์จะช่วยประเมินว่าแบบไหนเหมาะกับคุณ",
+        },
+        {
+          q: "พักฟื้นนานไหม",
+          a: "ขึ้นอยู่กับแต่ละบุคคล แพทย์จะแจ้งระยะเวลาที่ชัดเจนในวันปรึกษา หลังประเมินเคสของคุณแล้ว",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Silicone augmentation gives a defined, permanent result. It suits anyone who wants the nose genuinely restructured rather than temporarily reshaped.",
+        "Your surgeon assesses the bone structure, skin thickness and existing bridge height before choosing the implant shape and size — so the nose sits with the face rather than on it.",
+      ],
+      facts: [
+        { label: "Type", value: "Surgical" },
+        { label: "Results", value: "Permanent" },
+      ],
+      goodFor: [
+        "You want a defined result that lasts",
+        "A flat bridge you want more height on",
+        "You've had thread lifting and want more than it can give",
+      ],
+      faq: [
+        {
+          q: "How does this differ from a thread lift?",
+          a: "An implant is permanent and can add more height, but it involves surgery and recovery. Thread lifting needs neither, but the result lasts a period rather than indefinitely. Your surgeon will advise which suits you.",
+        },
+        {
+          q: "How long is recovery?",
+          a: "It varies by person. Your surgeon will give you a clear timeframe at the consultation, once your case has been assessed.",
+        },
+      ],
+    },
     image: "/images/services/cat-surgery.png",
     title_en: "Rhinoplasty",
     title_th: "เสริมซิลิโคนจมูก",
     desc_en: "Silicone nose augmentation",
     desc_th: "เสริมซิลิโคนจมูก",
-    summary_en: "Silicone nose augmentation",
-    summary_th: "เสริมซิลิโคนจมูก",
   },
   {
     slug: "blepharoplasty",

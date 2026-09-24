@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getService, getServiceSlugs } from "@/data/services";
-import { getCasesByTreatment } from "@/data/cases";
+import { getService, getParentService, getServiceSlugs } from "@/data/services";
+import { getCasesForService } from "@/data/cases";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
@@ -58,11 +58,16 @@ export default async function ServiceDetailPage({
   const service = await getService(locale, slug);
   if (!service) notFound();
 
-  const cases = await getCasesByTreatment(locale, slug, 3);
+  const cases = await getCasesForService(locale, slug, 3);
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
   const children = service.children ?? [];
+  // A child service — one of the fourteen treatments — gets a breadcrumb back
+  // to its parent. Without it a visitor arriving from search has no route up.
+  const parent = service.parent
+    ? await getParentService(locale, service.parent)
+    : null;
   const detail = service.detail;
 
   return (
@@ -73,6 +78,21 @@ export default async function ServiceDetailPage({
         description={service.summary}
         locale={locale}
       />
+
+      {parent && (
+        <div className="bg-[var(--color-surface)] pt-8">
+          <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+            <Link
+              href={`/${locale}/services/${parent.slug}`}
+              className="inline-flex items-center gap-2 text-xs tracking-[0.08em] uppercase text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors"
+              style={{ fontFamily: bodyFont }}
+            >
+              <span aria-hidden>&larr;</span>
+              {t.services.detail.backTo} {parent.title}
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Overview — the hero image and the description list. For the two leaf
           services this is the whole page body, so it carries more weight. */}
@@ -116,117 +136,128 @@ export default async function ServiceDetailPage({
       {detail && (
         <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
           <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
-            {detail.intro?.length ? (
-              <div className="max-w-[58ch] space-y-5">
-                {detail.intro.map((p, i) => (
-                  <InView key={i} variant="fade" index={i}>
-                    <p
-                      className={`text-[var(--color-text-warm)] text-[1.05rem] ${
-                        isTH ? "leading-[2]" : "leading-[1.9]"
-                      }`}
-                      style={{ fontFamily: bodyFont, fontWeight: 300 }}
-                    >
-                      {p}
-                    </p>
-                  </InView>
-                ))}
-              </div>
-            ) : null}
+            {/* Two columns: prose and facts left, the lists right. Stacked,
+                each block sat alone in a full-width container with the right
+                half empty — the text can't simply widen, because a 58ch
+                measure is what keeps it readable. */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+              <div>
+                {detail.intro?.length ? (
+                  <div className="max-w-[58ch] space-y-5">
+                    {detail.intro.map((p, i) => (
+                      <InView key={i} variant="fade" index={i}>
+                        <p
+                          className={`text-[var(--color-text-warm)] text-[1.05rem] ${
+                            isTH ? "leading-[2]" : "leading-[1.9]"
+                          }`}
+                          style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                        >
+                          {p}
+                        </p>
+                      </InView>
+                    ))}
+                  </div>
+                ) : null}
 
-            {detail.facts?.length ? (
-              <div className="mt-10 flex flex-wrap gap-x-12 gap-y-6">
-                {detail.facts.map((f) => (
-                  <div key={f.label}>
-                    <p
-                      className="text-[11px] tracking-[0.18em] uppercase text-[var(--color-text-subtle)]"
-                      style={{ fontFamily: bodyFont }}
-                    >
-                      {f.label}
-                    </p>
-                    <p
-                      className={`text-[var(--color-primary)] mt-1.5 ${
-                        isTH ? "text-[1.15rem]" : "text-[1.25rem]"
+                {detail.facts?.length ? (
+                  <div className="mt-10 flex flex-wrap gap-x-12 gap-y-6">
+                    {detail.facts.map((f) => (
+                      <div key={f.label}>
+                        <p
+                          className="text-[11px] tracking-[0.18em] uppercase text-[var(--color-text-subtle)]"
+                          style={{ fontFamily: bodyFont }}
+                        >
+                          {f.label}
+                        </p>
+                        <p
+                          className={`text-[var(--color-primary)] mt-1.5 ${
+                            isTH ? "text-[1.15rem]" : "text-[1.25rem]"
+                          }`}
+                          style={{
+                            fontFamily: titleFont,
+                            fontWeight: isTH ? 600 : 400,
+                          }}
+                        >
+                          {f.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              {/* Right column. goodFor and benefits STACK here rather than
+                  sitting in their own two-column grid — Rhinoplasty has no
+                  benefits, and a half-filled grid left a visibly empty cell. */}
+              <div className="space-y-10">
+                {detail.goodFor?.length ? (
+                  <div>
+                    <h2
+                      className={`text-[var(--color-primary)] ${
+                        isTH ? "text-[1.2rem]" : "text-[1.3rem]"
                       }`}
                       style={{
                         fontFamily: titleFont,
-                        fontWeight: isTH ? 600 : 400,
+                        fontWeight: isTH ? 600 : 500,
                       }}
                     >
-                      {f.value}
-                    </p>
+                      {t.services.detail.goodFor}
+                    </h2>
+                    <ul className="mt-4 space-y-2.5">
+                      {detail.goodFor.map((item) => (
+                        <li key={item} className="flex gap-3 items-start">
+                          <span
+                            aria-hidden
+                            className="shrink-0 w-1.5 h-1.5 rotate-45 border border-[var(--color-accent)] mt-2"
+                          />
+                          <span
+                            className={`text-[var(--color-text-warm)] text-[0.95rem] ${
+                              isTH ? "leading-[1.9]" : "leading-[1.75]"
+                            }`}
+                            style={{ fontFamily: bodyFont }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
+                ) : null}
+
+                {detail.benefits?.length ? (
+                  <div>
+                    <h2
+                      className={`text-[var(--color-primary)] ${
+                        isTH ? "text-[1.2rem]" : "text-[1.3rem]"
+                      }`}
+                      style={{
+                        fontFamily: titleFont,
+                        fontWeight: isTH ? 600 : 500,
+                      }}
+                    >
+                      {t.services.detail.benefits}
+                    </h2>
+                    <ul className="mt-4 space-y-2.5">
+                      {detail.benefits.map((item) => (
+                        <li key={item} className="flex gap-3 items-start">
+                          <span
+                            aria-hidden
+                            className="shrink-0 w-1.5 h-1.5 rotate-45 border border-[var(--color-accent)] mt-2"
+                          />
+                          <span
+                            className={`text-[var(--color-text-warm)] text-[0.95rem] ${
+                              isTH ? "leading-[1.9]" : "leading-[1.75]"
+                            }`}
+                            style={{ fontFamily: bodyFont }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-
-            <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
-              {detail.goodFor?.length ? (
-                <div>
-                  <h2
-                    className={`text-[var(--color-primary)] ${
-                      isTH ? "text-[1.2rem]" : "text-[1.3rem]"
-                    }`}
-                    style={{
-                      fontFamily: titleFont,
-                      fontWeight: isTH ? 600 : 500,
-                    }}
-                  >
-                    {t.services.detail.goodFor}
-                  </h2>
-                  <ul className="mt-4 space-y-2.5">
-                    {detail.goodFor.map((item) => (
-                      <li key={item} className="flex gap-3 items-start">
-                        <span
-                          aria-hidden
-                          className="shrink-0 w-1.5 h-1.5 rotate-45 border border-[var(--color-accent)] mt-2"
-                        />
-                        <span
-                          className={`text-[var(--color-text-warm)] text-[0.95rem] ${
-                            isTH ? "leading-[1.9]" : "leading-[1.75]"
-                          }`}
-                          style={{ fontFamily: bodyFont }}
-                        >
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {detail.benefits?.length ? (
-                <div>
-                  <h2
-                    className={`text-[var(--color-primary)] ${
-                      isTH ? "text-[1.2rem]" : "text-[1.3rem]"
-                    }`}
-                    style={{
-                      fontFamily: titleFont,
-                      fontWeight: isTH ? 600 : 500,
-                    }}
-                  >
-                    {t.services.detail.benefits}
-                  </h2>
-                  <ul className="mt-4 space-y-2.5">
-                    {detail.benefits.map((item) => (
-                      <li key={item} className="flex gap-3 items-start">
-                        <span
-                          aria-hidden
-                          className="shrink-0 w-1.5 h-1.5 rotate-45 border border-[var(--color-accent)] mt-2"
-                        />
-                        <span
-                          className={`text-[var(--color-text-warm)] text-[0.95rem] ${
-                            isTH ? "leading-[1.9]" : "leading-[1.75]"
-                          }`}
-                          style={{ fontFamily: bodyFont }}
-                        >
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
             </div>
 
             {/* Service-specific FAQ. Distinct from the general /faq page —

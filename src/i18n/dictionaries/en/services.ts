@@ -10,6 +10,7 @@ const services = {
     goodFor: "Who it suits",
     benefits: "Why it's worth it",
     faq: "Common questions",
+    backTo: "Back to",
     overview: "Overview",
     treatmentsHeading: "What's included",
     treatments: "Treatments",
