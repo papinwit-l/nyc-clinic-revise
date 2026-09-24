@@ -1,4 +1,4 @@
-import type { ServiceCard, Treatment } from "@/types/service";
+import type { ServiceCard } from "@/types/service";
 
 // ─────────────────────────────────────────────────────────────────────────
 // TODO — REVISIT: TREATMENT ROUTING
@@ -227,94 +227,6 @@ const DATA = [
     desc_th: "Filler เติมเต็ม · SMAS-X กระตุ้นคอลลาเจน · Botox",
     summary_en: "Filler and collagen lifting, planned around your proportions.",
     summary_th: "ปรับรูปหน้าให้ได้สัดส่วน ด้วยฟิลเลอร์และการกระตุ้นคอลลาเจน",
-    detail_th: {
-      intro: [
-        "การปรับรูปหน้าไม่ใช่การเติมให้เยอะที่สุด แต่คือการดูสัดส่วนของใบหน้าโดยรวม แล้วเลือกว่าจุดไหนควรเติม จุดไหนควรกระชับ เพื่อให้ใบหน้าดูมีมิติและได้สัดส่วนในแบบของแต่ละคน",
-        "ที่ NYC Clinic เราใช้ฟิลเลอร์เพื่อเติมเต็มส่วนที่ขาด และใช้การกระตุ้นคอลลาเจนเพื่อให้ผิวแน่นตึงขึ้นจากภายใน ทั้งสองอย่างทำงานร่วมกัน โดยแพทย์จะประเมินและออกแบบให้เฉพาะบุคคลก่อนเริ่มทุกครั้ง",
-      ],
-      faq: [
-        {
-          q: "ควรเลือกฟิลเลอร์หรือกระตุ้นคอลลาเจน",
-          a: "ขึ้นอยู่กับปัญหา ฟิลเลอร์เหมาะกับการเติมเต็มส่วนที่ยุบหรือตื้น เช่น ใต้ตา ร่องแก้ม ขมับ ส่วนการกระตุ้นคอลลาเจนเหมาะกับผิวที่เริ่มหย่อนและขาดความแน่นตึง หลายเคสทำร่วมกันเพื่อผลลัพธ์ที่ดีที่สุด",
-        },
-        {
-          q: "ผลลัพธ์ดูเป็นธรรมชาติไหม",
-          a: "ขึ้นอยู่กับการออกแบบและปริมาณที่ใช้ เราเน้นการปรับให้รับกับโครงหน้าเดิม ไม่ใช่การเติมให้มากที่สุด จึงได้ผลลัพธ์ที่ดูเป็นตัวคุณเอง",
-        },
-      ],
-    },
-    detail_en: {
-      intro: [
-        "Facial design isn't about adding as much as possible. It's about reading the proportions of a face as a whole, then deciding what to fill and what to firm, so the result has dimension and suits the person.",
-        "We use filler to restore what has been lost and collagen stimulation to firm the skin from within. The two work together, and every case is assessed and planned individually before anything begins.",
-      ],
-      faq: [
-        {
-          q: "Filler or collagen stimulation — which do I need?",
-          a: "It depends on the problem. Filler suits areas that have hollowed or flattened — under the eyes, nasolabial folds, temples. Collagen stimulation suits skin that has begun to sag and lost firmness. Many cases combine both.",
-        },
-        {
-          q: "Will it look natural?",
-          a: "That comes down to the planning and the amount used. We work with the existing bone structure rather than adding as much as possible, so the result still looks like you.",
-        },
-      ],
-    },
-    treatments: [
-      {
-        slug: "filler",
-        title_en: "Filler",
-        title_th: "ฟิลเลอร์",
-        intro_th: [
-          "ฟิลเลอร์คือสารเติมเต็มประเภทไฮยาลูโรนิค แอซิด (HA) ซึ่งมีคุณสมบัติกักเก็บน้ำและความชุ่มชื้น เติมเต็มในชั้นผิวหนัง เพิ่มความยืดหยุ่น ทำให้ผิวเต่งตึงและเรียบเนียนขึ้น",
-          "นอกจากเติมเต็มร่องลึกอย่างร่องแก้ม ใต้ตา ขมับ และหน้าผากแล้ว ยังใช้ปรับรูปหน้าให้มีมิติ ปรับคางให้ดูยาวขึ้น และปรับรูปปากให้อวบอิ่มได้ด้วย",
-        ],
-        intro_en: [
-          "Filler is a hyaluronic acid gel. HA holds water in the skin, adds volume where it has been lost, and improves elasticity — so the skin sits firmer and smoother.",
-          "Beyond filling folds such as the nasolabial lines, under-eyes, temples and forehead, it is also used to reshape: adding dimension to the face, lengthening a short chin, and giving fuller definition to the lips.",
-        ],
-        areas_th: [
-          "ใต้ตา",
-          "ร่องแก้ม",
-          "ขมับ",
-          "หน้าผาก",
-          "หน้าแก้ม",
-          "คาง",
-          "แก้มตอบ",
-          "ริมฝีปาก",
-        ],
-        areas_en: [
-          "Under-eye",
-          "Nasolabial folds",
-          "Temples",
-          "Forehead",
-          "Cheeks",
-          "Chin",
-          "Hollow cheeks",
-          "Lips",
-        ],
-        desc_en:
-          "Under-eye, nasolabial folds, cheeks, temples, forehead and lips",
-        desc_th:
-          "เติมเต็ม ปรับรูปหน้า ใต้ตา ร่องแก้ม แก้มตอบ ขมับ หน้าผาก ปากอิ่มฟู",
-      },
-      {
-        slug: "smas-x",
-        title_en: "SMAS-X",
-        title_th: "SMAS-X",
-        intro_th: [
-          "SMAS-X กระตุ้นการสร้างคอลลาเจนในชั้นผิว ทำให้ผิวแน่นตึงและกระชับขึ้นจากภายใน ด้วยเครื่องจากประเทศสเปน",
-          "ไม่ต้องผ่าตัด ไม่มีแผล ไม่ต้องพักฟื้น เหมาะกับผิวที่เริ่มหย่อนคล้อยแต่ยังไม่ถึงขั้นต้องยกกระชับด้วยการผ่าตัด",
-        ],
-        intro_en: [
-          "SMAS-X stimulates collagen within the skin layers, firming and tightening from underneath, using Spanish technology.",
-          "No surgery, no incision, no recovery time. It suits skin that has begun to lose firmness but doesn't yet call for a surgical lift.",
-        ],
-        desc_en:
-          "Collagen stimulation for firmer skin, using Spanish technology. No pain, no swelling, no incision.",
-        desc_th:
-          "กระตุ้นคอลลาเจน ผิวแน่นตึงกระชับ ด้วยเครื่องจากประเทศสเปน ไม่เจ็บ ไม่บวม ไม่มีแผล",
-      },
-    ],
   },
   {
     slug: "surgery",
@@ -325,90 +237,6 @@ const DATA = [
     desc_th: "เสริมจมูก ตาสองชั้น เสริมคาง ดูดไขมัน ฉีดไขมัน",
     summary_en: "Modern technique, quick recovery.",
     summary_th: "เปลี่ยนคุณเป็นคนใหม่ ด้วยเทคนิคทันสมัยและฟื้นตัวไว",
-    detail_th: {
-      intro: [
-        "ศัลยกรรมเป็นทางเลือกสำหรับท่านที่ต้องการผลลัพธ์ที่ชัดเจนและอยู่ได้ถาวร โดยศัลยแพทย์ผู้เชี่ยวชาญเฉพาะทาง",
-        "ทุกเคสเริ่มจากการปรึกษาและประเมินอย่างละเอียด เพื่อเลือกวิธีที่เหมาะกับโครงหน้าและความต้องการของแต่ละท่าน ภายใต้มาตรฐานความสะอาดปราศจากเชื้อระดับโรงพยาบาล",
-      ],
-      faq: [
-        {
-          q: "ต้องพักฟื้นนานไหม",
-          a: "ขึ้นอยู่กับหัตถการ แต่ละอย่างใช้เวลาพักฟื้นไม่เท่ากัน แพทย์จะแจ้งระยะเวลาที่ชัดเจนในวันปรึกษา หลังประเมินเคสของท่านแล้ว",
-        },
-        {
-          q: "ปรึกษาก่อนได้ไหม",
-          a: "ได้ และแนะนำให้ปรึกษาก่อนทุกครั้ง การปรึกษาไม่มีค่าใช้จ่าย และไม่มีข้อผูกมัดใดๆ",
-        },
-        {
-          q: "ใครเป็นผู้ผ่าตัด",
-          a: "ศัลยแพทย์ผู้เชี่ยวชาญเฉพาะทางของคลินิก ซึ่งมีประสบการณ์ในหัตถการนั้นโดยตรง ดูรายละเอียดได้ที่หน้าทีมแพทย์",
-        },
-      ],
-    },
-    detail_en: {
-      intro: [
-        "Surgery is the route when you want a defined result that lasts, performed by specialist surgeons.",
-        "Every case begins with a full consultation and assessment, so the approach fits your bone structure and what you actually want — carried out to hospital-grade sterile standards.",
-      ],
-      faq: [
-        {
-          q: "How long is the recovery?",
-          a: "It depends on the procedure — they differ considerably. Your surgeon will give you a clear timeframe at the consultation, once your case has been assessed.",
-        },
-        {
-          q: "Can I consult first?",
-          a: "Yes, and we recommend it. Consultations are free and carry no obligation.",
-        },
-        {
-          q: "Who performs the surgery?",
-          a: "One of the clinic's specialist surgeons, experienced in that specific procedure. Their credentials are on the doctors page.",
-        },
-      ],
-    },
-    treatments: [
-      {
-        slug: "rhinoplasty",
-        title_en: "Rhinoplasty",
-        title_th: "เสริมซิลิโคนจมูก",
-        desc_en: "Silicone nose augmentation",
-        desc_th: "เสริมซิลิโคนจมูก",
-      },
-      {
-        slug: "blepharoplasty",
-        title_en: "Blepharoplasty",
-        title_th: "ตาสองชั้น",
-        desc_en: "Double eyelid surgery",
-        desc_th: "ตาสองชั้น",
-      },
-      {
-        slug: "liposuction",
-        title_en: "Liposuction",
-        title_th: "ดูดไขมัน",
-        desc_en: "Body contouring by liposuction",
-        desc_th: "ดูดไขมัน",
-      },
-      {
-        slug: "chin-augmentation",
-        title_en: "Chin Augmentation",
-        title_th: "เสริมซิลิโคนคาง",
-        desc_en: "Silicone chin augmentation",
-        desc_th: "เสริมซิลิโคนคาง",
-      },
-      {
-        slug: "lip-surgery",
-        title_en: "Lip Surgery",
-        title_th: "ปากกระจับ",
-        desc_en: "Lip reshaping",
-        desc_th: "ปากกระจับ",
-      },
-      {
-        slug: "fat-transfer",
-        title_en: "Facial Fat Transfer",
-        title_th: "ฉีดไขมันหน้าเด็ก",
-        desc_en: "Facial fat grafting",
-        desc_th: "ฉีดไขมันหน้าเด็ก",
-      },
-    ],
   },
   {
     slug: "skin-treatments",
@@ -419,138 +247,190 @@ const DATA = [
     desc_th: "Sculptra · Meso Glass Skin · PRP · Placenta · Vitamin Drip",
     summary_en: "Healthy skin, so you stand out.",
     summary_th: "ผิวสวยสุขภาพดี ให้คุณโดดเด่นมีออร่า",
-    detail_th: {
-      intro: [
-        "ผิวที่ดีไม่ได้มาจากการทาอย่างเดียว แต่มาจากการฟื้นฟูจากภายใน โปรแกรมผิวของเราจึงเน้นการกระตุ้นให้ผิวสร้างคอลลาเจนและซ่อมแซมตัวเองได้ดีขึ้น",
-        "แพทย์จะประเมินสภาพผิวและปัญหาของแต่ละท่านก่อน แล้วจึงเลือกโปรแกรมที่เหมาะสม บางเคสใช้หลายโปรแกรมร่วมกันเพื่อผลลัพธ์ที่ครบด้าน",
-      ],
-      faq: [
-        {
-          q: "เห็นผลเร็วแค่ไหน",
-          a: "แตกต่างกันตามโปรแกรม บางอย่างเห็นผลเรื่องความชุ่มชื้นและความกระจ่างใสได้ในไม่กี่วัน ส่วนการกระตุ้นคอลลาเจนต้องใช้เวลาหลายสัปดาห์ เพราะเป็นการให้ผิวสร้างขึ้นเองตามธรรมชาติ",
-        },
-        {
-          q: "ต้องทำกี่ครั้ง",
-          a: "ขึ้นอยู่กับสภาพผิวและปัญหาที่ต้องการแก้ แพทย์จะวางแผนคอร์สให้หลังประเมินผิวของท่านแล้ว",
-        },
-      ],
-    },
-    detail_en: {
-      intro: [
-        "Good skin doesn't come from what you put on it alone — it comes from repair underneath. Our skin programmes are built around stimulating the skin to produce collagen and repair itself more effectively.",
-        "Your skin and its specific problems are assessed first, then the programme is chosen to match. Some cases combine several for a fuller result.",
-      ],
-      faq: [
-        {
-          q: "How quickly will I see results?",
-          a: "It varies by programme. Hydration and brightness can show within days; collagen stimulation takes several weeks, because the skin is building it naturally.",
-        },
-        {
-          q: "How many sessions do I need?",
-          a: "It depends on your skin and what you want to address. A course is planned for you after the assessment.",
-        },
-      ],
-    },
-    treatments: [
-      {
-        slug: "sculptra",
-        title_en: "Collagen Biostimulator",
-        title_th: "Sculptra กระตุ้นคอลลาเจน",
-        desc_en:
-          "Stimulates collagen for firm, smooth, resilient and youthful skin",
-        desc_th:
-          "กระตุ้นการสร้างคอลลาเจน ผิวตึงกระชับ เรียบเนียน ขาวใส ผิวแข็งแรง อ่อนเยาว์",
-      },
-      {
-        slug: "meso-glass-skin",
-        title_en: "Meso Glass Skin",
-        title_th: "เมโสผิวแก้ว",
-        desc_en:
-          "Clear, hydrated skin — reduces dark marks, melasma, acne scars and pore size",
-        desc_th:
-          "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว ลดรอยดำ ฝ้ากระ รอยสิว กระชับรูขุมขน",
-      },
-      {
-        slug: "prp",
-        title_en: "PRP Vita Cell",
-        title_th: "PRP VITA CELL",
-        desc_en: "For younger, brighter skin — reduces melasma and dark marks",
-        desc_th:
-          "เพื่อความดูอ่อนเยาว์ ช่วยให้ผิวเนียนกระจ่างใส ลดรอยฝ้ากระ ลดรอยดำ",
-      },
-      {
-        slug: "placenta-gf",
-        title_en: "Placenta GF",
-        title_th: "Placenta GF",
-        desc_en: "Restores tired skin to a quick, healthy glow",
-        desc_th:
-          "ช่วยฟื้นฟูผิวที่ร่วงโรย ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
-      },
-      {
-        slug: "vitamin-drip",
-        title_en: "Vitamin Drip",
-        title_th: "วิตามินดริป",
-        desc_en: "Vitamin therapy for immunity, antioxidants and clearer skin",
-        desc_th: "ฉีดวิตามิน เพิ่มภูมิคุ้มกัน ต้านอนุมูลอิสระ ผิวเนียนใส",
-      },
-      {
-        // Under Skin, following the old site. Project reference §3 lists it
-        // under Facial Design — that table needs correcting.
-        slug: "botox",
-        title_en: "Botox",
-        title_th: "สารลดริ้วรอย หน้าเรียว",
-        desc_en: "Softens lines and slims the jaw and calf muscles",
-        desc_th: "ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง",
-      },
-    ],
+  },
+  {
+    slug: "filler",
+    parent: "facial-design",
+    image: "/images/services/cat-facial-design.png",
+    title_en: "Filler",
+    title_th: "ฟิลเลอร์",
+    desc_en: "Under-eye, nasolabial folds, cheeks, temples, forehead and lips",
+    desc_th:
+      "เติมเต็ม ปรับรูปหน้า ใต้ตา ร่องแก้ม แก้มตอบ ขมับ หน้าผาก ปากอิ่มฟู",
+    summary_en:
+      "Under-eye, nasolabial folds, cheeks, temples, forehead and lips",
+    summary_th:
+      "เติมเต็ม ปรับรูปหน้า ใต้ตา ร่องแก้ม แก้มตอบ ขมับ หน้าผาก ปากอิ่มฟู",
+  },
+  {
+    slug: "smas-x",
+    parent: "facial-design",
+    image: "/images/services/cat-facial-design.png",
+    title_en: "SMAS-X",
+    title_th: "SMAS-X",
+    desc_en:
+      "Collagen stimulation for firmer skin, using Spanish technology. No pain, no swelling, no incision.",
+    desc_th:
+      "กระตุ้นคอลลาเจน ผิวแน่นตึงกระชับ ด้วยเครื่องจากประเทศสเปน ไม่เจ็บ ไม่บวม ไม่มีแผล",
+    summary_en:
+      "Collagen stimulation for firmer skin, using Spanish technology. No pain, no swelling, no incision.",
+    summary_th:
+      "กระตุ้นคอลลาเจน ผิวแน่นตึงกระชับ ด้วยเครื่องจากประเทศสเปน ไม่เจ็บ ไม่บวม ไม่มีแผล",
+  },
+  {
+    slug: "rhinoplasty",
+    parent: "surgery",
+    image: "/images/services/cat-surgery.png",
+    title_en: "Rhinoplasty",
+    title_th: "เสริมซิลิโคนจมูก",
+    desc_en: "Silicone nose augmentation",
+    desc_th: "เสริมซิลิโคนจมูก",
+    summary_en: "Silicone nose augmentation",
+    summary_th: "เสริมซิลิโคนจมูก",
+  },
+  {
+    slug: "blepharoplasty",
+    parent: "surgery",
+    image: "/images/services/cat-surgery.png",
+    title_en: "Blepharoplasty",
+    title_th: "ตาสองชั้น",
+    desc_en: "Double eyelid surgery",
+    desc_th: "ตาสองชั้น",
+    summary_en: "Double eyelid surgery",
+    summary_th: "ตาสองชั้น",
+  },
+  {
+    slug: "liposuction",
+    parent: "surgery",
+    image: "/images/services/cat-surgery.png",
+    title_en: "Liposuction",
+    title_th: "ดูดไขมัน",
+    desc_en: "Body contouring by liposuction",
+    desc_th: "ดูดไขมัน",
+    summary_en: "Body contouring by liposuction",
+    summary_th: "ดูดไขมัน",
+  },
+  {
+    slug: "chin-augmentation",
+    parent: "surgery",
+    image: "/images/services/cat-surgery.png",
+    title_en: "Chin Augmentation",
+    title_th: "เสริมซิลิโคนคาง",
+    desc_en: "Silicone chin augmentation",
+    desc_th: "เสริมซิลิโคนคาง",
+    summary_en: "Silicone chin augmentation",
+    summary_th: "เสริมซิลิโคนคาง",
+  },
+  {
+    slug: "lip-surgery",
+    parent: "surgery",
+    image: "/images/services/cat-surgery.png",
+    title_en: "Lip Surgery",
+    title_th: "ปากกระจับ",
+    desc_en: "Lip reshaping",
+    desc_th: "ปากกระจับ",
+    summary_en: "Lip reshaping",
+    summary_th: "ปากกระจับ",
+  },
+  {
+    slug: "fat-transfer",
+    parent: "surgery",
+    image: "/images/services/cat-surgery.png",
+    title_en: "Facial Fat Transfer",
+    title_th: "ฉีดไขมันหน้าเด็ก",
+    desc_en: "Facial fat grafting",
+    desc_th: "ฉีดไขมันหน้าเด็ก",
+    summary_en: "Facial fat grafting",
+    summary_th: "ฉีดไขมันหน้าเด็ก",
+  },
+  {
+    slug: "sculptra",
+    parent: "skin-treatments",
+    image: "/images/services/cat-skin.png",
+    title_en: "Collagen Biostimulator",
+    title_th: "Sculptra กระตุ้นคอลลาเจน",
+    desc_en:
+      "Stimulates collagen for firm, smooth, resilient and youthful skin",
+    desc_th:
+      "กระตุ้นการสร้างคอลลาเจน ผิวตึงกระชับ เรียบเนียน ขาวใส ผิวแข็งแรง อ่อนเยาว์",
+    summary_en:
+      "Stimulates collagen for firm, smooth, resilient and youthful skin",
+    summary_th:
+      "กระตุ้นการสร้างคอลลาเจน ผิวตึงกระชับ เรียบเนียน ขาวใส ผิวแข็งแรง อ่อนเยาว์",
+  },
+  {
+    slug: "meso-glass-skin",
+    parent: "skin-treatments",
+    image: "/images/services/cat-skin.png",
+    title_en: "Meso Glass Skin",
+    title_th: "เมโสผิวแก้ว",
+    desc_en:
+      "Clear, hydrated skin — reduces dark marks, melasma, acne scars and pore size",
+    desc_th: "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว ลดรอยดำ ฝ้ากระ รอยสิว กระชับรูขุมขน",
+    summary_en:
+      "Clear, hydrated skin — reduces dark marks, melasma, acne scars and pore size",
+    summary_th:
+      "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว ลดรอยดำ ฝ้ากระ รอยสิว กระชับรูขุมขน",
+  },
+  {
+    slug: "prp",
+    parent: "skin-treatments",
+    image: "/images/services/cat-skin.png",
+    title_en: "PRP Vita Cell",
+    title_th: "PRP VITA CELL",
+    desc_en: "For younger, brighter skin — reduces melasma and dark marks",
+    desc_th:
+      "เพื่อความดูอ่อนเยาว์ ช่วยให้ผิวเนียนกระจ่างใส ลดรอยฝ้ากระ ลดรอยดำ",
+    summary_en: "For younger, brighter skin — reduces melasma and dark marks",
+    summary_th:
+      "เพื่อความดูอ่อนเยาว์ ช่วยให้ผิวเนียนกระจ่างใส ลดรอยฝ้ากระ ลดรอยดำ",
+  },
+  {
+    slug: "placenta-gf",
+    parent: "skin-treatments",
+    image: "/images/services/cat-skin.png",
+    title_en: "Placenta GF",
+    title_th: "Placenta GF",
+    desc_en: "Restores tired skin to a quick, healthy glow",
+    desc_th: "ช่วยฟื้นฟูผิวที่ร่วงโรย ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
+    summary_en: "Restores tired skin to a quick, healthy glow",
+    summary_th:
+      "ช่วยฟื้นฟูผิวที่ร่วงโรย ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
+  },
+  {
+    slug: "vitamin-drip",
+    parent: "skin-treatments",
+    image: "/images/services/cat-skin.png",
+    title_en: "Vitamin Drip",
+    title_th: "วิตามินดริป",
+    desc_en: "Vitamin therapy for immunity, antioxidants and clearer skin",
+    desc_th: "ฉีดวิตามิน เพิ่มภูมิคุ้มกัน ต้านอนุมูลอิสระ ผิวเนียนใส",
+    summary_en: "Vitamin therapy for immunity, antioxidants and clearer skin",
+    summary_th: "ฉีดวิตามิน เพิ่มภูมิคุ้มกัน ต้านอนุมูลอิสระ ผิวเนียนใส",
+  },
+  {
+    slug: "botox",
+    parent: "skin-treatments",
+    image: "/images/services/cat-skin.png",
+    title_en: "Botox",
+    title_th: "สารลดริ้วรอย หน้าเรียว",
+    desc_en: "Softens lines and slims the jaw and calf muscles",
+    desc_th: "ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง",
+    summary_en: "Softens lines and slims the jaw and calf muscles",
+    summary_th: "ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง",
   },
 ];
 
-type RawTreatment = {
-  slug: string;
-  title_en: string;
-  title_th: string;
-  desc_en: string;
-  desc_th: string;
-  intro_en?: string[];
-  intro_th?: string[];
-  areas_en?: string[];
-  areas_th?: string[];
-};
-
-function toTreatments(items: RawTreatment[], isTH: boolean): Treatment[] {
-  return items.map((tr) => ({
-    slug: tr.slug,
-    title: isTH ? tr.title_th : tr.title_en,
-    desc: isTH ? tr.desc_th : tr.desc_en,
-    intro: isTH
-      ? "intro_th" in tr
-        ? tr.intro_th
-        : undefined
-      : "intro_en" in tr
-        ? tr.intro_en
-        : undefined,
-    areas: isTH
-      ? "areas_th" in tr
-        ? tr.areas_th
-        : undefined
-      : "areas_en" in tr
-        ? tr.areas_en
-        : undefined,
-  }));
-}
-
-export async function getServices(locale: string): Promise<ServiceCard[]> {
-  const isTH = locale === "th";
-
-  // TODO: fetch from WP and map bilingual fields
-  return DATA.map((item) => ({
+function toCard(item: (typeof DATA)[number], isTH: boolean): ServiceCard {
+  return {
     slug: item.slug,
     image: item.image,
     title: isTH ? item.title_th : item.title_en,
     subtitle: isTH ? item.title_en : item.title_th,
     desc: isTH ? item.desc_th : item.desc_en,
     summary: isTH ? item.summary_th : item.summary_en,
+    signature: "signature" in item ? item.signature : undefined,
+    parent: "parent" in item ? item.parent : undefined,
     detail: isTH
       ? "detail_th" in item
         ? item.detail_th
@@ -558,21 +438,50 @@ export async function getServices(locale: string): Promise<ServiceCard[]> {
       : "detail_en" in item
         ? item.detail_en
         : undefined,
-    signature: item.signature,
-    treatments: toTreatments(item.treatments, isTH),
-  }));
+  };
 }
 
-/** One category by slug — used by /services/[slug]. */
+/** Top-level services only, each with its children resolved. */
+export async function getServices(locale: string): Promise<ServiceCard[]> {
+  const isTH = locale === "th";
+  const all = DATA.map((item) => toCard(item, isTH));
+  return all
+    .filter((s) => !s.parent)
+    .map((s) => ({
+      ...s,
+      children: all.filter((c) => c.parent === s.slug),
+    }));
+}
+
+/** One service by slug — parent or child. Children of a parent are resolved. */
 export async function getService(
   locale: string,
   slug: string,
 ): Promise<ServiceCard | null> {
-  const all = await getServices(locale);
-  return all.find((s) => s.slug === slug) ?? null;
+  const isTH = locale === "th";
+  const raw = DATA.find((s) => s.slug === slug);
+  if (!raw) return null;
+  const card = toCard(raw, isTH);
+  if (card.parent) return card;
+  return {
+    ...card,
+    children: DATA.filter((c) => "parent" in c && c.parent === slug).map((c) =>
+      toCard(c, isTH),
+    ),
+  };
 }
 
-/** Slugs for generateStaticParams. */
+/** The parent of a child service, for breadcrumbs and back-links. */
+export async function getParentService(
+  locale: string,
+  parentSlug: string,
+): Promise<ServiceCard | null> {
+  const isTH = locale === "th";
+  const raw = DATA.find((s) => s.slug === parentSlug);
+  return raw ? toCard(raw, isTH) : null;
+}
+
+/** Every slug — parents AND children — for generateStaticParams. */
 export function getServiceSlugs(): string[] {
   return DATA.map((s) => s.slug);
 }

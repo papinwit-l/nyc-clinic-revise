@@ -62,7 +62,7 @@ export default async function ServiceDetailPage({
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
-  const hasTreatments = (service.treatments?.length ?? 0) > 0;
+  const children = service.children ?? [];
   const detail = service.detail;
 
   return (
@@ -272,84 +272,46 @@ export default async function ServiceDetailPage({
         </section>
       )}
 
-      {/* Treatments — anchored sections. Skipped entirely for the two leaf
-          services, which have no children. */}
-      {hasTreatments && (
+      {/* Children — cards linking to their own pages. Until the Sept 2026
+          flatten these were anchored sections on this page; see the note on
+          ServiceCard. A parent page is now a hub, not a long scroll. */}
+      {children.length > 0 && (
         <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
           <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
-            {/* Heading is generic, not the service name — the page header
-                directly above already says it, and repeating it made the
-                section read as a restart. */}
             <SectionIntro
               label={t.services.detail.treatments}
               heading={t.services.detail.treatmentsHeading}
               locale={locale}
-              className="mb-12"
+              className="mb-10"
             />
 
-            <div className="space-y-10">
-              {service.treatments?.map((tr, i) => (
-                <InView key={tr.slug} variant="rise">
-                  <article
-                    id={tr.slug}
-                    className="relative scroll-mt-28 pt-10 first:pt-0"
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {children.map((child, i) => (
+                <InView key={child.slug} variant="rise" index={i % 3}>
+                  <Link
+                    href={`/${locale}/services/${child.slug}`}
+                    className="group block h-full bg-white radius-soft ring-1 ring-[var(--color-border)] p-6 transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(26,31,58,0.14)]"
                   >
-                    {i > 0 && (
-                      <span
-                        aria-hidden
-                        className="absolute top-0 left-0 right-0 h-px"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, var(--color-accent) 0%, var(--color-border-accent) 45%, transparent 100%)",
-                        }}
-                      />
-                    )}
                     <h2
-                      className={`text-[var(--color-primary)] leading-tight ${
-                        isTH ? "text-[1.25rem]" : "text-[1.35rem]"
+                      className={`text-[var(--color-primary)] leading-tight transition-colors group-hover:text-[var(--color-accent)] ${
+                        isTH ? "text-[1.15rem]" : "text-[1.25rem]"
                       }`}
                       style={{
                         fontFamily: titleFont,
                         fontWeight: isTH ? 600 : 500,
                       }}
                     >
-                      {tr.title}
+                      {child.title}
                     </h2>
                     <p
-                      className={`text-[var(--color-accent-dark)] text-[0.9rem] mt-1.5 max-w-[62ch] ${
+                      className={`text-[var(--color-text-warm)] text-sm mt-2.5 ${
                         isTH ? "leading-[1.9]" : "leading-[1.75]"
                       }`}
-                      style={{ fontFamily: bodyFont }}
+                      style={{ fontFamily: bodyFont, fontWeight: 300 }}
                     >
-                      {tr.desc}
+                      {child.desc}
                     </p>
-
-                    {tr.intro?.map((para, pi) => (
-                      <p
-                        key={pi}
-                        className={`text-[var(--color-text-warm)] text-[0.95rem] mt-3 max-w-[62ch] ${
-                          isTH ? "leading-[1.95]" : "leading-[1.8]"
-                        }`}
-                        style={{ fontFamily: bodyFont, fontWeight: 300 }}
-                      >
-                        {para}
-                      </p>
-                    ))}
-
-                    {tr.areas?.length ? (
-                      <ul className="flex flex-wrap gap-2 mt-4">
-                        {tr.areas.map((a) => (
-                          <li
-                            key={a}
-                            className="text-xs px-2.5 py-1 ring-1 ring-[var(--color-border-accent)] text-[var(--color-text-warm)]"
-                            style={{ fontFamily: bodyFont }}
-                          >
-                            {a}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </article>
+                  </Link>
                 </InView>
               ))}
             </div>
