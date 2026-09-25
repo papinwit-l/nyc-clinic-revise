@@ -46,17 +46,18 @@ export default async function ServicesPage({
         locale={locale}
       />
 
-      <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
-        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
-          {/* ⚠ ServicesIndex is a REVIEW AID holding the layout toggle.
+      {/* No container here: the editorial layout renders full-bleed bands and
+          would be clipped by one. Each layout supplies its own container —
+          see ServicesIndex. */}
+      <section className="bg-[var(--color-surface)]">
+        {/* ⚠ ServicesIndex is a REVIEW AID holding the layout toggle.
               Once marketing chooses, delete it and map over the chosen
               layout component here — both are server components. */}
-          <ServicesIndex
-            services={services}
-            locale={locale}
-            signatureLabel={t.services.signature}
-          />
-        </div>
+        <ServicesIndex
+          services={services}
+          locale={locale}
+          signatureLabel={t.services.signature}
+        />
       </section>
     </>
   );

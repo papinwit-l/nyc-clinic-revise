@@ -2,14 +2,13 @@ import Link from "next/link";
 import type { ServiceCard } from "@/types/service";
 
 /**
- * Treatment names under a service.
+ * Child services under a top-level service.
  *
- * Links to the treatment's ANCHOR on the category page
- * (/services/surgery#rhinoplasty) — treatments are sections there, not pages
- * of their own. See the routing note at the top of src/data/services.ts; that
- * decision is marked for revisiting.
+ * Links to each child's OWN page (/services/rhinoplasty). They were anchors on
+ * the parent page until the Sept 2026 flatten — see the note on ServiceCard
+ * for why that changed.
  *
- * Shared by both index layouts so the two can't drift.
+ * Shared by all three index layouts so they can't drift.
  */
 
 type Props = {
@@ -20,7 +19,7 @@ type Props = {
 };
 
 export default function TreatmentList({ service, locale, compact }: Props) {
-  if (!service.treatments?.length) return null;
+  if (!service.children?.length) return null;
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
 
@@ -28,10 +27,10 @@ export default function TreatmentList({ service, locale, compact }: Props) {
     <ul
       className={`flex flex-wrap gap-x-5 gap-y-2 ${compact ? "mt-3" : "mt-5"}`}
     >
-      {service.treatments.map((tr) => (
-        <li key={tr.slug}>
+      {service.children.map((child) => (
+        <li key={child.slug}>
           <Link
-            href={`/${locale}/services/${service.slug}#${tr.slug}`}
+            href={`/${locale}/services/${child.slug}`}
             className={`inline-flex items-center gap-2 text-[var(--color-text-warm)] hover:text-[var(--color-accent-dark)] transition-colors ${
               compact ? "text-xs" : "text-sm"
             }`}
@@ -41,7 +40,7 @@ export default function TreatmentList({ service, locale, compact }: Props) {
               aria-hidden
               className="w-1.5 h-1.5 shrink-0 rotate-45 border border-[var(--color-accent)]"
             />
-            {tr.title}
+            {child.title}
           </Link>
         </li>
       ))}

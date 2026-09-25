@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ServiceCard } from "@/types/service";
 import ServiceRow from "./ServiceRow";
 import ServiceCardItem from "./ServiceCardItem";
+import ServiceFeature from "./ServiceFeature";
 
 /**
  * ⚠ REVIEW AID — REMOVE BEFORE LAUNCH.
@@ -18,11 +19,12 @@ import ServiceCardItem from "./ServiceCardItem";
  * client JS at all.
  */
 
-type Layout = "directory" | "cards";
+type Layout = "directory" | "cards" | "editorial";
 
 const LAYOUTS: { id: Layout; label: string }[] = [
   { id: "directory", label: "A · Directory" },
   { id: "cards", label: "B · Cards" },
+  { id: "editorial", label: "C · Editorial" },
 ];
 
 type Props = {
@@ -40,7 +42,7 @@ export default function ServicesIndex({
 
   return (
     <>
-      <div className="mb-10 flex items-center gap-2">
+      <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12 pt-[var(--section-py)] mb-10 flex items-center gap-2">
         <span
           className="text-[10px] tracking-[0.18em] uppercase text-[var(--color-text-subtle)] mr-1"
           style={{ fontFamily: "var(--font-body)" }}
@@ -64,8 +66,22 @@ export default function ServicesIndex({
         ))}
       </div>
 
-      {layout === "directory" ? (
-        <div className="space-y-12 sm:space-y-14">
+      {layout === "editorial" ? (
+        /* Full-bleed bands — no container, and no w-screen trick needed now
+           that the page doesn't wrap this in one. */
+        <div>
+          {services.map((s, i) => (
+            <ServiceFeature
+              key={s.slug}
+              service={s}
+              locale={locale}
+              index={i}
+              signatureLabel={signatureLabel}
+            />
+          ))}
+        </div>
+      ) : layout === "directory" ? (
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12 pb-[var(--section-py)] space-y-12 sm:space-y-14">
           {services.map((s, i) => (
             <ServiceRow
               key={s.slug}
@@ -77,7 +93,7 @@ export default function ServicesIndex({
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12 pb-[var(--section-py)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s, i) => (
             <ServiceCardItem
               key={s.slug}

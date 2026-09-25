@@ -24,7 +24,7 @@ import SectionIntro from "@/components/shared/SectionIntro";
  * over the image make an edge tap ambiguous.
  */
 
-const SHOW_PLACEHOLDER = true;
+const SHOW_PLACEHOLDER = false;
 
 type Props = {
   branch: FacilityBranch;

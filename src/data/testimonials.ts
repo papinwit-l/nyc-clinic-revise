@@ -39,13 +39,13 @@ const DATA: {
   {
     id: "3",
     quote_th:
-      "ร้อยไหมทรงสวยดูธรรมชาติ สวยคมมีมิติ คุณหมอและพี่ๆ เจ้าหน้าที่น่ารักมากค่ะ บริการดีมาก แนะนำเลยค่ะ",
+      "ร้อยไหมทรงสวยดูธรรมชาติ สวยคมมีมิติ คุณหมอและพี่ๆ เจ้าหน้าที่น่ารักมากครับ บริการดีมาก แนะนำเลยครับ",
     quote_en:
       "Natural-looking results with beautiful definition. The doctor and staff are wonderful. Highly recommend!",
-    name: "คุณวราลี",
+    name: "คุณบอย",
     treatment: "Nose Thread Lift",
     rating: 5,
-    reviewImage: "/images/testimonials/WEBSITE-NYC-03.jpg",
+    reviewImage: "/images/testimonials/WEBSITE-NYC-08.jpg",
   },
 ];
 

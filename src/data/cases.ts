@@ -114,3 +114,30 @@ export async function getCases(
     order: item.order,
   }));
 }
+
+/**
+ * Cases for a service page — used by /services/[slug].
+ *
+ * Matches EITHER field, because the case taxonomy mirrors the service tree:
+ *   treatmentSlug     the top-level service   ("surgery")
+ *   subcategorySlug   the child service       ("rhinoplasty")
+ *
+ * So /services/surgery picks up every surgical case, and
+ * /services/rhinoplasty picks up only its own. Matching treatmentSlug alone
+ * meant child pages found nothing even when a matching case existed.
+ *
+ * ⚠ This depends on sub-category terms being named the same as child service
+ * slugs. They are today. When both move to WP, `case_treatment`'s child terms
+ * and the service CPT's child slugs have to stay in step, or these pages go
+ * quietly empty.
+ */
+export async function getCasesForService(
+  locale: string,
+  slug: string,
+  limit = 3,
+): Promise<CaseCard[]> {
+  const all = await getCases(locale);
+  return all
+    .filter((c) => c.treatmentSlug === slug || c.subcategorySlug === slug)
+    .slice(0, limit);
+}
