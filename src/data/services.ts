@@ -21,6 +21,15 @@ import type { ServiceCard } from "@/types/service";
 // Thai summaries are verbatim from the old site where it had them; English is
 // drafted. Two Pods fields, not one, when this moves to WP.
 //
+// ⚠⚠ PLACENTA — MAJOR CLAIMS REMOVED. The old placenta page states the
+//   treatment helps with autoimmune disease (rheumatoid arthritis, lupus),
+//   HIV/AIDS, tuberculosis, diabetes complications, osteoporosis, dementia,
+//   migraine, menopause and andropause symptoms, and erectile dysfunction.
+//   Those are claims to treat named diseases and must not appear on a clinic
+//   site — Thai medical advertising rules are explicit about this, and the
+//   exposure is legal, not just reputational. The entry below covers SKIN
+//   only. Flag to marketing before anyone reinstates the old copy.
+//
 // ⚠ CLAIMS DELIBERATELY NOT CARRIED OVER from the old blepharoplasty page:
 //   "ชั้นตาคงรูปได้นานเกิน 3 ปี ไม่มีตก ไม่ต้องแก้" (a crease lasting 3+ years
 //   with no drop and no revision) and "รับประกันคุณภาพ" (a quality guarantee).
@@ -733,6 +742,92 @@ const DATA = [
   {
     slug: "sculptra",
     parent: "skin-treatments",
+    summary_en:
+      "A collagen biostimulator — rebuilds skin structure from within, over two years.",
+    summary_th:
+      "สารกระตุ้นคอลลาเจน ฟื้นฟูโครงสร้างผิวจากภายใน ผลลัพธ์นานถึง 2 ปี",
+    detail_th: {
+      intro: [
+        "Sculptra คืออนุภาคของสาร Poly-L-Lactic acid (PLLA) สารกระตุ้นการสร้างคอลลาเจนตามธรรมชาติตัวแรกของโลก ไม่ใช่การเติมเต็มโดยตรง แต่เป็นการกระตุ้นให้ผิวสร้างคอลลาเจนขึ้นมาเอง ทดแทนส่วนที่สูญเสียไปตามอายุ",
+        "PLLA เป็นสารเดียวกับที่ใช้ผลิตไหมละลายทางการแพทย์ ย่อยสลายได้ในร่างกาย ผ่านการรับรองจาก US FDA และ อย.ไทย และใช้ทางการแพทย์มาตั้งแต่ปี 1999",
+      ],
+      facts: [
+        { label: "ประเภท", value: "กระตุ้นคอลลาเจน" },
+        { label: "ผลลัพธ์", value: "นานถึง 2 ปี" },
+      ],
+      areas: [
+        "แก้ม",
+        "หน้าแก้ม",
+        "ร่องแก้ม",
+        "ร่องน้ำหมาก",
+        "แนวกราม",
+        "ขมับ",
+        "ใต้ตา",
+        "คอ",
+      ],
+      goodFor: [
+        "ผิวหย่อนคล้อย ไม่กระชับ ขาดความยืดหยุ่น",
+        "ริ้วรอยที่เห็นได้ชัดจากอายุที่มากขึ้น",
+        "ต้องการฟื้นฟูผิวจากโครงสร้างภายใน ไม่ใช่แค่ผิวชั้นบน",
+        "รูขุมขนกว้าง ผิวไม่กระชับ",
+        "ต้องการผลลัพธ์ที่อยู่ได้นาน ไม่ต้องทำบ่อย",
+      ],
+      faq: [
+        {
+          q: "ต่างจากฟิลเลอร์อย่างไร",
+          a: "ฟิลเลอร์คือการเติมเต็มโดยตรง เห็นผลทันที ส่วน Sculptra คือการกระตุ้นให้ผิวสร้างคอลลาเจนขึ้นมาเอง จึงค่อย ๆ เห็นผลและอยู่ได้นานกว่า",
+        },
+        {
+          q: "ต้องฉีดกี่ครั้ง",
+          a: "ขึ้นอยู่กับสภาพผิวและปริมาณคอลลาเจนใต้ผิวของแต่ละคน โดยทั่วไปฉีดซ้ำได้ทุก 1–2 เดือน แพทย์จะวางแผนคอร์สให้หลังประเมินผิวของคุณ",
+        },
+        {
+          q: "หลังฉีดต้องดูแลอย่างไร",
+          a: "อาจมีบวมเล็กน้อยและรู้สึกตึงจากยาชาที่ผสมอยู่ ซึ่งจะค่อย ๆ หายไปเอง ใช้ชีวิตประจำวันได้ตามปกติ และแพทย์จะแนะนำวิธีนวดหลังฉีดเพื่อให้ตัวยากระจายได้ทั่ว",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Sculptra is poly-L-lactic acid (PLLA) — the original collagen biostimulator. It isn't a filler: rather than adding volume directly, it prompts the skin to build its own collagen to replace what age has taken.",
+        "PLLA is the same material used to make absorbable surgical sutures. It breaks down naturally in the body, is approved by the US FDA and Thai FDA, and has been in medical use since 1999.",
+      ],
+      facts: [
+        { label: "Type", value: "Collagen stimulator" },
+        { label: "Results last", value: "Up to 2 years" },
+      ],
+      areas: [
+        "Cheeks",
+        "Mid-face",
+        "Nasolabial folds",
+        "Marionette lines",
+        "Jawline",
+        "Temples",
+        "Under-eye",
+        "Neck",
+      ],
+      goodFor: [
+        "Skin that has begun to sag and lost its elasticity",
+        "Visible lines that have come with age",
+        "You want to rebuild skin structure, not just treat the surface",
+        "Open pores and skin that lacks firmness",
+        "You want a long-lasting result rather than frequent sessions",
+      ],
+      faq: [
+        {
+          q: "How does it differ from filler?",
+          a: "Filler adds volume directly and you see it immediately. Sculptra prompts your skin to make its own collagen, so it appears gradually and lasts considerably longer.",
+        },
+        {
+          q: "How many sessions will I need?",
+          a: "It depends on your skin and how much collagen you still have. Sessions are generally repeated every one to two months; your doctor will plan a course after assessing your skin.",
+        },
+        {
+          q: "What happens afterwards?",
+          a: "There may be mild swelling and a tight feeling from the anaesthetic mixed into it, which settles on its own. You can carry on as normal, and your doctor will show you how to massage the area so it spreads evenly.",
+        },
+      ],
+    },
     image: "/images/services/cat-skin.png",
     title_en: "Collagen Biostimulator",
     title_th: "Sculptra กระตุ้นคอลลาเจน",
@@ -740,49 +835,205 @@ const DATA = [
       "Stimulates collagen for firm, smooth, resilient and youthful skin",
     desc_th:
       "กระตุ้นการสร้างคอลลาเจน ผิวตึงกระชับ เรียบเนียน ขาวใส ผิวแข็งแรง อ่อนเยาว์",
-    summary_en:
-      "Stimulates collagen for firm, smooth, resilient and youthful skin",
-    summary_th:
-      "กระตุ้นการสร้างคอลลาเจน ผิวตึงกระชับ เรียบเนียน ขาวใส ผิวแข็งแรง อ่อนเยาว์",
   },
   {
     slug: "meso-glass-skin",
     parent: "skin-treatments",
+    summary_en:
+      "Mesotherapy for clear, hydrated skin — the programme is chosen to fit the problem.",
+    summary_th:
+      "เมโสฟื้นฟูผิว ผิวเนียนใส ชุ่มชื้น เลือกโปรแกรมตามปัญหาผิวของแต่ละคน",
+    detail_th: {
+      intro: [
+        "เมโสผิวแก้วคือการฟื้นฟูผิวด้วยสารบำรุงที่ส่งเข้าสู่ชั้นผิวโดยตรง ช่วยลดเลือนริ้วรอย รอยดำ ฝ้ากระ รอยแผลเป็นหลุมสิว รอยแดงรอยดำจากสิว พร้อมกระชับรูขุมขนและเพิ่มความชุ่มชื้น",
+        "มีหลายโปรแกรมให้เลือก แพทย์จะประเมินสภาพผิวและปัญหาของคุณก่อน แล้วจึงเลือกสูตรที่เหมาะสมที่สุด",
+      ],
+      areas: [
+        "Meso Chanel",
+        "Rejuran",
+        "Meso Celeb",
+        "Meso P-Cell",
+        "Meso Hayyan",
+        "ASCE Exosome",
+      ],
+      goodFor: [
+        "ผิวหมองคล้า ขาดความชุ่มชื้น",
+        "รอยดำ ฝ้ากระ รอยแดงรอยดำจากสิว",
+        "รอยแผลเป็นหลุมสิว",
+        "รูขุมขนกว้าง",
+      ],
+      faq: [
+        {
+          q: "มีโปรแกรมอะไรบ้าง",
+          a: "Meso Chanel, Rejuran, Meso Celeb, Meso P-Cell, Meso Hayyan และ ASCE Exosome แต่ละสูตรเหมาะกับปัญหาผิวที่ต่างกัน แพทย์จะแนะนำหลังประเมินผิวของคุณ",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Glass-skin mesotherapy delivers active ingredients directly into the skin layers — softening lines, dark marks, melasma, acne scarring and post-acne redness, while tightening pores and restoring moisture.",
+        "Several programmes are available. Your doctor assesses your skin and its specific problems first, then chooses the formulation that fits.",
+      ],
+      areas: [
+        "Meso Chanel",
+        "Rejuran",
+        "Meso Celeb",
+        "Meso P-Cell",
+        "Meso Hayyan",
+        "ASCE Exosome",
+      ],
+      goodFor: [
+        "Dull skin that has lost its moisture",
+        "Dark marks, melasma, post-acne redness and pigmentation",
+        "Acne scarring",
+        "Open pores",
+      ],
+      faq: [
+        {
+          q: "Which programmes are available?",
+          a: "Meso Chanel, Rejuran, Meso Celeb, Meso P-Cell, Meso Hayyan and ASCE Exosome. Each suits different skin problems — your doctor will recommend one after assessing your skin.",
+        },
+      ],
+    },
     image: "/images/services/cat-skin.png",
     title_en: "Meso Glass Skin",
     title_th: "เมโสผิวแก้ว",
     desc_en:
       "Clear, hydrated skin — reduces dark marks, melasma, acne scars and pore size",
     desc_th: "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว ลดรอยดำ ฝ้ากระ รอยสิว กระชับรูขุมขน",
-    summary_en:
-      "Clear, hydrated skin — reduces dark marks, melasma, acne scars and pore size",
-    summary_th:
-      "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว ลดรอยดำ ฝ้ากระ รอยสิว กระชับรูขุมขน",
   },
   {
     slug: "prp",
     parent: "skin-treatments",
+    summary_en:
+      "Growth factors concentrated from your own blood, returned to the skin.",
+    summary_th:
+      "สกัด Growth Factor เข้มข้นจากเลือดของตัวเอง แล้วฉีดกลับคืนสู่ผิว",
+    detail_th: {
+      intro: [
+        "PRP (Platelet-Rich Plasma) คือการนำ Growth Factor เข้มข้นจากเกล็ดเลือดของเราเอง มาฉีดกลับเข้าไปในบริเวณที่ต้องการ เพื่อกระตุ้นการสร้างคอลลาเจนและเสริมให้ผิวแข็งแรงขึ้น",
+        "เกล็ดเลือดมี Growth Factor หลายชนิด เช่น FGF, PDGF, TGF-β, EGF, VEGF และ IGF ซึ่งกระตุ้นการสร้างเนื้อเยื่อใหม่ กระตุ้น Fibroblast ที่สร้างคอลลาเจน และช่วยให้ผิวสมานตัวได้เร็วขึ้น",
+      ],
+      facts: [
+        { label: "ที่มา", value: "เลือดของตัวเอง" },
+        { label: "เห็นผล", value: "ประมาณ 1 สัปดาห์" },
+        { label: "คอร์ส", value: "ทั่วไป 3–9 ครั้ง" },
+      ],
+      goodFor: [
+        "ผิวหมองคล้า ต้องการให้เนียนกระจ่างใสขึ้น",
+        "ริ้วรอย ผิวขาดความกระชับ",
+        "รอยดำ ฝ้ากระ",
+        "รอยแผลเป็นหลุมสิว",
+        "รูขุมขนกว้าง",
+      ],
+      faq: [
+        {
+          q: "PRP ทำงานอย่างไร",
+          a: "Growth Factor จากเกล็ดเลือดจะกระตุ้นการแบ่งเซลล์ใหม่ กระตุ้นการสร้างคอลลาเจนในชั้นผิว และกระตุ้นการสร้างหลอดเลือดใหม่ไปเลี้ยงเซลล์ให้ดีขึ้น",
+        },
+        {
+          q: "ต้องทำกี่ครั้ง",
+          a: "โดยทั่วไปประมาณ 3–9 ครั้ง ขึ้นอยู่กับปัญหาผิวของแต่ละท่าน และแนะนำให้ทำต่อเนื่องทุก 2–4 สัปดาห์",
+        },
+        {
+          q: "ปลอดภัยไหม",
+          a: "ใช้เลือดของตัวเอง จึงไม่มีสารแปลกปลอมจากภายนอก ทำภายใต้เทคนิคปลอดเชื้อของคลินิก",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "PRP — platelet-rich plasma — concentrates the growth factors from your own platelets and returns them to the area being treated, prompting collagen production and strengthening the skin.",
+        "Platelets carry growth factors including FGF, PDGF, TGF-β, EGF, VEGF and IGF. These stimulate new tissue, activate the fibroblasts that make collagen, and help skin repair itself faster.",
+      ],
+      facts: [
+        { label: "Source", value: "Your own blood" },
+        { label: "Visible", value: "About 1 week" },
+        { label: "Course", value: "Typically 3–9 sessions" },
+      ],
+      goodFor: [
+        "Dull skin you'd like clearer and more even",
+        "Lines and skin that has lost firmness",
+        "Dark marks and melasma",
+        "Acne scarring",
+        "Open pores",
+      ],
+      faq: [
+        {
+          q: "How does PRP work?",
+          a: "The growth factors prompt new cell division, stimulate collagen in the skin layers, and encourage new blood vessels to better supply the cells.",
+        },
+        {
+          q: "How many sessions?",
+          a: "Typically three to nine, depending on what you're treating, spaced every two to four weeks.",
+        },
+        {
+          q: "Is it safe?",
+          a: "It uses your own blood, so nothing foreign is introduced, and it's carried out under the clinic's sterile protocol.",
+        },
+      ],
+    },
     image: "/images/services/cat-skin.png",
     title_en: "PRP Vita Cell",
     title_th: "PRP VITA CELL",
     desc_en: "For younger, brighter skin — reduces melasma and dark marks",
     desc_th:
       "เพื่อความดูอ่อนเยาว์ ช่วยให้ผิวเนียนกระจ่างใส ลดรอยฝ้ากระ ลดรอยดำ",
-    summary_en: "For younger, brighter skin — reduces melasma and dark marks",
-    summary_th:
-      "เพื่อความดูอ่อนเยาว์ ช่วยให้ผิวเนียนกระจ่างใส ลดรอยฝ้ากระ ลดรอยดำ",
   },
   {
     slug: "placenta-gf",
     parent: "skin-treatments",
+    summary_en: "Placenta-derived peptides and growth factors, for tired skin.",
+    summary_th: "เปปไทด์และ Growth Factor สกัดจากรก สำหรับผิวที่ร่วงโรย",
+    detail_th: {
+      intro: [
+        "Placenta คือสารสกัดจากรก ซึ่งอุดมไปด้วยกรดอะมิโน เปปไทด์ วิตามิน และ Growth Factor หลายชนิด ทางการแพทย์จึงนำมาสกัดเพื่อใช้ฟื้นฟูเซลล์ผิว",
+        "สารสกัดจากรกกระตุ้นการสร้าง FGF และ EGF ซึ่งทำให้เซลล์ในชั้นหนังแท้ผลิตคอลลาเจน อิลาสติน และกรดไฮยาลูโรนิคเพิ่มขึ้น ช่วยฟื้นฟูผิวที่เสียหายให้กลับมาดูสดใสและชุ่มชื้น",
+      ],
+      goodFor: [
+        "ผิวร่วงโรย ขาดความชุ่มชื้น",
+        "ผิวโทรมจากการพักผ่อนไม่เพียงพอหรือความเครียดสะสม",
+        "ริ้วรอยเล็ก ๆ รอบดวงตาและรอบปาก",
+        "ผิวเสื่อมสภาพจากแสงแดดและมลภาวะ",
+      ],
+      faq: [
+        {
+          q: "Placenta คืออะไร",
+          a: "สารสกัดจากรก ประกอบด้วยกรดอะมิโน เปปไทด์ และ Growth Factor ที่ร่างกายสร้างได้น้อยลงเมื่ออายุมากขึ้น",
+        },
+        {
+          q: "เหมาะกับใคร",
+          a: "ผู้ที่ผิวดูโทรม ขาดความชุ่มชื้น หรือพักผ่อนไม่เพียงพอจนผิวไม่สดใส ควรให้แพทย์ประเมินก่อนว่าเหมาะสมหรือไม่",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Placenta extract is rich in amino acids, peptides, vitamins and growth factors, and is used in aesthetic medicine to help skin cells recover.",
+        "It prompts FGF and EGF production, which in turn leads cells in the dermis to make more collagen, elastin and hyaluronic acid — helping tired skin look brighter and better hydrated.",
+      ],
+      goodFor: [
+        "Tired skin that has lost its moisture",
+        "Dullness from poor sleep or accumulated stress",
+        "Fine lines around the eyes and mouth",
+        "Skin showing the effects of sun and pollution",
+      ],
+      faq: [
+        {
+          q: "What is it?",
+          a: "An extract from placenta, containing amino acids, peptides and growth factors — substances the body produces less of with age.",
+        },
+        {
+          q: "Who is it for?",
+          a: "People whose skin looks tired, dry or dull. Whether it suits you is assessed by a doctor first.",
+        },
+      ],
+    },
     image: "/images/services/cat-skin.png",
     title_en: "Placenta GF",
     title_th: "Placenta GF",
     desc_en: "Restores tired skin to a quick, healthy glow",
     desc_th: "ช่วยฟื้นฟูผิวที่ร่วงโรย ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
-    summary_en: "Restores tired skin to a quick, healthy glow",
-    summary_th:
-      "ช่วยฟื้นฟูผิวที่ร่วงโรย ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
   },
   {
     slug: "vitamin-drip",
