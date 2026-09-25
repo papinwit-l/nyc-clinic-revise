@@ -21,6 +21,17 @@ import type { ServiceCard } from "@/types/service";
 // Thai summaries are verbatim from the old site where it had them; English is
 // drafted. Two Pods fields, not one, when this moves to WP.
 //
+// ⚠ SMAS-X — SOURCE CONFLICT. The supplied copy is headed "HIFU – ULTRA
+//   FOCUS" and describes a machine from JAPAN, while this file's desc says
+//   SMAS-X uses SPANISH technology. Either they are two different devices and
+//   the copy belongs elsewhere, or one of the two descriptions is wrong. Note
+//   the clinic also holds a 2018 "HIFU — Star of Excellence" award, so HIFU is
+//   a real service here. Marketing to resolve before launch.
+//
+//   Also dropped from that page: "หน้ายกกระชับ 30% หลังทำ" (a 30% lift
+//   figure), the absolute "ไม่เจ็บ ไม่บวม ไม่แดง", and longevity given
+//   variously as 8 months, 1 year and 4–6 months.
+//
 // ⚠ BOTOX — migraine and office-syndrome treatment are listed on the old
 //   page ("แก้ไมเกรน", "แก้อาการ office syndrome"). Both are therapeutic
 //   claims for medical conditions rather than aesthetic outcomes, so they are
@@ -285,6 +296,72 @@ const DATA = [
       "Under-eye, nasolabial folds, cheeks, temples, forehead and lips",
     summary_th:
       "เติมเต็ม ปรับรูปหน้า ใต้ตา ร่องแก้ม แก้มตอบ ขมับ หน้าผาก ปากอิ่มฟู",
+    detail_th: {
+      intro: [
+        "ฟิลเลอร์คือสารเติมเต็มประเภทไฮยาลูโรนิค แอซิด (HA) ซึ่งมีคุณสมบัติกักเก็บน้ำและความชุ่มชื้น เติมเต็มในชั้นผิวหนัง เพิ่มความยืดหยุ่น ทำให้ผิวเต่งตึงและเรียบเนียนขึ้น",
+        "นอกจากเติมเต็มร่องลึกอย่างร่องแก้ม ใต้ตา ขมับ และหน้าผากแล้ว ยังใช้ปรับรูปหน้าให้มีมิติ ปรับคางให้ดูยาวขึ้น แก้ปัญหาคางตัดคางถอย และปรับรูปปากให้อวบอิ่มหรือยกมุมปากได้",
+      ],
+      facts: [{ label: "ประเภท", value: "สารเติมเต็ม HA" }],
+      areas: [
+        "ใต้ตา",
+        "ร่องแก้ม",
+        "ขมับ",
+        "หน้าผาก",
+        "หน้าแก้ม",
+        "คาง",
+        "แก้มตอบ",
+        "ริมฝีปาก",
+      ],
+      goodFor: [
+        "ร่องลึกบนใบหน้า เช่น ร่องแก้ม ใต้ตา ขมับ",
+        "คางตัด คางถอย ต้องการให้รูปหน้าเรียวยาวขึ้น",
+        "ริมฝีปากบาง ต้องการให้อวบอิ่มหรือยกมุมปาก",
+        "ต้องการเพิ่มมิติให้ใบหน้าโดยไม่ผ่าตัด",
+      ],
+      faq: [
+        {
+          q: "เทคนิค 4D Layer สำหรับปากคืออะไร",
+          a: "เป็นการตกแต่งรูปปากด้วยฟิลเลอร์ให้ครบทุกมิติ ประกอบด้วย Drip M Line ปรับริมฝีปากบน, Drip W Line ปรับริมฝีปากล่าง, Push Upper Lip และ Push Lower Lip เพื่อเพิ่มความอิ่มของแต่ละชั้น",
+        },
+        {
+          q: "ฉีดได้บริเวณไหนบ้าง",
+          a: "ใต้ตา ร่องแก้ม ขมับ หน้าผาก หน้าแก้ม คาง แก้มตอบ และริมฝีปาก แพทย์จะประเมินว่าควรเติมจุดไหนหลังดูสัดส่วนใบหน้าโดยรวม",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Filler is a hyaluronic acid gel. HA holds water in the skin, adds volume where it has been lost and improves elasticity, so the skin sits firmer and smoother.",
+        "Beyond filling folds such as the nasolabial lines, under-eyes, temples and forehead, it reshapes: adding dimension, lengthening a short or receding chin, giving fuller lips or lifting the corners of the mouth.",
+      ],
+      facts: [{ label: "Type", value: "HA filler" }],
+      areas: [
+        "Under-eye",
+        "Nasolabial folds",
+        "Temples",
+        "Forehead",
+        "Cheeks",
+        "Chin",
+        "Hollow cheeks",
+        "Lips",
+      ],
+      goodFor: [
+        "Folds and hollows — nasolabial lines, under-eyes, temples",
+        "A short or receding chin you'd like lengthened",
+        "Thin lips you'd like fuller, or downturned corners",
+        "You want more dimension in the face without surgery",
+      ],
+      faq: [
+        {
+          q: "What is the 4D Layer lip technique?",
+          a: "Lip shaping in four parts: Drip M Line for the upper lip, Drip W Line for the lower, then Push Upper and Push Lower to build fullness in each layer.",
+        },
+        {
+          q: "Which areas can be treated?",
+          a: "Under-eyes, nasolabial folds, temples, forehead, cheeks, chin, hollow cheeks and lips. Your doctor decides what to fill after looking at the proportions of the whole face.",
+        },
+      ],
+    },
   },
   {
     slug: "smas-x",
@@ -300,6 +377,73 @@ const DATA = [
       "Collagen stimulation for firmer skin, using Spanish technology. No pain, no swelling, no incision.",
     summary_th:
       "กระตุ้นคอลลาเจน ผิวแน่นตึงกระชับ ด้วยเครื่องจากประเทศสเปน ไม่เจ็บ ไม่บวม ไม่มีแผล",
+    detail_th: {
+      intro: [
+        "SMAS-X ใช้คลื่น Focus Ultrasound ที่ปรับพลังงานและความลึกได้อย่างแม่นยำ ยิงลงไปถึงชั้น SMAS ใต้ผิวหนัง ทำให้ชั้นนี้หดตัวและยกกระชับใบหน้าขึ้น พร้อมกระตุ้นการสร้างคอลลาเจน",
+        "ไม่ต้องผ่าตัด ไม่มีแผล จึงเหมาะกับผู้ที่กรอบหน้าเริ่มไม่ชัดและผิวเริ่มหย่อนคล้อยตามวัย แต่ยังไม่ถึงขั้นต้องยกกระชับด้วยการผ่าตัด",
+      ],
+      facts: [
+        { label: "เห็นผลทันที", value: "ประมาณ 20–30%" },
+        { label: "เห็นผลเต็มที่", value: "หลัง 1 เดือน" },
+      ],
+      areas: ["กรอบหน้า", "แก้ม", "ใต้ตา", "หางคิ้ว", "ลำคอ", "เหนียงใต้คาง"],
+      goodFor: [
+        "กรอบหน้าไม่ชัด ใบหน้าเริ่มหย่อนคล้อยตามวัย",
+        "ต้องการยกกระชับโดยไม่ผ่าตัดและไม่ต้องพักฟื้น",
+        "มีเหนียงใต้คาง หรือผิวลำคอเริ่มหย่อน",
+      ],
+      faq: [
+        {
+          q: "เห็นผลเมื่อไร",
+          a: "เห็นผลได้บางส่วนทันทีหลังทำ ประมาณ 20–30% จากนั้นคอลลาเจนจะค่อย ๆ สร้างขึ้น และเห็นผลชัดเจนเต็มที่หลังจาก 1 เดือนขึ้นไป",
+        },
+        {
+          q: "อยู่ได้นานแค่ไหน และควรทำซ้ำเมื่อไร",
+          a: "ขึ้นอยู่กับระดับความหย่อนคล้อยของแต่ละคน แพทย์จะประเมินและแนะนำช่วงเวลาที่เหมาะสมในการทำซ้ำ",
+        },
+        {
+          q: "ต้องเตรียมตัวอย่างไร",
+          a: "แพทย์จะแนะนำให้งดวิตามินและแอลกอฮอล์ก่อนทำ เพื่อลดอาการบวม และจะทายาชาก่อนเริ่มทำ",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "SMAS-X uses focused ultrasound with precisely controlled energy and depth, reaching the SMAS layer beneath the skin. That layer contracts, lifting the face, while collagen production is stimulated.",
+        "No surgery and no incision, so it suits anyone whose jawline has begun to soften with age but who doesn't yet need a surgical lift.",
+      ],
+      facts: [
+        { label: "Immediate", value: "Around 20–30%" },
+        { label: "Full effect", value: "After 1 month" },
+      ],
+      areas: [
+        "Jawline",
+        "Cheeks",
+        "Under-eye",
+        "Brow tail",
+        "Neck",
+        "Under-chin",
+      ],
+      goodFor: [
+        "A jawline that has lost definition with age",
+        "You want lifting without surgery or recovery time",
+        "Softness under the chin, or loosening skin on the neck",
+      ],
+      faq: [
+        {
+          q: "When will I see results?",
+          a: "Some effect is visible immediately — around 20–30%. Collagen then builds gradually, with the full result showing after about a month.",
+        },
+        {
+          q: "How long does it last, and when should I repeat it?",
+          a: "It depends how much laxity there is to begin with. Your doctor will assess this and advise when to repeat.",
+        },
+        {
+          q: "How do I prepare?",
+          a: "Your doctor will ask you to avoid vitamins and alcohol beforehand to reduce swelling. Topical anaesthetic is applied before the treatment begins.",
+        },
+      ],
+    },
   },
   {
     slug: "rhinoplasty",
