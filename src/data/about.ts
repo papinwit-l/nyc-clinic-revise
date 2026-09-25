@@ -59,11 +59,6 @@ export const FACILITY: FacilityBranch[] = [
       "/images/facility/thonglor-04.jpg",
       "/images/facility/thonglor-05.jpg",
       "/images/facility/thonglor-06.jpg",
-      "/images/facility/thonglor-07.jpg",
-      "/images/facility/thonglor-08.jpg",
-      "/images/facility/thonglor-09.jpg",
-      "/images/facility/thonglor-10.jpg",
-      "/images/facility/thonglor-11.jpg",
     ],
   },
 ];
