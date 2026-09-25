@@ -21,6 +21,15 @@ import type { ServiceCard } from "@/types/service";
 // Thai summaries are verbatim from the old site where it had them; English is
 // drafted. Two Pods fields, not one, when this moves to WP.
 //
+// ⚠ BOTOX — migraine and office-syndrome treatment are listed on the old
+//   page ("แก้ไมเกรน", "แก้อาการ office syndrome"). Both are therapeutic
+//   claims for medical conditions rather than aesthetic outcomes, so they are
+//   NOT carried over. Marketing to confirm before restating.
+//
+// ⚠ VITAMIN DRIP — the old page claims it prevents colds and allergies and
+//   nourishes the brain, nerves, eyes and liver. Those are health claims; the
+//   entry below stays with skin, energy and wellbeing. Confirm before adding.
+//
 // ⚠⚠ PLACENTA — MAJOR CLAIMS REMOVED. The old placenta page states the
 //   treatment helps with autoimmune disease (rheumatoid arthritis, lupus),
 //   HIV/AIDS, tuberculosis, diabetes complications, osteoporosis, dementia,
@@ -1038,24 +1047,175 @@ const DATA = [
   {
     slug: "vitamin-drip",
     parent: "skin-treatments",
+    summary_en:
+      "Vitamins delivered slowly by drip, so more of them reach the body.",
+    summary_th:
+      "ให้วิตามินทางหลอดเลือดแบบค่อย ๆ หยด ร่างกายจึงดูดซึมไปใช้ได้ดีกว่า",
+    detail_th: {
+      intro: [
+        "การให้วิตามินทางหลอดเลือดด้วยวิธี drip คือการปล่อยให้วิตามินค่อย ๆ ซึมเข้าสู่ร่างกาย ทำให้ดูดซึมและนำไปใช้ได้ดีกว่าการรับประทาน และไม่เจ็บ",
+        "มี 5 สูตรให้เลือก แพทย์จะแนะนำสูตรที่เหมาะกับสิ่งที่คุณต้องการดูแลเป็นหลัก",
+      ],
+      facts: [{ label: "ความถี่", value: "ทุก 2–4 สัปดาห์" }],
+      areas: [
+        "IMMUNITY เสริมภูมิคุ้มกัน",
+        "FAT BURNING เร่งการเผาผลาญ",
+        "AURA WHITE ผิวกระจ่างใส",
+        "ANTI-AGING ชะลอวัย",
+        "CELL REJUVENATE ฟื้นฟูระดับเซลล์",
+      ],
+      goodFor: [
+        "ผิวหมองคล้า ต้องการให้เนียนใสและชุ่มชื้นขึ้น",
+        "รู้สึกอ่อนเพลีย ไม่สดชื่น พักผ่อนไม่เพียงพอ",
+        "ต้องการดูแลสุขภาพผิวควบคู่กับสุขภาพโดยรวม",
+      ],
+      faq: [
+        {
+          q: "ฉีดวิตามินคืออะไร",
+          a: "การให้วิตามินเข้าทางหลอดเลือดแบบค่อย ๆ หยด ทำให้ร่างกายดูดซึมและนำไปใช้ได้ดีกว่า และไม่เจ็บ",
+        },
+        {
+          q: "ฉีดได้บ่อยแค่ไหน",
+          a: "โดยทั่วไปทุก 2–4 สัปดาห์ แพทย์จะประเมินและแนะนำความถี่ที่เหมาะกับคุณ",
+        },
+        {
+          q: "มีสูตรอะไรบ้าง",
+          a: "IMMUNITY, FAT BURNING, AURA WHITE, ANTI-AGING และ CELL REJUVENATE แต่ละสูตรเน้นคนละเรื่อง แพทย์จะช่วยเลือกให้ในวันปรึกษา",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "An IV drip releases vitamins slowly into the bloodstream, so the body absorbs and uses more of them than it would from a tablet — and it isn't painful.",
+        "Five formulations are available. Your doctor will suggest the one that matches what you most want to address.",
+      ],
+      facts: [{ label: "Frequency", value: "Every 2–4 weeks" }],
+      areas: [
+        "IMMUNITY — immune support",
+        "FAT BURNING — metabolism",
+        "AURA WHITE — brighter skin",
+        "ANTI-AGING",
+        "CELL REJUVENATE — cellular renewal",
+      ],
+      goodFor: [
+        "Dull skin you'd like clearer and better hydrated",
+        "Feeling tired or run-down, or not sleeping well",
+        "You want to look after your skin and general wellbeing together",
+      ],
+      faq: [
+        {
+          q: "What is a vitamin drip?",
+          a: "Vitamins released slowly into the bloodstream, so the body absorbs and uses more of them than it would orally. It isn't painful.",
+        },
+        {
+          q: "How often can I have one?",
+          a: "Generally every two to four weeks. Your doctor will advise a frequency that suits you.",
+        },
+        {
+          q: "Which formulations are there?",
+          a: "IMMUNITY, FAT BURNING, AURA WHITE, ANTI-AGING and CELL REJUVENATE. Each focuses on something different — your doctor will help you choose.",
+        },
+      ],
+    },
     image: "/images/services/cat-skin.png",
     title_en: "Vitamin Drip",
     title_th: "วิตามินดริป",
     desc_en: "Vitamin therapy for immunity, antioxidants and clearer skin",
     desc_th: "ฉีดวิตามิน เพิ่มภูมิคุ้มกัน ต้านอนุมูลอิสระ ผิวเนียนใส",
-    summary_en: "Vitamin therapy for immunity, antioxidants and clearer skin",
-    summary_th: "ฉีดวิตามิน เพิ่มภูมิคุ้มกัน ต้านอนุมูลอิสระ ผิวเนียนใส",
   },
   {
     slug: "botox",
     parent: "skin-treatments",
+    summary_en:
+      "Relaxes the muscle beneath a line — softening wrinkles and slimming the jaw.",
+    summary_th: "คลายมัดกล้ามเนื้อใต้ริ้วรอย ช่วยลดริ้วรอย ลดกราม และลดน่อง",
+    detail_th: {
+      intro: [
+        "เป็นการฉีดสารโปรตีนที่สกัดจากแบคทีเรีย Clostridium Botulinum เพื่อคลายมัดกล้ามเนื้อ ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง และลดการทำงานของต่อมเหงื่อ",
+        "แพทย์จะวิเคราะห์ความสมดุลของรูปหน้าก่อนทุกครั้ง เพื่อให้หน้าเรียวขึ้นอย่างเป็นธรรมชาติ และยังแสดงสีหน้าได้ตามปกติ ไม่แข็ง",
+      ],
+      facts: [
+        { label: "เห็นผล", value: "ริ้วรอย 5–7 วัน · กราม 1–2 สัปดาห์" },
+        { label: "อยู่ได้", value: "ประมาณ 4–6 เดือน" },
+      ],
+      areas: [
+        "ริ้วรอยขมวดคิ้ว",
+        "ริ้วรอยหน้าผาก",
+        "ริ้วรอยหางตา",
+        "ริ้วรอยย่นจมูก",
+        "ลดกราม หน้าเรียว",
+        "ลดน่อง",
+        "ลดเหงื่อ รักแร้ ฝ่ามือ ฝ่าเท้า",
+        "ลิฟท์กรอบหน้า",
+        "ลิฟท์คอ",
+      ],
+      goodFor: [
+        "ริ้วรอยจากการแสดงสีหน้า เช่น หน้าผาก หว่างคิ้ว หางตา",
+        "กล้ามเนื้อกรามใหญ่ ทำให้หน้าดูเหลี่ยม",
+        "น่องใหญ่จากกล้ามเนื้อ",
+        "เหงื่อออกมากบริเวณรักแร้ ฝ่ามือ หรือฝ่าเท้า",
+      ],
+      faq: [
+        {
+          q: "เห็นผลเมื่อไร และอยู่ได้นานแค่ไหน",
+          a: "การฉีดลดริ้วรอยเริ่มเห็นผลใน 5–7 วัน ส่วนการลดกรามใช้เวลา 1–2 สัปดาห์ ผลอยู่ได้ประมาณ 4–6 เดือน แพทย์จึงแนะนำให้ฉีดซ้ำ 2–3 ครั้งต่อปี",
+        },
+        {
+          q: "หน้าจะแข็งไหม",
+          a: "เทคนิคที่แพทย์ใช้จะช่วยลดริ้วรอยโดยที่ยังแสดงสีหน้าได้เป็นปกติ ผลลัพธ์ขึ้นอยู่กับสภาพผิวของแต่ละบุคคล",
+        },
+        {
+          q: "หลังฉีดต้องดูแลอย่างไร",
+          a: "หลังฉีดจะมีรอยเข็มแดงเล็ก ๆ ประมาณ 2–3 ชั่วโมงแล้วหายไป ส่วนใหญ่ไม่เขียวช้ำ ไม่ควรนอนราบใน 3–4 ชั่วโมงแรก และเดือนแรกควรงดนวดหน้าแรง ๆ หรือทรีตเมนต์ความร้อน",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "A protein derived from Clostridium botulinum, injected to relax the muscle beneath a line. It softens wrinkles, slims the jaw and calf muscles, and reduces sweat gland activity.",
+        "Facial balance is assessed before every treatment, so the face slims naturally and you keep normal expression rather than looking frozen.",
+      ],
+      facts: [
+        { label: "Visible", value: "Lines 5–7 days · jaw 1–2 weeks" },
+        { label: "Lasts", value: "About 4–6 months" },
+      ],
+      areas: [
+        "Frown lines",
+        "Forehead lines",
+        "Crow's feet",
+        "Bunny lines",
+        "Jaw slimming",
+        "Calf slimming",
+        "Sweat reduction — underarms, palms, soles",
+        "Jawline lift",
+        "Neck lift",
+      ],
+      goodFor: [
+        "Expression lines on the forehead, between the brows or at the eyes",
+        "A strong jaw muscle that squares the face",
+        "Calves enlarged by muscle rather than fat",
+        "Heavy sweating at the underarms, palms or soles",
+      ],
+      faq: [
+        {
+          q: "When will I see it, and how long does it last?",
+          a: "Lines begin softening at 5–7 days; jaw slimming takes 1–2 weeks. Results last roughly 4–6 months, so it is usually repeated two or three times a year.",
+        },
+        {
+          q: "Will my face look frozen?",
+          a: "The technique aims to soften lines while leaving normal expression intact. Results vary with individual skin.",
+        },
+        {
+          q: "What about afterwards?",
+          a: "Small red needle marks last two or three hours; bruising is uncommon. Avoid lying flat for the first three to four hours, and for the first month avoid firm facial massage and heat treatments.",
+        },
+      ],
+    },
     image: "/images/services/cat-skin.png",
     title_en: "Botox",
     title_th: "สารลดริ้วรอย หน้าเรียว",
     desc_en: "Softens lines and slims the jaw and calf muscles",
     desc_th: "ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง",
-    summary_en: "Softens lines and slims the jaw and calf muscles",
-    summary_th: "ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง",
   },
 ];
 
