@@ -21,6 +21,12 @@ import type { ServiceCard } from "@/types/service";
 // Thai summaries are verbatim from the old site where it had them; English is
 // drafted. Two Pods fields, not one, when this moves to WP.
 //
+// ⚠ CLAIMS DELIBERATELY NOT CARRIED OVER from the old blepharoplasty page:
+//   "ชั้นตาคงรูปได้นานเกิน 3 ปี ไม่มีตก ไม่ต้องแก้" (a crease lasting 3+ years
+//   with no drop and no revision) and "รับประกันคุณภาพ" (a quality guarantee).
+//   Both are outcome guarantees. Marketing should decide whether to restate
+//   them rather than having them inherited silently in a rebuild.
+//
 // ⚠ THE LIVE SITE CONTRADICTS ITSELF ON CLINICAL FACTS. The nose thread page
 //   states the procedure takes 20, 30 AND 15–20 minutes, and that results last
 //   3–5 years, "2 years or more", and 1–1.5 years — plus per-thread figures of
@@ -342,57 +348,387 @@ const DATA = [
   {
     slug: "blepharoplasty",
     parent: "surgery",
+    summary_en:
+      "Upper and lower eyelid surgery — a defined crease, or under-eye bags removed.",
+    summary_th:
+      "ผ่าตัดหนังตาบนและล่าง สร้างชั้นตาที่ชัดเจน หรือเก็บถุงไขมันใต้ตา",
+    detail_th: {
+      intro: [
+        "การผ่าตัดเปลือกตาแบ่งได้เป็นสองกลุ่ม คือผู้ที่มีตาชั้นเดียวและต้องการทำตาสองชั้น กับผู้ที่หนังตาเริ่มหย่อนตามวัยจนบังชั้นตาและมีถุงไขมันใต้ตา หลักการผ่าตัดเหมือนกัน ต่างกันที่ปริมาณผิวหนังที่ต้องตัดออก",
+        "เอกลักษณ์ของการทำตาที่ NYC Clinic คือชั้นตาที่เรียวยาวเท่ากันตั้งแต่หัวตาถึงหางตา และเทคนิคการเย็บซ่อนแผลของศัลยแพทย์ ทำให้ดูแลแผลง่ายหลังผ่าตัด และลดปัญหาบวมหรืออักเสบ",
+      ],
+      facts: [
+        { label: "ประเภท", value: "ศัลยกรรม" },
+        { label: "ตัดไหม", value: "5–7 วัน" },
+      ],
+      goodFor: [
+        "ไม่มีชั้นตาชัดเจน หรือชั้นตาสองข้างไม่เท่ากัน",
+        "เปลือกตาอูม มีถุงไขมันใต้เปลือกตา",
+        "หนังตาหย่อนปิดดวงตา โดยเฉพาะหางตา จนลานสายตาแคบลง",
+        "มีถุงไขมันใต้ตาล่างจากพันธุกรรมหรือวัยที่มากขึ้น",
+      ],
+      faq: [
+        {
+          q: "ผ่าตัดหนังตาบนกับหนังตาล่าง ต่างกันอย่างไร",
+          a: "หนังตาบนคือการกำหนดแนวชั้นตาและตัดผิวหนังกับไขมันส่วนเกินออก ส่วนหนังตาล่างคือการจัดการถุงไขมันใต้ตาและกระชับกล้ามเนื้อรอบตาล่าง เป็นคนละปัญหากัน แพทย์จะประเมินว่าควรทำอย่างไหน",
+        },
+        {
+          q: "แผลหายนานไหม",
+          a: "แพทย์จะนัดตัดไหมประมาณ 5–7 วันหลังผ่าตัด หลังตัดไหมยังบวมอยู่ราว 2–4 สัปดาห์ และจะดูเป็นธรรมชาติประมาณ 1 เดือน",
+        },
+        {
+          q: "ต้องเตรียมตัวอย่างไร",
+          a: "แจ้งประวัติสุขภาพ โรคประจำตัว และยาที่ใช้อยู่กับแพทย์อย่างละเอียด งดยาและอาหารเสริมบางชนิดก่อนผ่าตัด และควรมีคนสนิทมารับกลับบ้าน แพทย์จะให้รายละเอียดทั้งหมดในวันปรึกษา",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Eyelid surgery divides into two groups: people with a single eyelid who want a defined crease, and people whose lids have begun to drop with age, hiding the crease and leaving under-eye bags. The approach is the same; the amount of skin removed differs.",
+        "What distinguishes eyelid surgery at NYC Clinic is a crease that runs evenly from the inner to the outer corner, and a hidden-suture technique that makes the wound easier to care for and reduces swelling and inflammation.",
+      ],
+      facts: [
+        { label: "Type", value: "Surgical" },
+        { label: "Sutures out", value: "5–7 days" },
+      ],
+      goodFor: [
+        "No defined crease, or creases that differ between the eyes",
+        "Puffy lids with fat beneath them",
+        "Lids drooping over the eye — particularly at the outer corner — narrowing your field of vision",
+        "Under-eye bags, whether inherited or age-related",
+      ],
+      faq: [
+        {
+          q: "What's the difference between upper and lower eyelid surgery?",
+          a: "Upper surgery sets the crease line and removes excess skin and fat. Lower surgery deals with under-eye fat and tightens the muscle beneath the eye. They address different problems — your surgeon will assess which applies.",
+        },
+        {
+          q: "How long does healing take?",
+          a: "Sutures come out around 5–7 days. Swelling continues for roughly 2–4 weeks after that, and the result looks natural at about a month.",
+        },
+        {
+          q: "How should I prepare?",
+          a: "Give your surgeon a full account of your health, any conditions and any medication you take; some medicines and supplements are stopped beforehand. Arrange for someone to take you home. Full instructions are given at the consultation.",
+        },
+      ],
+    },
     image: "/images/services/cat-surgery.png",
     title_en: "Blepharoplasty",
     title_th: "ตาสองชั้น",
     desc_en: "Double eyelid surgery",
     desc_th: "ตาสองชั้น",
-    summary_en: "Double eyelid surgery",
-    summary_th: "ตาสองชั้น",
   },
   {
     slug: "liposuction",
     parent: "surgery",
+    summary_en:
+      "Removes subcutaneous fat from specific areas — shaping, not weight loss.",
+    summary_th:
+      "กำจัดไขมันใต้ผิวหนังเฉพาะจุด เพื่อรูปร่างที่ได้สัดส่วน ไม่ใช่การลดน้ำหนัก",
+    detail_th: {
+      intro: [
+        "การดูดไขมันคือการกำจัดไขมันส่วนเกินในชั้นไขมันใต้ผิวหนังออกจากร่างกายเฉพาะจุด ทำให้รูปร่างบริเวณนั้นเล็กลงและได้สัดส่วนมากขึ้น เป็นไขมันใต้ผิวหนังเท่านั้น ไม่ใช่ไขมันในช่องท้องหรืออวัยวะภายใน",
+        "การดูดไขมันมุ่งไปที่ไขมันที่ไม่ตอบสนองต่อการออกกำลังกายและการควบคุมอาหาร จึงเหมาะกับผู้ที่ร่างกายแข็งแรงและน้ำหนักตัวไม่มากจนเกินไป เพราะไม่ใช่วิธีลดน้ำหนัก แต่เป็นการปรับสัดส่วนให้พอใจในรูปร่างของตัวเองมากขึ้น",
+      ],
+      facts: [
+        { label: "ประเภท", value: "ศัลยกรรม" },
+        { label: "เป้าหมาย", value: "ปรับสัดส่วน ไม่ใช่ลดน้ำหนัก" },
+      ],
+      areas: [
+        "เหนียง",
+        "ต้นแขน",
+        "หน้าท้อง",
+        "เอว",
+        "ต้นขา",
+        "สะโพก",
+        "ปีกหลัง",
+        "ปีกนางฟ้า",
+        "นมน้อย",
+      ],
+      goodFor: [
+        "มีไขมันเฉพาะจุดที่ออกกำลังกายและคุมอาหารแล้วไม่ลดลง",
+        "ร่างกายแข็งแรง น้ำหนักตัวไม่มากจนเกินไป",
+        "ต้องการปรับสัดส่วนเฉพาะบริเวณ ไม่ใช่การลดน้ำหนักทั้งตัว",
+      ],
+      faq: [
+        {
+          q: "ดูดไขมันช่วยลดน้ำหนักไหม",
+          a: "ไม่ใช่วิธีลดน้ำหนัก เป็นการปรับสัดส่วนเฉพาะจุดที่ไขมันสะสมและไม่ตอบสนองต่อการออกกำลังกาย ผู้ที่เหมาะสมที่สุดคือผู้ที่น้ำหนักตัวอยู่ในเกณฑ์อยู่แล้ว",
+        },
+        {
+          q: "ดูดได้บริเวณไหนบ้าง",
+          a: "เหนียง ต้นแขน หน้าท้อง เอว ต้นขา สะโพก ปีกหลัง ปีกนางฟ้า และนมน้อย แพทย์จะประเมินว่าบริเวณใดเหมาะกับคุณในวันปรึกษา",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Liposuction removes excess fat from the layer beneath the skin in specific areas, making that part of the body smaller and better proportioned. It targets subcutaneous fat only — not fat inside the abdomen or around the organs.",
+        "It addresses fat that doesn't respond to exercise or diet, so it suits people who are in good health and not significantly overweight. This is not a weight-loss method; it is a way to be happier with your proportions.",
+      ],
+      facts: [
+        { label: "Type", value: "Surgical" },
+        { label: "Purpose", value: "Contouring, not weight loss" },
+      ],
+      areas: [
+        "Under the chin",
+        "Upper arms",
+        "Abdomen",
+        "Waist",
+        "Thighs",
+        "Hips",
+        "Back",
+        "Bra line",
+        "Chest",
+      ],
+      goodFor: [
+        "Localised fat that hasn't shifted with exercise or diet",
+        "You're in good health and not significantly overweight",
+        "You want to reshape a specific area rather than lose weight overall",
+      ],
+      faq: [
+        {
+          q: "Will liposuction help me lose weight?",
+          a: "No — it reshapes specific areas where fat has settled and won't respond to exercise. It suits people whose weight is already in a healthy range.",
+        },
+        {
+          q: "Which areas can be treated?",
+          a: "Under the chin, upper arms, abdomen, waist, thighs, hips, back, bra line and chest. Your surgeon will assess which apply to you at the consultation.",
+        },
+      ],
+    },
     image: "/images/services/cat-surgery.png",
     title_en: "Liposuction",
     title_th: "ดูดไขมัน",
     desc_en: "Body contouring by liposuction",
     desc_th: "ดูดไขมัน",
-    summary_en: "Body contouring by liposuction",
-    summary_th: "ดูดไขมัน",
   },
   {
     slug: "chin-augmentation",
     parent: "surgery",
+    summary_en:
+      "A silicone implant that lengthens the chin — the fastest route to a slimmer face.",
+    summary_th:
+      "เสริมซิลิโคนคาง ต่อคางให้ยาวขึ้น ใบหน้าเรียวขึ้นโดยไม่ต้องตัดกราม",
+    detail_th: {
+      intro: [
+        "คางเปลี่ยน หน้าก็เปลี่ยน โบท็อกซ์หรือร้อยไหมช่วยเรื่องรูปหน้าได้ แต่ถ้าคางไม่รับกับใบหน้า แก้ม และกราม ก็ยากที่ใบหน้าจะเรียวได้อย่างที่ต้องการ การเสริมคางแก้ปัญหาคางสั้น คางตัด และคางผิดรูปโดยตรง",
+        "ศัลยแพทย์จะเลือกความยาวและความแหลมให้เหมาะกับแต่ละบุคคล ซิลิโคนที่ใช้ต้องรับกับคางและกรามเดิม หลังทำคางจะยาวขึ้นและยื่นไปด้านหน้า ใบหน้าจึงเรียวขึ้นโดยไม่ต้องตัดกราม",
+      ],
+      facts: [
+        { label: "ประเภท", value: "ศัลยกรรม" },
+        { label: "ผลลัพธ์", value: "อยู่ได้นานกว่าการฉีดฟิลเลอร์" },
+      ],
+      goodFor: [
+        "คางสั้น คางตัด หรือคางผิดรูป",
+        "ใบหน้าดูไม่เรียวเพราะคางไม่รับกับกราม",
+        "เคยฉีดฟิลเลอร์เสริมคางแล้วต้องการผลลัพธ์ที่อยู่ได้นานกว่า",
+      ],
+      faq: [
+        {
+          q: "เสริมคางกับฉีดฟิลเลอร์ ต่างกันอย่างไร",
+          a: "การเสริมซิลิโคนให้ผลลัพธ์ที่อยู่ได้นานกว่าการฉีดฟิลเลอร์ และปรับความยาวคางได้มากกว่า แต่เป็นการผ่าตัดและต้องพักฟื้น แพทย์จะช่วยประเมินว่าแบบไหนเหมาะกับคุณ",
+        },
+        {
+          q: "ต้องตัดกรามด้วยไหม",
+          a: "ไม่จำเป็น เมื่อคางยาวขึ้นและยื่นไปด้านหน้า มิติของใบหน้าโดยรวมจะเปลี่ยน ทำให้หน้าดูเรียวขึ้นได้โดยไม่ต้องตัดกราม",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Change the chin and the face changes. Botox and thread lifting both help with face shape, but if the chin doesn't sit with the cheeks and jaw, a slim profile is hard to achieve. Chin augmentation addresses a short, flat or misshapen chin directly.",
+        "Your surgeon chooses the length and point to suit you, and the implant has to work with your existing chin and jaw. Afterwards the chin is longer and projects further forward, so the face reads slimmer without the jaw being cut.",
+      ],
+      facts: [
+        { label: "Type", value: "Surgical" },
+        { label: "Results", value: "Longer-lasting than filler" },
+      ],
+      goodFor: [
+        "A short, flat or misshapen chin",
+        "A face that doesn't read as slim because the chin doesn't match the jaw",
+        "You've had chin filler and want something that lasts longer",
+      ],
+      faq: [
+        {
+          q: "How does this compare to chin filler?",
+          a: "An implant lasts considerably longer and can add more length, but it is surgery and involves recovery. Your surgeon will advise which suits you.",
+        },
+        {
+          q: "Do I need jaw reduction as well?",
+          a: "Usually not. Once the chin is longer and projects forward, the proportions of the whole face change — so it reads slimmer without the jaw being cut.",
+        },
+      ],
+    },
     image: "/images/services/cat-surgery.png",
     title_en: "Chin Augmentation",
     title_th: "เสริมซิลิโคนคาง",
     desc_en: "Silicone chin augmentation",
     desc_th: "เสริมซิลิโคนคาง",
-    summary_en: "Silicone chin augmentation",
-    summary_th: "เสริมซิลิโคนคาง",
   },
   {
     slug: "lip-surgery",
     parent: "surgery",
+    summary_en:
+      "Reshapes a full lip into a defined line. Considered, because it can't be undone.",
+    summary_th:
+      "ตกแต่งริมฝีปากให้ได้รูป เรียวเป็นทรงกระจับ ตัดสินใจอย่างรอบคอบ เพราะแก้คืนไม่ได้",
+    detail_th: {
+      intro: [
+        "ศัลยกรรมริมฝีปาก หรือที่เรียกกันว่าทำปากบางหรือปากกระจับ คือการตัดเนื้ออ่อนด้านในบางส่วนออก เพื่อให้ริมฝีปากได้รูปขึ้นและเรียวเป็นทรงที่ต้องการ",
+        "ปากบางกับปากกระจับใช้เทคนิคการผ่าตัดแบบเดียวกัน ต่างกันที่ตำแหน่งของเนื้อเยื่อที่ตัดออกเล็กน้อย และที่สำคัญคือวิธีการเย็บ ซึ่งเป็นตัวกำหนดรูปทรงของแต่ละแบบ",
+      ],
+      facts: [
+        { label: "ประเภท", value: "ศัลยกรรม" },
+        { label: "พักฟื้น", value: "นานกว่าหัตถการอื่น" },
+      ],
+      goodFor: [
+        "ริมฝีปากหนาหรืออวบเกินกว่าที่ต้องการ",
+        "ริมฝีปากไม่ได้รูป ต้องการให้เรียวเป็นทรง",
+      ],
+      faq: [
+        {
+          q: "แก้กลับได้ไหมถ้าไม่พอใจ",
+          a: "แก้ไขภายหลังทำได้ยาก เพราะเนื้อเยื่อบางส่วนถูกตัดออกไปแล้วและไม่สามารถนำกลับมาได้ จึงควรปรึกษาและตัดสินใจอย่างรอบคอบกับศัลยแพทย์ก่อน",
+        },
+        {
+          q: "พักฟื้นนานไหม",
+          a: "นานกว่าศัลยกรรมอื่นหลายอย่าง เพราะริมฝีปากเป็นบริเวณที่ต้องขยับตลอดเวลาตามธรรมชาติ และเป็นการผ่าตัดในเนื้อเยื่ออ่อน การดูแลแผลตามคำแนะนำจะช่วยให้แผลเข้าที่เร็วขึ้น",
+        },
+        {
+          q: "จะมีรอยแผลเป็นไหม",
+          a: "ขึ้นอยู่กับความปราณีตของการตัดและการเย็บ จึงควรทำกับศัลยแพทย์ที่มีความชำนาญโดยตรง",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Lip surgery removes a portion of the soft tissue inside the lip so it takes a more defined shape.",
+        "The thinner and the classic curved shape use the same surgical technique — what differs is slightly where tissue is taken from, and above all how it is sutured, which is what determines the final shape.",
+      ],
+      facts: [
+        { label: "Type", value: "Surgical" },
+        { label: "Recovery", value: "Longer than most procedures" },
+      ],
+      goodFor: [
+        "Lips fuller than you'd like",
+        "Lips you'd like brought into a more defined shape",
+      ],
+      faq: [
+        {
+          q: "Can it be reversed if I'm unhappy?",
+          a: "Not easily. Tissue that has been removed cannot be put back, so this is worth discussing carefully with your surgeon before you decide.",
+        },
+        {
+          q: "How long is recovery?",
+          a: "Longer than for many procedures. The lips move constantly by nature, and this is surgery in soft tissue. Following the aftercare instructions closely is what shortens it.",
+        },
+        {
+          q: "Will there be scarring?",
+          a: "It depends on the precision of both the excision and the suturing, which is why it should be done by a surgeon experienced in it specifically.",
+        },
+      ],
+    },
     image: "/images/services/cat-surgery.png",
     title_en: "Lip Surgery",
     title_th: "ปากกระจับ",
     desc_en: "Lip reshaping",
     desc_th: "ปากกระจับ",
-    summary_en: "Lip reshaping",
-    summary_th: "ปากกระจับ",
   },
   {
     slug: "fat-transfer",
     parent: "surgery",
+    summary_en:
+      "Your own fat, placed in fine layers — fills hollows and softens the face.",
+    summary_th:
+      "ใช้ไขมันตัวเอง วางเป็นชั้นละเอียด เติมเต็มร่องลึก ใบหน้าดูละมุนอ่อนเยาว์",
+    detail_th: {
+      intro: [
+        "การฉีดไขมันหน้าคือการนำไขมันของตัวเองจากต้นขา หน้าท้อง หรือสะโพก มาคัดเซลล์ที่แข็งแรง แล้วเติมกลับเข้าไปในใบหน้า ช่วยแก้ปัญหาหน้าตอบ แก้มตอบ และใบหน้าที่ดูโทรมจากไขมันที่หายไปตามวัย",
+        "เทคนิคของ NYC Clinic คือการปั่นคัดเซลล์ไขมันจนเป็นโมเลกุลเล็ก แล้ววางไขมันเป็นจุดเล็ก ๆ กระจายในหลายระดับชั้นผิว ไม่ฉีดอัดแน่น จึงไม่เป็นก้อนแข็ง ผิวสัมผัสนิ่มและยืดหยุ่นเหมือนผิวปกติ",
+      ],
+      facts: [
+        { label: "ประเภท", value: "ศัลยกรรม" },
+        { label: "บวม", value: "3–5 วัน" },
+        { label: "เขียวช้ำ", value: "7–14 วัน" },
+      ],
+      areas: [
+        "หน้าผาก + ขมับ",
+        "เปลือกตา + เบ้าตา",
+        "ใต้ตา",
+        "ยกหน้าแก้ม",
+        "แก้มตอบ",
+        "ร่องแก้ม",
+        "ร่องน้ำหมาก",
+        "คาง",
+      ],
+      goodFor: [
+        "ใบหน้าตอบ แก้มตอบ ทั้งจากธรรมชาติหรือจากการจัดฟัน",
+        "อายุมากขึ้นจนไขมันบนใบหน้าหายไป ต้องการเติมเต็มให้ดูเด็กลง",
+        "โครงหน้าใหญ่ โหนกแก้มหรือกรามเด่น ต้องการให้ใบหน้าดูละมุนลง",
+        "อยากเติมเต็มใบหน้า แต่ไม่ต้องการสารเติมเต็มสังเคราะห์",
+      ],
+      faq: [
+        {
+          q: "ต่างจากการฉีดฟิลเลอร์อย่างไร",
+          a: "ใช้ไขมันของตัวเองแทนสารสังเคราะห์ เติมได้หลายบริเวณในครั้งเดียว และผลลัพธ์อยู่ได้นานกว่า แต่เป็นการผ่าตัดเล็กที่ต้องดูดไขมันจากร่างกายก่อน และมีช่วงบวมช้ำ",
+        },
+        {
+          q: "ต้องดูแลตัวเองอย่างไรหลังทำ",
+          a: "สามเดือนแรกสำคัญที่สุดต่อการติดของไขมัน แพทย์จะแนะนำให้งดออกกำลังกาย งดบุหรี่และแอลกอฮอล์ เลี่ยงความร้อนโดยตรงที่ใบหน้า และไม่ลดน้ำหนักในช่วงนี้ รายละเอียดทั้งหมดแพทย์จะให้ในวันปรึกษา",
+        },
+        {
+          q: "บวมนานไหม",
+          a: "อาการบวมประมาณ 3–5 วันแล้วค่อย ๆ ดีขึ้น ส่วนรอยเขียวช้ำขึ้นอยู่กับแต่ละบุคคล ประมาณ 7–14 วัน",
+        },
+      ],
+    },
+    detail_en: {
+      intro: [
+        "Facial fat transfer takes your own fat — from the thigh, abdomen or hip — selects the viable cells, and places it back into the face. It addresses hollow cheeks and the tired look that comes as facial fat is lost with age.",
+        "The technique here separates the fat into fine cells and places it in small deposits across several skin layers rather than packing it in. That's what keeps it soft and flexible to the touch rather than firm or lumpy.",
+      ],
+      facts: [
+        { label: "Type", value: "Surgical" },
+        { label: "Swelling", value: "3–5 days" },
+        { label: "Bruising", value: "7–14 days" },
+      ],
+      areas: [
+        "Forehead + temples",
+        "Upper eyelid + socket",
+        "Under-eye",
+        "Mid-face",
+        "Hollow cheeks",
+        "Nasolabial folds",
+        "Marionette lines",
+        "Chin",
+      ],
+      goodFor: [
+        "Hollow cheeks, whether natural or after orthodontic treatment",
+        "Facial fat lost with age, leaving the face looking drawn",
+        "A strong bone structure — prominent cheekbones or jaw — you'd like softened",
+        "You want volume restored but would rather not use a synthetic filler",
+      ],
+      faq: [
+        {
+          q: "How does this differ from filler?",
+          a: "It uses your own fat rather than a synthetic gel, treats several areas in one session, and lasts considerably longer. But it is minor surgery — fat has to be harvested first — and there is a swelling and bruising period.",
+        },
+        {
+          q: "What does aftercare involve?",
+          a: "The first three months matter most for how much fat survives. Your surgeon will advise avoiding exercise, smoking, alcohol and direct heat on the face, and not dieting during that period. Full instructions come at the consultation.",
+        },
+        {
+          q: "How long does swelling last?",
+          a: "Around 3–5 days, easing gradually. Bruising varies by person — roughly 7–14 days.",
+        },
+      ],
+    },
     image: "/images/services/cat-surgery.png",
     title_en: "Facial Fat Transfer",
     title_th: "ฉีดไขมันหน้าเด็ก",
     desc_en: "Facial fat grafting",
     desc_th: "ฉีดไขมันหน้าเด็ก",
-    summary_en: "Facial fat grafting",
-    summary_th: "ฉีดไขมันหน้าเด็ก",
   },
   {
     slug: "sculptra",
