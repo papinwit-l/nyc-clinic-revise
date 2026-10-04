@@ -81,7 +81,7 @@ export default async function TreatmentGalleryPage({
 
       {/* Back to the full gallery — someone arriving from search has no other
           route up, since the nav only reaches /before-after. */}
-      <div className="bg-[var(--color-surface)] pt-8">
+      <div className="bg-[var(--color-surface)] py-4">
         <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
           <Link
             href={`/${locale}/before-after`}
