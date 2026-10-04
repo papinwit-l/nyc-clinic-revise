@@ -19,7 +19,13 @@
 //    rest_case_collection_params filter (project reference §5).
 // ─────────────────────────────────────────────────────────────────────────
 
-import { CaseCard } from "@/types/case";
+import {
+  CaseCard,
+  SubcategoryGroup,
+  TreatmentGroup,
+  UNGROUPED_SLUG,
+} from "@/types/case";
+import { getServices } from "@/data/services";
 
 const DATA = [
   {
@@ -140,4 +146,102 @@ export async function getCasesForService(
   return all
     .filter((c) => c.treatmentSlug === slug || c.subcategorySlug === slug)
     .slice(0, limit);
+}
+
+/**
+ * Groups one treatment's cases by sub-category.
+ *
+ * The ungrouped bucket always sorts last and is dropped when it is the only
+ * group — see SubcategoryGroup. Everything else keeps the order cases arrive
+ * in, which is `order` (menu_order), so the term list's own sequence is what
+ * decides group order.
+ */
+function groupBySubcategory(
+  cases: CaseCard[],
+  ungroupedTitle: string,
+): SubcategoryGroup[] {
+  const groups: SubcategoryGroup[] = [];
+
+  for (const c of cases) {
+    const slug = c.subcategorySlug ?? UNGROUPED_SLUG;
+    const title = c.subcategory ?? ungroupedTitle;
+    const existing = groups.find((g) => g.slug === slug);
+    if (existing) existing.cases.push(c);
+    else groups.push({ slug, title, cases: [c] });
+  }
+
+  const named = groups.filter((g) => g.slug !== UNGROUPED_SLUG);
+  const ungrouped = groups.find((g) => g.slug === UNGROUPED_SLUG);
+
+  // Only group is the unnamed one → drop the heading entirely.
+  if (!named.length) return ungrouped ? [{ ...ungrouped, title: "" }] : [];
+  return ungrouped ? [...named, ungrouped] : named;
+}
+
+/**
+ * Every treatment with cases, each carrying a capped preview set.
+ * Used by /before-after.
+ *
+ * Treatment order follows the SERVICE list, not the case list — so the
+ * gallery reads in the same order as /services rather than by whichever case
+ * happens to be first. Treatments with no cases are omitted.
+ */
+export async function getCaseGroups(
+  locale: string,
+  opts?: { perGroup?: number; ungroupedTitle?: string },
+): Promise<TreatmentGroup[]> {
+  const perGroup = opts?.perGroup ?? 6;
+  const ungroupedTitle =
+    opts?.ungroupedTitle ?? (locale === "th" ? "เคสอื่น ๆ" : "More cases");
+
+  const [all, services] = await Promise.all([
+    getCases(locale),
+    getServices(locale),
+  ]);
+
+  return services
+    .map((service) => {
+      const mine = all.filter((c) => c.treatmentSlug === service.slug);
+      return {
+        slug: service.slug,
+        title: service.title,
+        cases: mine.slice(0, perGroup),
+        groups: groupBySubcategory(mine, ungroupedTitle),
+        total: mine.length,
+      };
+    })
+    .filter((g) => g.total > 0);
+}
+
+/**
+ * One treatment, grouped by sub-category.
+ * Used by /before-after/[treatment].
+ *
+ * Returns null for a slug that is not a top-level service, so the page can
+ * notFound() rather than rendering an empty shell.
+ */
+export async function getTreatmentGroup(
+  locale: string,
+  treatmentSlug: string,
+  opts?: { ungroupedTitle?: string },
+): Promise<TreatmentGroup | null> {
+  const ungroupedTitle =
+    opts?.ungroupedTitle ?? (locale === "th" ? "เคสอื่น ๆ" : "More cases");
+
+  const [all, services] = await Promise.all([
+    getCases(locale),
+    getServices(locale),
+  ]);
+
+  const service = services.find((s) => s.slug === treatmentSlug);
+  if (!service) return null;
+
+  const mine = all.filter((c) => c.treatmentSlug === treatmentSlug);
+  return {
+    slug: service.slug,
+    title: service.title,
+    cases: mine,
+    groups: groupBySubcategory(mine, ungroupedTitle),
+    total: mine.length,
+  };
 }
