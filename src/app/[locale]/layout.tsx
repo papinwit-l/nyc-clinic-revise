@@ -8,7 +8,7 @@ import {
   Mitr,
   Prompt,
 } from "next/font/google";
-import { isValidLocale, type Locale } from "@/i18n/config";
+import { isValidLocale, locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -81,6 +81,21 @@ const prompt = Prompt({
   variable: "--font-thai-body",
   display: "swap",
 });
+
+/**
+ * Without this, [locale] is an unresolved dynamic segment and every page
+ * beneath it renders on demand — which is where the Fluid CPU goes. Declaring
+ * the two locales lets Next prerender them at build time.
+ *
+ * Child routes with their own generateStaticParams (services/[slug]) combine
+ * with these, so 2 locales × 19 services = 38 prerendered pages.
+ *
+ * A page only stays static if nothing inside it opts out — headers(),
+ * cookies(), searchParams, or a no-store fetch pushes it back to dynamic.
+ */
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 // ─── Metadata ───────────────────────────────────────
 

@@ -3,7 +3,7 @@ import { getServices } from "@/data/services";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import PageHeader from "@/components/shared/PageHeader";
-import ServicesIndex from "@/components/services/ServicesIndex";
+import ServiceCardItem from "@/components/services/ServiceCardItem";
 
 /**
  * No closing CTA here, deliberately: the cards ARE the call to action. A LINE
@@ -46,18 +46,24 @@ export default async function ServicesPage({
         locale={locale}
       />
 
-      {/* No container here: the editorial layout renders full-bleed bands and
-          would be clipped by one. Each layout supplies its own container —
-          see ServicesIndex. */}
-      <section className="bg-[var(--color-surface)]">
-        {/* ⚠ ServicesIndex is a REVIEW AID holding the layout toggle.
-              Once marketing chooses, delete it and map over the chosen
-              layout component here — both are server components. */}
-        <ServicesIndex
-          services={services}
-          locale={locale}
-          signatureLabel={t.services.signature}
-        />
+      <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+          {/* Cards layout — chosen by marketing, Sept 2026, over the directory
+              and editorial alternatives. The review toggle (ServicesIndex) and
+              the two unused layouts are deleted, so this page ships no client
+              JS at all. */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((s, i) => (
+              <ServiceCardItem
+                key={s.slug}
+                service={s}
+                locale={locale}
+                index={i}
+                signatureLabel={t.services.signature}
+              />
+            ))}
+          </div>
+        </div>
       </section>
     </>
   );
