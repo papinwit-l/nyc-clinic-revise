@@ -14,8 +14,10 @@ type Props = {
 
 export default function PromotionsBanner({ t, locale, data }: Props) {
   if (!data) return null;
+  // Validity is decided by the data layer (getActivePromotion), in Bangkok
+  // time. The UTC comparison that was here hid a promo at 07:00 on its last
+  // day.
   const validDate = new Date(data.validUntil);
-  if (validDate < new Date()) return null;
 
   const isTH = locale === "th";
 

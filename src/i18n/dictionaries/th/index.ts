@@ -6,6 +6,7 @@ import beforeAfter from "./beforeAfter";
 import blog from "./blog";
 import contact from "./contact";
 import faq from "./faq";
+import promotions from "./promotions";
 
 const th = {
   nav: {
@@ -49,6 +50,7 @@ const th = {
   blog,
   contact,
   faq,
+  promotions,
 } as const;
 
 export default th;
