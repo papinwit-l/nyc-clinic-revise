@@ -122,6 +122,11 @@ export default async function PromotionsPage({
                       priority={i === 0}
                       enlargeLabel={p.enlarge}
                       closeLabel={t.common.close}
+                      overlay={
+                        promo.textOverImage
+                          ? { title: promo.title, offer: promo.offer, headFont }
+                          : undefined
+                      }
                     />
 
                     <div className="pt-[22px] grid gap-5 md:grid-cols-[1fr_auto] md:gap-10 md:items-start">

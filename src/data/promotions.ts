@@ -31,6 +31,7 @@ type RawPromotion = {
   offer_th: string;
   condition_en?: string;
   condition_th?: string;
+  textOverImage?: boolean;
   serviceSlug?: string;
   validFrom: string;
   validUntil: string;
@@ -39,7 +40,10 @@ type RawPromotion = {
 const DATA: RawPromotion[] = [
   {
     slug: "summer-nose-thread-2026",
-    image: "/images/promotions/placeholder-01.svg",
+    // Same mock photo the homepage banner uses. It has no offer in the
+    // artwork, so /promotions draws the text over it (textOverImage).
+    image: "/images/banner/promo-banner.png",
+    textOverImage: true,
     title_en: "Summer Special — Nose Thread Lift",
     title_th: "โปรร้อยไหมจมูก ต้อนรับซัมเมอร์",
     offer_en: "20% off Semi-Surgery Nose Thread Lift",
@@ -96,6 +100,7 @@ function resolve(raw: RawPromotion, locale: string): Promotion {
     offer: th ? raw.offer_th : raw.offer_en,
     condition: th ? raw.condition_th : raw.condition_en,
     serviceSlug: raw.serviceSlug,
+    textOverImage: raw.textOverImage,
     validUntil: raw.validUntil,
   };
 }

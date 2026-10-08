@@ -18,6 +18,9 @@ type Props = {
   priority?: boolean;
   enlargeLabel: string;
   closeLabel: string;
+  /** Set for artwork with no offer baked in: drawn over the right side,
+      matching the homepage PromotionsBanner. */
+  overlay?: { title: string; offer: string; headFont: string };
 };
 
 export default function PromoBannerImage({
@@ -26,6 +29,7 @@ export default function PromoBannerImage({
   priority,
   enlargeLabel,
   closeLabel,
+  overlay,
 }: Props) {
   const [open, setOpen] = useState(false);
 
@@ -42,9 +46,35 @@ export default function PromoBannerImage({
           alt={alt}
           fill
           priority={priority}
-          className="object-cover"
+          className={overlay ? "object-cover object-left" : "object-cover"}
           sizes="(max-width: 1024px) 100vw, 960px"
         />
+        {overlay && (
+          <>
+            <span
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 30%, rgba(26,31,58,0.55) 60%, rgba(26,31,58,0.85) 100%)",
+              }}
+            />
+            <span className="absolute inset-y-0 right-0 w-[58%] flex flex-col justify-center items-end text-right px-[5%]">
+              <span
+                className="text-white font-bold leading-tight text-[clamp(1rem,3.4vw,2.1rem)]"
+                style={{ fontFamily: overlay.headFont }}
+              >
+                {overlay.title}
+              </span>
+              <span
+                className="pt-[0.5em] text-[var(--color-accent)] font-semibold text-[clamp(0.8rem,2.2vw,1.35rem)]"
+                style={{ fontFamily: overlay.headFont }}
+              >
+                {overlay.offer}
+              </span>
+            </span>
+          </>
+        )}
       </button>
 
       <Lightbox
