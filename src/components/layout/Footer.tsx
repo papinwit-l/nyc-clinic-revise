@@ -12,7 +12,6 @@ import {
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 
-
 const SOCIALS = [
   {
     href: "https://web.facebook.com/nycclinic",
@@ -83,7 +82,7 @@ export default function Footer({ locale, t, navT }: Props) {
         { href: l("/contact"), label: navT.contact },
         { href: l("/promotions"), label: "Promotions" },
         { href: l("/faq"), label: "FAQ" },
-        { href: l("/reviews"), label: "Reviews" },
+        // { href: l("/reviews"), label: "Reviews" },
       ],
       // Mix of translated and English — use locale font (Montserrat handles English fine)
       linkFont: localeFont,

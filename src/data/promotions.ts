@@ -9,7 +9,7 @@ const DATA = {
   title_th: "โปรร้อยไหมจมูก ต้อนรับซัมเมอร์",
   offer_en: "20% off Semi-Surgery Nose Thread Lift",
   offer_th: "ลด 20% สำหรับร้อยไหมจมูกกึ่งศัลยกรรม",
-  validUntil: "2026-09-30",
+  validUntil: "2026-12-31",
 };
 
 export async function getActivePromotion(
