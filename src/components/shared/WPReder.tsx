@@ -41,7 +41,7 @@ export function WPContent({ children, className = "" }: WPContentProps) {
 
   return (
     <div
-      className={`prose prose-slate max-w-none ${className}`}
+      className={className}
       dangerouslySetInnerHTML={{ __html: cleanHtml }}
       suppressHydrationWarning={true}
     />

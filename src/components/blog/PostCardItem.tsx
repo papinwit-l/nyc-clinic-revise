@@ -25,11 +25,14 @@ type Props = {
 };
 
 export function formatPostDate(date: string, locale: string) {
-  return new Date(date).toLocaleDateString(locale === "th" ? "th-TH" : "en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  return new Date(date).toLocaleDateString(
+    locale === "th" ? "th-TH" : "en-US",
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    },
+  );
 }
 
 export default function PostCardItem({
@@ -83,7 +86,7 @@ export default function PostCardItem({
         </p>
 
         <Heading
-          className={`text-[var(--color-primary)] mt-2.5 transition-colors group-hover:text-[var(--color-accent-dark)] ${
+          className={`text-[var(--color-primary)] pt-2.5 transition-colors group-hover:text-[var(--color-accent-dark)] ${
             isLead
               ? "text-[clamp(1.35rem,2.6vw,1.9rem)] leading-[1.35]"
               : textTH
