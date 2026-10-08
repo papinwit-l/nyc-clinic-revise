@@ -5,6 +5,7 @@ import services from "./services";
 import beforeAfter from "./beforeAfter";
 import blog from "./blog";
 import contact from "./contact";
+import faq from "./faq";
 
 const en = {
   nav: {
@@ -47,6 +48,7 @@ const en = {
   beforeAfter,
   blog,
   contact,
+  faq,
 } as const;
 
 export default en;

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getFeaturedFaqs } from "@/data/faq";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
@@ -26,7 +27,7 @@ import FaqAccordion from "@/components/shared/FaqAccordion";
  *
  *   channels  — LINE (the primary, larger), phone, hours
  *   location  — address + directions link + socials | map
- *   FAQ       — short pick from the faq data; full list is /faq (not built)
+ *   FAQ       — short pick from the faq data; full list is /faq
  *
  * No form: every conversion goes through LINE or phone (project reference §7).
  * No closing CTA band either — LINE is the first thing on the page and the
@@ -263,6 +264,15 @@ export default async function ContactPage({
                 className="mb-8"
               />
               <FaqAccordion items={faqs} locale={locale} group="contact-faq" />
+              <div className="pt-8">
+                <Link
+                  href={`/${locale}/faq`}
+                  className="text-sm font-medium text-[var(--color-accent-dark)] hover:text-[var(--color-accent)] transition-colors"
+                  style={{ fontFamily: bodyFont }}
+                >
+                  {c.faq.viewAll}
+                </Link>
+              </div>
             </div>
           </div>
         </section>

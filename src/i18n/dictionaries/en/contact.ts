@@ -26,6 +26,7 @@ const contact = {
   faq: {
     label: "FAQ",
     heading: "Frequently Asked Questions",
+    viewAll: "View all questions →",
   },
 } as const;
 
