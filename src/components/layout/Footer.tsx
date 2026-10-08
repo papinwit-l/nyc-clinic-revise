@@ -1,3 +1,4 @@
+import { LINE_URL, PHONE_HREF } from "@/lib/site";
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import Logo from "@/components/shared/Logo";
@@ -11,8 +12,6 @@ import {
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 
-const LINE_URL = "https://lin.ee/7oJgymx";
-const PHONE_HREF = "tel:+66880087870";
 
 const SOCIALS = [
   {

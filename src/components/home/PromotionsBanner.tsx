@@ -1,10 +1,10 @@
+import { LINE_URL } from "@/lib/site";
 import Image from "next/image";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Promotion } from "@/types/promotion";
 import { sectionHeadings } from "@/i18n/section-headings";
 
-const LINE_URL = "https://lin.ee/7oJgymx";
 
 type Props = {
   t: Dictionary["home"]["promotion"];

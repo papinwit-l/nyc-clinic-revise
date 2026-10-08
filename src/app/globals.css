@@ -724,3 +724,9 @@ h6 {
     animation: none;
   }
 }
+
+/* FAQ accordion — hide the native disclosure triangle (Safari needs the
+   -webkit- rule; `list-none` alone doesn't remove it there). */
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}

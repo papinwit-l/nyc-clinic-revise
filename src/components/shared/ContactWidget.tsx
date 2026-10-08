@@ -1,13 +1,11 @@
 "use client";
 
+import { LINE_URL, PHONE, PHONE_HREF } from "@/lib/site";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Phone, MessageCircle, X, Minus } from "lucide-react";
 import { LineIcon, TiktokIcon } from "@/components/shared/SocialIcons";
 
-const LINE_URL = "https://lin.ee/7oJgymx";
-const PHONE = "088-008-7870";
-const PHONE_HREF = "tel:+66880087870";
 const TIKTOK_URL = "https://www.tiktok.com/@nycclinic";
 
 type WidgetState = "collapsed" | "expanded" | "minimized";

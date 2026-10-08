@@ -1,3 +1,4 @@
+import { CLINIC, LINE_URL, PHONE, PHONE_HREF, SOCIAL_URLS } from "@/lib/site";
 import Image from "next/image";
 import {
   LineIcon,
@@ -9,38 +10,31 @@ import {
 import type { Dictionary } from "@/i18n/get-dictionary";
 import SectionHeader from "@/components/shared/SectionHeader";
 
-const LINE_URL = "https://lin.ee/7oJgymx";
-const PHONE = "088-008-7870";
-const PHONE_HREF = "tel:+66880087870";
 
 // Match the Footer's social set + URLs exactly.
 const SOCIALS = [
   {
     label: "Facebook",
-    href: "https://web.facebook.com/nycclinic",
+    href: SOCIAL_URLS.facebook,
     Icon: FacebookIcon,
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/nycclinic/",
+    href: SOCIAL_URLS.instagram,
     Icon: InstagramIcon,
   },
   {
     label: "TikTok",
-    href: "https://www.tiktok.com/@nycclinic",
+    href: SOCIAL_URLS.tiktok,
     Icon: TiktokIcon,
   },
   { label: "LINE", href: LINE_URL, Icon: LineIcon },
   {
     label: "YouTube",
-    href: "https://www.youtube.com/user/nycnewyorkclinic",
+    href: SOCIAL_URLS.youtube,
     Icon: YoutubeIcon,
   },
 ];
-
-// NYC Clinic Thonglor — 136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110
-const MAP_EMBED =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6!2d100.5794!3d13.7367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29ee114e6b9a1%3A0x2b5e5c94e4a8b8a0!2sNYC+Clinic!5e0!3m2!1sth!2sth!4v1";
 
 type Props = {
   t: Dictionary["home"]["contact"];
@@ -109,13 +103,11 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
                   </h3>
                   <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
                     <span style={{ fontFamily: "var(--font-body)" }}>
-                      NYC Clinic (New York Clinic, GR)
+                      {CLINIC.name}
                     </span>
                     <br />
                     <span style={{ fontFamily: bodyFont }}>
-                      {isTH
-                        ? "136/2 ซ.สุขุมวิท 53 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพฯ 10110"
-                        : "136/2 Sukhumvit 53 Alley, Khlong Tan Nuea, Watthana, Bangkok 10110"}
+                      {isTH ? CLINIC.address.th : CLINIC.address.en}
                     </span>
                   </p>
                 </div>
@@ -131,7 +123,12 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
                     className="text-[var(--color-text-muted)] text-sm leading-relaxed whitespace-pre-line"
                     style={{ fontFamily: bodyFont }}
                   >
-                    {t.hoursValue}
+                    {CLINIC.hours
+                      .map(
+                        (h) =>
+                          `${isTH ? h.days.th : h.days.en} ${isTH ? h.time.th : h.time.en}`,
+                      )
+                      .join("\n")}
                   </p>
                 </div>
               </div>
@@ -163,7 +160,7 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
           {/* RIGHT — Google Maps, fills the column height on desktop */}
           <div className="min-h-[360px] lg:min-h-full bg-[var(--color-surface-dim)]">
             <iframe
-              src={MAP_EMBED}
+              src={CLINIC.mapEmbed}
               width="100%"
               height="100%"
               style={{ border: 0, minHeight: 360 }}

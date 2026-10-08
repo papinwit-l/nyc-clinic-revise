@@ -4,6 +4,7 @@ import about from "./about";
 import services from "./services";
 import beforeAfter from "./beforeAfter";
 import blog from "./blog";
+import contact from "./contact";
 
 const th = {
   nav: {
@@ -45,6 +46,7 @@ const th = {
   services,
   beforeAfter,
   blog,
+  contact,
 } as const;
 
 export default th;

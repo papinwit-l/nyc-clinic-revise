@@ -123,7 +123,7 @@ export default async function BlogPostPage({
 
             <h1
               lang={post.lang}
-              className="text-[var(--color-primary)] mt-3.5 text-[clamp(1.8rem,4.4vw,2.75rem)] leading-[1.3]"
+              className="text-[var(--color-primary)] pt-3.5 text-[clamp(1.8rem,4.4vw,2.75rem)] leading-[1.3]"
               style={{
                 fontFamily: titleFont,
                 fontWeight: textTH ? 600 : 500,

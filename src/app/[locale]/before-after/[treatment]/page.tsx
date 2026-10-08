@@ -1,3 +1,4 @@
+import { LINE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,7 +12,6 @@ import PageHeader from "@/components/shared/PageHeader";
 import RevealCarousel from "@/components/before-after/RevealCarousel";
 import CaseGroup from "@/components/before-after/CaseGroup";
 
-const LINE_URL = "https://lin.ee/7oJgymx";
 
 /**
  * One treatment's cases, grouped by sub-category.

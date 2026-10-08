@@ -1,5 +1,6 @@
 "use client";
 
+import { LINE_URL } from "@/lib/site";
 import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,7 +9,6 @@ import { ChevronDown } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import HeroLogo from "@/components/shared/HeroLogo";
 
-const LINE_URL = "https://lin.ee/7oJgymx";
 
 // Plays once on desktop, then hands off to the slideshow below. No loop.
 const HERO_VIDEO_SRC = "/videos/hero-intro.mp4";
