@@ -15,6 +15,9 @@ import type { ReactNode } from "react";
  * `pt` accounts for the fixed header.
  */
 
+/** Thai script takes neither tracking nor uppercase — see .section-label-thai. */
+const HAS_THAI = /[\u0E00-\u0E7F]/;
+
 type Props = {
   /** Small tracked eyebrow above the heading. */
   label: string;
@@ -56,7 +59,20 @@ export default function PageHeader({
       </div>
 
       <div className="relative z-10 max-w-[var(--container-max)] mx-auto px-6 sm:px-12 text-center">
-        <span className="section-label">{label}</span>
+        <span
+          className={
+            HAS_THAI.test(label)
+              ? "section-label section-label-thai"
+              : "section-label"
+          }
+          style={{
+            fontFamily: HAS_THAI.test(label)
+              ? "var(--font-thai-body)"
+              : "var(--font-body)",
+          }}
+        >
+          {label}
+        </span>
 
         <h1
           className="text-[clamp(2.2rem,5vw,3.4rem)] leading-[1.15] mt-4"

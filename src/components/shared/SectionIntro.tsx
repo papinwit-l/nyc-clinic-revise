@@ -14,6 +14,9 @@ import type { ReactNode } from "react";
  * diamond and rule between the two lines, attached to neither.
  */
 
+/** Thai script takes neither tracking nor uppercase — see .section-label-thai. */
+const HAS_THAI = /[\u0E00-\u0E7F]/;
+
 type Props = {
   label: string;
   heading: string;
@@ -41,7 +44,20 @@ export default function SectionIntro({
           aria-hidden
           className="w-2.5 h-2.5 shrink-0 rotate-45 border border-[var(--color-accent)]"
         />
-        <span className="section-label shrink-0">{label}</span>
+        <span
+          className={`shrink-0 ${
+            HAS_THAI.test(label)
+              ? "section-label section-label-thai"
+              : "section-label"
+          }`}
+          style={{
+            fontFamily: HAS_THAI.test(label)
+              ? "var(--font-thai-body)"
+              : "var(--font-body)",
+          }}
+        >
+          {label}
+        </span>
         <span
           aria-hidden
           className="h-px flex-1"

@@ -730,3 +730,20 @@ h6 {
 .faq-item > summary::-webkit-details-marker {
   display: none;
 }
+
+/* Thai variants of the tracked/uppercase labels. Thai has no capitals, and
+   letter-spacing pulls tone marks away from their consonants — so the label
+   drops both and goes up a size to hold the same visual weight. */
+.section-label-thai {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+.badge-thai {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-thai-body);
+}

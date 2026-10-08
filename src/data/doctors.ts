@@ -24,14 +24,8 @@ export const DOCTORS: Doctor[] = [
         en: "Aesthetic Dermatology",
         th: "ชำนาญการด้านผิวพรรณความงาม Aesthetic",
       },
-      {
-        en: "20+ years in aesthetic medicine",
-        th: "ประสบการณ์ด้านผิวพรรณความงามมากกว่า 20 ปี",
-      },
-      {
-        en: "40,000+ nose thread cases",
-        th: "ประสบการณ์ร้อยไหมจมูกมามากกว่า 40,000 เคส",
-      },
+      // "20+ years" and "40,000+ cases" were also listed here. Removed Oct 2026:
+      // the bio and the stats directly above already say both.
     ],
     services: ["nose-thread-lift", "facial-thread-lift", "facial-design"],
     featured: true,

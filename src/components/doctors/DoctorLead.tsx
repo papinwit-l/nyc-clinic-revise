@@ -80,25 +80,31 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
       </InView>
 
       <div className="relative z-10 lg:col-span-3">
-        <span className="badge">
+        <span className={isTH ? "badge badge-thai" : "badge"}>
           {isTH ? "แพทย์ผู้เชี่ยวชาญหลัก" : "Lead Specialist"}
         </span>
 
+        {/* Name follows the page locale; the other language sits beneath in
+            the opposite face (Oct 2026 — was English-first on both).
+            pt-, not mt-: the global heading reset zeroes margins on h1–h6. */}
         <h2
-          className="text-[clamp(1.9rem,3.4vw,2.6rem)] leading-[1.15] mt-5 text-[var(--color-primary)]"
+          className="text-[clamp(1.9rem,3.4vw,2.6rem)] leading-[1.15] pt-5 text-[var(--color-primary)]"
           style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 400,
-            letterSpacing: "-0.005em",
+            fontFamily: headFont,
+            fontWeight: isTH ? 600 : 400,
+            letterSpacing: isTH ? "0" : "-0.005em",
           }}
         >
-          {doctor.fullNameEn}
+          {isTH ? doctor.fullNameTh : doctor.fullNameEn}
         </h2>
         <p
           className="text-[var(--color-accent)] text-base sm:text-lg mt-1.5"
-          style={{ fontFamily: "var(--font-thai-head)", fontWeight: 500 }}
+          style={{
+            fontFamily: isTH ? "var(--font-display)" : "var(--font-thai-head)",
+            fontWeight: isTH ? 400 : 500,
+          }}
         >
-          {doctor.fullNameTh}
+          {isTH ? doctor.fullNameEn : doctor.fullNameTh}
         </p>
 
         <div className="divider-accent mt-4 mb-5" />
@@ -152,7 +158,7 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
         {/* Credentials — active locale only. Both languages stacked on every
             line reads as duplicated content, not thoroughness. */}
         <h3
-          className={`mt-9 text-[var(--color-primary)] ${
+          className={`pt-9 text-[var(--color-primary)] ${
             isTH ? "text-[1.1rem]" : "text-[1.2rem]"
           }`}
           style={{ fontFamily: headFont, fontWeight: isTH ? 600 : 500 }}

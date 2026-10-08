@@ -5,9 +5,9 @@ import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import PageHeader from "@/components/shared/PageHeader";
 import DoctorLead from "@/components/doctors/DoctorLead";
-import DoctorCard from "@/components/doctors/DoctorCard";
-
-const LINE_URL = "https://lin.ee/7oJgymx";
+import DoctorTeamCard from "@/components/doctors/DoctorTeamCard";
+import TeamLayoutReview from "@/components/doctors/TeamLayoutReview";
+import { LINE_URL } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -58,46 +58,55 @@ export default async function DoctorsPage({
           primary moment */}
       <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
         <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
-          {/* A mark, not another line. The blocks below already carry a
-              gradient separator and a vertical rule each; a third rule
-              treatment here would tip the section into line work. */}
-          <div className="flex items-center gap-5 sm:gap-8 mb-14">
+          {/* A real section header. This was a small line of text between
+              two rules and read as a footnote, for the section that
+              introduces three of the four doctors. No diamond: the page
+              header already has one. */}
+          <div className="text-center mb-12 sm:mb-14">
             <span
-              aria-hidden
-              className="h-px flex-1"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, var(--color-accent))",
-              }}
-            />
-            <p
-              className={`text-[var(--color-text-warm)] ${
-                isTH ? "text-[1.1rem]" : "text-[1.2rem]"
-              }`}
+              className={
+                isTH ? "section-label section-label-thai" : "section-label"
+              }
+              style={{ fontFamily: bodyFont }}
+            >
+              {t.doctor.team.label}
+            </span>
+            <h2
+              className="pt-3 text-[clamp(1.7rem,3.2vw,2rem)] leading-[1.35] text-[var(--color-primary)]"
               style={{ fontFamily: headFont, fontWeight: isTH ? 600 : 400 }}
             >
-              {isTH ? "ทีมแพทย์ของเรา" : "Also On Our Team"}
-            </p>
-            <span
-              aria-hidden
-              className="h-px flex-1"
-              style={{
-                background:
-                  "linear-gradient(90deg, var(--color-accent), transparent)",
-              }}
-            />
+              {t.doctor.team.heading}
+            </h2>
           </div>
 
-          <div className="space-y-14 sm:space-y-16">
-            {team.map((doc, i) => (
-              <DoctorCard
-                key={doc.slug}
-                doctor={doc}
-                locale={locale}
-                index={i}
-              />
-            ))}
-          </div>
+          {/* TEMPORARY: two layouts for marketing to choose between.
+              Add ?team=a or ?team=b to the URL — see TeamLayoutReview. */}
+          <TeamLayoutReview
+            a={
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
+                {team.map((doc) => (
+                  <DoctorTeamCard
+                    key={doc.slug}
+                    doctor={doc}
+                    locale={locale}
+                    layout="grid"
+                  />
+                ))}
+              </div>
+            }
+            b={
+              <div className="grid gap-6">
+                {team.map((doc) => (
+                  <DoctorTeamCard
+                    key={doc.slug}
+                    doctor={doc}
+                    locale={locale}
+                    layout="row"
+                  />
+                ))}
+              </div>
+            }
+          />
         </div>
       </section>
 

@@ -6,6 +6,10 @@ const doctor = {
     description:
       "A team of board-certified specialists with over 15 years of experience, ready to consult and care for you.",
   },
+  team: {
+    label: "Our Team",
+    heading: "Also On Our Team",
+  },
   credentials: {
     heading: "Qualifications & Expertise",
   },
