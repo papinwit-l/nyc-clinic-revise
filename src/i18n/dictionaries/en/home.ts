@@ -63,6 +63,7 @@ const home = {
     validUntil: "Valid until",
     cta: "Get Promotion",
     details: "View Details",
+    viewAll: "View all {n} promotions →",
   },
   blog: {
     cta: "Read More →",

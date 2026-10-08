@@ -1,5 +1,6 @@
 import { LINE_URL } from "@/lib/site";
 import Image from "next/image";
+import Link from "next/link";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Promotion } from "@/types/promotion";
@@ -10,9 +11,17 @@ type Props = {
   t: Dictionary["home"]["promotion"];
   locale: string;
   data: Promotion | null;
+  /** Active promotions in total. The "view all" link shows only above 1 —
+      with a single promo it would lead to the same offer again. */
+  total?: number;
 };
 
-export default function PromotionsBanner({ t, locale, data }: Props) {
+export default function PromotionsBanner({
+  t,
+  locale,
+  data,
+  total = 1,
+}: Props) {
   if (!data) return null;
   // Validity is decided by the data layer (getActivePromotion), in Bangkok
   // time. The UTC comparison that was here hid a promo at 07:00 on its last
@@ -103,7 +112,23 @@ export default function PromotionsBanner({ t, locale, data }: Props) {
             {t.validUntil} {formattedDate}
           </p>
 
-          <div className="flex items-center justify-end gap-3 mt-6">
+          <div className="flex flex-wrap items-center justify-end gap-x-6 gap-y-3 mt-6">
+            {/* Secondary on purpose: the LINE button stays the main action. */}
+            {total > 1 && (
+              <Link
+                href={`/${locale}/promotions`}
+                className={`text-sm text-[var(--color-accent-pale)] hover:text-white transition-colors ${
+                  isTH ? "" : "tracking-[0.04em]"
+                }`}
+                style={{
+                  fontFamily: isTH
+                    ? "var(--font-thai-body)"
+                    : "var(--font-body)",
+                }}
+              >
+                {t.viewAll.replace("{n}", String(total))}
+              </Link>
+            )}
             <a
               href={LINE_URL}
               target="_blank"

@@ -5,7 +5,7 @@ import { getCases } from "@/data/cases";
 import { getDoctors } from "@/data/doctors";
 import { getTestimonials } from "@/data/testimonials";
 import { getLatestPosts } from "@/data/posts";
-import { getActivePromotion } from "@/data/promotions";
+import { getActivePromotions } from "@/data/promotions";
 import { getInstagramPosts } from "@/data/instagram";
 import Hero from "@/components/home/Hero";
 import TrustBar from "@/components/home/TrustBar";
@@ -35,7 +35,7 @@ export default async function HomePage({
     doctors,
     testimonials,
     posts,
-    promo,
+    promos,
     igPosts,
   ] = await Promise.all([
     getServices(locale),
@@ -44,7 +44,7 @@ export default async function HomePage({
     getDoctors(),
     getTestimonials(locale, 3),
     getLatestPosts(locale, 3),
-    getActivePromotion(locale),
+    getActivePromotions(locale),
     getInstagramPosts(8),
   ]);
 
@@ -69,7 +69,12 @@ export default async function HomePage({
       />
       <Testimonials locale={locale} data={testimonials} />
       <InstagramFeed locale={locale} data={igPosts} />
-      <PromotionsBanner t={t.home.promotion} locale={locale} data={promo} />
+      <PromotionsBanner
+        t={t.home.promotion}
+        locale={locale}
+        data={promos[0] ?? null}
+        total={promos.length}
+      />
       <BlogPreview t={t.home.blog} locale={locale} data={posts} />
       <ContactCTA t={t.home.contact} tCommon={t.common} locale={locale} />
     </>
