@@ -26,9 +26,23 @@ type Props = {
   tCommon: Dictionary["common"];
   locale: string;
   cases: CaseCard[];
+  /**
+   * What the surrounding page already says, so the card doesn't repeat it:
+   *   "none"        homepage — the card carries everything (default)
+   *   "treatment"   /before-after — the block heading names the treatment
+   *   "subcategory" /before-after/[treatment] — the page names the treatment
+   *                 AND the group heading names the sub-category
+   * The modal always shows the full caption; it is read out of context.
+   */
+  context?: "none" | "treatment" | "subcategory";
 };
 
-export default function CaseGallery({ tCommon, locale, cases }: Props) {
+export default function CaseGallery({
+  tCommon,
+  locale,
+  cases,
+  context = "none",
+}: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
@@ -39,52 +53,67 @@ export default function CaseGallery({ tCommon, locale, cases }: Props) {
   return (
     <>
       <div className="relative z-10 grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-        {cases.map(({ slug, image, treatment, subcategory, doctor }) => (
-          <button
-            key={slug}
-            type="button"
-            onClick={() => setOpenSlug(slug)}
-            className="group block relative text-left transition-transform duration-300 hover:-translate-y-1 hover:z-10"
-            aria-label={`${subcategory ?? treatment} — ${isTH ? "ดูภาพขยาย" : "view larger"}`}
-          >
-            <span className="block relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:ring-[var(--color-border-accent)] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
-              <Image
-                src={image}
-                alt={`${treatment} — Before & After`}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-              />
-            </span>
+        {cases.map(({ slug, image, treatment, subcategory, doctor }) => {
+          // Title: the most specific thing the page hasn't already said.
+          const title =
+            context === "subcategory"
+              ? null
+              : context === "treatment"
+                ? (subcategory ?? null)
+                : (subcategory ?? treatment);
+          const showTreatment = context === "none" && !!subcategory;
 
-            <span className="block pt-4">
-              <span
-                className={`block text-[var(--color-primary)] leading-[1.3] transition-colors group-hover:text-[var(--color-accent)] ${
-                  isTH ? "text-[1.05rem]" : "text-[1.15rem]"
-                }`}
-                style={{
-                  fontFamily: titleFont,
-                  fontWeight: isTH ? 600 : 500,
-                }}
-              >
-                {subcategory ?? treatment}
-              </span>
-              <span className="flex items-center gap-2.5 mt-2">
-                <span
-                  aria-hidden
-                  className="h-px w-4 shrink-0 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8"
+          return (
+            <button
+              key={slug}
+              type="button"
+              onClick={() => setOpenSlug(slug)}
+              className="group block relative text-left transition-transform duration-300 hover:-translate-y-1 hover:z-10"
+              aria-label={`${subcategory ?? treatment} — ${isTH ? "ดูภาพขยาย" : "view larger"}`}
+            >
+              <span className="block relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)] transition-[transform,box-shadow] duration-300 ease-out group-hover:scale-[1.03] group-hover:ring-[var(--color-border-accent)] group-hover:shadow-[0_18px_45px_rgba(26,31,58,0.22)]">
+                <Image
+                  src={image}
+                  alt={`${treatment} — Before & After`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
                 />
+              </span>
+
+              <span className={`block ${title ? "pt-4" : "pt-3"}`}>
+                {title && (
+                  <span
+                    className={`block text-[var(--color-primary)] leading-[1.3] transition-colors group-hover:text-[var(--color-accent)] ${
+                      isTH ? "text-[1.05rem]" : "text-[1.15rem]"
+                    }`}
+                    style={{
+                      fontFamily: titleFont,
+                      fontWeight: isTH ? 600 : 500,
+                    }}
+                  >
+                    {title}
+                  </span>
+                )}
                 <span
-                  className="text-xs text-[var(--color-text-subtle)]"
-                  style={{ fontFamily: bodyFont }}
+                  className={`flex items-center gap-2.5 ${title ? "mt-2" : ""}`}
                 >
-                  {subcategory ? `${treatment} · ` : ""}
-                  {tCommon.by} {doctor}
+                  <span
+                    aria-hidden
+                    className="h-px w-4 shrink-0 bg-[var(--color-accent)] transition-all duration-300 group-hover:w-8"
+                  />
+                  <span
+                    className="text-xs text-[var(--color-text-subtle)]"
+                    style={{ fontFamily: bodyFont }}
+                  >
+                    {showTreatment ? `${treatment} · ` : ""}
+                    {tCommon.by} {doctor}
+                  </span>
                 </span>
               </span>
-            </span>
-          </button>
-        ))}
+            </button>
+          );
+        })}
       </div>
 
       <Lightbox

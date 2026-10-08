@@ -5,7 +5,7 @@ import { getRevealsByTreatment } from "@/data/reveal";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import PageHeader from "@/components/shared/PageHeader";
-import SectionIntro from "@/components/shared/SectionIntro";
+import ConsultBand from "@/components/shared/ConsultBand";
 import BeforeAfterRevealSlide from "@/components/home/BeforeAfterRevealSlide";
 import CaseGallery from "@/components/home/CaseGallery";
 
@@ -46,6 +46,7 @@ export default async function BeforeAfterPage({
   const t = await getDictionary(locale as Locale);
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
+  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   const groups = await getCaseGroups(locale, {
     perGroup: PER_BLOCK,
@@ -81,13 +82,35 @@ export default async function BeforeAfterPage({
             }`}
           >
             <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
-              <SectionIntro
-                label={t.beforeAfter.hero.label}
-                heading={group.title}
-                meta={`${group.total} ${t.beforeAfter.cases}`}
-                locale={locale}
-                className="mb-10"
-              />
+              {/* Block header. Not SectionIntro: its "Real Results" eyebrow
+                  repeated on all five blocks under a page header that already
+                  says it, and its heading was sized for a sub-section — these
+                  are the page's main sections. */}
+              <div className="flex items-end gap-4 sm:gap-6 mb-10">
+                <h2
+                  className="text-[clamp(1.6rem,3vw,2rem)] leading-[1.3] text-[var(--color-primary)]"
+                  style={{
+                    fontFamily: headFont,
+                    fontWeight: isTH ? 600 : 400,
+                  }}
+                >
+                  {group.title}
+                </h2>
+                <span
+                  aria-hidden
+                  className="h-px flex-1 mb-[0.6em]"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, var(--color-border-accent), transparent)",
+                  }}
+                />
+                <span
+                  className="shrink-0 text-sm text-[var(--color-text-muted)] mb-[0.2em]"
+                  style={{ fontFamily: bodyFont }}
+                >
+                  {group.total} {t.beforeAfter.cases}
+                </span>
+              </div>
 
               {reveal && (
                 <div className="mx-auto w-full max-w-3xl mb-12">
@@ -111,42 +134,39 @@ export default async function BeforeAfterPage({
                 tCommon={t.common}
                 locale={locale}
                 cases={group.cases}
+                context="treatment"
               />
 
               {/* CTA only when the block is genuinely a preview — with six or
                   fewer cases there is nothing more to show, and "View all 3"
                   would be a link to the same thing. */}
               {hasMore && (
-                <div className="mt-10 flex items-center gap-4">
-                  <span
-                    aria-hidden
-                    className="h-px flex-1"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, var(--color-border-accent))",
-                    }}
-                  />
+                <div className="mt-12 text-center">
+                  {/* A button, not tracked text between rules: this is the
+                      only route from here into the treatment page. */}
                   <Link
                     href={`/${locale}/before-after/${group.slug}`}
-                    className="shrink-0 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-                    style={{ fontFamily: bodyFont }}
+                    className="btn-ghost"
+                    style={{
+                      fontFamily: bodyFont,
+                      ...(isTH ? { letterSpacing: 0, fontSize: "0.9rem" } : {}),
+                    }}
                   >
                     {t.beforeAfter.viewAll} {group.total} {t.beforeAfter.cases}
+                    <span aria-hidden>&rarr;</span>
                   </Link>
-                  <span
-                    aria-hidden
-                    className="h-px flex-1"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, var(--color-border-accent), transparent)",
-                    }}
-                  />
                 </div>
               )}
             </div>
           </section>
         );
       })}
+
+      <ConsultBand
+        text={t.beforeAfter.consult}
+        button={t.beforeAfter.ctaLine}
+        locale={locale}
+      />
     </>
   );
 }

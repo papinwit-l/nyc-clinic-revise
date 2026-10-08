@@ -34,9 +34,16 @@ type Props = {
   group: SubcategoryGroup;
   tCommon: Dictionary["common"];
   locale: string;
+  /** "cases" / "เคส" — shown as a count beside the group heading. */
+  casesLabel: string;
 };
 
-export default function CaseGroup({ group, tCommon, locale }: Props) {
+export default function CaseGroup({
+  group,
+  tCommon,
+  locale,
+  casesLabel,
+}: Props) {
   const isTH = locale === "th";
   const [page, setPage] = useState(0);
   const [fading, setFading] = useState(false);
@@ -64,7 +71,7 @@ export default function CaseGroup({ group, tCommon, locale }: Props) {
           />
           <h3
             className={`shrink-0 text-[var(--color-primary)] ${
-              isTH ? "text-[1.15rem]" : "text-[1.25rem]"
+              isTH ? "text-[1.3rem]" : "text-[1.45rem]"
             }`}
             style={{
               fontFamily: isTH
@@ -75,6 +82,15 @@ export default function CaseGroup({ group, tCommon, locale }: Props) {
           >
             {group.title}
           </h3>
+          {/* Count — tells a 12-case group from a 3-case one before paging */}
+          <span
+            className="shrink-0 text-sm text-[var(--color-text-muted)]"
+            style={{
+              fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+            }}
+          >
+            {group.cases.length} {casesLabel}
+          </span>
           <span
             aria-hidden
             className="h-px flex-1"
@@ -91,7 +107,12 @@ export default function CaseGroup({ group, tCommon, locale }: Props) {
           fading ? "opacity-0" : "opacity-100"
         }`}
       >
-        <CaseGallery tCommon={tCommon} locale={locale} cases={visible} />
+        <CaseGallery
+          tCommon={tCommon}
+          locale={locale}
+          cases={visible}
+          context={group.title ? "subcategory" : "treatment"}
+        />
       </div>
 
       {pages > 1 && (
@@ -103,7 +124,7 @@ export default function CaseGroup({ group, tCommon, locale }: Props) {
               onClick={() => goTo(i)}
               aria-current={i === page}
               aria-label={`${i + 1} / ${pages}`}
-              className={`w-9 h-9 text-xs transition-colors ${
+              className={`w-11 h-11 text-sm transition-colors ${
                 i === page
                   ? "bg-[var(--color-primary)] text-white"
                   : "text-[var(--color-text-subtle)] ring-1 ring-[var(--color-border-strong)] hover:ring-[var(--color-accent)]"
