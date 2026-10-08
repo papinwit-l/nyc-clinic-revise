@@ -560,3 +560,167 @@ h6 {
     display: none !important;
   }
 }
+
+/* ============================================
+   Blog — article body (.article-body)
+   Styles the HTML WordPress returns for a post. Hand-written rather than
+   Tailwind `prose`: the brand needs its own h2 rule, diamond bullets and
+   Thai line-height. Faces are chosen by [data-lang] — the language the
+   article is written in, not the page locale.
+   Sharp corners throughout: editorial content (radius policy).
+   ============================================ */
+.article-body {
+  --ab-body: var(--font-body);
+  --ab-head: var(--font-display);
+  --ab-quote: var(--font-accent);
+  color: var(--color-text-warm);
+  font-size: 1.02rem;
+  line-height: 1.85;
+}
+.article-body[data-lang="th"] {
+  --ab-body: var(--font-thai-body);
+  --ab-head: var(--font-thai-head);
+  --ab-quote: var(--font-thai-serif);
+  line-height: 2;
+}
+.article-body :is(p, li, td, th, figcaption) {
+  font-family: var(--ab-body);
+  font-weight: 300;
+}
+.article-body p {
+  margin: 0 0 1.15em;
+}
+.article-body :is(strong, b) {
+  font-weight: 500;
+  color: var(--color-primary);
+}
+.article-body a {
+  color: var(--color-accent-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body :is(h2, h3, h4) {
+  font-family: var(--ab-head);
+  font-weight: 500;
+  color: var(--color-primary);
+  line-height: 1.45;
+}
+.article-body[data-lang="th"] :is(h2, h3, h4) {
+  font-weight: 600;
+}
+.article-body h2 {
+  position: relative;
+  font-size: 1.5rem;
+  margin: 2.4em 0 0.8em;
+  padding-top: 1.4em;
+}
+.article-body h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 1px;
+  background: var(--color-accent);
+}
+.article-body h3 {
+  font-size: 1.2rem;
+  margin: 2em 0 0.6em;
+}
+.article-body :is(ul, ol) {
+  margin: 0 0 1.3em;
+  padding: 0;
+}
+.article-body ul {
+  list-style: none;
+}
+.article-body ul > li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 0.35em;
+}
+.article-body ul > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.95em;
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  border: 1px solid var(--color-accent);
+}
+.article-body ol {
+  padding-left: 1.4em;
+}
+.article-body figure {
+  margin: 2em 0;
+}
+.article-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.article-body figure.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.article-body figcaption {
+  margin-top: 0.6em;
+  font-size: 0.82rem;
+  color: var(--color-text-subtle);
+  text-align: center;
+}
+.article-body blockquote {
+  margin: 2.2em 0;
+  padding: 2em 0 0;
+  border-top: 1px solid var(--color-border-accent);
+  text-align: center;
+}
+.article-body blockquote p {
+  font-family: var(--ab-quote);
+  font-weight: 300;
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: var(--color-primary);
+  margin: 0;
+}
+.article-body[data-lang="en"] blockquote p {
+  font-style: italic;
+  font-size: 1.5rem;
+}
+.article-body iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 2em 0;
+  border: 0;
+}
+.article-body hr {
+  border: 0;
+  height: 1px;
+  background: var(--color-border-accent);
+  margin: 2.4em 0;
+}
+.article-body > :first-child {
+  margin-top: 0;
+}
+.article-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* /blog grid — brief fade when the page or filter changes (no scroll jump) */
+.blog-grid-fade {
+  animation: blog-grid-fade 0.3s ease;
+}
+@keyframes blog-grid-fade {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-grid-fade {
+    animation: none;
+  }
+}
