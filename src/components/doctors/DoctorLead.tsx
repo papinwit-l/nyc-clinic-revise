@@ -5,9 +5,9 @@ import CountUp from "@/components/shared/CountUp";
 import InView from "@/components/shared/InView";
 
 /**
- * Lead specialist block. Four things separate it from DoctorCard, and the
- * separation is deliberate — one of them alone wouldn't read as hierarchy:
- *   1. a 2-of-5 column against the team's fixed 200px portrait
+ * Lead specialist block. Four things separate it from the team rows
+ * (DoctorTeamCard), and the separation is deliberate — one of them alone wouldn't read as hierarchy:
+ *   1. a 2-of-5 column against the team's fixed 220px portrait
  *   2. the navy backing plate
  *   3. the Lead Specialist badge
  *   4. the stats — only the lead carries these

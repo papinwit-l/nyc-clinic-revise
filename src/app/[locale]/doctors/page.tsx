@@ -6,7 +6,6 @@ import { LineIcon } from "@/components/shared/SocialIcons";
 import PageHeader from "@/components/shared/PageHeader";
 import DoctorLead from "@/components/doctors/DoctorLead";
 import DoctorTeamCard from "@/components/doctors/DoctorTeamCard";
-import TeamLayoutReview from "@/components/doctors/TeamLayoutReview";
 import { LINE_URL } from "@/lib/site";
 
 export async function generateMetadata({
@@ -79,34 +78,11 @@ export default async function DoctorsPage({
             </h2>
           </div>
 
-          {/* TEMPORARY: two layouts for marketing to choose between.
-              Add ?team=a or ?team=b to the URL — see TeamLayoutReview. */}
-          <TeamLayoutReview
-            a={
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
-                {team.map((doc) => (
-                  <DoctorTeamCard
-                    key={doc.slug}
-                    doctor={doc}
-                    locale={locale}
-                    layout="grid"
-                  />
-                ))}
-              </div>
-            }
-            b={
-              <div className="grid gap-6">
-                {team.map((doc) => (
-                  <DoctorTeamCard
-                    key={doc.slug}
-                    doctor={doc}
-                    locale={locale}
-                    layout="row"
-                  />
-                ))}
-              </div>
-            }
-          />
+          <div className="grid gap-6">
+            {team.map((doc) => (
+              <DoctorTeamCard key={doc.slug} doctor={doc} locale={locale} />
+            ))}
+          </div>
         </div>
       </section>
 

@@ -2,42 +2,38 @@ import Image from "next/image";
 import type { Doctor } from "@/types/doctor";
 
 /**
- * Team doctor — two layouts of the same content, for marketing to choose
- * between on the live page (Oct 2026, see TeamLayoutReview):
+ * Team doctor row: portrait | name block | credentials, on a white panel.
+ * Every row faces the same way.
  *
- *   "grid"  Option A — portrait on top, 3 across. Faces carry the section.
- *   "row"   Option B — portrait | name block | credentials, every row the
- *           same way round, on a white panel.
- *
- * Both replace the alternating blocks in DoctorCard.tsx (kept, unused, until
- * the choice is made): those left half the page empty on desktop and the
- * flipped middle row read as misaligned.
+ * Chosen by marketing Oct 2026 ("Option B") over a 3-column card grid, after
+ * reviewing both on the live page. Replaced the alternating blocks of the old
+ * DoctorCard, which left half the page empty on desktop and made the flipped
+ * middle row read as misaligned. (DoctorCard and the card-grid variant are in
+ * git history if ever needed.)
  *
  * Still lighter than DoctorLead — no backing plate, no badge, no stats.
  *
  * The name follows the page locale; the other language sits beneath it in the
  * opposite face. Nickname ("Dr. Beer" / "หมอเบียร์") leads, because that is
  * how patients know the doctors.
+ *
+ * Below md the row stacks: portrait, name block, then credentials.
  */
 
 type Props = {
   doctor: Doctor;
   locale: string;
-  layout: "grid" | "row";
 };
 
-export default function DoctorTeamCard({ doctor, locale, layout }: Props) {
+export default function DoctorTeamCard({ doctor, locale }: Props) {
   const isTH = locale === "th";
-  const isRow = layout === "row";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
   const altFont = isTH ? "var(--font-display)" : "var(--font-thai-head)";
 
   const portrait = (
     <div
-      className={`relative aspect-[4/5] overflow-hidden radius-soft bg-[var(--color-surface-dim)] ${
-        isRow ? "w-full max-w-[260px] md:max-w-none" : "w-full"
-      }`}
+      className="relative aspect-[4/5] w-full max-w-[260px] md:max-w-none overflow-hidden radius-soft bg-[var(--color-surface-dim)]"
       style={{ boxShadow: "0 10px 30px rgba(26, 31, 58, 0.12)" }}
     >
       <Image
@@ -45,11 +41,7 @@ export default function DoctorTeamCard({ doctor, locale, layout }: Props) {
         alt={`${doctor.nameEn} — ${doctor.nameTh}`}
         fill
         className="object-cover object-top"
-        sizes={
-          isRow
-            ? "(max-width: 768px) 260px, 220px"
-            : "(max-width: 720px) 90vw, 33vw"
-        }
+        sizes="(max-width: 768px) 260px, 220px"
       />
     </div>
   );
@@ -90,13 +82,7 @@ export default function DoctorTeamCard({ doctor, locale, layout }: Props) {
   );
 
   const credentials = (
-    <ul
-      className={`space-y-2 ${
-        isRow
-          ? "pt-4 border-t border-[var(--color-border-accent)] md:pt-0 md:border-t-0 md:pl-10 md:border-l"
-          : "mt-4 pt-4 border-t border-[var(--color-border-accent)]"
-      }`}
-    >
+    <ul className="space-y-2 pt-4 border-t border-[var(--color-border-accent)] md:pt-0 md:border-t-0 md:pl-10 md:border-l">
       {doctor.credentials.map((c, i) => (
         <li key={i} className="flex gap-3 items-start">
           <span
@@ -116,29 +102,14 @@ export default function DoctorTeamCard({ doctor, locale, layout }: Props) {
     </ul>
   );
 
-  if (isRow) {
-    return (
-      <article
-        id={doctor.slug}
-        className="scroll-mt-28 bg-[var(--color-surface-white)] border border-[var(--color-border-accent)] p-6 md:p-8 grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr_1.25fr] md:gap-10 md:items-start"
-      >
-        {portrait}
-        {identity}
-        {credentials}
-      </article>
-    );
-  }
-
   return (
     <article
       id={doctor.slug}
-      className="scroll-mt-28 w-full max-w-[420px] mx-auto md:max-w-none"
+      className="scroll-mt-28 bg-[var(--color-surface-white)] border border-[var(--color-border-accent)] p-6 md:p-8 grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr_1.25fr] md:gap-10 md:items-start"
     >
       {portrait}
-      <div className="pt-[22px]">
-        {identity}
-        {credentials}
-      </div>
+      {identity}
+      {credentials}
     </article>
   );
 }

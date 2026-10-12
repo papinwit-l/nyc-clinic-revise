@@ -11,7 +11,8 @@ import TreatmentList from "./TreatmentList";
  * the 220px thumbnail in ServiceRow was too small to carry a service, but a
  * card grid hides the treatment names that make this page worth visiting.
  *
- * Alternation reuses the DoctorCard pattern rather than inventing one. Five
+ * Alternation reuses the pattern of the old /doctors team blocks (DoctorCard,
+ * since replaced — see git history) rather than inventing one. Five
  * services is enough for it to read as rhythm; three would look accidental.
  *
  * Below lg the grid stacks and the image always comes first — a reversed
