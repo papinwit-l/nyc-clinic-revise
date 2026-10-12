@@ -33,7 +33,9 @@ export default function FaqAccordion({ items, locale, group = "faq" }: Props) {
         >
           <summary
             className={`flex items-start justify-between gap-6 py-5 cursor-pointer list-none text-[var(--color-primary)] hover:text-[var(--color-accent-dark)] transition-colors ${
-              isTH ? "text-[1rem] leading-[1.7]" : "text-[1.05rem] leading-[1.5]"
+              isTH
+                ? "text-[1rem] leading-[1.7]"
+                : "text-[1.05rem] leading-[1.5]"
             }`}
             style={{ fontFamily: bodyFont, fontWeight: 500 }}
           >
@@ -47,14 +49,19 @@ export default function FaqAccordion({ items, locale, group = "faq" }: Props) {
               <span className="absolute left-0 top-1/2 w-full h-px bg-current rotate-90 transition-transform duration-200 group-open:rotate-0" />
             </span>
           </summary>
-          <p
+          <div
             className={`pb-6 pr-10 text-[0.95rem] text-[var(--color-text-warm)] ${
               isTH ? "leading-[1.95]" : "leading-[1.8]"
             }`}
             style={{ fontFamily: bodyFont, fontWeight: 300 }}
           >
-            {item.a}
-          </p>
+            {/* Answers can run to several paragraphs (blank-line separated) */}
+            {item.a.split(/\n\s*\n/).map((para, k) => (
+              <p key={k} className={k > 0 ? "pt-3" : undefined}>
+                {para}
+              </p>
+            ))}
+          </div>
         </details>
       ))}
     </div>

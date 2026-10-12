@@ -17,15 +17,15 @@ import FaqAccordion from "@/components/shared/FaqAccordion";
  * page (data/services.ts) and are deliberately not repeated here.
  *
  * Category order is fixed below, not derived from the data, so the page reads
- * in the order a new patient asks: how do I book → how do I get there → who
- * treats me. A category with no items is skipped; the jump links only appear
+ * in the order a patient asks: what is it → is it safe → how do I prepare and
+ * recover. A category with no items is skipped; the jump links only appear
  * when more than one category has content.
  *
  * Emits FAQPage JSON-LD. The answers are also in the HTML (native <details>),
  * so the structured data describes what is visibly on the page.
  */
 
-const CATEGORY_ORDER: FaqCategory[] = ["booking", "visit", "treatment"];
+const CATEGORY_ORDER: FaqCategory[] = ["nose", "face", "safety", "care"];
 
 export async function generateMetadata({
   params,

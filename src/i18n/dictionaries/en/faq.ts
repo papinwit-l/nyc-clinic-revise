@@ -3,12 +3,13 @@ const faq = {
     label: "FAQ",
     heading: "Frequently Asked Questions",
     description:
-      "Answers to the questions we hear most, on booking, visiting the clinic and treatment.",
+      "Answers on nose and face thread lifts, safety, and how to prepare and recover.",
   },
   categories: {
-    booking: "Booking & pricing",
-    visit: "Visiting the clinic",
-    treatment: "Doctors & treatment",
+    nose: "Nose thread lift",
+    face: "Face thread lift",
+    safety: "Safety & side effects",
+    care: "Preparation & aftercare",
   },
   more: {
     heading: "Didn't find your answer?",
