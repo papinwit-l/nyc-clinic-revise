@@ -24,6 +24,7 @@ export const sectionHeadings = {
   // "Recognition", not "Certifications" — see src/data/awards.ts on wording.
   awards: { label: "Industry Recognition" },
   blog: { label: "Latest Articles", heading: "From Our Blog" },
+  faq: { label: "FAQ", heading: "Common Questions" },
   contact: { label: "Contact Us" },
 } as const;
 

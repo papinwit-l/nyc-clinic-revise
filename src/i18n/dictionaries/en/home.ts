@@ -68,6 +68,9 @@ const home = {
   blog: {
     cta: "Read More →",
   },
+  faq: {
+    cta: "View All Questions →",
+  },
   contact: {
     hoursValue: "Mon – Sat 10:00 AM – 7:00 PM\nSun 10:00 AM – 5:00 PM",
     readyTitle: "Ready to Transform?",
