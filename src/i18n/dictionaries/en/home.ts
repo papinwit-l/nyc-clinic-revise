@@ -69,7 +69,11 @@ const home = {
     cta: "Read More →",
   },
   faq: {
-    cta: "View All Questions →",
+    cta: "View all {n} questions →",
+    intro: "The questions patients ask us most, on nose and face thread lifts, safety and aftercare.",
+    askHeading: "Still have a question?",
+    askText: "Ask our doctors directly on LINE. Consultations are free.",
+    askButton: "Ask on LINE",
   },
   contact: {
     hoursValue: "Mon – Sat 10:00 AM – 7:00 PM\nSun 10:00 AM – 5:00 PM",
