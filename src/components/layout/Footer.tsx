@@ -1,4 +1,4 @@
-import { LINE_URL, PHONE_HREF } from "@/lib/site";
+import { LINE_ID, LINE_URL, PHONE_HREF } from "@/lib/site";
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import Logo from "@/components/shared/Logo";
@@ -123,7 +123,7 @@ export default function Footer({ locale, t, navT }: Props) {
                 style={{ fontFamily: enFont }}
               >
                 <LineIcon className="w-3.5 h-3.5" />
-                @nycclinic
+                {LINE_ID}
               </a>
             </div>
 

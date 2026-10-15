@@ -1,5 +1,5 @@
 import { LineIcon } from "@/components/shared/SocialIcons";
-import { LINE_URL } from "@/lib/site";
+import { LINE_ID, LINE_URL } from "@/lib/site";
 
 /**
  * Shared LINE call-to-action at the foot of EVERY article. One component, copy
@@ -43,7 +43,7 @@ export default function ArticleCTA({ t, locale }: Props) {
         style={{ fontFamily: bodyFont }}
       >
         <LineIcon className="w-5 h-5" />
-        {t.button}
+        {t.button.replace("{line}", LINE_ID)}
       </a>
     </aside>
   );

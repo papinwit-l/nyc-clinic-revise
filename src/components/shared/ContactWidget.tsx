@@ -1,6 +1,6 @@
 "use client";
 
-import { LINE_URL, PHONE, PHONE_HREF } from "@/lib/site";
+import { LINE_ID, LINE_URL, PHONE, PHONE_HREF } from "@/lib/site";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Phone, MessageCircle, X, Minus } from "lucide-react";
@@ -140,7 +140,7 @@ export default function ContactWidget({ locale }: Props) {
               {isTH ? "แอดไลน์ปรึกษาฟรี" : "Free consultation"}
             </span>
             <span className="text-sm font-semibold text-white tracking-wide">
-              @nycclinic
+              {LINE_ID}
             </span>
           </span>
         </a>

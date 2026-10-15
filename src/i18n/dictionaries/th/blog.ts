@@ -20,7 +20,8 @@ const blog = {
   cta: {
     heading: "ปรึกษาแพทย์ฟรี ผ่าน LINE",
     text: "ส่งรูปของคุณ ให้แพทย์ประเมินเบื้องต้นก่อนเข้ามาที่คลินิก",
-    button: "แอดไลน์ @nyc-clinic",
+    // "{line}" is replaced with LINE_ID from lib/site.ts
+    button: "แอดไลน์ {line}",
   },
 } as const;
 

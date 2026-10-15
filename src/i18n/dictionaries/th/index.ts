@@ -30,6 +30,10 @@ const th = {
     terms: "ข้อกำหนด",
     ctaLine: "แอดไลน์ปรึกษาฟรี",
   },
+  legal: {
+    label: "Legal",
+    updated: "ปรับปรุงล่าสุด",
+  },
   common: {
     learnMore: "ดูเพิ่มเติม",
     viewAll: "ดูทั้งหมด →",

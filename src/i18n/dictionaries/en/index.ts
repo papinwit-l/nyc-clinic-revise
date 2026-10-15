@@ -30,6 +30,10 @@ const en = {
     terms: "Terms",
     ctaLine: "Add LINE for Free Consult",
   },
+  legal: {
+    label: "Legal",
+    updated: "Last updated",
+  },
   common: {
     learnMore: "Learn More",
     viewAll: "View All →",
