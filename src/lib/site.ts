@@ -15,8 +15,9 @@ export const SITE_URL = (
 
 export const LINE_URL = "https://lin.ee/7oJgymx";
 // Shown wherever the LINE account is named (footer, widget, /contact, article
-// CTA). Value per project reference §1 ("LINE OA: @nyc-clinic").
-export const LINE_ID = "@nyc-clinic";
+// CTA). Confirmed Oct 2026: @nycclinic (the project reference's "@nyc-clinic"
+// was wrong).
+export const LINE_ID = "@nycclinic";
 export const PHONE = "088-008-7870";
 export const PHONE_HREF = "tel:+66880087870";
 
