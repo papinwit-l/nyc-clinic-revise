@@ -1,12 +1,17 @@
+import { privacyPolicyHtml } from "./privacy-policy";
+
 /**
  * Legal pages — /privacy-policy and /terms. WP static pages when the CMS is
  * connected (project reference §6); `html` is then content.rendered.
  *
- * ⚠ PLACEHOLDER. These are section SKELETONS only — headings a Thai clinic
- * privacy notice and website terms commonly carry, with no legal wording.
- * The clinic (and whoever advises it on PDPA) must supply the text. Nothing
- * here should be published as-is: `draft: true` keeps both pages out of
- * search results (noindex) until real content replaces it.
+ * Privacy policy: full DRAFT text in ./privacy-policy.ts (Oct 2026), with
+ * [bracketed] facts still to be supplied by the clinic.
+ *
+ * Terms: ⚠ PLACEHOLDER. Section SKELETON only — headings website terms
+ * commonly carry, with no legal wording; the clinic must supply the text.
+ *
+ * Neither should be published as-is: `draft: true` keeps both pages out of
+ * search results (noindex) until the clinic has signed off the text.
  *
  * TODO: replace with WP fetch — /wp/v2/pages?slug=privacy-policy
  */
@@ -96,7 +101,10 @@ export async function getLegalPage(
     slug,
     title: th ? page.title_th : page.title_en,
     updated: "2026-10-16",
-    html: skeleton(locale, th ? page.th : page.en),
+    html:
+      slug === "privacy-policy"
+        ? privacyPolicyHtml(locale)
+        : skeleton(locale, th ? page.th : page.en),
     draft: true,
   };
 }
