@@ -1,8 +1,6 @@
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { FaqItem } from "@/types/faq";
-import { LINE_URL } from "@/lib/site";
-import { LineIcon } from "@/components/shared/SocialIcons";
 import SectionHeader from "@/components/shared/SectionHeader";
 import FaqAccordion from "@/components/shared/FaqAccordion";
 
@@ -10,17 +8,20 @@ import FaqAccordion from "@/components/shared/FaqAccordion";
  * Homepage FAQ preview — between Blog Preview and Contact CTA (Oct 2026,
  * marketing's request).
  *
- * Two columns on desktop. Left: the header, a line of copy, and a navy "ask
- * the doctor" panel with the LINE button — so a patient whose question isn't
- * listed has somewhere to go right here. Right: the featured questions as
- * numbered cards (FaqAccordion variant="card"). The first version was a lone
- * centred list and read as flat between two image-led sections.
+ * Two columns on desktop. Left: the header, a line of copy, and a navy panel
+ * that sends people to the full /faq. Right: the featured questions as
+ * numbered cards (FaqAccordion variant="card"). On mobile: header →
+ * questions → panel.
+ *
+ * Division of labour with the next section: this one's action is "read more
+ * answers" (/faq); Contact CTA's is LINE. An earlier version put a LINE
+ * button here too and the two asks sat back to back.
  *
  * Same featured pick as /contact (data/faq.ts `featured`). No FAQPage JSON-LD
  * here — that lives on /faq only, so the questions are marked up once.
  *
  * Ground: surface-dim, its own band between Blog Preview (white) and Contact
- * CTA (surface). On mobile the panel follows the questions.
+ * CTA (surface).
  */
 
 type Props = {
@@ -67,7 +68,10 @@ export default function FaqPreview({ t, locale, data, total }: Props) {
         </div>
 
         <div className="lg:col-start-1 lg:row-start-2">
-          {/* Ask-the-doctor panel */}
+          {/* "More questions" panel. Its action is the full /faq, NOT LINE:
+              Contact CTA follows directly with the LINE button, and two
+              LINE asks back to back competed. Outlined, so the solid
+              rose-gold LINE button below stays the page's one loud action. */}
           <div className="relative overflow-hidden bg-[var(--color-primary)] px-7 py-8">
             <span
               aria-hidden
@@ -93,25 +97,14 @@ export default function FaqPreview({ t, locale, data, total }: Props) {
             >
               {t.askText}
             </p>
-            <a
-              href={LINE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center justify-center gap-2.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-6 py-3.5 text-[0.95rem] font-medium transition-colors"
+            <Link
+              href={`/${locale}/faq`}
+              className="mt-6 inline-flex items-center justify-center gap-2.5 border border-[var(--color-accent)] text-[var(--color-accent-pale)] hover:bg-[var(--color-accent)] hover:text-white px-6 py-3.5 text-[0.95rem] font-medium transition-colors"
               style={{ fontFamily: bodyFont }}
             >
-              <LineIcon className="w-5 h-5" />
-              {t.askButton}
-            </a>
+              {t.cta.replace("{n}", String(total))}
+            </Link>
           </div>
-
-          <Link
-            href={`/${locale}/faq`}
-            className="inline-block mt-6 text-sm font-medium text-[var(--color-accent-dark)] hover:text-[var(--color-accent)] transition-colors"
-            style={{ fontFamily: bodyFont }}
-          >
-            {t.cta.replace("{n}", String(total))}
-          </Link>
         </div>
       </div>
     </section>
