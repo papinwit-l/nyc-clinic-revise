@@ -36,12 +36,8 @@ export const CLINIC = {
   // homepage can join them.
   hours: [
     {
-      days: { th: "จันทร์ – เสาร์", en: "Mon – Sat" },
+      days: { th: "ทุกวัน", en: "Daily" },
       time: { th: "10:00 – 19:00 น.", en: "10:00 AM – 7:00 PM" },
-    },
-    {
-      days: { th: "อาทิตย์", en: "Sun" },
-      time: { th: "10:00 – 17:00 น.", en: "10:00 AM – 5:00 PM" },
     },
   ],
   mapEmbed:

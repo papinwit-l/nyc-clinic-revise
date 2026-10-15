@@ -75,7 +75,7 @@ const home = {
     askText: "See every answer, from nose and face thread lifts to safety, preparation and aftercare.",
   },
   contact: {
-    hoursValue: "Mon – Sat 10:00 AM – 7:00 PM\nSun 10:00 AM – 5:00 PM",
+    hoursValue: "Daily 10:00 AM – 7:00 PM",
     readyTitle: "Ready to Transform?",
     readySubtitle: "Free consultation — no obligation",
     ctaLine: "Add LINE for Free Consult",
