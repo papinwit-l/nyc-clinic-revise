@@ -212,7 +212,15 @@ export default function ContactWidget({ locale }: Props) {
               fontWeight: 500,
             }}
           >
-            {isTH ? "ติดต่อสอบถามได้เลย" : "Questions? Ask us"}
+            {isTH ? (
+              "ติดต่อสอบถามได้เลย"
+            ) : (
+              <>
+                Have questions?
+                <br />
+                We're here to help.
+              </>
+            )}
             <span className="absolute top-1/2 -right-1 -translate-y-1/2 w-2.5 h-2.5 rotate-45 bg-[var(--color-primary)] border-r border-t border-[var(--color-accent-border)]" />
           </span>
         </button>
