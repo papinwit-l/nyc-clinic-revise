@@ -120,6 +120,14 @@ export default async function ServiceDetailPage({
                 heading={service.title}
                 locale={locale}
               />
+              <p
+                className={`text-[var(--color-text-warm)] text-[1.05rem] mt-6 max-w-[56ch] ${
+                  isTH ? "leading-[2]" : "leading-[1.9]"
+                }`}
+                style={{ fontFamily: bodyFont, fontWeight: 300 }}
+              >
+                {service.desc}
+              </p>
               <ul className="mt-6 max-w-[56ch] space-y-3">
                 {service.points.map((item) => (
                   <li key={item} className="flex gap-3.5 items-start">
