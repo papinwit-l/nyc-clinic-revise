@@ -14,6 +14,8 @@ import PageHeaderEnhance from "@/components/shared/PageHeaderEnhance";
 import TrustBar from "@/components/home/TrustBar";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
 import { getActivePromotions } from "@/data/promotions";
+import { getDoctors } from "@/data/doctors";
+import ServicesDoctor from "@/components/shared/ServicesDoctor";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -63,9 +65,10 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, promos] = await Promise.all([
+  const [cases, promos, doctors] = await Promise.all([
     getCasesForService(locale, slug, 3),
     getActivePromotions(locale),
+    getDoctors(),
   ]);
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
@@ -440,6 +443,8 @@ export default async function ServiceDetailPage({
         total={promos.length}
       />
 
+      <ServicesDoctor t={t.home.doctors} locale={locale} data={doctors} />
+
       {/* Service FAQ — treatment-specific questions; the general ones are on
           /faq. Intro left (sticky on desktop), accordion right, so the
           section doesn't sit as one narrow column with the right half empty.
@@ -460,7 +465,10 @@ export default async function ServiceDetailPage({
                   }`}
                   style={{ fontFamily: bodyFont, fontWeight: 300 }}
                 >
-                  {t.services.detail.faqIntro.replace("{service}", service.title)}
+                  {t.services.detail.faqIntro.replace(
+                    "{service}",
+                    service.title,
+                  )}
                 </p>
                 <Link
                   href={`/${locale}/faq`}

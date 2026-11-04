@@ -128,7 +128,7 @@ export default function Doctors({ t, locale, data }: Props) {
                   className="stat-number text-[clamp(2.2rem,4.2vw,3rem)] text-[var(--color-accent)]"
                   style={{ fontWeight: 400 }}
                 >
-                  <CountUp to={40000} suffix="+" />
+                  <CountUp to={50000} suffix="+" />
                 </p>
                 <p
                   className="text-xs text-[var(--color-text-warm)] mt-2"
