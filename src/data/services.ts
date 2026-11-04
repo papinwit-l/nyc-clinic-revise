@@ -86,14 +86,13 @@ const DATA = [
     slug: "nose-thread-lift",
     image: "/images/services/cat-nose-thread.png",
     title_en: "Nose Thread Lift",
-    title_th: "ร้อยไหมเสริมจมูก",
+    title_th: "ร้อยไหมจมูก",
     desc_en:
       "Semi-surgery technique for natural-looking nose enhancement without surgery",
     desc_th: "เทคนิคกึ่งศัลยกรรม จมูกสวยเป็นธรรมชาติ ไม่ต้องผ่าตัด",
     summary_en:
       "A semi-surgical technique developed here — around twenty minutes, no downtime.",
-    summary_th:
-      "เทคนิคกึ่งศัลยกรรมเฉพาะของเรา ใช้เวลาราว 20 นาที ไม่ต้องพักฟื้น",
+    summary_th: "เทคนิคกึ่งศัลยกรรม ใช้เวลา 20 นาที ไม่ต้องพักฟื้น",
     signature: true,
     detail_th: {
       intro: [

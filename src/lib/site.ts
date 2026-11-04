@@ -49,3 +49,8 @@ export const CLINIC = {
   mapUrl:
     "https://www.google.com/maps/search/?api=1&query=NYC+Clinic+136%2F2+Sukhumvit+53+Bangkok",
 } as const;
+
+export const HERO_SLIDES = [
+  "/images/banner/banner-c.png",
+  "/images/banner/banner-c_backup.png",
+];

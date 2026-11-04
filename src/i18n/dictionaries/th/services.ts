@@ -11,7 +11,7 @@ const services = {
     benefits: "ข้อดี",
     faq: "คำถามที่พบบ่อย",
     backTo: "กลับไปที่",
-    overview: "ภาพรวม",
+    overview: "Overview",
     treatmentsHeading: "บริการที่อยู่ในหมวดนี้",
     treatments: "บริการในหมวดนี้",
     results: "ผลงานจริง",

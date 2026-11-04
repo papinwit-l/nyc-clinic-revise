@@ -7,9 +7,10 @@ import { getCasesForService } from "@/data/cases";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
-import PageHeader from "@/components/shared/PageHeader";
 import SectionIntro from "@/components/shared/SectionIntro";
 import InView from "@/components/shared/InView";
+import PageHeaderEnhance from "@/components/shared/PageHeaderEnhance";
+import TrustBar from "@/components/home/TrustBar";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -72,12 +73,13 @@ export default async function ServiceDetailPage({
 
   return (
     <>
-      <PageHeader
+      <PageHeaderEnhance
         label={service.subtitle}
         heading={service.title}
         description={service.summary}
         locale={locale}
       />
+      <TrustBar t={t.home.trust} locale={locale} />
 
       {parent && (
         <div className="bg-[var(--color-surface)] pt-8">
