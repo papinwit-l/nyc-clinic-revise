@@ -11,6 +11,8 @@ import SectionIntro from "@/components/shared/SectionIntro";
 import InView from "@/components/shared/InView";
 import PageHeaderEnhance from "@/components/shared/PageHeaderEnhance";
 import TrustBar from "@/components/home/TrustBar";
+import PromotionsBanner from "@/components/home/PromotionsBanner";
+import { getActivePromotions } from "@/data/promotions";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -59,7 +61,11 @@ export default async function ServiceDetailPage({
   const service = await getService(locale, slug);
   if (!service) notFound();
 
-  const cases = await getCasesForService(locale, slug, 3);
+  // const cases = await getCasesForService(locale, slug, 3);
+  const [cases, promos] = await Promise.all([
+    getCasesForService(locale, slug, 3),
+    getActivePromotions(locale),
+  ]);
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
@@ -284,7 +290,7 @@ export default async function ServiceDetailPage({
 
             {/* Service-specific FAQ. Distinct from the general /faq page —
                 these questions are about this treatment only. */}
-            {detail.faq?.length ? (
+            {/* {detail.faq?.length ? (
               <div className="mt-14 max-w-[70ch]">
                 <h2
                   className={`text-[var(--color-primary)] ${
@@ -320,7 +326,7 @@ export default async function ServiceDetailPage({
                   ))}
                 </dl>
               </div>
-            ) : null}
+            ) : null} */}
           </div>
         </section>
       )}
@@ -424,6 +430,59 @@ export default async function ServiceDetailPage({
           </div>
         </section>
       )}
+
+      {/* Promotion Banner */}
+      <PromotionsBanner
+        t={t.home.promotion}
+        locale={locale}
+        data={promos[0] ?? null}
+        total={promos.length}
+      />
+
+      {/* FAQ Section */}
+      <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
+        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+          {/* Service-specific FAQ. Distinct from the general /faq page —
+                these questions are about this treatment only. */}
+          {detail?.faq?.length ? (
+            <div className="mt-14 max-w-[70ch]">
+              <h2
+                className={`text-[var(--color-primary)] ${
+                  isTH ? "text-[1.2rem]" : "text-[1.3rem]"
+                }`}
+                style={{
+                  fontFamily: titleFont,
+                  fontWeight: isTH ? 600 : 500,
+                }}
+              >
+                {t.services.detail.faq}
+              </h2>
+              <dl className="mt-5 divide-y divide-[var(--color-border)]">
+                {detail.faq.map((item) => (
+                  <div key={item.q} className="py-5">
+                    <dt
+                      className={`text-[var(--color-primary)] ${
+                        isTH ? "text-[1rem]" : "text-[1.05rem]"
+                      }`}
+                      style={{ fontFamily: bodyFont, fontWeight: 600 }}
+                    >
+                      {item.q}
+                    </dt>
+                    <dd
+                      className={`text-[var(--color-text-warm)] text-[0.95rem] mt-2 ${
+                        isTH ? "leading-[1.95]" : "leading-[1.8]"
+                      }`}
+                      style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                    >
+                      {item.a}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ) : null}
+        </div>
+      </section>
 
       {/* Closing line, not a band — see the note at the top of this file. */}
       <section className="bg-[var(--color-surface-dim)] py-14">

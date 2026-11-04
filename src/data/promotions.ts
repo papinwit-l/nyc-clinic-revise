@@ -44,8 +44,8 @@ const DATA: RawPromotion[] = [
     // artwork, so /promotions draws the text over it (textOverImage).
     image: "/images/banner/promo-banner.png",
     textOverImage: true,
-    title_en: "Summer Special — Nose Thread Lift",
-    title_th: "โปรร้อยไหมจมูก ต้อนรับซัมเมอร์",
+    title_en: "Nose Thread Lift Promotion",
+    title_th: "โปรโมชั่นร้อยไหมจมูก",
     offer_en: "20% off Semi-Surgery Nose Thread Lift",
     offer_th: "ลด 20% สำหรับร้อยไหมจมูกกึ่งศัลยกรรม",
     condition_en: "Placeholder condition: limited to the first 20 patients.",
