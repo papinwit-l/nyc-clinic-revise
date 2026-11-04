@@ -80,3 +80,22 @@ export async function getRevealsByTreatment(
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .map((r) => toReveal(r, isTH));
 }
+
+/**
+ * Reveals for a service page — same matching rule as getCasesForService:
+ * a parent service gets every reveal in its treatment, a child service only
+ * those whose sub-category is that child's slug.
+ */
+export async function getRevealsForService(
+  locale: string,
+  slug: string,
+): Promise<Reveal[]> {
+  const isTH = locale === "th";
+  return DATA.filter(
+    (r) =>
+      r.treatmentSlug === slug ||
+      ("subcategorySlug" in r && r.subcategorySlug === slug),
+  )
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map((r) => toReveal(r, isTH));
+}

@@ -4,12 +4,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getService, getParentService, getServiceSlugs } from "@/data/services";
 import { getCasesForService } from "@/data/cases";
+import { getRevealsForService } from "@/data/reveal";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import SectionIntro from "@/components/shared/SectionIntro";
 import InView from "@/components/shared/InView";
 import FaqAccordion from "@/components/shared/FaqAccordion";
+import RevealCarousel from "@/components/before-after/RevealCarousel";
 import PageHeaderEnhance from "@/components/shared/PageHeaderEnhance";
 import TrustBar from "@/components/home/TrustBar";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
@@ -65,8 +67,9 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, promos, doctors] = await Promise.all([
+  const [cases, reveals, promos, doctors] = await Promise.all([
     getCasesForService(locale, slug, 3),
+    getRevealsForService(locale, slug),
     getActivePromotions(locale),
     getDoctors(),
   ]);
@@ -383,9 +386,11 @@ export default async function ServiceDetailPage({
       )}
 
       {/* Real results — reuses case data that already exists, so a service
-          page gains substance without new copy. Renders nothing when this
-          treatment has no cases yet. */}
-      {cases.length > 0 && (
+          page gains substance without new copy. A drag-to-compare reveal
+          leads when this service has one (same carousel as
+          /before-after/[treatment]); the case grid follows. Renders nothing
+          when the service has neither. */}
+      {(cases.length > 0 || reveals.length > 0) && (
         <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
           <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
             <SectionIntro
@@ -395,34 +400,58 @@ export default async function ServiceDetailPage({
               className="mb-10"
             />
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-              {cases.map((c, i) => (
-                <InView key={c.slug} variant="rise" index={i}>
-                  <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)]">
-                    <Image
-                      src={c.image}
-                      alt={`${c.treatment} — Before & After`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 50vw, 33vw"
-                    />
-                  </div>
-                  <p
-                    className={`text-[var(--color-primary)] mt-3 leading-tight ${
-                      isTH ? "text-[1rem]" : "text-[1.05rem]"
-                    }`}
-                    style={{
-                      fontFamily: titleFont,
-                      fontWeight: isTH ? 600 : 500,
-                    }}
-                  >
-                    {c.subcategory ?? c.treatment}
-                  </p>
-                </InView>
-              ))}
-            </div>
+            {reveals.length > 0 && (
+              <InView variant="rise">
+                <div className="max-w-3xl mx-auto">
+                  <RevealCarousel
+                    reveals={reveals}
+                    locale={locale}
+                    treatmentTitle={service.title}
+                  />
+                </div>
+              </InView>
+            )}
 
-            <div className="mt-8">
+            {cases.length > 0 && (
+              <div
+                className={`grid grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 ${
+                  reveals.length > 0 ? "mt-14" : ""
+                }`}
+              >
+                {cases.map((c, i) => (
+                  <InView key={c.slug} variant="rise" index={i}>
+                    <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)]">
+                      <Image
+                        src={c.image}
+                        alt={`${c.treatment} — Before & After`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                    <p
+                      className={`text-[var(--color-primary)] mt-3 leading-tight ${
+                        isTH ? "text-[1rem]" : "text-[1.05rem]"
+                      }`}
+                      style={{
+                        fontFamily: titleFont,
+                        fontWeight: isTH ? 600 : 500,
+                      }}
+                    >
+                      {c.subcategory ?? c.treatment}
+                    </p>
+                  </InView>
+                ))}
+              </div>
+            )}
+
+            <div
+              className={
+                reveals.length > 0 && !cases.length
+                  ? "mt-8 text-center"
+                  : "mt-8"
+              }
+            >
               <Link
                 href={`/${locale}/before-after/${service.slug}`}
                 className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
