@@ -184,7 +184,9 @@ export default function PageHeaderEnhance({
               }`}
               style={{ fontFamily: bodyFont, fontWeight: 300 }}
             >
-              {description}
+              {typeof description === "string"
+                ? phraseWrap(description, isTH)
+                : description}
             </p>
           )}
         </div>

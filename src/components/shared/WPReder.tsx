@@ -104,3 +104,5 @@ export function WPImage({
     />
   );
 }
+
+export const looksLikeHTML = (s: string) => /<[a-z][\s\S]*>/i.test(s);
