@@ -11,12 +11,14 @@ import type { FaqItem } from "@/types/faq";
  * Variants:
  *   "list"  hairline-separated rows — /faq and /contact
  *   "card"  numbered white cards; the open one gains a rose-gold edge and a
- *           shadow. Homepage FAQ preview, where the section has to hold its
- *           own between two image-led sections.
+ *           shadow. Homepage FAQ preview and the service-page FAQ.
  */
 
+/** Only the question and answer are needed — service FAQs have no slug. */
+type AccordionItem = Pick<FaqItem, "q" | "a"> & { slug?: string };
+
 type Props = {
-  items: FaqItem[];
+  items: readonly AccordionItem[];
   locale: string;
   /** Unique per accordion on a page. */
   group?: string;
@@ -41,7 +43,7 @@ export default function FaqAccordion({
     >
       {items.map((item, i) => (
         <details
-          key={item.slug}
+          key={item.slug ?? item.q}
           name={group}
           className={`faq-item group ${
             isCard

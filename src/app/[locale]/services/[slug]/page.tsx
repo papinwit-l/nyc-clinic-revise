@@ -9,6 +9,7 @@ import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import SectionIntro from "@/components/shared/SectionIntro";
 import InView from "@/components/shared/InView";
+import FaqAccordion from "@/components/shared/FaqAccordion";
 import PageHeaderEnhance from "@/components/shared/PageHeaderEnhance";
 import TrustBar from "@/components/home/TrustBar";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
@@ -439,50 +440,49 @@ export default async function ServiceDetailPage({
         total={promos.length}
       />
 
-      {/* FAQ Section */}
-      <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
-        <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
-          {/* Service-specific FAQ. Distinct from the general /faq page —
-                these questions are about this treatment only. */}
-          {detail?.faq?.length ? (
-            <div className="mt-14 max-w-[70ch]">
-              <h2
-                className={`text-[var(--color-primary)] ${
-                  isTH ? "text-[1.2rem]" : "text-[1.3rem]"
-                }`}
-                style={{
-                  fontFamily: titleFont,
-                  fontWeight: isTH ? 600 : 500,
-                }}
-              >
-                {t.services.detail.faq}
-              </h2>
-              <dl className="mt-5 divide-y divide-[var(--color-border)]">
-                {detail.faq.map((item) => (
-                  <div key={item.q} className="py-5">
-                    <dt
-                      className={`text-[var(--color-primary)] ${
-                        isTH ? "text-[1rem]" : "text-[1.05rem]"
-                      }`}
-                      style={{ fontFamily: bodyFont, fontWeight: 600 }}
-                    >
-                      {item.q}
-                    </dt>
-                    <dd
-                      className={`text-[var(--color-text-warm)] text-[0.95rem] mt-2 ${
-                        isTH ? "leading-[1.95]" : "leading-[1.8]"
-                      }`}
-                      style={{ fontFamily: bodyFont, fontWeight: 300 }}
-                    >
-                      {item.a}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+      {/* Service FAQ — treatment-specific questions; the general ones are on
+          /faq. Intro left (sticky on desktop), accordion right, so the
+          section doesn't sit as one narrow column with the right half empty.
+          Skipped entirely when the service has no questions. */}
+      {detail?.faq?.length ? (
+        <section className="bg-[var(--color-surface-dim)] py-[var(--section-py)]">
+          <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16">
+              <div className="lg:sticky lg:top-[calc(var(--header-height)+2rem)] lg:self-start">
+                <SectionIntro
+                  label={t.services.detail.faqLabel}
+                  heading={t.services.detail.faq}
+                  locale={locale}
+                />
+                <p
+                  className={`text-[var(--color-text-warm)] text-[0.95rem] mt-5 max-w-[42ch] ${
+                    isTH ? "leading-[1.95]" : "leading-[1.8]"
+                  }`}
+                  style={{ fontFamily: bodyFont, fontWeight: 300 }}
+                >
+                  {t.services.detail.faqIntro.replace("{service}", service.title)}
+                </p>
+                <Link
+                  href={`/${locale}/faq`}
+                  className={`inline-block mt-6 text-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors ${
+                    isTH ? "" : "tracking-[0.1em] uppercase"
+                  }`}
+                  style={{ fontFamily: bodyFont }}
+                >
+                  {t.services.detail.faqAll}
+                </Link>
+              </div>
+
+              <FaqAccordion
+                items={detail.faq}
+                locale={locale}
+                group={`faq-${service.slug}`}
+                variant="card"
+              />
             </div>
-          ) : null}
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : null}
 
       {/* Closing line, not a band — see the note at the top of this file. */}
       <section className="bg-[var(--color-surface-dim)] py-14">

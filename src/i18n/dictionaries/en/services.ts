@@ -10,6 +10,10 @@ const services = {
     goodFor: "Who it suits",
     benefits: "Why it's worth it",
     faq: "Common questions",
+    faqLabel: "FAQ",
+    faqIntro:
+      "Answers specific to {service}. For general questions — safety, preparation, aftercare — see the full FAQ.",
+    faqAll: "All questions",
     backTo: "Back to",
     overview: "Overview",
     treatmentsHeading: "What's included",
