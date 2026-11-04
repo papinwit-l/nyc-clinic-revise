@@ -47,6 +47,8 @@ export type ServiceCard = {
   subtitle: string;
   /** Homepage card — a list of what's inside. */
   desc: string;
+  /** Detail page Overview — short bullet points (Pods: one per line). */
+  points: string[];
   /**
    * /services — prose, because the children are already listed under the card
    * there and `desc` would just repeat them.

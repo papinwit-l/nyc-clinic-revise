@@ -16,6 +16,9 @@ import type { ServiceCard } from "@/types/service";
 //
 // TWO DESCRIPTIONS PER SERVICE, on purpose:
 //   desc     homepage card — a LIST of what's inside the category
+//   points   /services/[slug] Overview — the same idea as bullets. Thai is
+//            desc split into its phrases; the six surgical treatments, whose
+//            desc only repeats the title, take theirs from the summary.
 //   summary  /services      — prose, because the treatment names are already
 //                             listed under the card there
 // Thai summaries are verbatim from the old site where it had them; English is
@@ -90,6 +93,16 @@ const DATA = [
     desc_en:
       "Semi-surgery technique for natural-looking nose enhancement without surgery",
     desc_th: "เทคนิคกึ่งศัลยกรรม จมูกสวยเป็นธรรมชาติ ไม่ต้องผ่าตัด",
+    points_en: [
+      "Semi-surgical technique",
+      "Natural-looking nose enhancement",
+      "No surgery",
+    ],
+    points_th: [
+      "เทคนิคกึ่งศัลยกรรม",
+      "จมูกสวยเป็นธรรมชาติ",
+      "ไม่ต้องผ่าตัด",
+    ],
     summary_en:
       "A semi-surgical technique developed here — around twenty minutes, no downtime.",
     summary_th: "เทคนิคกึ่งศัลยกรรม ใช้เวลา 20 นาที ไม่ต้องพักฟื้น",
@@ -187,6 +200,16 @@ const DATA = [
     title_th: "ร้อยไหมหน้า",
     desc_en: "V-shape lifting and collagen stimulation",
     desc_th: "ยกกระชับ ปรับรูปหน้า V-Shape กระตุ้นคอลลาเจน",
+    points_en: [
+      "Lifting and firming",
+      "V-shape contouring",
+      "Collagen stimulation",
+    ],
+    points_th: [
+      "ยกกระชับ",
+      "ปรับรูปหน้า V-Shape",
+      "กระตุ้นคอลลาเจน",
+    ],
     summary_en:
       "Lifts and firms without surgery, stimulating your own collagen.",
     summary_th: "ยกผิวแน่นตึงกระชับไม่ต้องศัลยกรรม",
@@ -259,6 +282,16 @@ const DATA = [
     title_th: "ปรับรูปหน้า",
     desc_en: "Filler · SMAS-X collagen lifting · Botox",
     desc_th: "Filler เติมเต็ม · SMAS-X กระตุ้นคอลลาเจน · Botox",
+    points_en: [
+      "Filler",
+      "SMAS-X collagen lifting",
+      "Botox",
+    ],
+    points_th: [
+      "Filler เติมเต็ม",
+      "SMAS-X กระตุ้นคอลลาเจน",
+      "Botox",
+    ],
     summary_en: "Filler and collagen lifting, planned around your proportions.",
     summary_th: "ปรับรูปหน้าให้ได้สัดส่วน ด้วยฟิลเลอร์และการกระตุ้นคอลลาเจน",
   },
@@ -269,6 +302,20 @@ const DATA = [
     title_th: "ศัลยกรรม",
     desc_en: "Rhinoplasty, blepharoplasty, chin, lipo, fat transfer",
     desc_th: "เสริมจมูก ตาสองชั้น เสริมคาง ดูดไขมัน ฉีดไขมัน",
+    points_en: [
+      "Rhinoplasty",
+      "Blepharoplasty",
+      "Chin augmentation",
+      "Liposuction",
+      "Fat transfer",
+    ],
+    points_th: [
+      "เสริมจมูก",
+      "ตาสองชั้น",
+      "เสริมคาง",
+      "ดูดไขมัน",
+      "ฉีดไขมัน",
+    ],
     summary_en: "Modern technique, quick recovery.",
     summary_th: "เปลี่ยนคุณเป็นคนใหม่ ด้วยเทคนิคทันสมัยและฟื้นตัวไว",
   },
@@ -279,6 +326,20 @@ const DATA = [
     title_th: "ฟื้นฟูผิว",
     desc_en: "Sculptra · Meso Glass Skin · PRP · Placenta · Vitamin Drip",
     desc_th: "Sculptra · Meso Glass Skin · PRP · Placenta · Vitamin Drip",
+    points_en: [
+      "Sculptra",
+      "Meso Glass Skin",
+      "PRP",
+      "Placenta",
+      "Vitamin Drip",
+    ],
+    points_th: [
+      "Sculptra",
+      "Meso Glass Skin",
+      "PRP",
+      "Placenta",
+      "Vitamin Drip",
+    ],
     summary_en: "Healthy skin, so you stand out.",
     summary_th: "ผิวสวยสุขภาพดี ให้คุณโดดเด่นมีออร่า",
   },
@@ -291,6 +352,18 @@ const DATA = [
     desc_en: "Under-eye, nasolabial folds, cheeks, temples, forehead and lips",
     desc_th:
       "เติมเต็ม ปรับรูปหน้า ใต้ตา ร่องแก้ม แก้มตอบ ขมับ หน้าผาก ปากอิ่มฟู",
+    points_en: [
+      "Volume and facial contouring",
+      "Under-eye, nasolabial folds and cheeks",
+      "Temples and forehead",
+      "Fuller lips",
+    ],
+    points_th: [
+      "เติมเต็ม ปรับรูปหน้า",
+      "ใต้ตา ร่องแก้ม แก้มตอบ",
+      "ขมับ หน้าผาก",
+      "ปากอิ่มฟู",
+    ],
     summary_en:
       "Under-eye, nasolabial folds, cheeks, temples, forehead and lips",
     summary_th:
@@ -372,6 +445,16 @@ const DATA = [
       "Collagen stimulation for firmer skin, using Spanish technology. No pain, no swelling, no incision.",
     desc_th:
       "กระตุ้นคอลลาเจน ผิวแน่นตึงกระชับ ด้วยเครื่องจากประเทศสเปน ไม่เจ็บ ไม่บวม ไม่มีแผล",
+    points_en: [
+      "Collagen stimulation for firmer skin",
+      "Spanish technology",
+      "No pain, no swelling, no incision",
+    ],
+    points_th: [
+      "กระตุ้นคอลลาเจน ผิวแน่นตึงกระชับ",
+      "ด้วยเครื่องจากประเทศสเปน",
+      "ไม่เจ็บ ไม่บวม ไม่มีแผล",
+    ],
     summary_en:
       "Collagen stimulation for firmer skin, using Spanish technology. No pain, no swelling, no incision.",
     summary_th:
@@ -505,6 +588,16 @@ const DATA = [
     title_th: "เสริมซิลิโคนจมูก",
     desc_en: "Silicone nose augmentation",
     desc_th: "เสริมซิลิโคนจมูก",
+    points_en: [
+      "Silicone nose augmentation",
+      "A permanent result",
+      "Shaped to your face, not to a standard",
+    ],
+    points_th: [
+      "เสริมซิลิโคนจมูก",
+      "ผลลัพธ์ถาวร",
+      "ออกแบบทรงให้เข้ากับใบหน้า ไม่ใช่ทรงสำเร็จรูป",
+    ],
   },
   {
     slug: "blepharoplasty",
@@ -578,6 +671,16 @@ const DATA = [
     title_th: "ตาสองชั้น",
     desc_en: "Double eyelid surgery",
     desc_th: "ตาสองชั้น",
+    points_en: [
+      "Upper and lower eyelid surgery",
+      "A defined crease",
+      "Under-eye bags removed",
+    ],
+    points_th: [
+      "ผ่าตัดหนังตาบนและล่าง",
+      "สร้างชั้นตาที่ชัดเจน",
+      "เก็บถุงไขมันใต้ตา",
+    ],
   },
   {
     slug: "liposuction",
@@ -663,6 +766,16 @@ const DATA = [
     title_th: "ดูดไขมัน",
     desc_en: "Body contouring by liposuction",
     desc_th: "ดูดไขมัน",
+    points_en: [
+      "Removes fat from specific areas",
+      "Body contouring",
+      "Shaping, not weight loss",
+    ],
+    points_th: [
+      "กำจัดไขมันใต้ผิวหนังเฉพาะจุด",
+      "รูปร่างที่ได้สัดส่วน",
+      "ไม่ใช่การลดน้ำหนัก",
+    ],
   },
   {
     slug: "chin-augmentation",
@@ -726,6 +839,16 @@ const DATA = [
     title_th: "เสริมซิลิโคนคาง",
     desc_en: "Silicone chin augmentation",
     desc_th: "เสริมซิลิโคนคาง",
+    points_en: [
+      "A silicone implant that lengthens the chin",
+      "A slimmer-looking face",
+      "No jaw reduction needed",
+    ],
+    points_th: [
+      "เสริมซิลิโคนคาง ต่อคางให้ยาวขึ้น",
+      "ใบหน้าเรียวขึ้น",
+      "ไม่ต้องตัดกราม",
+    ],
   },
   {
     slug: "lip-surgery",
@@ -795,6 +918,16 @@ const DATA = [
     title_th: "ปากกระจับ",
     desc_en: "Lip reshaping",
     desc_th: "ปากกระจับ",
+    points_en: [
+      "Reshapes the lips into a defined line",
+      "A slimmer, shapelier lip",
+      "A considered decision — it can't be undone",
+    ],
+    points_th: [
+      "ตกแต่งริมฝีปากให้ได้รูป",
+      "เรียวเป็นทรงกระจับ",
+      "ตัดสินใจอย่างรอบคอบ เพราะแก้คืนไม่ได้",
+    ],
   },
   {
     slug: "fat-transfer",
@@ -890,6 +1023,16 @@ const DATA = [
     title_th: "ฉีดไขมันหน้าเด็ก",
     desc_en: "Facial fat grafting",
     desc_th: "ฉีดไขมันหน้าเด็ก",
+    points_en: [
+      "Your own fat, placed in fine layers",
+      "Fills hollows",
+      "A softer, more youthful face",
+    ],
+    points_th: [
+      "ใช้ไขมันตัวเอง วางเป็นชั้นละเอียด",
+      "เติมเต็มร่องลึก",
+      "ใบหน้าดูละมุนอ่อนเยาว์",
+    ],
   },
   {
     slug: "sculptra",
@@ -987,6 +1130,16 @@ const DATA = [
       "Stimulates collagen for firm, smooth, resilient and youthful skin",
     desc_th:
       "กระตุ้นการสร้างคอลลาเจน ผิวตึงกระชับ เรียบเนียน ขาวใส ผิวแข็งแรง อ่อนเยาว์",
+    points_en: [
+      "Stimulates collagen",
+      "Firm, smooth, brighter skin",
+      "Resilient, youthful skin",
+    ],
+    points_th: [
+      "กระตุ้นการสร้างคอลลาเจน",
+      "ผิวตึงกระชับ เรียบเนียน ขาวใส",
+      "ผิวแข็งแรง อ่อนเยาว์",
+    ],
   },
   {
     slug: "meso-glass-skin",
@@ -1053,6 +1206,16 @@ const DATA = [
     desc_en:
       "Clear, hydrated skin — reduces dark marks, melasma, acne scars and pore size",
     desc_th: "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว ลดรอยดำ ฝ้ากระ รอยสิว กระชับรูขุมขน",
+    points_en: [
+      "Clear, hydrated, glowing skin",
+      "Reduces dark marks, melasma and acne scars",
+      "Refines pores",
+    ],
+    points_th: [
+      "ผิวเนียนใส ชุ่มชื่น ฉ่ำวาว",
+      "ลดรอยดำ ฝ้ากระ รอยสิว",
+      "กระชับรูขุมขน",
+    ],
   },
   {
     slug: "prp",
@@ -1131,6 +1294,16 @@ const DATA = [
     desc_en: "For younger, brighter skin — reduces melasma and dark marks",
     desc_th:
       "เพื่อความดูอ่อนเยาว์ ช่วยให้ผิวเนียนกระจ่างใส ลดรอยฝ้ากระ ลดรอยดำ",
+    points_en: [
+      "For younger-looking skin",
+      "Smoother, brighter skin",
+      "Reduces melasma and dark marks",
+    ],
+    points_th: [
+      "เพื่อความดูอ่อนเยาว์",
+      "ช่วยให้ผิวเนียนกระจ่างใส",
+      "ลดรอยฝ้ากระ ลดรอยดำ",
+    ],
   },
   {
     slug: "placenta-gf",
@@ -1186,6 +1359,14 @@ const DATA = [
     title_th: "Placenta GF",
     desc_en: "Restores tired skin to a quick, healthy glow",
     desc_th: "ช่วยฟื้นฟูผิวที่ร่วงโรย ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
+    points_en: [
+      "Restores tired skin",
+      "A quick, healthy glow",
+    ],
+    points_th: [
+      "ช่วยฟื้นฟูผิวที่ร่วงโรย",
+      "ให้กลับมาเปล่งปลั่งสดใสได้อย่างรวดเร็ว",
+    ],
   },
   {
     slug: "vitamin-drip",
@@ -1265,6 +1446,18 @@ const DATA = [
     title_th: "วิตามินดริป",
     desc_en: "Vitamin therapy for immunity, antioxidants and clearer skin",
     desc_th: "ฉีดวิตามิน เพิ่มภูมิคุ้มกัน ต้านอนุมูลอิสระ ผิวเนียนใส",
+    points_en: [
+      "Vitamin therapy",
+      "Immune support",
+      "Antioxidants",
+      "Clearer skin",
+    ],
+    points_th: [
+      "ฉีดวิตามิน",
+      "เพิ่มภูมิคุ้มกัน",
+      "ต้านอนุมูลอิสระ",
+      "ผิวเนียนใส",
+    ],
   },
   {
     slug: "botox",
@@ -1359,6 +1552,16 @@ const DATA = [
     title_th: "สารลดริ้วรอย หน้าเรียว",
     desc_en: "Softens lines and slims the jaw and calf muscles",
     desc_th: "ช่วยลดริ้วรอย ลดขนาดกล้ามเนื้อกราม ลดขนาดกล้ามเนื้อน่อง",
+    points_en: [
+      "Softens lines",
+      "Slims the jaw muscle",
+      "Slims the calf muscle",
+    ],
+    points_th: [
+      "ช่วยลดริ้วรอย",
+      "ลดขนาดกล้ามเนื้อกราม",
+      "ลดขนาดกล้ามเนื้อน่อง",
+    ],
   },
 ];
 
@@ -1369,6 +1572,7 @@ function toCard(item: (typeof DATA)[number], isTH: boolean): ServiceCard {
     title: isTH ? item.title_th : item.title_en,
     subtitle: isTH ? item.title_en : item.title_th,
     desc: isTH ? item.desc_th : item.desc_en,
+    points: isTH ? item.points_th : item.points_en,
     summary: isTH ? item.summary_th : item.summary_en,
     signature: "signature" in item ? item.signature : undefined,
     parent: "parent" in item ? item.parent : undefined,
