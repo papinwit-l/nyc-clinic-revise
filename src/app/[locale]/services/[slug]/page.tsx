@@ -18,6 +18,8 @@ import PromotionsBanner from "@/components/home/PromotionsBanner";
 import { getActivePromotions } from "@/data/promotions";
 import { getDoctors } from "@/data/doctors";
 import ServicesDoctor from "@/components/shared/ServicesDoctor";
+import InstagramFeed from "@/components/home/InstagramFeed";
+import { getInstagramPosts } from "@/data/instagram";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -67,10 +69,11 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, reveals, promos, doctors] = await Promise.all([
+  const [cases, reveals, promos, igPosts, doctors] = await Promise.all([
     getCasesForService(locale, slug, 3),
     getRevealsForService(locale, slug),
     getActivePromotions(locale),
+    getInstagramPosts(8),
     getDoctors(),
   ]);
 
@@ -463,6 +466,9 @@ export default async function ServiceDetailPage({
           </div>
         </section>
       )}
+
+      {/* IG Feed */}
+      <InstagramFeed locale={locale} data={igPosts} />
 
       {/* Promotion Banner */}
       <PromotionsBanner
