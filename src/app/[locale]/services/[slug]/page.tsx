@@ -415,38 +415,11 @@ export default async function ServiceDetailPage({
               </InView>
             )}
 
-            {cases.length > 0 && (
-              <div
-                className={`grid grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 ${
-                  reveals.length > 0 ? "mt-14" : ""
-                }`}
-              >
-                {cases.map((c, i) => (
-                  <InView key={c.slug} variant="rise" index={i}>
-                    <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden radius-soft bg-white ring-1 ring-[var(--color-border)]">
-                      <Image
-                        src={c.image}
-                        alt={`${c.treatment} — Before & After`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 1024px) 50vw, 33vw"
-                      />
-                    </div>
-                    <p
-                      className={`text-[var(--color-primary)] mt-3 leading-tight ${
-                        isTH ? "text-[1rem]" : "text-[1.05rem]"
-                      }`}
-                      style={{
-                        fontFamily: titleFont,
-                        fontWeight: isTH ? 600 : 500,
-                      }}
-                    >
-                      {c.subcategory ?? c.treatment}
-                    </p>
-                  </InView>
-                ))}
-              </div>
-            )}
+            {/* Services Details List */}
+            {/* ร้อยไหมจมูก */}
+            {/* ทรงผู้ชาย / ทรงเนื้อน้อย / ทรงมี Hump / ทรงปีกกว้าง / ทรงปลายพุ่งหยดน้ำ / แก้จมูกแก้จมูกเอียง */}
+            {/* ร้อยไหมหน้า */}
+            {/* ผิวหย่อนคล้อย /  ร่องแก้ม / กระเปาะแก้ม / ขอบหน้าไม่ชัด / คิ้วตก / เหนียงหย่อนคล้อย */}
 
             <div
               className={
