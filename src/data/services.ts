@@ -163,9 +163,9 @@ const DATA = [
       showcase: [
         { title: "Male nose" },
         { title: "Thin nasal tissue" },
-        { title: "Nose with a hump" },
+        { title: "Humped Nose" },
         { title: "Wide alar base" },
-        { title: "Teardrop tip" },
+        { title: "Projected tip" },
         { title: "Crooked nose correction" },
       ],
       intro: [
@@ -231,9 +231,9 @@ const DATA = [
       // Photos to come — add `image` per item; until then a placeholder.
       showcase: [
         { title: "ผิวหย่อนคล้อย" },
-        { title: "ร่องแก้ม" },
+        { title: "ร่องแก้มลึก" },
         { title: "กระเปาะแก้ม" },
-        { title: "ขอบหน้าไม่ชัด" },
+        { title: "กรอบหน้าไม่ชัด" },
         { title: "คิ้วตก" },
         { title: "เหนียงหย่อนคล้อย" },
       ],
@@ -270,8 +270,8 @@ const DATA = [
       // Photos to come — add `image` per item; until then a placeholder.
       showcase: [
         { title: "Sagging skin" },
-        { title: "Nasolabial folds" },
-        { title: "Jowls" },
+        { title: "Deep Nasolabial folds" },
+        { title: "Buccal Fat" },
         { title: "Undefined jawline" },
         { title: "Drooping brows" },
         { title: "Sagging under-chin" },

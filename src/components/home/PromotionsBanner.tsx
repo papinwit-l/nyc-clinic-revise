@@ -6,7 +6,6 @@ import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Promotion } from "@/types/promotion";
 import { sectionHeadings } from "@/i18n/section-headings";
 
-
 type Props = {
   t: Dictionary["home"]["promotion"];
   locale: string;
@@ -93,7 +92,7 @@ export default function PromotionsBanner({
           )}
 
           <p
-            className="text-xl sm:text-2xl font-semibold text-[var(--color-accent)] mt-4"
+            className="text-3xl sm:text-6xl font-semibold text-[var(--color-accent)] mt-4"
             style={{
               fontFamily: isTH
                 ? "var(--font-thai-head)"
@@ -114,7 +113,7 @@ export default function PromotionsBanner({
 
           <div className="flex flex-wrap items-center justify-end gap-x-6 gap-y-3 mt-6">
             {/* Secondary on purpose: the LINE button stays the main action. */}
-            {total > 1 && (
+            {/* {total > 1 && (
               <Link
                 href={`/${locale}/promotions`}
                 className={`text-sm text-[var(--color-accent-pale)] hover:text-white transition-colors ${
@@ -128,7 +127,7 @@ export default function PromotionsBanner({
               >
                 {t.viewAll.replace("{n}", String(total))}
               </Link>
-            )}
+            )} */}
             <a
               href={LINE_URL}
               target="_blank"
