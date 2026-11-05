@@ -1,5 +1,8 @@
 import type { GoogleReviews, GoogleReview } from "@/types/google-review";
 
+import fs from "node:fs/promises";
+import path from "node:path";
+
 /**
  * Google rating + reviews for the clinic — Places API (New), Place Details.
  *
@@ -49,6 +52,8 @@ type ApiPlace = {
   googleMapsUri?: string;
   reviews?: ApiReview[];
 };
+
+const filePath = path.join(process.cwd(), "data", "reviews.json");
 
 function toReview(r: ApiReview): GoogleReview | null {
   // The reviewer's own words, not Google's machine translation. The card sets
@@ -107,7 +112,17 @@ export async function getGoogleReviews(
     const place = (await res.json()) as ApiPlace;
     if (!place.rating || !place.userRatingCount) return null;
 
-    return {
+    // return {
+    //   rating: place.rating,
+    //   total: place.userRatingCount,
+    //   url: place.googleMapsUri ?? "",
+    //   reviews: (place.reviews ?? [])
+    //     .map(toReview)
+    //     .filter((r): r is GoogleReview => r !== null && r.rating === 5)
+    //     .sort((a, b) => b.published.localeCompare(a.published)),
+    // };
+
+    const result = {
       rating: place.rating,
       total: place.userRatingCount,
       url: place.googleMapsUri ?? "",
@@ -116,6 +131,62 @@ export async function getGoogleReviews(
         .filter((r): r is GoogleReview => r !== null && r.rating === 5)
         .sort((a, b) => b.published.localeCompare(a.published)),
     };
+
+    // Local JSON storage (best-effort)
+    let existing: typeof result | null = null;
+
+    try {
+      await fs.mkdir(path.dirname(filePath), {
+        recursive: true,
+      });
+
+      try {
+        const file = await fs.readFile(filePath, "utf-8");
+        existing = JSON.parse(file);
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+          throw error;
+        }
+      }
+
+      const existingReviews = existing?.reviews ?? [];
+
+      // Compare review IDs
+      const existingIds = new Set(existingReviews.map((r) => r.id));
+
+      const newReviews = result.reviews.filter((r) => !existingIds.has(r.id));
+
+      // No new reviews: return existing JSON
+      if (existing && newReviews.length === 0) {
+        return existing;
+      }
+
+      // Merge, deduplicate, sort and keep latest 6
+      const reviews = [
+        ...new Map(
+          [...existingReviews, ...newReviews].map((r) => [r.id, r]),
+        ).values(),
+      ]
+        .sort((a, b) => b.published.localeCompare(a.published))
+        .slice(0, 6);
+
+      const updated = {
+        ...result,
+        reviews,
+      };
+
+      await fs.writeFile(filePath, JSON.stringify(updated, null, 2), "utf-8");
+
+      return updated;
+    } catch (storageError) {
+      console.warn(
+        "[Google reviews] Local JSON storage unavailable:",
+        storageError instanceof Error ? storageError.message : storageError,
+      );
+
+      // Prefer existing JSON; otherwise use fresh Google API data
+      return existing ?? result;
+    }
   } catch (err) {
     console.error(
       "[Google reviews] fetch failed:",
