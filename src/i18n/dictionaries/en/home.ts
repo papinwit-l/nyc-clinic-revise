@@ -65,6 +65,12 @@ const home = {
     details: "View Details",
     viewAll: "View all {n} promotions →",
   },
+  reviews: {
+    basedOn: "Based on {n} Google reviews",
+    readMore: "Read the full review on Google",
+    seeAll: "See all reviews on Google →",
+    source: "Reviews from Google Maps",
+  },
   blog: {
     cta: "Read More →",
   },

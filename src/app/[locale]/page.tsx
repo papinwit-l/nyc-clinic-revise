@@ -3,7 +3,7 @@ import type { Locale } from "@/i18n/config";
 import { getServices } from "@/data/services";
 import { getCases } from "@/data/cases";
 import { getDoctors } from "@/data/doctors";
-import { getTestimonials } from "@/data/testimonials";
+import { getGoogleReviews } from "@/data/google-reviews";
 import { getLatestPosts } from "@/data/posts";
 import { getFaqs, getFeaturedFaqs } from "@/data/faq";
 import { getActivePromotions } from "@/data/promotions";
@@ -12,7 +12,7 @@ import Hero from "@/components/home/Hero";
 import TrustBar from "@/components/home/TrustBar";
 import About from "@/components/home/About";
 import Doctors from "@/components/home/Doctors";
-import Testimonials from "@/components/home/Testimonials";
+import GoogleReviews from "@/components/home/GoogleReviews";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
 import BlogPreview from "@/components/home/BlogPreview";
 import ContactCTA from "@/components/home/ContactCTA";
@@ -35,7 +35,7 @@ export default async function HomePage({
     cases,
     featuredReveal,
     doctors,
-    testimonials,
+    reviews,
     posts,
     promos,
     igPosts,
@@ -46,7 +46,7 @@ export default async function HomePage({
     getCases(locale, { limit: 6 }),
     getFeaturedReveal(locale),
     getDoctors(),
-    getTestimonials(locale, 3),
+    getGoogleReviews(locale),
     getLatestPosts(locale, 3),
     getActivePromotions(locale),
     getInstagramPosts(8),
@@ -73,7 +73,9 @@ export default async function HomePage({
         data={cases}
         reveal={featuredReveal}
       />
-      <Testimonials locale={locale} data={testimonials} />
+      {/* §07 — live Google reviews. The hand-written Testimonials section
+          (data/testimonials.ts) is kept but not rendered. */}
+      <GoogleReviews t={t.home.reviews} locale={locale} data={reviews} />
       <InstagramFeed locale={locale} data={igPosts} />
       <PromotionsBanner
         t={t.home.promotion}

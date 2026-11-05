@@ -65,6 +65,12 @@ const home = {
     details: "ดูรายละเอียด",
     viewAll: "ดูโปรโมชันทั้งหมด ({n}) →",
   },
+  reviews: {
+    basedOn: "จาก {n} รีวิวบน Google",
+    readMore: "อ่านรีวิวเต็มบน Google",
+    seeAll: "ดูรีวิวทั้งหมดบน Google →",
+    source: "รีวิวจาก Google Maps",
+  },
   blog: {
     cta: "อ่านต่อ →",
   },
