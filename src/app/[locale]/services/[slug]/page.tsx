@@ -20,6 +20,8 @@ import { getDoctors } from "@/data/doctors";
 import ServicesDoctor from "@/components/shared/ServicesDoctor";
 import InstagramFeed from "@/components/home/InstagramFeed";
 import { getInstagramPosts } from "@/data/instagram";
+import GoogleReviews from "@/components/home/GoogleReviews";
+import { getGoogleReviews } from "@/data/google-reviews";
 
 const LINE_URL = "https://lin.ee/7oJgymx";
 
@@ -69,13 +71,16 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, reveals, promos, igPosts, doctors] = await Promise.all([
-    getCasesForService(locale, slug, 3),
-    getRevealsForService(locale, slug),
-    getActivePromotions(locale),
-    getInstagramPosts(8),
-    getDoctors(),
-  ]);
+  const [cases, reveals, promos, igPosts, doctors, reviews] = await Promise.all(
+    [
+      getCasesForService(locale, slug, 3),
+      getRevealsForService(locale, slug),
+      getActivePromotions(locale),
+      getInstagramPosts(8),
+      getDoctors(),
+      getGoogleReviews(locale),
+    ],
+  );
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
@@ -489,7 +494,11 @@ export default async function ServiceDetailPage({
         total={promos.length}
       />
 
+      {/* Doctors */}
       <ServicesDoctor t={t.home.doctors} locale={locale} data={doctors} />
+
+      {/* Reviews */}
+      <GoogleReviews t={t.home.reviews} locale={locale} data={reviews} />
 
       {/* Service FAQ — treatment-specific questions; the general ones are on
           /faq. Intro left (sticky on desktop), accordion right, so the
