@@ -108,6 +108,15 @@ const DATA = [
     summary_th: "เทคนิคกึ่งศัลยกรรม ใช้เวลา 20 นาที ไม่ต้องพักฟื้น",
     signature: true,
     detail_th: {
+      // Photos to come — add `image` per item; until then a placeholder.
+      showcase: [
+        { title: "ทรงผู้ชาย" },
+        { title: "ทรงเนื้อน้อย" },
+        { title: "ทรงมี Hump" },
+        { title: "ทรงปีกกว้าง" },
+        { title: "ทรงปลายพุ่งหยดน้ำ" },
+        { title: "แก้จมูกเอียง" },
+      ],
       intro: [
         "เทคนิคกึ่งศัลยกรรมของ NYC Clinic ปรับโครงสร้างจมูกได้ทั้งทรง โดยไม่ต้องผ่าตัด ไม่ต้องพักฟื้น มีแผลเพียงรูเข็มเล็กประมาณ 2 มิลลิเมตร",
         "จมูกที่สวยไม่ใช่แค่โด่ง แต่ต้องรับกับรูปหน้า เราจึงออกแบบทรงเฉพาะบุคคล ปรับสันให้เรียวคม เก็บปีก ยืดปลายพุ่ง ให้ใบหน้าดูมีมิติขึ้นในทุกมุม",
@@ -150,6 +159,15 @@ const DATA = [
       ],
     },
     detail_en: {
+      // Photos to come — add `image` per item; until then a placeholder.
+      showcase: [
+        { title: "Male nose" },
+        { title: "Thin nasal tissue" },
+        { title: "Nose with a hump" },
+        { title: "Wide alar base" },
+        { title: "Teardrop tip" },
+        { title: "Crooked nose correction" },
+      ],
       intro: [
         "NYC Clinic's semi-surgical technique reshapes the whole nose without surgery and without downtime — the only mark is a needle point around 2mm across.",
         "A good nose isn't just a high one. The shape has to suit the face, so each is designed individually: a finer bridge, narrower wings, a lifted tip, more definition from every angle.",
@@ -210,6 +228,15 @@ const DATA = [
       "Lifts and firms without surgery, stimulating your own collagen.",
     summary_th: "ยกผิวแน่นตึงกระชับไม่ต้องศัลยกรรม",
     detail_th: {
+      // Photos to come — add `image` per item; until then a placeholder.
+      showcase: [
+        { title: "ผิวหย่อนคล้อย" },
+        { title: "ร่องแก้ม" },
+        { title: "กระเปาะแก้ม" },
+        { title: "ขอบหน้าไม่ชัด" },
+        { title: "คิ้วตก" },
+        { title: "เหนียงหย่อนคล้อย" },
+      ],
       intro: [
         "ร้อยไหมยกกระชับใบหน้า ด้วยไหมละลายที่มีเงี่ยงเล็กๆ ยึดเกาะกับเนื้อเยื่อใต้ผิวหนัง ยกผิวขึ้นพร้อมกระตุ้นการสร้างคอลลาเจนและอิลาสติน",
       ],
@@ -240,6 +267,15 @@ const DATA = [
       ],
     },
     detail_en: {
+      // Photos to come — add `image` per item; until then a placeholder.
+      showcase: [
+        { title: "Sagging skin" },
+        { title: "Nasolabial folds" },
+        { title: "Jowls" },
+        { title: "Undefined jawline" },
+        { title: "Drooping brows" },
+        { title: "Sagging under-chin" },
+      ],
       intro: [
         "Absorbable threads with fine barbs anchor into the tissue beneath the skin, lifting it while stimulating your own collagen and elastin.",
       ],

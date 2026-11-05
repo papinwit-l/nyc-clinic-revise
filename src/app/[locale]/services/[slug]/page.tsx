@@ -86,6 +86,7 @@ export default async function ServiceDetailPage({
     ? await getParentService(locale, service.parent)
     : null;
   const detail = service.detail;
+  const showcase = detail?.showcase ?? [];
 
   return (
     <>
@@ -391,9 +392,9 @@ export default async function ServiceDetailPage({
       {/* Real results — reuses case data that already exists, so a service
           page gains substance without new copy. A drag-to-compare reveal
           leads when this service has one (same carousel as
-          /before-after/[treatment]); the case grid follows. Renders nothing
-          when the service has neither. */}
-      {(cases.length > 0 || reveals.length > 0) && (
+          /before-after/[treatment]); the showcase grid follows. Renders
+          nothing when the service has neither. */}
+      {(reveals.length > 0 || showcase.length > 0) && (
         <section className="bg-[var(--color-surface)] py-[var(--section-py)]">
           <div className="max-w-[var(--container-max)] mx-auto px-6 sm:px-12">
             <SectionIntro
@@ -415,27 +416,64 @@ export default async function ServiceDetailPage({
               </InView>
             )}
 
-            {/* Services Details List */}
-            {/* ร้อยไหมจมูก */}
-            {/* ทรงผู้ชาย / ทรงเนื้อน้อย / ทรงมี Hump / ทรงปีกกว้าง / ทรงปลายพุ่งหยดน้ำ / แก้จมูกแก้จมูกเอียง */}
-            {/* ร้อยไหมหน้า */}
-            {/* ผิวหย่อนคล้อย /  ร่องแก้ม / กระเปาะแก้ม / ขอบหน้าไม่ชัด / คิ้วตก / เหนียงหย่อนคล้อย */}
-
-            <div
-              className={
-                reveals.length > 0 && !cases.length
-                  ? "mt-8 text-center"
-                  : "mt-8"
-              }
-            >
-              <Link
-                href={`/${locale}/before-after/${service.slug}`}
-                className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-                style={{ fontFamily: bodyFont }}
+            {/* Showcase — the shapes / concerns this service handles, one
+                photo each (detail.showcase). Replaces the three small case
+                thumbnails. Cards without a photo yet show a placeholder. */}
+            {showcase.length > 0 && (
+              <div
+                className={`grid grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-10 ${
+                  reveals.length > 0 ? "mt-14" : ""
+                }`}
               >
-                {t.services.detail.resultsCta}
-              </Link>
-            </div>
+                {showcase.map((item, i) => (
+                  <InView key={item.title} variant="rise" index={i % 3}>
+                    <div className="relative aspect-[4/3] overflow-hidden radius-soft bg-[var(--color-surface-dim)] ring-1 ring-[var(--color-border)]">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={`${service.title} — ${item.title}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1024px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 grid place-items-center"
+                        >
+                          <span className="w-5 h-5 rotate-45 border border-[var(--color-accent)] opacity-60" />
+                        </span>
+                      )}
+                    </div>
+                    <p
+                      className={`text-[var(--color-primary)] mt-3 leading-tight ${
+                        isTH ? "text-[1rem]" : "text-[1.05rem]"
+                      }`}
+                      style={{
+                        fontFamily: titleFont,
+                        fontWeight: isTH ? 600 : 500,
+                      }}
+                    >
+                      {item.title}
+                    </p>
+                  </InView>
+                ))}
+              </div>
+            )}
+
+            {(cases.length > 0 || reveals.length > 0) && (
+              <div
+                className={showcase.length > 0 ? "mt-10" : "mt-8 text-center"}
+              >
+                <Link
+                  href={`/${locale}/before-after/${service.slug}`}
+                  className="text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+                  style={{ fontFamily: bodyFont }}
+                >
+                  {t.services.detail.resultsCta}
+                </Link>
+              </div>
+            )}
           </div>
         </section>
       )}

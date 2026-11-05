@@ -21,6 +21,12 @@ export type ServiceDetail = {
   areas?: string[];
   /** Service-specific FAQ. Distinct from the general /faq page. */
   faq?: { q: string; a: string }[];
+  /**
+   * Shapes / concerns this service handles, each with a photo — the grid
+   * under the reveal in "Real results". `image` is optional: without one the
+   * card shows a placeholder, so the list can go live before the photos.
+   */
+  showcase?: { title: string; image?: string }[];
 };
 
 /**
