@@ -12,6 +12,8 @@ export type GoogleReview = {
   authorPhoto?: string;
   /** Google's relative time, already localised — "2 เดือนที่แล้ว". */
   time: string;
+  /** ISO timestamp — for sorting newest first. */
+  published: string;
   /** This review on Google Maps. */
   url?: string;
 };
@@ -23,6 +25,6 @@ export type GoogleReviews = {
   total: number;
   /** The clinic's Google Maps listing. */
   url: string;
-  /** At most five, chosen by Google. */
+  /** 5-star only, newest first — from the five Google chose. */
   reviews: GoogleReview[];
 };

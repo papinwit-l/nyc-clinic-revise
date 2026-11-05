@@ -11,7 +11,8 @@ import SectionHeader from "@/components/shared/SectionHeader";
  * shown unedited (clamped, with a link to the full review), and Google Maps
  * attribution beside a link to the listing.
  *
- * Renders nothing without data — see the note in the fetcher.
+ * Cards are 5-star reviews only, newest first (see the fetcher); with none,
+ * the rating badge and links still show. Renders nothing without data.
  */
 
 type Props = {
@@ -85,12 +86,14 @@ export default function GoogleReviews({ locale, data, t, limit = 3 }: Props) {
           </a>
         </div>
 
+        {/* Flex, not a 3-col grid: on a day with only one or two 5-star
+            reviews the cards centre instead of leaving empty columns. */}
         {reviews.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex flex-col md:flex-row md:justify-center gap-6">
             {reviews.map((r) => (
               <article
                 key={r.id}
-                className="bg-white radius-soft p-6 sm:p-8 flex flex-col"
+                className="bg-white radius-soft p-6 sm:p-8 flex flex-col md:w-[calc((100%-3rem)/3)]"
               >
                 <Stars value={r.rating} size={14} />
 

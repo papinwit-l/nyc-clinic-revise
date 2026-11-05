@@ -18,8 +18,11 @@ import type { GoogleReviews, GoogleReview } from "@/types/google-review";
  *
  * DISPLAY TERMS: show the reviews as returned — text unedited, with author
  * name, photo and time — plus Google attribution and a link to the listing.
- * Rating-only reviews (no text) are skipped because there is nothing to
- * show; nothing is filtered by star rating.
+ *
+ * SELECTION (clinic's decision, Nov 2026): of the five, only 5-star reviews
+ * with text are shown, newest first. Usually that leaves 2–4; on a day with
+ * none, the section shows the rating badge alone. The overall rating and
+ * count are NOT affected — they cover every review on Google.
  *
  * Failure → null, and the homepage hides the section. Deliberately no
  * fallback to hand-written testimonials.
@@ -63,6 +66,7 @@ function toReview(r: ApiReview): GoogleReview | null {
     authorUrl: r.authorAttribution?.uri,
     authorPhoto: r.authorAttribution?.photoUri,
     time: r.relativePublishTimeDescription ?? "",
+    published: r.publishTime ?? "",
     url: r.googleMapsUri,
   };
 }
@@ -109,7 +113,8 @@ export async function getGoogleReviews(
       url: place.googleMapsUri ?? "",
       reviews: (place.reviews ?? [])
         .map(toReview)
-        .filter((r): r is GoogleReview => r !== null),
+        .filter((r): r is GoogleReview => r !== null && r.rating === 5)
+        .sort((a, b) => b.published.localeCompare(a.published)),
     };
   } catch (err) {
     console.error(
