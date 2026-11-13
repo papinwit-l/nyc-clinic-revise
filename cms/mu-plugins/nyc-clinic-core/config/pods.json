@@ -1,0 +1,1973 @@
+{
+ "meta": {
+  "version": "3.3.9",
+  "build": 0,
+  "source": "nyc-clinic-core"
+ },
+ "pods": [
+  {
+   "name": "post",
+   "label": "Posts",
+   "type": "post_type",
+   "storage": "meta",
+   "object": "post",
+   "rest_enable": "1",
+   "read_all": "1",
+   "groups": [
+    {
+     "name": "post_th",
+     "label": "Thai",
+     "description": "",
+     "fields": [
+      {
+       "name": "title_th",
+       "label": "Title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "excerpt_th",
+       "label": "Excerpt (TH)",
+       "type": "paragraph",
+       "description": "One or two sentences for the blog list and homepage.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "content_th",
+       "label": "Article (TH)",
+       "type": "wysiwyg",
+       "description": "Paste from Word here. Leave empty if this article has no Thai version.",
+       "required": "0",
+       "wysiwyg_editor": "tinymce",
+       "wysiwyg_media_buttons": "1",
+       "wysiwyg_editor_height": "400",
+       "wysiwyg_wpautop": "1",
+       "wysiwyg_oembed": "0",
+       "wysiwyg_allow_shortcode": "0"
+      }
+     ]
+    },
+    {
+     "name": "post_en",
+     "label": "English",
+     "description": "",
+     "fields": [
+      {
+       "name": "title_en",
+       "label": "Title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "excerpt_en",
+       "label": "Excerpt (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "content_en",
+       "label": "Article (EN)",
+       "type": "wysiwyg",
+       "description": "Leave empty if this article has no English version — the Thai one is shown on /en instead.",
+       "required": "0",
+       "wysiwyg_editor": "tinymce",
+       "wysiwyg_media_buttons": "1",
+       "wysiwyg_editor_height": "400",
+       "wysiwyg_wpautop": "1",
+       "wysiwyg_oembed": "0",
+       "wysiwyg_allow_shortcode": "0"
+      }
+     ]
+    },
+    {
+     "name": "post_seo",
+     "label": "SEO",
+     "description": "",
+     "fields": [
+      {
+       "name": "seo_title_th",
+       "label": "SEO title (TH)",
+       "type": "text",
+       "description": "Optional. Falls back to the title.",
+       "required": "0",
+       "text_max_length": "70"
+      },
+      {
+       "name": "seo_title_en",
+       "label": "SEO title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "70"
+      },
+      {
+       "name": "seo_desc_th",
+       "label": "SEO description (TH)",
+       "type": "paragraph",
+       "description": "Optional. Falls back to the excerpt. About 150 characters.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "seo_desc_en",
+       "label": "SEO description (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "faq",
+   "label": "FAQ",
+   "label_singular": "FAQ",
+   "description": "Internal name: English, used for the web address (slug) and the admin list. Not shown on the site.",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-editor-help",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "0",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "faq",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "faq_main",
+     "label": "Question",
+     "description": "",
+     "fields": [
+      {
+       "name": "q_th",
+       "label": "Question (TH)",
+       "type": "text",
+       "description": "",
+       "required": "1",
+       "text_max_length": "0"
+      },
+      {
+       "name": "q_en",
+       "label": "Question (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "0"
+      },
+      {
+       "name": "a_th",
+       "label": "Answer (TH)",
+       "type": "paragraph",
+       "description": "Separate paragraphs with a blank line.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "a_en",
+       "label": "Answer (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "category",
+       "label": "Category",
+       "type": "pick",
+       "description": "",
+       "required": "1",
+       "pick_object": "custom-simple",
+       "pick_custom": "nose|Nose thread lift\nface|Face thread lift\nsafety|Safety & side effects\ncare|Preparation & aftercare",
+       "pick_format_type": "single",
+       "pick_format_single": "dropdown"
+      },
+      {
+       "name": "featured",
+       "label": "Featured",
+       "type": "boolean",
+       "description": "Shown on /contact and the homepage FAQ preview (keep to about 5).",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Featured",
+       "boolean_no_label": "",
+       "default": "0"
+      },
+      {
+       "name": "show_on_faq_page",
+       "label": "Show on FAQ page",
+       "type": "boolean",
+       "description": "Untick for a question that should only appear on its service pages.",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Show on FAQ page",
+       "boolean_no_label": "",
+       "default": "1"
+      },
+      {
+       "name": "services",
+       "label": "Services",
+       "type": "pick",
+       "description": "This question also appears in the FAQ of the services ticked here.",
+       "required": "0",
+       "pick_object": "post_type",
+       "pick_val": "service",
+       "pick_format_type": "multi",
+       "pick_format_single": "autocomplete",
+       "pick_format_multi": "list",
+       "pick_allow_add_new": "0",
+       "pick_show_edit_link": "1",
+       "pick_show_view_link": "0",
+       "pick_limit": "0",
+       "pick_post_status": [
+        "publish"
+       ],
+       "rest_pick_response": "id"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "promotion",
+   "label": "Promotions",
+   "label_singular": "Promotion",
+   "description": "Drag to order: the first active promotion is the homepage banner.",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-tag",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "0",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "promotion",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "promo_main",
+     "label": "Promotion",
+     "description": "",
+     "fields": [
+      {
+       "name": "title_th",
+       "label": "Title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "title_en",
+       "label": "Title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "subtitle_th",
+       "label": "Subtitle (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "subtitle_en",
+       "label": "Subtitle (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "offer_th",
+       "label": "Offer (TH)",
+       "type": "text",
+       "description": "e.g. ลด 20% / 20% off",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "offer_en",
+       "label": "Offer (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "condition_th",
+       "label": "Condition (TH)",
+       "type": "text",
+       "description": "Optional small print, e.g. limited to 20 people.",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "condition_en",
+       "label": "Condition (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "valid_from",
+       "label": "Valid from",
+       "type": "date",
+       "description": "Optional. First day shown (Bangkok time).",
+       "required": "0",
+       "date_type": "format",
+       "date_format": "y_m_d",
+       "date_allow_empty": "1",
+       "date_html5": "1"
+      },
+      {
+       "name": "valid_until",
+       "label": "Valid until",
+       "type": "date",
+       "description": "Last day shown, inclusive (Bangkok time).",
+       "required": "1",
+       "date_type": "format",
+       "date_format": "y_m_d",
+       "date_allow_empty": "0",
+       "date_html5": "1"
+      },
+      {
+       "name": "image",
+       "label": "Banner (16:9)",
+       "type": "file",
+       "description": "Banner artwork for /promotions.",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "text_over_image",
+       "label": "Plain photo — draw text over it",
+       "type": "boolean",
+       "description": "Tick when the banner is a photo with no offer in the artwork.",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Plain photo — draw text over it",
+       "boolean_no_label": "",
+       "default": "0"
+      },
+      {
+       "name": "service",
+       "label": "Linked service",
+       "type": "pick",
+       "description": "Optional — the promotion links to this service page.",
+       "required": "0",
+       "pick_object": "post_type",
+       "pick_val": "service",
+       "pick_format_type": "single",
+       "pick_format_single": "autocomplete",
+       "pick_format_multi": "list",
+       "pick_allow_add_new": "0",
+       "pick_show_edit_link": "1",
+       "pick_show_view_link": "0",
+       "pick_limit": "0",
+       "pick_post_status": [
+        "publish"
+       ],
+       "rest_pick_response": "id"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "doctor",
+   "label": "Doctors",
+   "label_singular": "Doctor",
+   "description": "Credentials are edited in the box below.",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-id",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "0",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "doctor",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "doctor_main",
+     "label": "Doctor",
+     "description": "",
+     "fields": [
+      {
+       "name": "name_th",
+       "label": "Short name (TH)",
+       "type": "text",
+       "description": "e.g. หมอจิ๋ง / Dr. Jing",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "name_en",
+       "label": "Short name (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "full_name_th",
+       "label": "Full name (TH)",
+       "type": "text",
+       "description": "",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "full_name_en",
+       "label": "Full name (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "specialty_th",
+       "label": "Specialty (TH)",
+       "type": "text",
+       "description": "",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "specialty_en",
+       "label": "Specialty (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "experience",
+       "label": "Experience",
+       "type": "text",
+       "description": "e.g. 15+",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "photo",
+       "label": "Photo",
+       "type": "file",
+       "description": "",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "featured",
+       "label": "Lead specialist",
+       "type": "boolean",
+       "description": "Homepage featured card. Only one doctor.",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Lead specialist",
+       "boolean_no_label": "",
+       "default": "0"
+      },
+      {
+       "name": "bio_th",
+       "label": "Short bio (TH)",
+       "type": "paragraph",
+       "description": "Lead specialist card only.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "bio_en",
+       "label": "Short bio (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "services",
+       "label": "Services",
+       "type": "pick",
+       "description": "",
+       "required": "0",
+       "pick_object": "post_type",
+       "pick_val": "service",
+       "pick_format_type": "multi",
+       "pick_format_single": "autocomplete",
+       "pick_format_multi": "list",
+       "pick_allow_add_new": "0",
+       "pick_show_edit_link": "1",
+       "pick_show_view_link": "0",
+       "pick_limit": "0",
+       "pick_post_status": [
+        "publish"
+       ],
+       "rest_pick_response": "id"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "award",
+   "label": "Awards",
+   "label_singular": "Award",
+   "description": "Most awards are supplier 'Valued Customer' awards — label them so, not as accreditation.",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-awards",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "0",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "award",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "award_main",
+     "label": "Award",
+     "description": "",
+     "fields": [
+      {
+       "name": "image",
+       "label": "Award photo (PNG)",
+       "type": "file",
+       "description": "PNG with a transparent background only — never JPG.",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "other",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image",
+       "file_allowed_extensions": "png"
+      },
+      {
+       "name": "year",
+       "label": "Year",
+       "type": "text",
+       "description": "",
+       "required": "1",
+       "text_max_length": "4"
+      },
+      {
+       "name": "title_th",
+       "label": "Label (TH)",
+       "type": "text",
+       "description": "Awarding body or programme, shown under the photo.",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "title_en",
+       "label": "Label (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "engraved_en",
+       "label": "Engraved text",
+       "type": "paragraph",
+       "description": "Full text on the award. Used for the enlarged view and screen readers.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "service",
+   "label": "Services",
+   "label_singular": "Service",
+   "description": "Top-level = service category. Set a Parent to make it a treatment page.",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-heart",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "1",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "service",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "service_main",
+     "label": "Card & overview",
+     "description": "",
+     "fields": [
+      {
+       "name": "title_th",
+       "label": "Title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "title_en",
+       "label": "Title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "subtitle_th",
+       "label": "Subtitle (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "subtitle_en",
+       "label": "Subtitle (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "desc_th",
+       "label": "Card line (TH)",
+       "type": "text",
+       "description": "Homepage card — what's inside, e.g. Filler · SMAS-X · Botox.",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "desc_en",
+       "label": "Card line (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "summary_th",
+       "label": "Summary (TH)",
+       "type": "paragraph",
+       "description": "/services page — one or two sentences of prose.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "summary_en",
+       "label": "Summary (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "points_th",
+       "label": "Overview points (TH)",
+       "type": "text",
+       "description": "One point per line.",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "points_en",
+       "label": "Overview points (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "image",
+       "label": "Image",
+       "type": "file",
+       "description": "",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "signature",
+       "label": "Signature service",
+       "type": "boolean",
+       "description": "",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Signature service",
+       "boolean_no_label": "",
+       "default": "0"
+      }
+     ]
+    },
+    {
+     "name": "service_detail",
+     "label": "Detail page",
+     "description": "Quick facts and the results showcase are edited in the boxes below. FAQ: tick this service on the FAQ itself.",
+     "fields": [
+      {
+       "name": "intro_th",
+       "label": "Intro (TH)",
+       "type": "paragraph",
+       "description": "One or two paragraphs. Separate with a blank line.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "intro_en",
+       "label": "Intro (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "good_for_th",
+       "label": "Good for (TH)",
+       "type": "text",
+       "description": "Who this suits — one per line.",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "good_for_en",
+       "label": "Good for (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "benefits_th",
+       "label": "Benefits (TH)",
+       "type": "text",
+       "description": "One per line.",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "benefits_en",
+       "label": "Benefits (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "areas_th",
+       "label": "Areas / variants (TH)",
+       "type": "text",
+       "description": "One per line.",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      },
+      {
+       "name": "areas_en",
+       "label": "Areas / variants (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255",
+       "repeatable": "1",
+       "repeatable_add_new_label": "Add line",
+       "repeatable_format": "default"
+      }
+     ]
+    },
+    {
+     "name": "service_seo",
+     "label": "SEO",
+     "description": "",
+     "fields": [
+      {
+       "name": "seo_title_th",
+       "label": "SEO title (TH)",
+       "type": "text",
+       "description": "Optional. Falls back to the title.",
+       "required": "0",
+       "text_max_length": "70"
+      },
+      {
+       "name": "seo_title_en",
+       "label": "SEO title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "70"
+      },
+      {
+       "name": "seo_desc_th",
+       "label": "SEO description (TH)",
+       "type": "paragraph",
+       "description": "Optional. About 150 characters.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "seo_desc_en",
+       "label": "SEO description (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "case",
+   "label": "Cases",
+   "label_singular": "Case",
+   "description": "",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-images-alt2",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "0",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "case",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "case_main",
+     "label": "Case",
+     "description": "Category: tick ONE treatment's sub-category. If you tick several, the FIRST one decides the group; the rest show as tags.",
+     "fields": [
+      {
+       "name": "image",
+       "label": "Before & after composite",
+       "type": "file",
+       "description": "",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "doctor",
+       "label": "Doctor",
+       "type": "pick",
+       "description": "",
+       "required": "1",
+       "pick_object": "post_type",
+       "pick_val": "doctor",
+       "pick_format_type": "single",
+       "pick_format_single": "autocomplete",
+       "pick_format_multi": "list",
+       "pick_allow_add_new": "0",
+       "pick_show_edit_link": "1",
+       "pick_show_view_link": "0",
+       "pick_limit": "0",
+       "pick_post_status": [
+        "publish"
+       ],
+       "rest_pick_response": "id"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "reveal",
+   "label": "Reveals",
+   "label_singular": "Reveal",
+   "description": "",
+   "type": "post_type",
+   "storage": "meta",
+   "public": "0",
+   "publicly_queryable": "0",
+   "exclude_from_search": "1",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_in_nav_menus": "0",
+   "show_in_admin_bar": "1",
+   "menu_icon": "dashicons-image-flip-horizontal",
+   "capability_type": "post",
+   "has_archive": "0",
+   "hierarchical": "0",
+   "rewrite": "0",
+   "query_var": "0",
+   "can_export": "1",
+   "supports_title": "1",
+   "supports_editor": "0",
+   "supports_revisions": "1",
+   "supports_page_attributes": "1",
+   "supports_thumbnail": "0",
+   "supports_excerpt": "0",
+   "supports_custom_fields": "0",
+   "supports_comments": "0",
+   "supports_author": "0",
+   "rest_enable": "1",
+   "rest_base": "reveal",
+   "read_all": "1",
+   "write_all": "0",
+   "groups": [
+    {
+     "name": "reveal_main",
+     "label": "Reveal (drag-to-compare pair)",
+     "description": "Category: tick the treatment, and optionally one sub-category.",
+     "fields": [
+      {
+       "name": "before_image",
+       "label": "Before photo",
+       "type": "file",
+       "description": "Same framing and lighting as the after photo.",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "after_image",
+       "label": "After photo",
+       "type": "file",
+       "description": "",
+       "required": "1",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "title_th",
+       "label": "Title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "title_en",
+       "label": "Title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "doctor",
+       "label": "Doctor",
+       "type": "pick",
+       "description": "",
+       "required": "0",
+       "pick_object": "post_type",
+       "pick_val": "doctor",
+       "pick_format_type": "single",
+       "pick_format_single": "autocomplete",
+       "pick_format_multi": "list",
+       "pick_allow_add_new": "0",
+       "pick_show_edit_link": "1",
+       "pick_show_view_link": "0",
+       "pick_limit": "0",
+       "pick_post_status": [
+        "publish"
+       ],
+       "rest_pick_response": "id"
+      },
+      {
+       "name": "featured",
+       "label": "Homepage reveal",
+       "type": "boolean",
+       "description": "If several are ticked, the newest wins.",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Homepage reveal",
+       "boolean_no_label": "",
+       "default": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "case_treatment",
+   "label": "Categories",
+   "label_singular": "Category",
+   "type": "taxonomy",
+   "storage": "meta",
+   "public": "0",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "show_admin_column": "1",
+   "hierarchical": "1",
+   "rewrite": "0",
+   "query_var": "0",
+   "built_in_post_types_case": "1",
+   "built_in_post_types_reveal": "1",
+   "rest_enable": "1",
+   "rest_base": "case_treatment",
+   "read_all": "1",
+   "description": "Top level = treatment, child = sub-category. Name in English; drag to order.",
+   "groups": [
+    {
+     "name": "treatment_main",
+     "label": "Thai",
+     "description": "",
+     "fields": [
+      {
+       "name": "name_th",
+       "label": "Name (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "nyc_site",
+   "label": "Site Settings",
+   "description": "",
+   "type": "settings",
+   "storage": "option",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "menu_name": "Site Settings",
+   "menu_location": "submenu",
+   "menu_location_custom": "nyc-page-manage",
+   "ui_style": "settings",
+   "groups": [
+    {
+     "name": "site_contact",
+     "label": "Contact",
+     "description": "Used in the header widget, footer, homepage and /contact.",
+     "fields": [
+      {
+       "name": "line_url",
+       "label": "LINE link",
+       "type": "website",
+       "description": "",
+       "required": "1",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      },
+      {
+       "name": "line_id",
+       "label": "LINE ID",
+       "type": "text",
+       "description": "e.g. @nycclinic",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "phone",
+       "label": "Phone",
+       "type": "text",
+       "description": "e.g. 088-008-7870",
+       "required": "1",
+       "text_max_length": "255"
+      },
+      {
+       "name": "address_th",
+       "label": "Address (TH)",
+       "type": "paragraph",
+       "description": "",
+       "required": "1",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "address_en",
+       "label": "Address (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "hours_1_days_th",
+       "label": "Hours row 1 — days (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_1_days_en",
+       "label": "Hours row 1 — days (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_1_time_th",
+       "label": "Hours row 1 — time (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_1_time_en",
+       "label": "Hours row 1 — time (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_2_days_th",
+       "label": "Hours row 2 — days (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_2_days_en",
+       "label": "Hours row 2 — days (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_2_time_th",
+       "label": "Hours row 2 — time (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "hours_2_time_en",
+       "label": "Hours row 2 — time (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      }
+     ]
+    },
+    {
+     "name": "site_map",
+     "label": "Map",
+     "description": "",
+     "fields": [
+      {
+       "name": "map_embed",
+       "label": "Google Maps embed URL",
+       "type": "website",
+       "description": "The src of the embed iframe.",
+       "required": "0",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      },
+      {
+       "name": "map_url",
+       "label": "Google Maps link",
+       "type": "website",
+       "description": "Opens directions.",
+       "required": "0",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      }
+     ]
+    },
+    {
+     "name": "site_social",
+     "label": "Social",
+     "description": "",
+     "fields": [
+      {
+       "name": "facebook",
+       "label": "Facebook",
+       "type": "website",
+       "description": "",
+       "required": "0",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      },
+      {
+       "name": "instagram",
+       "label": "Instagram",
+       "type": "website",
+       "description": "",
+       "required": "0",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      },
+      {
+       "name": "tiktok",
+       "label": "TikTok",
+       "type": "website",
+       "description": "",
+       "required": "0",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      },
+      {
+       "name": "youtube",
+       "label": "YouTube",
+       "type": "website",
+       "description": "",
+       "required": "0",
+       "website_format": "no-normalize",
+       "website_max_length": "0",
+       "website_html5": "1",
+       "website_allow_port": "0",
+       "website_clickable": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "nyc_home",
+   "label": "Home",
+   "description": "Everything else on the homepage fills itself from Doctors, Services, Cases, Promotions, Blog and FAQ.",
+   "type": "settings",
+   "storage": "option",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "menu_name": "Home",
+   "menu_location": "submenu",
+   "menu_location_custom": "nyc-page-manage",
+   "ui_style": "settings",
+   "groups": [
+    {
+     "name": "home_hero",
+     "label": "Hero",
+     "description": "",
+     "fields": [
+      {
+       "name": "hero_slides",
+       "label": "Hero slides",
+       "type": "file",
+       "description": "Drag to order.",
+       "required": "0",
+       "file_format_type": "multi",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Add images",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      }
+     ]
+    },
+    {
+     "name": "home_trust",
+     "label": "Trust Bar",
+     "description": "Leave a stat's number empty to hide it.",
+     "fields": [
+      {
+       "name": "stat_1_value",
+       "label": "Stat 1 — number",
+       "type": "number",
+       "description": "",
+       "required": "0",
+       "number_format_type": "number",
+       "number_format": "9999.99",
+       "number_decimals": "0",
+       "number_format_soft": "1",
+       "number_step": "1"
+      },
+      {
+       "name": "stat_1_suffix",
+       "label": "Stat 1 — suffix",
+       "type": "text",
+       "description": "e.g. +",
+       "required": "0",
+       "text_max_length": "4"
+      },
+      {
+       "name": "stat_1_unit_th",
+       "label": "Stat 1 — unit (TH)",
+       "type": "text",
+       "description": "Optional, e.g. ปี / yrs",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_1_unit_en",
+       "label": "Stat 1 — unit (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_1_label_th",
+       "label": "Stat 1 — label (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_1_label_en",
+       "label": "Stat 1 — label (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_2_value",
+       "label": "Stat 2 — number",
+       "type": "number",
+       "description": "",
+       "required": "0",
+       "number_format_type": "number",
+       "number_format": "9999.99",
+       "number_decimals": "0",
+       "number_format_soft": "1",
+       "number_step": "1"
+      },
+      {
+       "name": "stat_2_suffix",
+       "label": "Stat 2 — suffix",
+       "type": "text",
+       "description": "e.g. +",
+       "required": "0",
+       "text_max_length": "4"
+      },
+      {
+       "name": "stat_2_unit_th",
+       "label": "Stat 2 — unit (TH)",
+       "type": "text",
+       "description": "Optional, e.g. ปี / yrs",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_2_unit_en",
+       "label": "Stat 2 — unit (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_2_label_th",
+       "label": "Stat 2 — label (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_2_label_en",
+       "label": "Stat 2 — label (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_3_value",
+       "label": "Stat 3 — number",
+       "type": "number",
+       "description": "",
+       "required": "0",
+       "number_format_type": "number",
+       "number_format": "9999.99",
+       "number_decimals": "0",
+       "number_format_soft": "1",
+       "number_step": "1"
+      },
+      {
+       "name": "stat_3_suffix",
+       "label": "Stat 3 — suffix",
+       "type": "text",
+       "description": "e.g. +",
+       "required": "0",
+       "text_max_length": "4"
+      },
+      {
+       "name": "stat_3_unit_th",
+       "label": "Stat 3 — unit (TH)",
+       "type": "text",
+       "description": "Optional, e.g. ปี / yrs",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_3_unit_en",
+       "label": "Stat 3 — unit (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_3_label_th",
+       "label": "Stat 3 — label (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "stat_3_label_en",
+       "label": "Stat 3 — label (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      }
+     ]
+    },
+    {
+     "name": "home_intro",
+     "label": "Clinic intro",
+     "description": "",
+     "fields": [
+      {
+       "name": "quote_th",
+       "label": "Quote (TH)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "quote_en",
+       "label": "Quote (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "quote_name_th",
+       "label": "Quote — name (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "quote_name_en",
+       "label": "Quote — name (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "quote_role_th",
+       "label": "Quote — role (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "quote_role_en",
+       "label": "Quote — role (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "bio_th",
+       "label": "Clinic text (TH)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "bio_en",
+       "label": "Clinic text (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "pillar_1_title_th",
+       "label": "Pillar 1 — title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_1_title_en",
+       "label": "Pillar 1 — title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_1_desc_th",
+       "label": "Pillar 1 — text (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_1_desc_en",
+       "label": "Pillar 1 — text (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_2_title_th",
+       "label": "Pillar 2 — title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_2_title_en",
+       "label": "Pillar 2 — title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_2_desc_th",
+       "label": "Pillar 2 — text (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_2_desc_en",
+       "label": "Pillar 2 — text (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_3_title_th",
+       "label": "Pillar 3 — title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_3_title_en",
+       "label": "Pillar 3 — title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_3_desc_th",
+       "label": "Pillar 3 — text (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "pillar_3_desc_en",
+       "label": "Pillar 3 — text (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "nyc_about",
+   "label": "About",
+   "description": "",
+   "type": "settings",
+   "storage": "option",
+   "show_ui": "1",
+   "show_in_menu": "1",
+   "menu_name": "About",
+   "menu_location": "submenu",
+   "menu_location_custom": "nyc-page-manage",
+   "ui_style": "settings",
+   "groups": [
+    {
+     "name": "about_story",
+     "label": "Story",
+     "description": "",
+     "fields": [
+      {
+       "name": "story_th",
+       "label": "Story (TH)",
+       "type": "paragraph",
+       "description": "Separate paragraphs with a blank line.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "story_en",
+       "label": "Story (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      }
+     ]
+    },
+    {
+     "name": "about_facility",
+     "label": "Facility",
+     "description": "",
+     "fields": [
+      {
+       "name": "facility_gallery",
+       "label": "Facility photos",
+       "type": "file",
+       "description": "Drag to order.",
+       "required": "0",
+       "file_format_type": "multi",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Add images",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

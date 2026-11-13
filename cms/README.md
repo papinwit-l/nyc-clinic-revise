@@ -1,0 +1,182 @@
+# NYC Clinic — WordPress CMS
+
+Headless WordPress at **cms.nyc-clinic.com**. Editors use wp-admin; the public
+site is the Next.js app. Design: `nyc-clinic-wp-admin-architecture.md` (v2).
+
+```
+cms/
+└ mu-plugins/
+  ├ nyc-clinic-core.php            loader (WordPress loads top-level files only)
+  └ nyc-clinic-core/
+    ├ config/pods.json             the whole content model (12 pods, 142 fields)
+    ├ inc/pods.php                 loads pods.json into Pods as a file config
+    ├ inc/headless.php             front-end → 301 to the site, no XML-RPC/comments, hide /wp/v2/users
+    ├ inc/admin.php                Page Manage menu, menu order, Clinic Editor role, dashboard guide
+    ├ inc/posts.php                article needs ≥1 complete language; language column
+    ├ inc/repeater.php             Quick facts / Results showcase / Credentials
+    ├ inc/rest.php                 image + boolean shapes, ?orderby=menu_order, GET /nyc/v1/site
+    ├ inc/revalidate.php           on save → POST tags to Next.js /api/revalidate
+    └ assets/repeater.{js,css}
+```
+
+Tested on WordPress 7.0.1, Pods 3.3.9, Simple Custom Post Order 2.8, PHP 8.3.
+
+---
+
+## 1. Server setup (Plesk, once)
+
+### 1.1 Domain and SSL
+1. **Cloudflare DNS:** add an `A` record `cms` → the server IP.
+2. **Plesk → Websites & Domains → Add Subdomain:** `cms.nyc-clinic.com`.
+3. **SSL:** use the domain's *SSL/TLS Certificates* page to issue a Let's Encrypt
+   certificate. In Cloudflare, set SSL/TLS mode to **Full (strict)**.
+
+### 1.2 PHP
+In the subdomain's **PHP** settings:
+- PHP **8.3** (8.2 is the minimum; Pods 3.4 will need 8.0+), served by FPM
+- `memory_limit` 256M · `upload_max_filesize` 32M · `post_max_size` 32M · `max_execution_time` 120
+
+### 1.3 Install WordPress
+Install with **WP Toolkit**:
+- Admin username: **not** `admin`. Use a strong password.
+- Language: English
+- Afterwards, delete the plugins and themes WP Toolkit adds. Keep one default
+  theme active (WordPress needs one, even though it renders nothing).
+
+### 1.4 wp-config.php
+Add these above `/* That's all, stop editing! */`:
+
+```php
+define( 'NYC_FRONTEND_URL', 'https://nyc-clinic.com' );
+// Next.js revalidate endpoint. Same server → call it locally:
+define( 'NYC_REVALIDATE_URL', 'http://127.0.0.1:3000/api/revalidate' );
+// Long random string; the SAME value goes in Next.js as REVALIDATE_SECRET.
+// Generate: openssl rand -hex 32
+define( 'NYC_REVALIDATE_SECRET', 'paste-generated-secret-here' );
+
+define( 'DISALLOW_FILE_EDIT', true );   // no theme/plugin code editor in wp-admin
+define( 'WP_POST_REVISIONS', 20 );
+define( 'WP_ENVIRONMENT_TYPE', 'production' );
+```
+
+> While the frontend still runs on Vercel, point `NYC_REVALIDATE_URL` at
+> `https://<vercel-domain>/api/revalidate` instead. Until the Next.js route
+> exists, leave the two `NYC_REVALIDATE_*` lines out and nothing is sent.
+
+### 1.5 Plugins
+Install and activate from **Plugins → Add New**:
+
+| Plugin | Notes |
+|---|---|
+| **Pods – Custom Content Types and Fields** | Required |
+| **Simple Custom Post Order** (Colorlib) | Required. Configured by the mu-plugin; leave its settings alone. |
+| **Wordfence Security** | Turn on 2FA for administrator accounts |
+| **UpdraftPlus** | Daily DB + weekly uploads backups to Google Drive |
+
+Delete Akismet and Hello Dolly.
+
+### 1.6 Deploy the mu-plugin
+Copy the **contents** of `cms/mu-plugins/` into `wp-content/mu-plugins/` (create
+the folder if it isn't there):
+
+```bash
+# from the repo root, on your machine
+rsync -av --delete cms/mu-plugins/ \
+  <ssh-user>@server1.nyc-clinic.com:/var/www/vhosts/nyc-clinic.com/cms.nyc-clinic.com/wp-content/mu-plugins/
+```
+
+Check the path in Plesk: it is the subdomain's *Document root*. Then fix ownership
+so PHP can read the files. Plesk's *Repair* function does this, or run
+`chown -R <subscription-user>:psacln wp-content/mu-plugins`.
+
+After the first deploy, the Plugins screen shows **Must-Use → NYC Clinic — Core**.
+On the next page load it creates the Clinic Editor role, the Guides / Tips / News
+categories and the drag-sort settings.
+
+### 1.7 WordPress settings
+- **Settings → General:** Timezone **Bangkok**.
+- **Settings → Permalinks:** **Post name** (gives `/wp-json/...` URLs).
+- **Settings → Reading:** tick **Discourage search engines** (the CMS isn't the public site).
+- **Posts:** delete "Hello world!". **Pages:** delete "Sample Page".
+
+### 1.8 Block XML-RPC at the server
+**Apache & nginx Settings → Additional nginx directives:**
+
+```nginx
+location = /xmlrpc.php { deny all; }
+```
+
+### 1.9 Editor accounts
+**Users → Add New**, role **Clinic Editor**, one account per person on the
+marketing team. Don't share an account between people.
+
+---
+
+## 2. Check it works
+
+```bash
+curl -s https://cms.nyc-clinic.com/wp-json/nyc/v1/site | head -c 300
+curl -s "https://cms.nyc-clinic.com/wp-json/wp/v2/service?orderby=menu_order&order=asc" | head -c 300
+curl -sI https://cms.nyc-clinic.com/        # → 301 to https://nyc-clinic.com/
+```
+
+In wp-admin you should see **Page Manage** (Site Settings, Home, About), then
+Blog, Promotions, Services, Doctors, Awards, Cases, Reveals and FAQ.
+**Pods Admin → Edit Pods** lists 12 pods, marked as coming from `pods.json`.
+
+If Cloudflare challenges the server's own requests to `/wp-json/` (for example
+with Bot Fight Mode), add a WAF skip rule for `cms.nyc-clinic.com/wp-json/*`.
+
+---
+
+## 3. What editors see
+
+| Menu | What it is |
+|---|---|
+| **Page Manage → Site Settings** | Phone, LINE, address, hours, map, socials (everywhere on the site) |
+| **Page Manage → Home** | Hero slides, Trust Bar numbers, clinic intro block |
+| **Page Manage → About** | Story text, facility photos |
+| **Blog** | Articles: Thai editor and English editor; either language alone is fine |
+| **Promotions** | Drag to order; the first live one is the homepage banner |
+| **Services** | Parent = category; set a Parent to make a treatment page |
+| **Doctors · Awards** | Drag to order |
+| **Cases · Reveals** | Before & after; categories under Cases → Categories (drag to order) |
+| **FAQ** | Drag to order; tick services to show a question on those pages too |
+
+The title box at the top of every item is the **internal name in English**. It
+makes the web address (slug), so keep it short and English. The real Thai and
+English titles are the fields below it.
+
+---
+
+## 4. Changing the content model
+
+1. Edit `config/pods.json`. Pods Admin can't edit file-based pods: they are
+   read-only there on purpose, so nobody can delete a field the frontend reads.
+2. Deploy the folder again (§1.6).
+3. **Pods Admin → Settings → Clear Pods Cache.**
+4. If you renamed or removed a field, update the matching fetcher in `src/data/`.
+
+When `NYC_CORE_VERSION` in `nyc-clinic-core.php` changes, the role, categories
+and drag-sort settings are re-applied on the next load.
+
+## 5. Revalidation contract (for the Next.js side)
+
+On every relevant save the CMS sends one request:
+
+```
+POST {NYC_REVALIDATE_URL}
+x-revalidate-secret: {NYC_REVALIDATE_SECRET}
+{"tags": ["service", ...]}
+```
+
+| Tag | Sent when |
+|---|---|
+| `post` `page` `faq` `promotion` `doctor` `award` `service` `case` `reveal` | that type is published, updated, unpublished or deleted, or reordered by drag |
+| `case`, `reveal` | a Before & After category changes or is reordered |
+| `post` | a blog category changes |
+| `site` | Site Settings, Home or About is saved |
+| all of the above | an image's details change in Media |
+
+The call doesn't wait for a reply. If Next.js is down, the save still succeeds
+and the hourly `revalidate` catches up.

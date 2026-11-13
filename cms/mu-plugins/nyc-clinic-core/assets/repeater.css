@@ -1,0 +1,17 @@
+.nyc-repeater-rows { margin: 8px 0 12px; }
+.nyc-repeater-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px; margin-bottom: 8px;
+  background: #f6f7f7; border: 1px solid #dcdcde; border-radius: 4px;
+}
+.nyc-repeater-handle { cursor: move; color: #8c8f94; margin-top: 22px; }
+.nyc-repeater-fields {
+  flex: 1; display: grid; gap: 8px 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.nyc-repeater-field > span { display: block; font-weight: 600; margin-bottom: 3px; }
+.nyc-repeater-image { height: auto !important; padding: 4px !important; }
+.nyc-repeater-image img { display: block; max-width: 80px; max-height: 80px; }
+.nyc-repeater-clear { display: block; margin-top: 4px; color: #b32d2e; }
+.nyc-repeater-delete { color: #b32d2e; margin-top: 22px; }
+.ui-sortable-helper.nyc-repeater-row { box-shadow: 0 2px 8px rgba(0,0,0,.15); }
