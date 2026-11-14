@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Google reviews cache — written at runtime by src/data/google-reviews.ts.
+# Each server keeps its own copy; tracking it would make git pull conflict.
+/data/
