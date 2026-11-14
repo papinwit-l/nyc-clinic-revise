@@ -10,7 +10,7 @@ export const DOCTORS: Doctor[] = [
     fullNameTh: "แพทย์หญิงอิสรีย์ เมืองมณี",
     specialty: "Nose Thread Lift · Facial Design",
     specialtyTh: "ร้อยไหมจมูก · ปรับรูปหน้า",
-    experience: "20+ yrs · 40,000+ cases",
+    experience: "20+ yrs · 50,000+ cases",
     credentials: [
       {
         en: "Nose Thread Lifting Specialist",
@@ -24,17 +24,17 @@ export const DOCTORS: Doctor[] = [
         en: "Aesthetic Dermatology",
         th: "ชำนาญการด้านผิวพรรณความงาม Aesthetic",
       },
-      // "20+ years" and "40,000+ cases" were also listed here. Removed Oct 2026:
-      // the bio and the stats directly above already say both.
+      // "20+ years" and "50,000+ cases" are not repeated here: the bio and the
+      // stats above already say both. Figures confirmed by Dr. Jing, Nov 2026.
     ],
     services: ["nose-thread-lift", "facial-thread-lift", "facial-design"],
     featured: true,
     // Placeholder bio — rephrased from credential bullets on nycclinic.net/doctor/.
     // Nothing invented. Flag for client edit/approval before final build.
     bioEn:
-      "Dr. Jing specializes in nose thread lift and facial design, with over 20 years of experience in aesthetic medicine and more than 40,000 documented nose thread lift cases performed to date.",
+      "Dr. Jing specializes in nose thread lift and facial design, with over 20 years of experience in aesthetic medicine and more than 50,000 documented nose thread lift cases performed to date.",
     bioTh:
-      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 20 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 40,000 เคส",
+      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 20 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 50,000 เคส",
   },
   {
     slug: "dr-beer",

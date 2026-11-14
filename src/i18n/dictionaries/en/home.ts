@@ -14,7 +14,7 @@ const home = {
   about: {
     // Quote is DRAFT — pending Dr. Jing's approval (it's attributed to her).
     quote:
-      "Every face is unique — so nose thread lift takes real experience, from a specialist of more than 15 years.",
+      "Every face is unique — so nose thread lift takes real experience, from a specialist of more than 20 years.",
     quoteName: "Dr. Jing (Isreey Muangmanee, M.D.)",
     quoteRole:
       "Lead Specialist · Pioneer of NYC Clinic's semi-surgical nose thread technique",
@@ -40,7 +40,7 @@ const home = {
     title: "Nose Thread Lift",
     subtitle: "Semi-Surgery Nose Thread Technique",
     description:
-      "An exclusive technique pioneered by Dr. Jing, Thailand's first nose thread specialist, with over 15 years of experience and more than 10,000 cases — achieving natural-looking results without surgery.",
+      "An exclusive technique pioneered by Dr. Jing, Thailand's first nose thread specialist, with over 20 years of experience and more than 50,000 cases — achieving natural-looking results without surgery.",
     benefits: [
       "Semi-surgery technique — natural-looking results",
       "Quick recovery, minimal downtime",

@@ -33,7 +33,7 @@ export default function SignatureSpotlight({
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[var(--color-primary)] to-transparent pt-16 pb-6 px-6">
-              <span className="badge">10,000+ Cases</span>
+              <span className="badge">50,000+ Cases</span>
             </div>
           </div>
 

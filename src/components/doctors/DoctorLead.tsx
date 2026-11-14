@@ -120,9 +120,8 @@ export default function DoctorLead({ doctor, t, locale }: Props) {
             : (doctor.bioEn ?? doctor.specialty)}
         </p>
 
-        {/* TODO: 15+/10,000+ are hardcoded to match the Trust Bar. The
-            doctor record's `experience` field says "20+ yrs · 40,000+ cases" —
-            one of the two is wrong and marketing owes an answer. */}
+        {/* 20+ years / 50,000+ nose thread cases — confirmed by Dr. Jing,
+            Nov 2026. Same figures as the homepage Trust Bar. */}
         <div className="flex items-center gap-8 mt-7">
           <div>
             <p

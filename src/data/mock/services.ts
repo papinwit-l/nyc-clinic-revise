@@ -65,9 +65,8 @@
 //   (20 minutes, 2 years or more). These are clinical claims: marketing and
 //   Dr. Jing should confirm the real figures before launch.
 //
-// ⚠ DR. JING'S NUMBERS DIFFER AGAIN. That page says 20+ years / 40,000+ cases
-//   in one place and 10+ years / 10,000 cases in another; the homepage says
-//   15+ / 10,000. Three different sets. Not used here, but it needs settling.
+// ✓ DR. JING'S NUMBERS — SETTLED Nov 2026: 20+ years / 50,000+ nose thread
+//   cases, confirmed by Dr. Jing. (The old site had three different sets.)
 //
 // OTHER OPEN ITEMS
 // - No prices anywhere. The brand guide's service-card pattern specifies
