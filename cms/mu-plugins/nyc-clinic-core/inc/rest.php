@@ -116,6 +116,12 @@ add_action(
 							case 'boolean':
 								$data[ $name ] = (bool) (int) get_post_meta( $post->ID, $name, true );
 								break;
+							case 'wysiwyg':
+								// The visual editor stores paragraphs as blank lines and
+								// leaves <p> to display time (wpautop), which REST skips.
+								$html          = (string) get_post_meta( $post->ID, $name, true );
+								$data[ $name ] = '' === trim( $html ) ? '' : wpautop( $html );
+								break;
 						}
 					}
 					$response->set_data( $data );
@@ -126,6 +132,26 @@ add_action(
 			);
 		}
 	}
+);
+
+// ── Blog posts: featured image + category, resolved ─────────────────────────
+// Core REST gives only IDs (featured_media, categories); resolving them here
+// saves the frontend a media and a categories request per list.
+add_filter(
+	'rest_prepare_post',
+	static function ( WP_REST_Response $response, WP_Post $post ) {
+		$data                   = $response->get_data();
+		$data['featured_image'] = nyc_image( (int) get_post_thumbnail_id( $post ) );
+		$terms                  = get_the_terms( $post, 'category' );
+		$data['category_slug']  = is_array( $terms ) && $terms ? $terms[0]->slug : '';
+		// 'th' | 'en' | 'both' — which languages are complete (title + text).
+		// Lets list views pick a language without fetching every article body.
+		$data['languages']      = nyc_post_language( $post->ID );
+		$response->set_data( $data );
+		return $response;
+	},
+	20,
+	2
 );
 
 // ── /nyc/v1/site ────────────────────────────────────────────────────────────

@@ -13,6 +13,8 @@ const blog = {
   back: "← บทความทั้งหมด",
   minRead: "อ่าน {n} นาที",
   thaiOnly: "",
+  // Shown on /th when an article has no Thai version.
+  englishOnly: "บทความนี้มีเฉพาะภาษาอังกฤษในขณะนี้",
   relatedLabel: "Read next",
   relatedHeading: "บทความอื่น ๆ",
   // Shared CTA at the foot of every article — see ArticleCTA.

@@ -6,7 +6,10 @@
  * swapping this file for a WP fetch changes nothing in ArticleBody.
  *
  * `title_en` / `excerpt_en` / `content_en` are optional. A post without them
- * is served in Thai on /en as well — see resolve() in data/posts.ts.
+ * is served in Thai on /en as well — see langFor() in data/posts.ts.
+ *
+ * Used only when WP_API_URL isn't set (local development without the CMS).
+ * The live articles are in WordPress.
  */
 
 export type RawPost = {

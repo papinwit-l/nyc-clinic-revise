@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
         hostname: "loremflickr.com",
         pathname: "/**",
       },
+      // WordPress Media (articles, and later doctors, services, cases).
+      {
+        protocol: "https",
+        hostname: "cms.nyc-clinic.com",
+        pathname: "/wp-content/uploads/**",
+      },
     ],
     unoptimized: true,
   },

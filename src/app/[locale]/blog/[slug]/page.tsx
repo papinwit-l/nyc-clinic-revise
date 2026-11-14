@@ -37,9 +37,10 @@ export async function generateMetadata({
   const post = await getPostBySlug(locale, slug);
   if (!post) return {};
 
-  // A Thai-only article on /en is the same document as /th — point the
-  // canonical at /th so the two URLs don't compete.
-  const canonicalLocale = post.lang === "th" ? "th" : locale;
+  // The canonical is the language the article is shown in. An article that
+  // exists in only one language is the same document on /th and /en, so both
+  // URLs point at that language's and don't compete.
+  const canonicalLocale = post.lang;
 
   return {
     title: `${post.title} — NYC Clinic`,
@@ -78,7 +79,13 @@ export default async function BlogPostPage({
   const standfirstFont = textTH
     ? "var(--font-thai-serif)"
     : "var(--font-accent)";
-  const fallbackNote = locale !== post.lang ? t.blog.thaiOnly : "";
+  // Shown when the article isn't available in this page's language.
+  const fallbackNote =
+    locale === post.lang
+      ? ""
+      : post.lang === "th"
+        ? t.blog.thaiOnly
+        : t.blog.englishOnly;
 
   return (
     <article>

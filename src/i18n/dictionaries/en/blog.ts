@@ -14,6 +14,8 @@ const blog = {
   minRead: "{n} min read",
   // Shown on /en when an article has no English version.
   thaiOnly: "This article is currently available in Thai only.",
+  // Shown on /th when an article has no Thai version — never on /en.
+  englishOnly: "",
   relatedLabel: "Read next",
   relatedHeading: "More articles",
   // Shared CTA at the foot of every article — see ArticleCTA.
