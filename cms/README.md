@@ -20,6 +20,7 @@ cms/
 ```
 
 Tested on WordPress 7.0.1, Pods 3.3.9, Simple Custom Post Order 2.8, PHP 8.3.
+Live server: WordPress 7.1.4, PHP 8.3.36.
 
 ---
 
@@ -76,18 +77,24 @@ Install and activate from **Plugins → Add New**:
 Delete Akismet and Hello Dolly.
 
 ### 1.6 Deploy the mu-plugin
-Copy the **contents** of `cms/mu-plugins/` into `wp-content/mu-plugins/` (create
-the folder if it isn't there):
+Copy the **contents** of `cms/mu-plugins/` into `wp-content/mu-plugins/`
+(create the folder if it isn't there). The CMS is its own webspace, so the
+folder is `/var/www/vhosts/cms.nyc-clinic.com/httpdocs/wp-content/mu-plugins/`.
+
+**Easiest — Plesk File Manager:** zip the two items (`nyc-clinic-core.php` and
+the `nyc-clinic-core/` folder), upload the zip into `mu-plugins`, use the row
+menu → **Extract Files**, then delete the zip. Files extracted this way get the
+right owner automatically.
+
+**Or rsync over SSH**, from the repo root:
 
 ```bash
-# from the repo root, on your machine
 rsync -av --delete cms/mu-plugins/ \
-  <ssh-user>@server1.nyc-clinic.com:/var/www/vhosts/nyc-clinic.com/cms.nyc-clinic.com/wp-content/mu-plugins/
+  root@server1.nyc-clinic.com:/var/www/vhosts/cms.nyc-clinic.com/httpdocs/wp-content/mu-plugins/
 ```
 
-Check the path in Plesk: it is the subdomain's *Document root*. Then fix ownership
-so PHP can read the files. Plesk's *Repair* function does this, or run
-`chown -R <subscription-user>:psacln wp-content/mu-plugins`.
+then fix ownership so PHP can read them (Plesk's *Repair*, or
+`chown -R nycftpuser:psacln` on that folder).
 
 After the first deploy, the Plugins screen shows **Must-Use → NYC Clinic — Core**.
 On the next page load it creates the Clinic Editor role, the Guides / Tips / News
@@ -160,7 +167,18 @@ English titles are the fields below it.
 When `NYC_CORE_VERSION` in `nyc-clinic-core.php` changes, the role, categories
 and drag-sort settings are re-applied on the next load.
 
-## 5. Revalidation contract (for the Next.js side)
+## 5. Next.js environment
+
+```
+WP_API_URL=https://cms.nyc-clinic.com/wp-json
+REVALIDATE_SECRET=<same value as NYC_REVALIDATE_SECRET in wp-config.php>
+```
+
+Without `WP_API_URL` the site runs on its built-in defaults (local development
+without the CMS). With it, a fetch failure throws, so ISR keeps serving the
+last good page rather than an empty one.
+
+## 6. Revalidation contract (for the Next.js side)
 
 On every relevant save the CMS sends one request:
 

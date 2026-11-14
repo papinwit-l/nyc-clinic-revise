@@ -5,8 +5,9 @@
  * refresh.
  *
  * Changes are collected during the request and sent ONCE at shutdown (a save
- * can touch several hooks). The call is non-blocking: if Next.js is down, the
- * editor's save still succeeds and the hourly revalidate catches up.
+ * can touch several hooks). From wp-admin the call is non-blocking: if Next.js
+ * is down, the editor's save still succeeds and the hourly revalidate catches
+ * up.
  *
  * Tags are the post type names, plus "site" for the Page Manage screens. The
  * Next.js side tags each fetch the same way (src/lib/wp.ts).
@@ -111,7 +112,9 @@ add_action(
 		$response = wp_remote_post(
 			NYC_REVALIDATE_URL,
 			[
-				'blocking' => false,
+				// Fire-and-forget from wp-admin. Under WP-CLI (imports, scripts) the
+				// process exits at once and would drop an unsent request, so wait.
+				'blocking' => defined( 'WP_CLI' ) && WP_CLI,
 				'timeout'  => 2,
 				'headers'  => [
 					'Content-Type'        => 'application/json',
