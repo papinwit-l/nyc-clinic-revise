@@ -93,53 +93,6 @@
        "wysiwyg_allow_shortcode": "0"
       }
      ]
-    },
-    {
-     "name": "post_seo",
-     "label": "SEO",
-     "description": "",
-     "fields": [
-      {
-       "name": "seo_title_th",
-       "label": "SEO title (TH)",
-       "type": "text",
-       "description": "Optional. Falls back to the title.",
-       "required": "0",
-       "text_max_length": "70"
-      },
-      {
-       "name": "seo_title_en",
-       "label": "SEO title (EN)",
-       "type": "text",
-       "description": "",
-       "required": "0",
-       "text_max_length": "70"
-      },
-      {
-       "name": "seo_desc_th",
-       "label": "SEO description (TH)",
-       "type": "paragraph",
-       "description": "Optional. Falls back to the excerpt. About 150 characters.",
-       "required": "0",
-       "paragraph_allow_html": "0",
-       "paragraph_wpautop": "0",
-       "paragraph_wptexturize": "0",
-       "paragraph_convert_chars": "0",
-       "paragraph_max_length": "0"
-      },
-      {
-       "name": "seo_desc_en",
-       "label": "SEO description (EN)",
-       "type": "paragraph",
-       "description": "",
-       "required": "0",
-       "paragraph_allow_html": "0",
-       "paragraph_wpautop": "0",
-       "paragraph_wptexturize": "0",
-       "paragraph_convert_chars": "0",
-       "paragraph_max_length": "0"
-      }
-     ]
     }
    ]
   },
@@ -227,8 +180,8 @@
        "name": "category",
        "label": "Category",
        "type": "pick",
-       "description": "",
-       "required": "1",
+       "description": "Which group it appears under on /faq. Required for the question to show on /faq; leave empty for a question shown only on service pages.",
+       "required": "0",
        "pick_object": "custom-simple",
        "pick_custom": "nose|Nose thread lift\nface|Face thread lift\nsafety|Safety & side effects\ncare|Preparation & aftercare",
        "pick_format_type": "single",
@@ -788,22 +741,6 @@
        "text_max_length": "255"
       },
       {
-       "name": "subtitle_th",
-       "label": "Subtitle (TH)",
-       "type": "text",
-       "description": "",
-       "required": "0",
-       "text_max_length": "255"
-      },
-      {
-       "name": "subtitle_en",
-       "label": "Subtitle (EN)",
-       "type": "text",
-       "description": "",
-       "required": "0",
-       "text_max_length": "255"
-      },
-      {
        "name": "desc_th",
        "label": "Card line (TH)",
        "type": "text",
@@ -990,53 +927,6 @@
        "repeatable": "1",
        "repeatable_add_new_label": "Add line",
        "repeatable_format": "default"
-      }
-     ]
-    },
-    {
-     "name": "service_seo",
-     "label": "SEO",
-     "description": "",
-     "fields": [
-      {
-       "name": "seo_title_th",
-       "label": "SEO title (TH)",
-       "type": "text",
-       "description": "Optional. Falls back to the title.",
-       "required": "0",
-       "text_max_length": "70"
-      },
-      {
-       "name": "seo_title_en",
-       "label": "SEO title (EN)",
-       "type": "text",
-       "description": "",
-       "required": "0",
-       "text_max_length": "70"
-      },
-      {
-       "name": "seo_desc_th",
-       "label": "SEO description (TH)",
-       "type": "paragraph",
-       "description": "Optional. About 150 characters.",
-       "required": "0",
-       "paragraph_allow_html": "0",
-       "paragraph_wpautop": "0",
-       "paragraph_wptexturize": "0",
-       "paragraph_convert_chars": "0",
-       "paragraph_max_length": "0"
-      },
-      {
-       "name": "seo_desc_en",
-       "label": "SEO description (EN)",
-       "type": "paragraph",
-       "description": "",
-       "required": "0",
-       "paragraph_allow_html": "0",
-       "paragraph_wpautop": "0",
-       "paragraph_wptexturize": "0",
-       "paragraph_convert_chars": "0",
-       "paragraph_max_length": "0"
       }
      ]
     }

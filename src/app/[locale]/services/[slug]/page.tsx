@@ -39,8 +39,8 @@ import { getSiteSettings } from "@/data/site-settings";
  * top of src/data/services.ts — that decision is marked for revisiting.
  */
 
-export function generateStaticParams() {
-  return getServiceSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getServiceSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

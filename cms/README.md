@@ -148,13 +148,73 @@ with Bot Fight Mode), add a WAF skip rule for `cms.nyc-clinic.com/wp-json/*`.
 | **Services** | Parent = category; set a Parent to make a treatment page |
 | **Doctors · Awards** | Drag to order |
 | **Cases · Reveals** | Before & after; categories under Cases → Categories (drag to order) |
-| **FAQ** | Drag to order; tick services to show a question on those pages too |
+| **FAQ** | Drag to order. Tick services to show a question on those pages; untick "Show on FAQ page" for service-only questions. A question needs a **Category** to appear on /faq |
 
 The title box at the top of every item is the **internal name in English**. It
 makes the web address (slug), so keep it short and English. The real Thai and
 English titles are the fields below it.
 
 ---
+
+## 3a. ⚠ Content warnings — read before editing Services
+
+The service copy was rebuilt from the old site in Sept–Oct 2026, and some of
+the old copy was **left out on purpose**. Don't restore it from nycclinic.net
+without checking with the clinic: Thai rules on advertising medical facilities
+forbid claims to treat diseases and outcome guarantees.
+
+**Claims deliberately removed**
+- **Placenta:** the old page claimed help with autoimmune disease, HIV/AIDS,
+  tuberculosis, diabetes complications, osteoporosis, dementia, migraine,
+  menopause/andropause symptoms and erectile dysfunction. Only the skin
+  benefits were kept. These must not come back.
+- **Botox:** migraine and office-syndrome treatment (therapeutic claims).
+- **Vitamin drip:** preventing colds and allergies; nourishing brain, nerves,
+  eyes and liver.
+- **Blepharoplasty:** "crease lasts 3+ years, no drop, no revision" and a
+  quality guarantee.
+- **SMAS-X:** a "30% lift" figure and an absolute "no pain, no swelling, no
+  redness".
+
+**Still to resolve with the clinic before launch**
+- **SMAS-X vs HIFU:** the supplied copy describes a Japanese HIFU machine,
+  while the service says SMAS-X uses Spanish technology.
+- **Nose thread figures:** the old site gives the procedure time as 15–30
+  minutes and results as anything from 1 to 5 years. The site uses the most
+  conservative values (about 20 minutes, 2 years or more) until Dr. Jing
+  confirms.
+- **Dr. Jing's experience:** three different sets of numbers across the old site.
+- **Prices:** none yet.
+- **English text:** drafted, not yet reviewed by a fluent speaker.
+
+The full notes are at the top of `src/data/mock/services.ts`.
+
+### Possible duplicate questions (for marketing)
+The import kept every question as it was. These service questions are close
+to a general FAQ but have **different answers**. Decide whether to merge them:
+in that case delete the service copy, then on the general question tick the
+service under **Services**.
+
+| Service question | Similar general question |
+|---|---|
+| Nose thread — "ร้อยไหมจมูกเจ็บไหม" | "ร้อยไหมจมูกเจ็บไหม? ต้องพักฟื้นกี่วัน?" |
+| Nose thread — "ต้องพักฟื้นไหม" | "การร้อยไหมจมูกต้องพักฟื้นไหม?" |
+| Facial thread — "ร้อยไหมอันตรายไหม" | "ร้อยไหมอันตรายไหม? ปลอดภัยหรือไม่?" |
+
+## 3b. One-time import (Services + FAQ, Nov 2026)
+
+`cms/tools/import-services-faq.php` moved the services and FAQs that used to be
+in the code into WordPress. It runs from a package (`nyc-import.zip`: the
+script, `import.json` and the service images) that is built from the codebase.
+
+1. Upload `nyc-import.zip` to the CMS webspace's **home folder** (one level
+   above `httpdocs`, so it's never reachable from the web) and extract it there.
+2. Plesk → WordPress → **WP-CLI**: `eval-file ../nyc-import/import.php`
+3. Check wp-admin → Services (19) and FAQ (54), then delete the `nyc-import` folder.
+
+Running it again is safe: entries that already exist are skipped, so edits
+made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
+overwrites them with the imported content instead.
 
 ## 4. Changing the content model
 
