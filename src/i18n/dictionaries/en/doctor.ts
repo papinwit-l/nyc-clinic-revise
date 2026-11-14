@@ -4,7 +4,7 @@ const doctor = {
     heading: "Meet the Doctors",
     subtitle: "Our Specialists",
     description:
-      "A team of board-certified specialists with over 15 years of experience, ready to consult and care for you.",
+      "A team of board-certified specialists with over 20 years of experience, ready to consult and care for you.",
   },
   team: {
     label: "Our Team",
