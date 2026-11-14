@@ -22,8 +22,7 @@ import InstagramFeed from "@/components/home/InstagramFeed";
 import { getInstagramPosts } from "@/data/instagram";
 import GoogleReviews from "@/components/home/GoogleReviews";
 import { getGoogleReviews } from "@/data/google-reviews";
-
-const LINE_URL = "https://lin.ee/7oJgymx";
+import { getSiteSettings } from "@/data/site-settings";
 
 /**
  * One service category.
@@ -71,7 +70,7 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, reveals, promos, igPosts, doctors, reviews] = await Promise.all(
+  const [cases, reveals, promos, igPosts, doctors, reviews, site] = await Promise.all(
     [
       getCasesForService(locale, slug, 3),
       getRevealsForService(locale, slug),
@@ -79,6 +78,7 @@ export default async function ServiceDetailPage({
       getInstagramPosts(8),
       getDoctors(),
       getGoogleReviews(locale),
+      getSiteSettings(),
     ],
   );
 
@@ -100,6 +100,7 @@ export default async function ServiceDetailPage({
         heading={service.title}
         description={service.summary}
         locale={locale}
+        lineUrl={site.lineUrl}
       />
       <TrustBar t={t.home.trust} locale={locale} />
 
@@ -559,7 +560,7 @@ export default async function ServiceDetailPage({
             {t.services.detail.consult}
           </p>
           <a
-            href={LINE_URL}
+            href={site.lineUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-line mt-5 inline-flex"

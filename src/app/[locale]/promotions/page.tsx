@@ -3,7 +3,7 @@ import Link from "next/link";
 import { daysLeft, getActivePromotions } from "@/data/promotions";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
-import { LINE_URL } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import PageHeader from "@/components/shared/PageHeader";
 import PromoBannerImage from "@/components/promotions/PromoBannerImage";
@@ -49,6 +49,7 @@ export default async function PromotionsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const site = await getSiteSettings();
   const [t, promos] = await Promise.all([
     getDictionary(locale as Locale),
     getActivePromotions(locale),
@@ -86,7 +87,7 @@ export default async function PromotionsPage({
                 {p.empty.text}
               </p>
               <a
-                href={LINE_URL}
+                href={site.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={lineButton}
@@ -179,7 +180,7 @@ export default async function PromotionsPage({
 
                       <div className="flex flex-col gap-3 md:items-end">
                         <a
-                          href={LINE_URL}
+                          href={site.lineUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className={lineButton}

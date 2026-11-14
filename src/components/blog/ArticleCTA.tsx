@@ -1,5 +1,5 @@
 import { LineIcon } from "@/components/shared/SocialIcons";
-import { LINE_ID, LINE_URL } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 
 /**
  * Shared LINE call-to-action at the foot of EVERY article. One component, copy
@@ -14,7 +14,8 @@ type Props = {
   locale: string;
 };
 
-export default function ArticleCTA({ t, locale }: Props) {
+export default async function ArticleCTA({ t, locale }: Props) {
+  const site = await getSiteSettings();
   const isTH = locale === "th";
   const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
@@ -36,14 +37,14 @@ export default function ArticleCTA({ t, locale }: Props) {
         </p>
       </div>
       <a
-        href={LINE_URL}
+        href={site.lineUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-[0.95rem] font-medium px-7 py-3.5 whitespace-nowrap transition-colors"
         style={{ fontFamily: bodyFont }}
       >
         <LineIcon className="w-5 h-5" />
-        {t.button.replace("{line}", LINE_ID)}
+        {t.button.replace("{line}", site.lineId)}
       </a>
     </aside>
   );

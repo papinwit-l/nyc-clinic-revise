@@ -9,10 +9,9 @@ import PageHeader from "@/components/shared/PageHeader";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import InView from "@/components/shared/InView";
 import SectionIntro from "@/components/shared/SectionIntro";
-
-const LINE_URL = "https://lin.ee/7oJgymx";
 import FacilityGallery from "@/components/about/FacilityGallery";
 import AwardsShelf from "@/components/shared/AwardsShelf";
+import { getSiteSettings } from "@/data/site-settings";
 
 export async function generateMetadata({
   params,
@@ -33,7 +32,10 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getDictionary(locale as Locale);
+  const [t, site] = await Promise.all([
+    getDictionary(locale as Locale),
+    getSiteSettings(),
+  ]);
   const isTH = locale === "th";
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
@@ -226,7 +228,7 @@ export default async function AboutPage({
             />
           </div>
           <a
-            href={LINE_URL}
+            href={site.lineUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-line mt-6 inline-flex"

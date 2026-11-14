@@ -1,4 +1,4 @@
-import { LINE_URL } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 import Image from "next/image";
 import Link from "next/link";
 import { LineIcon } from "@/components/shared/SocialIcons";
@@ -15,13 +15,14 @@ type Props = {
   total?: number;
 };
 
-export default function PromotionsBanner({
+export default async function PromotionsBanner({
   t,
   locale,
   data,
   total = 1,
 }: Props) {
   if (!data) return null;
+  const site = await getSiteSettings();
   // Validity is decided by the data layer (getActivePromotion), in Bangkok
   // time. The UTC comparison that was here hid a promo at 07:00 on its last
   // day.
@@ -129,7 +130,7 @@ export default function PromotionsBanner({
               </Link>
             )} */}
             <a
-              href={LINE_URL}
+              href={site.lineUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-white text-[var(--color-primary)] px-6 py-3 text-[0.8rem] font-semibold tracking-[0.1em] uppercase hover:bg-[var(--color-accent-pale)] transition-colors"

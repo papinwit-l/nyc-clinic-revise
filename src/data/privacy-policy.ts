@@ -1,4 +1,4 @@
-import { CLINIC, LINE_ID, PHONE } from "@/lib/site";
+import type { SiteSettings } from "@/lib/site";
 
 /**
  * Privacy policy text (TH + EN), drafted Oct 2026 against Thailand's Personal
@@ -15,17 +15,18 @@ import { CLINIC, LINE_ID, PHONE } from "@/lib/site";
  *   - retention periods
  *   - analytics / ad-tracking tools, if any are added to the site
  *
- * Contact details (address, phone, LINE) come from lib/site.ts so they can't
- * drift from the rest of the site.
+ * Contact details (address, phone, LINE) come from Site Settings, passed in by
+ * data/legal.ts, so they can't drift from the rest of the site.
  */
 
 const P = (s: string) => `<em>[${s}]</em>`;
 
-export function privacyPolicyHtml(locale: string): string {
-  return locale === "th" ? th() : en();
+export function privacyPolicyHtml(locale: string, site: SiteSettings): string {
+  return locale === "th" ? th(site) : en(site);
 }
 
-function th(): string {
+function th(site: SiteSettings): string {
+  const { clinic: CLINIC, phone: PHONE, lineId: LINE_ID } = site;
   return `
 <p>${P("ชื่อนิติบุคคลผู้ดำเนินกิจการ")} ผู้ดำเนินกิจการ ${CLINIC.name} (“คลินิก” หรือ “เรา”) ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของคุณ นโยบายนี้อธิบายว่าเราเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของคุณอย่างไร ทั้งเมื่อคุณใช้เว็บไซต์นี้ ติดต่อเราผ่านช่องทางออนไลน์ และเข้ารับบริการที่คลินิก ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562</p>
 
@@ -103,7 +104,8 @@ function th(): string {
 `;
 }
 
-function en(): string {
+function en(site: SiteSettings): string {
+  const { clinic: CLINIC, phone: PHONE, lineId: LINE_ID } = site;
   return `
 <p>${P("Legal name of the operating entity")}, which operates ${CLINIC.name} (“the clinic”, “we”), is committed to protecting your personal data. This policy explains how we collect, use and disclose your personal data when you use this website, contact us online, and receive treatment at the clinic, in accordance with Thailand's Personal Data Protection Act B.E. 2562 (2019).</p>
 

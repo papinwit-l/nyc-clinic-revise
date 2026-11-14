@@ -1,5 +1,5 @@
 import { LineIcon } from "@/components/shared/SocialIcons";
-import { LINE_URL } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 
 /**
  * Closing LINE call-to-action band: rule – line of text – rule, then the LINE
@@ -17,7 +17,8 @@ type Props = {
   locale: string;
 };
 
-export default function ConsultBand({ text, button, locale }: Props) {
+export default async function ConsultBand({ text, button, locale }: Props) {
+  const site = await getSiteSettings();
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
@@ -52,7 +53,7 @@ export default function ConsultBand({ text, button, locale }: Props) {
           />
         </div>
         <a
-          href={LINE_URL}
+          href={site.lineUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-line mt-6 inline-flex"

@@ -1,5 +1,6 @@
 import { privacyPolicyHtml } from "./privacy-policy";
 import { termsHtml } from "./terms";
+import { getSiteSettings } from "./site-settings";
 
 /**
  * Legal pages — /privacy-policy and /terms. WP static pages when the CMS is
@@ -36,14 +37,15 @@ export async function getLegalPage(
   slug: LegalSlug,
 ): Promise<LegalPage> {
   const th = locale === "th";
+  const site = await getSiteSettings();
   return {
     slug,
     title: th ? TITLES[slug].th : TITLES[slug].en,
     updated: "2026-10-16",
     html:
       slug === "privacy-policy"
-        ? privacyPolicyHtml(locale)
-        : termsHtml(locale, `/${locale}/privacy-policy`),
+        ? privacyPolicyHtml(locale, site)
+        : termsHtml(locale, `/${locale}/privacy-policy`, site),
     draft: true,
   };
 }

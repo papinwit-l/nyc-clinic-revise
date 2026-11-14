@@ -1,20 +1,22 @@
 "use client";
 
-import { LINE_ID, LINE_URL, PHONE, PHONE_HREF } from "@/lib/site";
+import type { SiteSettings } from "@/lib/site";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Phone, MessageCircle, X, Minus } from "lucide-react";
 import { LineIcon, TiktokIcon } from "@/components/shared/SocialIcons";
 
-const TIKTOK_URL = "https://www.tiktok.com/@nycclinic";
-
 type WidgetState = "collapsed" | "expanded" | "minimized";
 
 type Props = {
   locale: string;
+  /** From getSiteSettings() in the layout — this is a client component. */
+  site: SiteSettings;
 };
 
-export default function ContactWidget({ locale }: Props) {
+export default function ContactWidget({ locale, site }: Props) {
+  // "https://www.tiktok.com/@nycclinic" → "@nycclinic"
+  const tiktokHandle = site.social.tiktok.match(/@[^/?#]+/)?.[0] ?? "TikTok";
   const [state, setState] = useState<WidgetState>("collapsed");
   const containerRef = useRef<HTMLDivElement>(null);
   const isTH = locale === "th";
@@ -69,7 +71,7 @@ export default function ContactWidget({ locale }: Props) {
       >
         {/* Phone */}
         <a
-          href={PHONE_HREF}
+          href={site.phoneHref}
           className="group flex items-center gap-3 bg-white pl-4 pr-5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
           style={{ fontFamily: "var(--font-body)" }}
         >
@@ -86,7 +88,7 @@ export default function ContactWidget({ locale }: Props) {
               {isTH ? "โทรหาเรา" : "Call us"}
             </span>
             <span className="text-sm font-semibold text-[var(--color-primary)] tracking-wide">
-              {PHONE}
+              {site.phone}
             </span>
           </span>
         </a>
@@ -94,34 +96,36 @@ export default function ContactWidget({ locale }: Props) {
         {/* TikTok — social discovery channel, below the two direct-contact
             pills. Brand black rather than the palette: a platform pill reads
             as that platform, same reasoning as LINE's green. */}
-        <a
-          href={TIKTOK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-3 bg-[#111111] pl-4 pr-5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
-          style={{ fontFamily: "var(--font-body)" }}
-        >
-          <span className="flex items-center justify-center w-9 h-9 rounded-full bg-white/15 text-white shrink-0">
-            <TiktokIcon className="w-5 h-5" />
-          </span>
-          <span className="flex flex-col">
-            <span
-              className="text-[9px] font-medium tracking-[0.1em] uppercase text-white/70"
-              style={{
-                fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
-              }}
-            >
-              {isTH ? "ดูผลงานจริง" : "See our work"}
+        {site.social.tiktok && (
+          <a
+            href={site.social.tiktok}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-3 bg-[#111111] pl-4 pr-5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            <span className="flex items-center justify-center w-9 h-9 rounded-full bg-white/15 text-white shrink-0">
+              <TiktokIcon className="w-5 h-5" />
             </span>
-            <span className="text-sm font-semibold text-white tracking-wide">
-              @nycclinic
+            <span className="flex flex-col">
+              <span
+                className="text-[9px] font-medium tracking-[0.1em] uppercase text-white/70"
+                style={{
+                  fontFamily: isTH ? "var(--font-thai-body)" : "var(--font-body)",
+                }}
+              >
+                {isTH ? "ดูผลงานจริง" : "See our work"}
+              </span>
+              <span className="text-sm font-semibold text-white tracking-wide">
+                {tiktokHandle}
+              </span>
             </span>
-          </span>
-        </a>
+          </a>
+        )}
 
         {/* LINE */}
         <a
-          href={LINE_URL}
+          href={site.lineUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="group flex items-center gap-3 bg-[var(--color-line)] pl-4 pr-5 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
@@ -140,7 +144,7 @@ export default function ContactWidget({ locale }: Props) {
               {isTH ? "แอดไลน์ปรึกษาฟรี" : "Free consultation"}
             </span>
             <span className="text-sm font-semibold text-white tracking-wide">
-              {LINE_ID}
+              {site.lineId}
             </span>
           </span>
         </a>

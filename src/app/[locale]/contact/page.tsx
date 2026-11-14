@@ -3,14 +3,7 @@ import Link from "next/link";
 import { getFeaturedFaqs } from "@/data/faq";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
-import {
-  CLINIC,
-  LINE_ID,
-  LINE_URL,
-  PHONE,
-  PHONE_HREF,
-  SOCIAL_URLS,
-} from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -33,17 +26,19 @@ import FaqAccordion from "@/components/shared/FaqAccordion";
  * No closing CTA band either — LINE is the first thing on the page and the
  * floating widget is always present; a third ask would be furniture.
  *
- * Every value comes from lib/site.ts. Nothing about the clinic is typed here.
+ * Every value comes from Site Settings (getSiteSettings). Nothing about the
+ * clinic is typed here.
  * Sharp corners throughout: structural content (radius policy).
  */
 
+// An account left blank in Site Settings is skipped.
 const SOCIALS = [
-  { label: "Facebook", href: SOCIAL_URLS.facebook, Icon: FacebookIcon },
-  { label: "Instagram", href: SOCIAL_URLS.instagram, Icon: InstagramIcon },
-  { label: "TikTok", href: SOCIAL_URLS.tiktok, Icon: TiktokIcon },
-  { label: "LINE", href: LINE_URL, Icon: LineIcon },
-  { label: "YouTube", href: SOCIAL_URLS.youtube, Icon: YoutubeIcon },
-];
+  { label: "Facebook", key: "facebook", Icon: FacebookIcon },
+  { label: "Instagram", key: "instagram", Icon: InstagramIcon },
+  { label: "TikTok", key: "tiktok", Icon: TiktokIcon },
+  { label: "LINE", key: "line", Icon: LineIcon },
+  { label: "YouTube", key: "youtube", Icon: YoutubeIcon },
+] as const;
 
 export async function generateMetadata({
   params,
@@ -64,10 +59,16 @@ export default async function ContactPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const [t, faqs] = await Promise.all([
+  const [t, faqs, site] = await Promise.all([
     getDictionary(locale as Locale),
     getFeaturedFaqs(locale),
+    getSiteSettings(),
   ]);
+  const CLINIC = site.clinic;
+  const socials = SOCIALS.map((s) => ({
+    ...s,
+    href: s.key === "line" ? site.lineUrl : site.social[s.key],
+  })).filter((s) => s.href);
   const c = t.contact;
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
@@ -97,7 +98,7 @@ export default async function ContactPage({
                 className="text-[1.75rem] leading-tight text-[var(--color-accent-pale)] pt-3"
                 style={{ fontFamily: enFont, fontWeight: 500 }}
               >
-                {LINE_ID}
+                {site.lineId}
               </p>
               <p
                 className={`pt-3 text-[0.95rem] text-[var(--color-on-primary-muted)] ${
@@ -109,7 +110,7 @@ export default async function ContactPage({
               </p>
               <div className="mt-auto pt-7">
                 <a
-                  href={LINE_URL}
+                  href={site.lineUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`inline-flex items-center justify-center gap-2.5 w-full sm:w-auto bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 text-sm font-semibold transition-colors ${
@@ -127,11 +128,11 @@ export default async function ContactPage({
             <div className="bg-[var(--color-surface-white)] border border-[var(--color-border-accent)] p-8 flex flex-col">
               <span className="section-label">{c.phone.label}</span>
               <a
-                href={PHONE_HREF}
+                href={site.phoneHref}
                 className="text-[1.75rem] leading-tight text-[var(--color-primary)] hover:text-[var(--color-accent-dark)] transition-colors pt-3"
                 style={{ fontFamily: enFont, fontWeight: 500 }}
               >
-                {PHONE}
+                {site.phone}
               </a>
               <p
                 className={`pt-3 ${cardText}`}
@@ -220,7 +221,7 @@ export default async function ContactPage({
                   >
                     {c.location.follow}
                   </span>
-                  {SOCIALS.map(({ label, href, Icon }) => (
+                  {socials.map(({ label, href, Icon }) => (
                     <a
                       key={label}
                       href={href}

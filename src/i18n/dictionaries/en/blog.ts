@@ -21,7 +21,7 @@ const blog = {
   cta: {
     heading: "Free consultation on LINE",
     text: "Send us your photos for an initial assessment by our doctors before you visit.",
-    // "{line}" is replaced with LINE_ID from lib/site.ts
+    // "{line}" is replaced with the LINE ID from Site Settings
     button: "Add LINE {line}",
   },
 } as const;

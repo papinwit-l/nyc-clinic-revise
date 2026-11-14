@@ -3,7 +3,7 @@ import { getFaqs } from "@/data/faq";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import type { FaqCategory } from "@/types/faq";
-import { LINE_URL } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import PageHeader from "@/components/shared/PageHeader";
 import SectionIntro from "@/components/shared/SectionIntro";
@@ -46,6 +46,7 @@ export default async function FaqPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const site = await getSiteSettings();
   const [t, faqs] = await Promise.all([
     getDictionary(locale as Locale),
     getFaqs(locale),
@@ -148,7 +149,7 @@ export default async function FaqPage({
           </p>
           <div className="pt-7">
             <a
-              href={LINE_URL}
+              href={site.lineUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={`inline-flex items-center justify-center gap-2.5 bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 text-sm font-semibold transition-colors ${

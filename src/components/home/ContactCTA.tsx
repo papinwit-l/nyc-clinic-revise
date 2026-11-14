@@ -1,4 +1,4 @@
-import { CLINIC, LINE_URL, PHONE, PHONE_HREF, SOCIAL_URLS } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 import Image from "next/image";
 import {
   LineIcon,
@@ -11,30 +11,15 @@ import type { Dictionary } from "@/i18n/get-dictionary";
 import SectionHeader from "@/components/shared/SectionHeader";
 
 
-// Match the Footer's social set + URLs exactly.
+// Match the Footer's social set exactly. LINE comes from the LINE setting; an
+// account left blank in Site Settings is skipped.
 const SOCIALS = [
-  {
-    label: "Facebook",
-    href: SOCIAL_URLS.facebook,
-    Icon: FacebookIcon,
-  },
-  {
-    label: "Instagram",
-    href: SOCIAL_URLS.instagram,
-    Icon: InstagramIcon,
-  },
-  {
-    label: "TikTok",
-    href: SOCIAL_URLS.tiktok,
-    Icon: TiktokIcon,
-  },
-  { label: "LINE", href: LINE_URL, Icon: LineIcon },
-  {
-    label: "YouTube",
-    href: SOCIAL_URLS.youtube,
-    Icon: YoutubeIcon,
-  },
-];
+  { label: "Facebook", key: "facebook", Icon: FacebookIcon },
+  { label: "Instagram", key: "instagram", Icon: InstagramIcon },
+  { label: "TikTok", key: "tiktok", Icon: TiktokIcon },
+  { label: "LINE", key: "line", Icon: LineIcon },
+  { label: "YouTube", key: "youtube", Icon: YoutubeIcon },
+] as const;
 
 type Props = {
   t: Dictionary["home"]["contact"];
@@ -42,7 +27,13 @@ type Props = {
   locale: string;
 };
 
-export default function ContactCTA({ t, tCommon, locale }: Props) {
+export default async function ContactCTA({ t, tCommon, locale }: Props) {
+  const site = await getSiteSettings();
+  const CLINIC = site.clinic;
+  const socials = SOCIALS.map((s) => ({
+    ...s,
+    href: s.key === "line" ? site.lineUrl : site.social[s.key],
+  })).filter((s) => s.href);
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
 
@@ -67,7 +58,7 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
             {/* Primary CTA — rose-gold accent, the section's focal action */}
             <div className="mt-7">
               <a
-                href={LINE_URL}
+                href={site.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 w-full sm:w-auto bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-8 py-4 text-sm font-semibold tracking-[0.12em] uppercase transition-colors"
@@ -82,11 +73,11 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
               >
                 {isTH ? "หรือโทร " : "or call "}
                 <a
-                  href={PHONE_HREF}
+                  href={site.phoneHref}
                   className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] font-medium transition-colors"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
-                  {PHONE}
+                  {site.phone}
                 </a>
               </p>
             </div>
@@ -141,7 +132,7 @@ export default function ContactCTA({ t, tCommon, locale }: Props) {
                 >
                   {isTH ? "ติดตามเรา" : "Follow us"}
                 </span>
-                {SOCIALS.map(({ label, href, Icon }) => (
+                {socials.map(({ label, href, Icon }) => (
                   <a
                     key={label}
                     href={href}

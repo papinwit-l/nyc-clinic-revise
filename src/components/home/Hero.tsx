@@ -1,6 +1,5 @@
 "use client";
 
-import { LINE_URL } from "@/lib/site";
 import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -53,9 +52,11 @@ function phraseWrap(text: string, isTH: boolean) {
 type Props = {
   t: Dictionary["home"]["hero"];
   locale: string;
+  /** From Site Settings — this is a client component. */
+  lineUrl: string;
 };
 
-export default function Hero({ t, locale }: Props) {
+export default function Hero({ t, locale, lineUrl }: Props) {
   const isTH = locale === "th";
   // Server/first client render always renders the slideshow — this
   // avoids any hydration mismatch. The video is only swapped in
@@ -176,7 +177,7 @@ export default function Hero({ t, locale }: Props) {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 sm:mt-10">
           <a
-            href={LINE_URL}
+            href={lineUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-cta w-full sm:w-auto"

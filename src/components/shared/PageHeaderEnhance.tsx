@@ -1,6 +1,6 @@
 "use client";
 
-import { HERO_SLIDES, LINE_URL } from "@/lib/site";
+import { HERO_SLIDES } from "@/lib/site";
 import Image from "next/image";
 import { Fragment, useState, type ReactNode } from "react";
 import HeroLogo from "./HeroLogo";
@@ -32,6 +32,8 @@ type Props = {
   heading: string;
   description?: ReactNode;
   locale: string;
+  /** From Site Settings — this is a client component. */
+  lineUrl: string;
 };
 
 function phraseWrap(text: string, isTH: boolean) {
@@ -53,6 +55,7 @@ export default function PageHeaderEnhance({
   heading,
   description,
   locale,
+  lineUrl,
 }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
@@ -193,7 +196,7 @@ export default function PageHeaderEnhance({
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 sm:mt-10">
           <a
-            href={LINE_URL}
+            href={lineUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-cta w-full sm:w-auto"

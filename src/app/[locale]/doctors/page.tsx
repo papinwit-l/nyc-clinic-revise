@@ -6,7 +6,7 @@ import { LineIcon } from "@/components/shared/SocialIcons";
 import PageHeader from "@/components/shared/PageHeader";
 import DoctorLead from "@/components/doctors/DoctorLead";
 import DoctorTeamCard from "@/components/doctors/DoctorTeamCard";
-import { LINE_URL } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 
 export async function generateMetadata({
   params,
@@ -27,6 +27,7 @@ export default async function DoctorsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const site = await getSiteSettings();
   const t = await getDictionary(locale as Locale);
   const isTH = locale === "th";
 
@@ -119,7 +120,7 @@ export default async function DoctorsPage({
             />
           </div>
           <a
-            href={LINE_URL}
+            href={site.lineUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-line mt-6 inline-flex"

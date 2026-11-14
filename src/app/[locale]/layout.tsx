@@ -10,6 +10,7 @@ import {
 } from "next/font/google";
 import { isValidLocale, locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { getSiteSettings } from "@/data/site-settings";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ContactWidget from "@/components/shared/ContactWidget";
@@ -123,7 +124,7 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const t = await getDictionary(locale);
+  const [t, site] = await Promise.all([getDictionary(locale), getSiteSettings()]);
 
   return (
     <html
@@ -143,7 +144,7 @@ export default async function LocaleLayout({
         <Header locale={locale as Locale} t={t.nav} />
         <main>{children}</main>
         <Footer locale={locale as Locale} t={t.footer} navT={t.nav} />
-        <ContactWidget locale={locale} />
+        <ContactWidget locale={locale} site={site} />
       </body>
     </html>
   );

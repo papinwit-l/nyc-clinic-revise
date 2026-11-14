@@ -1,4 +1,4 @@
-import { LINE_ID, LINE_URL, PHONE_HREF } from "@/lib/site";
+import { getSiteSettings } from "@/data/site-settings";
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import Logo from "@/components/shared/Logo";
@@ -12,28 +12,14 @@ import {
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 
+// URLs come from Site Settings; an account left blank there is skipped. LINE
+// has its own button above, so it isn't repeated here.
 const SOCIALS = [
-  {
-    href: "https://web.facebook.com/nycclinic",
-    icon: FacebookIcon,
-    label: "Facebook",
-  },
-  {
-    href: "https://www.instagram.com/nycclinic/",
-    icon: InstagramIcon,
-    label: "Instagram",
-  },
-  {
-    href: "https://www.tiktok.com/@nycclinic",
-    icon: TiktokIcon,
-    label: "TikTok",
-  },
-  {
-    href: "https://www.youtube.com/user/nycnewyorkclinic",
-    icon: YoutubeIcon,
-    label: "YouTube",
-  },
-];
+  { key: "facebook", icon: FacebookIcon, label: "Facebook" },
+  { key: "instagram", icon: InstagramIcon, label: "Instagram" },
+  { key: "tiktok", icon: TiktokIcon, label: "TikTok" },
+  { key: "youtube", icon: YoutubeIcon, label: "YouTube" },
+] as const;
 
 type Props = {
   locale: Locale;
@@ -41,7 +27,11 @@ type Props = {
   navT: Dictionary["nav"];
 };
 
-export default function Footer({ locale, t, navT }: Props) {
+export default async function Footer({ locale, t, navT }: Props) {
+  const site = await getSiteSettings();
+  const socials = SOCIALS.map((s) => ({ ...s, href: site.social[s.key] })).filter(
+    (s) => s.href,
+  );
   const isTH = locale === "th";
   const l = (path: string) => `/${locale}${path}`;
 
@@ -108,7 +98,7 @@ export default function Footer({ locale, t, navT }: Props) {
 
             <div className="space-y-2 text-sm">
               <a
-                href={PHONE_HREF}
+                href={site.phoneHref}
                 className="flex items-center gap-2 hover:text-white transition-colors"
                 style={{ fontFamily: enFont }}
               >
@@ -116,19 +106,19 @@ export default function Footer({ locale, t, navT }: Props) {
                 088-008-7870
               </a>
               <a
-                href={LINE_URL}
+                href={site.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                 style={{ fontFamily: enFont }}
               >
                 <LineIcon className="w-3.5 h-3.5" />
-                {LINE_ID}
+                {site.lineId}
               </a>
             </div>
 
             <div className="flex items-center gap-4 pt-1">
-              {SOCIALS.map(({ href, icon: Icon, label }) => (
+              {socials.map(({ href, icon: Icon, label }) => (
                 <a
                   key={label}
                   href={href}

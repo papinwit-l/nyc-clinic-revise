@@ -21,6 +21,7 @@ import InstagramFeed from "@/components/home/InstagramFeed";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import ServicesOverview from "@/components/home/ServicesOverview";
 import { getFeaturedReveal } from "@/data/reveal";
+import { getSiteSettings } from "@/data/site-settings";
 
 export default async function HomePage({
   params,
@@ -41,6 +42,7 @@ export default async function HomePage({
     igPosts,
     faqs,
     allFaqs,
+    site,
   ] = await Promise.all([
     getServices(locale),
     getCases(locale, { limit: 6 }),
@@ -52,11 +54,12 @@ export default async function HomePage({
     getInstagramPosts(8),
     getFeaturedFaqs(locale),
     getFaqs(locale),
+    getSiteSettings(),
   ]);
 
   return (
     <>
-      <Hero t={t.home.hero} locale={locale} />
+      <Hero t={t.home.hero} locale={locale} lineUrl={site.lineUrl} />
       <TrustBar t={t.home.trust} locale={locale} />
       <About t={t.home.about} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />

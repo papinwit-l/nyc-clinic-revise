@@ -1,4 +1,4 @@
-import { CLINIC, LINE_ID, PHONE } from "@/lib/site";
+import type { SiteSettings } from "@/lib/site";
 
 /**
  * Website terms of use (TH + EN), drafted Oct 2026.
@@ -16,16 +16,21 @@ import { CLINIC, LINE_ID, PHONE } from "@/lib/site";
  *     if the clinic's ads require one)
  *   - a contact email
  *
- * Contact details come from lib/site.ts.
+ * Contact details come from Site Settings, passed in by data/legal.ts.
  */
 
 const P = (s: string) => `<em>[${s}]</em>`;
 
-export function termsHtml(locale: string, privacyHref: string): string {
-  return locale === "th" ? th(privacyHref) : en(privacyHref);
+export function termsHtml(
+  locale: string,
+  privacyHref: string,
+  site: SiteSettings,
+): string {
+  return locale === "th" ? th(privacyHref, site) : en(privacyHref, site);
 }
 
-function th(privacyHref: string): string {
+function th(privacyHref: string, site: SiteSettings): string {
+  const { clinic: CLINIC, phone: PHONE, lineId: LINE_ID } = site;
   return `
 <p>ข้อกำหนดนี้ใช้กับการเข้าชมและใช้งานเว็บไซต์ของ ${CLINIC.name} (“คลินิก” หรือ “เรา”) ซึ่งดำเนินกิจการโดย ${P("ชื่อนิติบุคคลผู้ดำเนินกิจการ")} การเข้าใช้งานเว็บไซต์นี้ถือว่าคุณได้อ่านและยอมรับข้อกำหนดนี้แล้ว หากคุณไม่ยอมรับ กรุณางดใช้งานเว็บไซต์</p>
 
@@ -72,7 +77,8 @@ function th(privacyHref: string): string {
 `;
 }
 
-function en(privacyHref: string): string {
+function en(privacyHref: string, site: SiteSettings): string {
+  const { clinic: CLINIC, phone: PHONE, lineId: LINE_ID } = site;
   return `
 <p>These terms apply to your use of the website of ${CLINIC.name} (“the clinic”, “we”), operated by ${P("Legal name of the operating entity")}. By using this website you confirm that you have read and accept these terms. If you do not accept them, please do not use the website.</p>
 
