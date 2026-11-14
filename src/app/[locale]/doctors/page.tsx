@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DOCTORS } from "@/data/doctors";
+import { getDoctors } from "@/data/doctors";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { LineIcon } from "@/components/shared/SocialIcons";
@@ -34,9 +34,10 @@ export default async function DoctorsPage({
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
-  const lead = DOCTORS.find((d) => d.featured) ?? DOCTORS[0];
+  const doctors = await getDoctors();
+  const lead = doctors.find((d) => d.featured) ?? doctors[0];
   // Dr. Jing does not repeat in the team section — decided Sept 2026.
-  const team = DOCTORS.filter((d) => d.slug !== lead.slug);
+  const team = doctors.filter((d) => d.slug !== lead.slug);
 
   return (
     <>

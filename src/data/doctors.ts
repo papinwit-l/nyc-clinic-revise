@@ -1,150 +1,76 @@
+import { cache } from "react";
 import type { Doctor } from "@/types/doctor";
+import { wpConfigured, wpFetch } from "@/lib/wp";
+import { getServiceSlugById } from "./services";
+import { MOCK_DOCTORS } from "./mock/doctors";
 
-export const DOCTORS: Doctor[] = [
-  {
-    slug: "dr-jing",
-    image: "/images/doctors/dr-jing.jpg",
-    nameEn: "Dr. Jing",
-    nameTh: "หมอจิ๋ง",
-    fullNameEn: "Isreey Muangmanee M.D.",
-    fullNameTh: "แพทย์หญิงอิสรีย์ เมืองมณี",
-    specialty: "Nose Thread Lift · Facial Design",
-    specialtyTh: "ร้อยไหมจมูก · ปรับรูปหน้า",
-    experience: "20+ yrs · 50,000+ cases",
-    credentials: [
-      {
-        en: "Nose Thread Lifting Specialist",
-        th: "ชำนาญการด้านการร้อยไหมจมูก Nose Thread Lifting",
-      },
-      {
-        en: "Facial Design Specialist (Filler, Thread Lifting)",
-        th: "ชำนาญการด้านการปรับรูปหน้า Facial Design (Filler, Thread Lifting)",
-      },
-      {
-        en: "Aesthetic Dermatology",
-        th: "ชำนาญการด้านผิวพรรณความงาม Aesthetic",
-      },
-      // "20+ years" and "50,000+ cases" are not repeated here: the bio and the
-      // stats above already say both. Figures confirmed by Dr. Jing, Nov 2026.
-    ],
-    services: ["nose-thread-lift", "facial-thread-lift", "facial-design"],
-    featured: true,
-    // Placeholder bio — rephrased from credential bullets on nycclinic.net/doctor/.
-    // Nothing invented. Flag for client edit/approval before final build.
-    bioEn:
-      "Dr. Jing specializes in nose thread lift and facial design, with over 20 years of experience in aesthetic medicine and more than 50,000 documented nose thread lift cases performed to date.",
-    bioTh:
-      "หมอจิ๋งเชี่ยวชาญด้านร้อยไหมจมูกและออกแบบรูปหน้า ด้วยประสบการณ์กว่า 20 ปีในสาขาเวชศาสตร์ความงาม และผลงานร้อยไหมจมูกมากกว่า 50,000 เคส",
-  },
-  {
-    slug: "dr-beer",
-    image: "/images/doctors/dr-beer.jpg",
-    nameEn: "Dr. Beer",
-    nameTh: "หมอเบียร์",
-    fullNameEn: "Pattaya Tanthanatip M.D.",
-    fullNameTh: "นายแพทย์พัทยา ตันธนาธิป",
-    specialty: "Plastic Surgery",
-    specialtyTh: "ศัลยกรรมตกแต่ง",
-    experience: "15+ yrs",
-    credentials: [
-      {
-        en: "Board-Certified Plastic Surgeon",
-        th: "ศัลยแพทย์ตกแต่งเฉพาะทาง Plastic Surgeon",
-      },
-      {
-        en: "Member, Royal College of Surgeons of Thailand",
-        th: "สมาชิกราชวิทยาลัยศัลยแพทย์ตกแต่งแห่งประเทศไทย",
-      },
-      {
-        en: "Rhinoplasty Specialist",
-        th: "ชำนาญการด้านศัลยกรรมจมูก Rhinoplasty",
-      },
-      {
-        en: "Blepharoplasty, Chin Augmentation, Breast Augmentation, Face Lift",
-        th: "ศัลยกรรมตา, ศัลยกรรมคาง, ศัลยกรรมหน้าอก, ดึงหน้า",
-      },
-      {
-        en: "15+ years of experience",
-        th: "ประสบการณ์มากกว่า 15 ปี",
-      },
-    ],
-    services: ["surgery"],
-  },
-  {
-    slug: "dr-lulu",
-    image: "/images/doctors/dr-lulu.jpg",
-    nameEn: "Dr. Lulu",
-    nameTh: "หมอลู่ลู่",
-    fullNameEn: "Rangrong Sriworarak M.D.",
-    fullNameTh: "แพทย์หญิง รังรอง ศรีวรรักษ์",
-    specialty: "Surgery — Eyes · Lips · Sub-brow Lift",
-    specialtyTh: "ศัลยกรรมตา · ปาก · ยกคิ้ว",
-    experience: "15+ yrs",
-    credentials: [
-      {
-        en: "Surgeon",
-        th: "ศัลยแพทย์ Surgeon",
-      },
-      {
-        en: "Eye Surgery Specialist (Blepharoplasty, Under Eye, Sub-brow Lift)",
-        th: "ชำนาญการด้านการทำศัลยกรรมตา Blepharoplasty, Under Eye Surgery, Sub-brows Lift",
-      },
-      {
-        en: "Lip Surgery Specialist",
-        th: "ชำนาญการด้านศัลยกรรมปาก Lips Surgery",
-      },
-      {
-        en: "Aesthetic Dermatology",
-        th: "ชำนาญการด้านผิวพรรณความงาม Aesthetic",
-      },
-      {
-        en: "15+ years of experience",
-        th: "ประสบการณ์มากกว่า 15 ปี",
-      },
-    ],
-    services: ["surgery"],
-  },
-  {
-    slug: "dr-pek",
-    image: "/images/doctors/dr-pek.jpg",
-    nameEn: "Dr. Pek",
-    nameTh: "หมอเป๊ก",
-    fullNameEn: "Pichit Sooksaranjit M.D.",
-    fullNameTh: "นายแพทย์พิชิต สุขสราญจิต",
-    specialty: "Lipo · Fat Transfer · Nose Thread",
-    specialtyTh: "ดูดไขมัน · ฉีดไขมัน · ร้อยไหมจมูก",
-    experience: "15+ yrs",
-    credentials: [
-      {
-        en: "Liposuction Specialist",
-        th: "ชำนาญการด้านศัลยกรรมดูดไขมัน Liposuction",
-      },
-      {
-        en: "Fat Transfer Specialist",
-        th: "ชำนาญการด้านการเติมไขมัน Fat Transfer",
-      },
-      {
-        en: "Nose Thread Lifting Specialist",
-        th: "ชำนาญการด้านการร้อยไหมจมูก Nose Thread Lifting",
-      },
-      {
-        en: "Facial Design Specialist (Filler, Thread Lifting)",
-        th: "ชำนาญการด้านการปรับรูปหน้า Facial Design (Filler, Thread Lifting)",
-      },
-      {
-        en: "Aesthetic Dermatology",
-        th: "ชำนาญการด้านผิวพรรณความงาม Aesthetic",
-      },
-    ],
-    services: ["surgery", "nose-thread-lift", "facial-design"],
-  },
-];
+/**
+ * Doctors from WordPress (wp-admin → Doctors), in drag order. Cache tag:
+ * "doctor".
+ *
+ * A Doctor carries both languages (nameEn/nameTh, …); components pick per
+ * locale. English falls back to Thai field by field, so a doctor entered in
+ * Thai only still shows on /en.
+ *
+ * Without WP_API_URL (local dev) the in-code list is served instead.
+ */
 
-export function getDoctorBySlug(slug: string): Doctor | undefined {
-  return DOCTORS.find((d) => d.slug === slug);
+type WpDoctor = {
+  slug: string;
+  photo: { url: string } | null;
+  featured: boolean;
+  services: number[] | null;
+  credentials: { th: string; en: string }[];
+  experience: string;
+} & Record<
+  `${"name" | "full_name" | "specialty" | "bio"}_${"th" | "en"}`,
+  string
+>;
+
+const FIELDS = [
+  "slug,photo,featured,services,credentials,experience",
+  ...["name", "full_name", "specialty", "bio"].flatMap((f) => [`${f}_th`, `${f}_en`]),
+].join(",");
+
+const str = (v: unknown) =>
+  typeof v === "string" ? v.replace(/\r\n?/g, "\n").trim() : "";
+
+async function fromWp(d: WpDoctor): Promise<Doctor> {
+  const th = (f: "name" | "full_name" | "specialty" | "bio") => str(d[`${f}_th`]);
+  const en = (f: "name" | "full_name" | "specialty" | "bio") =>
+    str(d[`${f}_en`]) || th(f);
+  const slugs = await Promise.all(
+    (Array.isArray(d.services) ? d.services : []).map(getServiceSlugById),
+  );
+  const bioTh = th("bio");
+  const bioEn = en("bio");
+  return {
+    slug: d.slug,
+    image: d.photo?.url ?? "",
+    nameEn: en("name"),
+    nameTh: th("name"),
+    fullNameEn: en("full_name"),
+    fullNameTh: th("full_name"),
+    specialty: en("specialty"),
+    specialtyTh: th("specialty"),
+    experience: str(d.experience),
+    credentials: (d.credentials ?? [])
+      .map((c) => ({ th: str(c.th), en: str(c.en) || str(c.th) }))
+      .filter((c) => c.th || c.en),
+    // A linked service that was later deleted is simply dropped.
+    services: slugs.filter((s): s is string => !!s),
+    featured: d.featured || undefined,
+    bioTh: bioTh || undefined,
+    bioEn: bioEn || undefined,
+  };
 }
 
-// TODO: replace with WP fetch
-export async function getDoctors(): Promise<Doctor[]> {
-  return DOCTORS;
-}
+/** All doctors, in the admin's drag order. */
+export const getDoctors = cache(async (): Promise<Doctor[]> => {
+  if (!wpConfigured()) return MOCK_DOCTORS;
+  const all = await wpFetch<WpDoctor[]>(
+    `/wp/v2/doctor?per_page=100&orderby=menu_order&order=asc&_fields=${FIELDS}`,
+    ["doctor"],
+  );
+  return Promise.all(all.map(fromWp));
+});

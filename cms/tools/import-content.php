@@ -1,15 +1,18 @@
 <?php
 /**
- * One-time import of Services and FAQs into the CMS (Nov 2026).
+ * One-time import of existing content into the CMS (Nov 2026).
  *
- * Moves the content that used to live in src/data/services.ts and
- * src/data/faq.ts into WordPress, so editors start from today's site instead
- * of a blank screen.
+ * Moves content that used to live in src/data/*.ts into WordPress, so
+ * editors start from today's site instead of a blank screen. A package holds
+ * any of these sections; sections it doesn't contain are left alone:
  *
- * Package layout (built from the codebase, delivered as nyc-import.zip):
+ *   services, faqs   (nyc-import.zip)          — Services + FAQ round
+ *   doctors, awards  (nyc-import-doctors.zip)  — Doctors + Awards round
+ *
+ * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
- *   nyc-import/import.json   services + FAQs
- *   nyc-import/images/       service images
+ *   nyc-import/import.json   the sections
+ *   nyc-import/images/       images the sections use
  *
  * Run with WP-CLI (Plesk → WordPress → WP-CLI tab):
  *   eval-file ../nyc-import/import.php           create what's missing
@@ -35,8 +38,14 @@ $nyc_data   = json_decode( (string) file_get_contents( "{$nyc_dir}/import.json" 
 if ( ! is_array( $nyc_data ) || 1 !== ( $nyc_data['version'] ?? 0 ) ) {
 	WP_CLI::error( "import.json missing or unreadable in {$nyc_dir}" );
 }
-foreach ( array( 'service', 'faq' ) as $nyc_type ) {
-	if ( ! post_type_exists( $nyc_type ) || ! function_exists( 'pods' ) ) {
+$nyc_sections = array(
+	'services' => 'service',
+	'faqs'     => 'faq',
+	'doctors'  => 'doctor',
+	'awards'   => 'award',
+);
+foreach ( $nyc_sections as $nyc_key => $nyc_type ) {
+	if ( isset( $nyc_data[ $nyc_key ] ) && ( ! post_type_exists( $nyc_type ) || ! function_exists( 'pods' ) ) ) {
 		WP_CLI::error( "Post type '{$nyc_type}' or Pods is missing — is the nyc-clinic-core mu-plugin installed?" );
 	}
 }
@@ -141,13 +150,27 @@ function nyc_import_entry( string $type, array $item, int $parent, array $fields
 	return array( $id, isset( $post['ID'] ) ? 'updated' : 'created' );
 }
 
+/** Service IDs for slugs: imported in this run, or already in WordPress. */
+function nyc_import_service_ids( array $slugs, array $imported ): array {
+	$ids = array();
+	foreach ( $slugs as $slug ) {
+		$id = $imported[ $slug ] ?? nyc_import_find( 'service', $slug );
+		if ( $id ) {
+			$ids[] = $id;
+		} else {
+			WP_CLI::warning( "Linked service '{$slug}' not found — import Services first." );
+		}
+	}
+	return $ids;
+}
+
 $nyc_counts = array();
 $nyc_count  = static function ( string $type, string $action ) use ( &$nyc_counts ) {
 	$nyc_counts[ $type ][ $action ] = ( $nyc_counts[ $type ][ $action ] ?? 0 ) + 1;
 };
 
 // ── Services: categories first, so treatments can point at their parent ────
-$nyc_services = $nyc_data['services'];
+$nyc_services = $nyc_data['services'] ?? array();
 usort( $nyc_services, static fn( $a, $b ) => ( '' === $a['parent'] ? 0 : 1 ) <=> ( '' === $b['parent'] ? 0 : 1 ) );
 $nyc_service_ids = array();
 
@@ -184,13 +207,38 @@ foreach ( $nyc_services as $nyc_s ) {
 }
 
 // ── FAQs ────────────────────────────────────────────────────────────────────
-foreach ( $nyc_data['faqs'] as $nyc_f ) {
+foreach ( $nyc_data['faqs'] ?? array() as $nyc_f ) {
 	$nyc_fields             = $nyc_f['fields'];
-	$nyc_fields['services'] = array_values(
-		array_filter( array_map( static fn( $slug ) => $nyc_service_ids[ $slug ] ?? 0, $nyc_f['services'] ) )
-	);
+	$nyc_fields['services'] = nyc_import_service_ids( $nyc_f['services'], $nyc_service_ids );
 	[ , $nyc_action ]       = nyc_import_entry( 'faq', $nyc_f, 0, $nyc_fields, $nyc_update );
 	$nyc_count( 'faq', $nyc_action );
+}
+
+// ── Doctors ─────────────────────────────────────────────────────────────────
+foreach ( $nyc_data['doctors'] ?? array() as $nyc_d ) {
+	$nyc_fields             = $nyc_d['fields'];
+	$nyc_fields['photo']    = nyc_import_image( $nyc_dir, $nyc_d['photo'] );
+	$nyc_fields['services'] = nyc_import_service_ids( $nyc_d['services'], $nyc_service_ids );
+	[ , $nyc_action ]       = nyc_import_entry(
+		'doctor',
+		$nyc_d,
+		0,
+		$nyc_fields,
+		$nyc_update,
+		static function ( int $id ) use ( $nyc_d ) {
+			// Same storage as the repeater meta box (inc/repeater.php).
+			update_post_meta( $id, 'credentials', wp_slash( wp_json_encode( $nyc_d['credentials'], JSON_UNESCAPED_UNICODE ) ) );
+		}
+	);
+	$nyc_count( 'doctor', $nyc_action );
+}
+
+// ── Awards ──────────────────────────────────────────────────────────────────
+foreach ( $nyc_data['awards'] ?? array() as $nyc_a ) {
+	$nyc_fields          = $nyc_a['fields'];
+	$nyc_fields['image'] = nyc_import_image( $nyc_dir, $nyc_a['image'] );
+	[ , $nyc_action ]    = nyc_import_entry( 'award', $nyc_a, 0, $nyc_fields, $nyc_update );
+	$nyc_count( 'award', $nyc_action );
 }
 
 foreach ( $nyc_counts as $nyc_type => $nyc_by_action ) {

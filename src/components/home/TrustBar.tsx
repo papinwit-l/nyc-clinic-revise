@@ -1,5 +1,6 @@
 import type { Dictionary } from "@/i18n/get-dictionary";
 import AwardsShelf from "@/components/shared/AwardsShelf";
+import { getAwards } from "@/data/awards";
 import TrustStats from "./TrustStats";
 
 type Props = {
@@ -7,7 +8,8 @@ type Props = {
   locale: string;
 };
 
-export default function TrustBar({ t, locale }: Props) {
+export default async function TrustBar({ t, locale }: Props) {
+  const awards = await getAwards();
   return (
     <section>
       {/* Stats strip — own client component: the count-up needs an
@@ -23,7 +25,7 @@ export default function TrustBar({ t, locale }: Props) {
           and permission (project reference §8). */}
       <div className="bg-[var(--color-surface-white)] border-b border-[var(--color-border)]">
         <div className="max-w-[var(--container-max)] mx-auto px-6 py-10 sm:py-12">
-          <AwardsShelf locale={locale} />
+          <AwardsShelf locale={locale} awards={awards} />
         </div>
       </div>
     </section>

@@ -573,7 +573,7 @@
    "name": "award",
    "label": "Awards",
    "label_singular": "Award",
-   "description": "Most awards are supplier 'Valued Customer' awards — label them so, not as accreditation.",
+   "description": "Drag to order, oldest first. The LAST one is shown large on the About page. Most awards are supplier 'Valued Customer' awards — label them so, not as accreditation.",
    "type": "post_type",
    "storage": "meta",
    "public": "0",

@@ -4,7 +4,8 @@ import type { Locale } from "@/i18n/config";
 import Link from "next/link";
 import Image from "next/image";
 import { ABOUT_STORY, FACILITY } from "@/data/about";
-import { DOCTORS } from "@/data/doctors";
+import { getDoctors } from "@/data/doctors";
+import { getAwards } from "@/data/awards";
 import PageHeader from "@/components/shared/PageHeader";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import InView from "@/components/shared/InView";
@@ -32,9 +33,11 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const [t, site] = await Promise.all([
+  const [t, site, doctors, awards] = await Promise.all([
     getDictionary(locale as Locale),
     getSiteSettings(),
+    getDoctors(),
+    getAwards(),
   ]);
   const isTH = locale === "th";
 
@@ -105,7 +108,12 @@ export default async function AboutPage({
             locale={locale}
             className="mb-12"
           />
-          <AwardsShelf locale={locale} variant="featured" showLabel={false} />
+          <AwardsShelf
+            locale={locale}
+            awards={awards}
+            variant="featured"
+            showLabel={false}
+          />
         </div>
       </section>
 
@@ -122,7 +130,7 @@ export default async function AboutPage({
           />
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-            {DOCTORS.map((doc, i) => (
+            {doctors.map((doc, i) => (
               <InView key={doc.slug} variant="rise" index={i}>
                 <Link
                   href={`/${locale}/doctors#${doc.slug}`}

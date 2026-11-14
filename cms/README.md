@@ -201,19 +201,26 @@ service under **Services**.
 | Nose thread — "ต้องพักฟื้นไหม" | "การร้อยไหมจมูกต้องพักฟื้นไหม?" |
 | Facial thread — "ร้อยไหมอันตรายไหม" | "ร้อยไหมอันตรายไหม? ปลอดภัยหรือไม่?" |
 
-## 3b. One-time import (Services + FAQ, Nov 2026)
+## 3b. One-time imports (Nov 2026)
 
-`cms/tools/import-services-faq.php` moved the services and FAQs that used to be
-in the code into WordPress. It runs from a package (`nyc-import.zip`: the
-script, `import.json` and the service images) that is built from the codebase.
+`cms/tools/import-content.php` moves content that used to be in the code into
+WordPress. It runs from a package built from the codebase: the script,
+`import.json` and the images. A package holds only some sections, and sections
+it doesn't hold are left alone.
 
-1. Upload `nyc-import.zip` to the CMS webspace's **home folder** (one level
-   above `httpdocs`, so it's never reachable from the web) and extract it there.
+| Package | Sections |
+|---|---|
+| `nyc-import.zip` | 19 services, 54 FAQs |
+| `nyc-import-doctors.zip` | 4 doctors (linked to services, so import Services first), 6 awards |
+
+1. Upload the zip to the CMS webspace's **home folder** (one level above
+   `httpdocs`, so it's never reachable from the web) and extract it there. Each
+   package extracts to a folder named `nyc-import`; delete the previous one first.
 2. Plesk → WordPress → **WP-CLI**: `eval-file ../nyc-import/import.php`
-3. Check wp-admin → Services (19) and FAQ (54), then delete the `nyc-import` folder.
+3. Check wp-admin, then delete the `nyc-import` folder.
 
-Running it again is safe: entries that already exist are skipped, so edits
-made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
+Running it again is safe: entries that already exist (same slug) are skipped,
+so edits made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
 overwrites them with the imported content instead.
 
 ## 4. Changing the content model

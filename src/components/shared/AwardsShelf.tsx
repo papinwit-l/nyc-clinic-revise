@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { AWARDS, type Award } from "@/data/awards";
+import type { Award } from "@/data/awards";
 import InView from "@/components/shared/InView";
 import { sectionHeadings } from "@/i18n/section-headings";
 
@@ -26,6 +26,8 @@ import { sectionHeadings } from "@/i18n/section-headings";
 
 type Props = {
   locale: string;
+  /** From getAwards() in the parent server component — this is a client component. */
+  awards: Award[];
   variant?: "shelf" | "featured";
   /** Homepage sits inside TrustBar and supplies its own spacing. */
   className?: string;
@@ -72,6 +74,7 @@ function AwardsLabel({
 
 export default function AwardsShelf({
   locale,
+  awards,
   variant = "shelf",
   className = "",
   showLabel = true,
@@ -91,8 +94,11 @@ export default function AwardsShelf({
     };
   }, [open]);
 
-  const featured = AWARDS[AWARDS.length - 1];
-  const rest = AWARDS.slice(0, -1);
+  // No awards in the CMS → no shelf (rather than an empty band).
+  if (awards.length === 0) return null;
+
+  const featured = awards[awards.length - 1];
+  const rest = awards.slice(0, -1);
 
   return (
     <div className={className}>
@@ -153,7 +159,7 @@ export default function AwardsShelf({
       ) : (
         /* Shelf — static grid from sm up, swipeable row below it */
         <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-3 lg:grid-cols-6 sm:gap-8 sm:overflow-visible sm:pb-0 sm:items-end">
-          {AWARDS.map((a, i) => (
+          {awards.map((a, i) => (
             <InView
               key={a.slug}
               index={i}
