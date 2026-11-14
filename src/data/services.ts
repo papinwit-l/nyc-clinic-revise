@@ -234,6 +234,14 @@ export async function getParentService(
   return src ? toCard(src, locale) : null;
 }
 
+/**
+ * Slug of a service by WordPress ID — for other content types that link to a
+ * service (promotions, later doctors and cases). Null if it no longer exists.
+ */
+export async function getServiceSlugById(id: number): Promise<string | null> {
+  return (await getSources()).find((s) => s.id === id)?.slug ?? null;
+}
+
 /** Every slug — parents AND children — for generateStaticParams. */
 export async function getServiceSlugs(): Promise<string[]> {
   return (await getSources()).map((s) => s.slug);
