@@ -13,6 +13,7 @@ import InView from "@/components/shared/InView";
 import FaqAccordion from "@/components/shared/FaqAccordion";
 import RevealCarousel from "@/components/before-after/RevealCarousel";
 import PageHeaderEnhance from "@/components/shared/PageHeaderEnhance";
+import { getHero } from "@/data/hero";
 import TrustBar from "@/components/home/TrustBar";
 import PromotionsBanner from "@/components/home/PromotionsBanner";
 import { getActivePromotions } from "@/data/promotions";
@@ -70,7 +71,7 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, reveals, promos, igPosts, doctors, reviews, site] = await Promise.all(
+  const [cases, reveals, promos, igPosts, doctors, reviews, site, hero] = await Promise.all(
     [
       getCasesForService(locale, slug, 3),
       getRevealsForService(locale, slug),
@@ -79,6 +80,7 @@ export default async function ServiceDetailPage({
       getDoctors(),
       getGoogleReviews(locale),
       getSiteSettings(),
+      getHero(),
     ],
   );
 
@@ -101,6 +103,7 @@ export default async function ServiceDetailPage({
         description={service.summary}
         locale={locale}
         lineUrl={site.lineUrl}
+        slides={hero.slides}
       />
       <TrustBar t={t.home.trust} locale={locale} />
 

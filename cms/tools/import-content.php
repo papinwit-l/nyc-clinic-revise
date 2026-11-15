@@ -10,6 +10,7 @@
  *   doctors, awards  (nyc-import-doctors.zip)  — Doctors + Awards round
  *   case_terms, cases, reveals  (nyc-import-cases.zip)  — Before & After round
  *   about            (nyc-import-about.zip)    — Page Manage → About
+ *   hero_slides, home_video  (nyc-import-hero.zip)  — Hero Slides + Home intro video
  *
  * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
@@ -47,6 +48,7 @@ $nyc_sections = array(
 	'awards'   => 'award',
 	'cases'    => 'case',
 	'reveals'  => 'reveal',
+	'hero_slides' => 'hero_slide',
 );
 foreach ( $nyc_sections as $nyc_key => $nyc_type ) {
 	if ( isset( $nyc_data[ $nyc_key ] ) && ( ! post_type_exists( $nyc_type ) || ! function_exists( 'pods' ) ) ) {
@@ -351,6 +353,24 @@ if ( isset( $nyc_data['about'] ) ) {
 			)
 		);
 		$nyc_count( 'about', $nyc_filled ? 'updated' : 'created' );
+	}
+}
+
+// ── Hero Slides + Page Manage → Home intro video ────────────────────────────
+foreach ( $nyc_data['hero_slides'] ?? array() as $nyc_h ) {
+	$nyc_fields                  = $nyc_h['fields'];
+	$nyc_fields['desktop_image'] = nyc_import_image( $nyc_dir, $nyc_h['desktop_image'] );
+	$nyc_fields['mobile_image']  = nyc_import_image( $nyc_dir, $nyc_h['mobile_image'] );
+	[ , $nyc_action ]            = nyc_import_entry( 'hero_slide', $nyc_h, 0, $nyc_fields, $nyc_update );
+	$nyc_count( 'hero_slide', $nyc_action );
+}
+if ( isset( $nyc_data['home_video'] ) ) {
+	$nyc_has = (bool) get_option( 'nyc_home_hero_video', '' );
+	if ( $nyc_has && ! $nyc_update ) {
+		$nyc_count( 'home video', 'skipped' );
+	} else {
+		pods( 'nyc_home' )->save( array( 'hero_video' => nyc_import_image( $nyc_dir, $nyc_data['home_video'] ) ) );
+		$nyc_count( 'home video', $nyc_has ? 'updated' : 'created' );
 	}
 }
 

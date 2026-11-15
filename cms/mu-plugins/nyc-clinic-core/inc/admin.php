@@ -110,6 +110,7 @@ add_filter(
 	static fn() => [
 		'index.php',
 		'nyc-page-manage',
+		'edit.php?post_type=hero_slide',
 		'separator1',
 		'edit.php',
 		'edit.php?post_type=promotion',
@@ -205,7 +206,8 @@ add_action(
 function nyc_dashboard_guide(): void {
 	$rows = [
 		[ 'Phone, LINE, address, hours, socials', 'Page Manage → Site Settings' ],
-		[ 'Hero slides, Trust Bar numbers, clinic intro', 'Page Manage → Home' ],
+		[ 'Homepage intro video, Trust Bar numbers, clinic intro', 'Page Manage → Home' ],
+		[ 'Hero images — desktop and mobile (drag to order)', 'Hero Slides' ],
 		[ 'Clinic story, facility photos', 'Page Manage → About' ],
 		[ 'Articles', 'Blog' ],
 		[ 'Offers (drag to order — the first live one is on the homepage)', 'Promotions' ],

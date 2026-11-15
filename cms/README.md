@@ -214,6 +214,7 @@ it doesn't hold are left alone.
 | `nyc-import-doctors.zip` | 4 doctors (linked to services, so import Services first), 6 awards |
 | `nyc-import-cases.zip` | Categories: Nose Thread Lift + 3 draft sub-categories; 9 cases, 1 reveal (all Dr. Jing, so import Doctors first) |
 | `nyc-import-about.zip` | Page Manage → About: story (3 paragraphs TH + EN) and 6 facility photos. Skipped if the story already has text. |
+| `nyc-import-hero.zip` | Hero Slides: the 2 current banners (desktop only), and the intro video (re-encoded to H.264) on Page Manage → Home. |
 
 1. Upload the zip to the CMS webspace's **home folder** (one level above
    `httpdocs`, so it's never reachable from the web) and extract it there. Each
@@ -224,6 +225,17 @@ it doesn't hold are left alone.
 Running it again is safe: entries that already exist (same slug) are skipped,
 so edits made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
 overwrites them with the imported content instead.
+
+### Hero rules (for marketing)
+
+- **Hero Slides** (own menu, drag to order): desktop image 1920 × 1080 (16:9),
+  required; mobile image 1080 × 1920 (9:16), optional. Below 1024px wide the
+  mobile image is used; without one, phones crop the desktop image. Keep faces
+  and details in the middle — the logo and buttons sit over the centre.
+- Used by the homepage hero and the service page headers.
+- **Intro video** (Page Manage → Home, optional): MP4 in **H.264** (not HEVC —
+  Firefox and many Windows PCs can't play HEVC), 1920 × 1080, no sound,
+  5–10 seconds, under 5 MB. Desktop only, plays once, then the slides.
 
 ### Before & After rules (for marketing)
 

@@ -17,12 +17,6 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://nycclinic.net"
 ).replace(/\/$/, "");
 
-// Moves to Page Manage → Home when the homepage is connected.
-export const HERO_SLIDES = [
-  "/images/banner/banner-c.png",
-  "/images/banner/banner-c_backup.png",
-];
-
 type Bilingual = { th: string; en: string };
 
 export type SiteSettings = {

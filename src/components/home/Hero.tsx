@@ -1,24 +1,15 @@
 "use client";
 
+import HeroSlideImage from "@/components/shared/HeroSlideImage";
+import type { HeroContent } from "@/data/hero";
+
 import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { LineIcon } from "@/components/shared/SocialIcons";
 import { ChevronDown } from "lucide-react";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import HeroLogo from "@/components/shared/HeroLogo";
 
-
-// Plays once on desktop, then hands off to the slideshow below. No loop.
-const HERO_VIDEO_SRC = "/videos/hero-intro.mp4";
-
-// Crossfading background slides — used on mobile always, and on
-// desktop after the intro video finishes. Add more paths here as
-// assets come in; a single entry just renders as a static image.
-const HERO_SLIDES = [
-  "/images/banner/banner-c.png",
-  "/images/banner/banner-c_backup.png",
-];
 
 // Matches the header's lg breakpoint (1024px) — below this, video
 // never loads, mobile gets the image slideshow only.
@@ -54,9 +45,12 @@ type Props = {
   locale: string;
   /** From Site Settings — this is a client component. */
   lineUrl: string;
+  /** From getHero(): Hero Slides + the optional desktop intro video. */
+  hero: HeroContent;
 };
 
-export default function Hero({ t, locale, lineUrl }: Props) {
+export default function Hero({ t, locale, lineUrl, hero }: Props) {
+  const { slides, video } = hero;
   const isTH = locale === "th";
   // Server/first client render always renders the slideshow — this
   // avoids any hydration mismatch. The video is only swapped in
@@ -76,22 +70,22 @@ export default function Hero({ t, locale, lineUrl }: Props) {
         setShowVideo(false);
         return;
       }
-      setShowVideo(mql.matches);
+      setShowVideo(!!video && mql.matches);
     };
 
     apply();
     mql.addEventListener("change", apply);
     return () => mql.removeEventListener("change", apply);
-  }, []);
+  }, [video]);
 
   // Slideshow auto-advance — only runs while the video isn't showing.
   useEffect(() => {
-    if (showVideo || HERO_SLIDES.length < 2) return;
+    if (showVideo || slides.length < 2) return;
     const id = setInterval(() => {
-      setSlideIndex((i) => (i + 1) % HERO_SLIDES.length);
+      setSlideIndex((i) => (i + 1) % slides.length);
     }, SLIDE_INTERVAL_MS);
     return () => clearInterval(id);
-  }, [showVideo]);
+  }, [showVideo, slides.length]);
 
   const handleVideoEnded = () => {
     videoPlayedRef.current = true;
@@ -101,12 +95,12 @@ export default function Hero({ t, locale, lineUrl }: Props) {
   return (
     <section className="relative h-svh min-h-[600px] flex items-center justify-center overflow-hidden bg-[var(--color-primary)]">
       <div className="absolute inset-0">
-        {showVideo ? (
+        {showVideo && video ? (
           <video
             key="hero-video"
             className="absolute inset-0 w-full h-full object-cover object-center"
-            src={HERO_VIDEO_SRC}
-            poster={HERO_SLIDES[0]}
+            src={video}
+            poster={slides[0]?.desktop}
             autoPlay
             muted
             playsInline
@@ -116,17 +110,14 @@ export default function Hero({ t, locale, lineUrl }: Props) {
             onEnded={handleVideoEnded}
           />
         ) : (
-          HERO_SLIDES.map((src, i) => (
-            <Image
-              key={src}
-              src={src}
-              alt=""
-              fill
+          slides.map((slide, i) => (
+            <HeroSlideImage
+              key={slide.desktop}
+              slide={slide}
               priority={i === 0}
               className={`object-cover object-center transition-opacity duration-1000 ease-in-out ${
                 i === slideIndex ? "opacity-100" : "opacity-0"
               }`}
-              sizes="100vw"
             />
           ))
         )}

@@ -24,6 +24,7 @@ export const WP_TAGS = [
   "service",
   "case",
   "reveal",
+  "hero_slide",
 ] as const;
 export type WpTag = (typeof WP_TAGS)[number];
 

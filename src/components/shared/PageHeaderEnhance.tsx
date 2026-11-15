@@ -1,7 +1,7 @@
 "use client";
 
-import { HERO_SLIDES } from "@/lib/site";
-import Image from "next/image";
+import HeroSlideImage from "./HeroSlideImage";
+import type { HeroSlide } from "@/data/hero";
 import { Fragment, useState, type ReactNode } from "react";
 import HeroLogo from "./HeroLogo";
 import { LineIcon } from "./SocialIcons";
@@ -34,6 +34,8 @@ type Props = {
   locale: string;
   /** From Site Settings — this is a client component. */
   lineUrl: string;
+  /** From getHero() — Hero Slides. */
+  slides: HeroSlide[];
 };
 
 function phraseWrap(text: string, isTH: boolean) {
@@ -56,6 +58,7 @@ export default function PageHeaderEnhance({
   description,
   locale,
   lineUrl,
+  slides,
 }: Props) {
   const isTH = locale === "th";
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
@@ -66,17 +69,14 @@ export default function PageHeaderEnhance({
   return (
     <section className="relative h-svh min-h-[600px] flex items-center justify-center overflow-hidden bg-[var(--color-primary)]">
       <div className="absolute inset-0">
-        {HERO_SLIDES.map((src, i) => (
-          <Image
-            key={src}
-            src={src}
-            alt=""
-            fill
+        {slides.map((slide, i) => (
+          <HeroSlideImage
+            key={slide.desktop}
+            slide={slide}
             priority={i === 0}
             className={`object-cover object-center transition-opacity duration-1000 ease-in-out ${
               i === slideIndex ? "opacity-100" : "opacity-0"
             }`}
-            sizes="100vw"
           />
         ))}
         <div className="overlay-gradient absolute inset-0" />

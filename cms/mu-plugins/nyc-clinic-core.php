@@ -21,7 +21,7 @@ define( 'NYC_CORE_DIR', __DIR__ . '/nyc-clinic-core' );
 define( 'NYC_CORE_URL', content_url( 'mu-plugins/nyc-clinic-core' ) );
 
 /** Post types whose order editors control by dragging (menu_order). */
-const NYC_ORDERED_TYPES = [ 'faq', 'promotion', 'doctor', 'award', 'service', 'case', 'reveal' ];
+const NYC_ORDERED_TYPES = [ 'faq', 'promotion', 'doctor', 'award', 'service', 'case', 'reveal', 'hero_slide' ];
 
 /** Settings pages under Page Manage — Pods "settings" pods, stored as options. */
 const NYC_SETTINGS_PODS = [ 'nyc_site', 'nyc_home', 'nyc_about' ];
