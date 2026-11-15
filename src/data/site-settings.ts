@@ -89,11 +89,21 @@ function toSiteSettings(raw: Partial<RawSiteSettings>): SiteSettings {
   };
 }
 
+/**
+ * The whole /nyc/v1/site payload — Site Settings, Home and About in one
+ * request, shared by every fetcher that reads a Page Manage screen.
+ * Only call when wpConfigured().
+ */
+export const getSitePayload = cache(() =>
+  wpFetch<{
+    settings?: Partial<RawSiteSettings>;
+    home?: Record<string, unknown>;
+    about?: Record<string, unknown>;
+  }>("/nyc/v1/site", ["site"]),
+);
+
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   if (!wpConfigured()) return DEFAULT_SITE_SETTINGS;
-  const data = await wpFetch<{ settings: Partial<RawSiteSettings> }>(
-    "/nyc/v1/site",
-    ["site"],
-  );
+  const data = await getSitePayload();
   return toSiteSettings(data.settings ?? {});
 });

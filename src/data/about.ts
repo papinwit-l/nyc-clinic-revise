@@ -16,9 +16,14 @@
 //   advertising rules are strict about those. Marketing should confirm it
 //   carries over rather than it being inherited silently.
 //
-// TODO: replace with WP fetch — this becomes a static page in WP
-//   (project reference §6: "About | /about | WP static page").
+// In WordPress: Page Manage → About (story_th / story_en, facility_gallery).
+// The text below is the built-in copy, used for local dev without WP and
+// when both story boxes in WP are empty.
 // ─────────────────────────────────────────────────────────────────────────
+
+import { cache } from "react";
+import { wpConfigured } from "@/lib/wp";
+import { getSitePayload, getSiteSettings } from "./site-settings";
 
 export type AboutStory = { en: string; th: string };
 
@@ -44,10 +49,8 @@ export type FacilityBranch = {
   images: string[];
 };
 
-// Eleven photographs from the live site's About page. Download them into
-// public/images/facility/ — see the URL list supplied alongside this file.
-// Filenames below assume a sequential rename; adjust if you keep the originals.
-export const FACILITY: FacilityBranch[] = [
+// Photographs from the live site's About page.
+const MOCK_FACILITY: FacilityBranch[] = [
   {
     slug: "thonglor",
     nameEn: "Thonglor",
@@ -62,3 +65,60 @@ export const FACILITY: FacilityBranch[] = [
     ],
   },
 ];
+
+export type AboutContent = {
+  /** Paragraphs for each language; English falls back to Thai. */
+  story: { th: string[]; en: string[] };
+  /** One gallery per branch; empty when WP has no photos. */
+  facility: FacilityBranch[];
+};
+
+/** Paragraphs split on blank lines. */
+const paragraphs = (v: unknown) =>
+  typeof v === "string"
+    ? v
+        .replace(/\r\n?/g, "\n")
+        .split(/\n\s*\n/)
+        .map((p) => p.replace(/\s*\n\s*/g, " ").trim())
+        .filter(Boolean)
+    : [];
+
+const MOCK_STORY = {
+  th: ABOUT_STORY.map((p) => p.th),
+  en: ABOUT_STORY.map((p) => p.en),
+};
+
+/**
+ * About page content (Page Manage → About). Cache tag: "site".
+ * Without WP_API_URL (local dev) the built-in copy and photos are served.
+ */
+export const getAbout = cache(async (): Promise<AboutContent> => {
+  if (!wpConfigured()) return { story: MOCK_STORY, facility: MOCK_FACILITY };
+
+  const [{ about = {} }, site] = await Promise.all([
+    getSitePayload(),
+    getSiteSettings(),
+  ]);
+  const th = paragraphs(about.story_th);
+  const en = paragraphs(about.story_en);
+  const images = (Array.isArray(about.facility_gallery) ? about.facility_gallery : [])
+    .map((img: { url?: unknown }) => (typeof img?.url === "string" ? img.url : ""))
+    .filter(Boolean);
+
+  return {
+    // Both boxes empty → built-in copy rather than a blank section.
+    story: th.length || en.length
+      ? { th: th.length ? th : en, en: en.length ? en : th }
+      : MOCK_STORY,
+    facility: images.length
+      ? [
+          {
+            slug: "main",
+            nameTh: site.clinic.branch.th,
+            nameEn: site.clinic.branch.en,
+            images,
+          },
+        ]
+      : [],
+  };
+});

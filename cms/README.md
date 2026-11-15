@@ -213,6 +213,7 @@ it doesn't hold are left alone.
 | `nyc-import.zip` | 19 services, 54 FAQs |
 | `nyc-import-doctors.zip` | 4 doctors (linked to services, so import Services first), 6 awards |
 | `nyc-import-cases.zip` | Categories: Nose Thread Lift + 3 draft sub-categories; 9 cases, 1 reveal (all Dr. Jing, so import Doctors first) |
+| `nyc-import-about.zip` | Page Manage → About: story (3 paragraphs TH + EN) and 6 facility photos. Skipped if the story already has text. |
 
 1. Upload the zip to the CMS webspace's **home folder** (one level above
    `httpdocs`, so it's never reachable from the web) and extract it there. Each

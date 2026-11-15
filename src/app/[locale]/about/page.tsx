@@ -3,7 +3,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import Link from "next/link";
 import Image from "next/image";
-import { ABOUT_STORY, FACILITY } from "@/data/about";
+import { getAbout } from "@/data/about";
 import { getDoctors } from "@/data/doctors";
 import { getAwards } from "@/data/awards";
 import PageHeader from "@/components/shared/PageHeader";
@@ -33,11 +33,12 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const [t, site, doctors, awards] = await Promise.all([
+  const [t, site, doctors, awards, about] = await Promise.all([
     getDictionary(locale as Locale),
     getSiteSettings(),
     getDoctors(),
     getAwards(),
+    getAbout(),
   ]);
   const isTH = locale === "th";
 
@@ -67,7 +68,7 @@ export default async function AboutPage({
             />
 
             <div className="mt-8 space-y-6">
-              {ABOUT_STORY.map((p, i) => (
+              {(isTH ? about.story.th : about.story.en).map((p, i) => (
                 <InView key={i} variant="fade" index={i}>
                   <p
                     className={`text-[var(--color-text-warm)] ${
@@ -77,7 +78,7 @@ export default async function AboutPage({
                     }`}
                     style={{ fontFamily: bodyFont, fontWeight: 300 }}
                   >
-                    {isTH ? p.th : p.en}
+                    {p}
                   </p>
                 </InView>
               ))}
@@ -86,7 +87,7 @@ export default async function AboutPage({
         </div>
       </section>
 
-      {FACILITY.map((branch) => (
+      {about.facility.map((branch) => (
         <FacilityGallery
           key={branch.slug}
           branch={branch}

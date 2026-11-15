@@ -9,6 +9,7 @@
  *   services, faqs   (nyc-import.zip)          — Services + FAQ round
  *   doctors, awards  (nyc-import-doctors.zip)  — Doctors + Awards round
  *   case_terms, cases, reveals  (nyc-import-cases.zip)  — Before & After round
+ *   about            (nyc-import-about.zip)    — Page Manage → About
  *
  * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
@@ -331,6 +332,26 @@ foreach ( $nyc_data['reveals'] ?? array() as $nyc_r ) {
 		static fn( int $id ) => wp_set_object_terms( $id, $nyc_terms, 'case_treatment' )
 	);
 	$nyc_count( 'reveal', $nyc_action );
+}
+
+// ── Page Manage → About ─────────────────────────────────────────────────────
+// Left alone when the story already has text (unless "update").
+if ( isset( $nyc_data['about'] ) ) {
+	$nyc_ab     = $nyc_data['about'];
+	$nyc_filled = '' !== trim( (string) get_option( 'nyc_about_story_th', '' ) ) || '' !== trim( (string) get_option( 'nyc_about_story_en', '' ) );
+	if ( $nyc_filled && ! $nyc_update ) {
+		$nyc_count( 'about', 'skipped' );
+	} else {
+		$nyc_gallery = array_values( array_filter( array_map( static fn( $n ) => nyc_import_image( $nyc_dir, $n ), $nyc_ab['facility_gallery'] ) ) );
+		pods( 'nyc_about' )->save(
+			array(
+				'story_th'         => $nyc_ab['story_th'],
+				'story_en'         => $nyc_ab['story_en'],
+				'facility_gallery' => $nyc_gallery,
+			)
+		);
+		$nyc_count( 'about', $nyc_filled ? 'updated' : 'created' );
+	}
 }
 
 foreach ( $nyc_counts as $nyc_type => $nyc_by_action ) {
