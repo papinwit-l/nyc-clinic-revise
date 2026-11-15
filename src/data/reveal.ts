@@ -1,54 +1,75 @@
-// ─────────────────────────────────────────────────────────────────────────
-// TODO — REVEAL PAIRS ARE PLACEHOLDERS
-//
-// beforeImage/afterImage below are two DIFFERENT patients' composites, so the
-// slider currently wipes between four faces. A real reveal needs two
-// single-shot photos of ONE patient — matched framing, lighting and crop
-// (object-cover crops each layer independently, so mismatched framing
-// misaligns at the handle). This is a shooting instruction, not fixable in
-// code later.
-//
-// WP: `reveal` CPT sharing the hierarchical `case_treatment` taxonomy.
-// ─────────────────────────────────────────────────────────────────────────
-
+import { cache } from "react";
 import type { Reveal } from "@/types/reveal";
+import { wpConfigured, wpFetch } from "@/lib/wp";
+import {
+  bi,
+  fromWpCommon,
+  type RevealSource,
+  type WpCaseCommon,
+} from "./cases";
+import { MOCK_REVEALS } from "./mock/cases";
 
-const DATA = [
-  {
-    slug: "nose-thread-signature",
-    beforeImage: "/images/cases/reveal/case-01-before.jpg",
-    afterImage: "/images/cases/reveal/case-01-after.jpg",
-    treatmentSlug: "nose-thread-lift",
-    title_en: "Nose Thread Lift",
-    title_th: "ร้อยไหมจมูก",
-    doctor: "Dr. Jing",
-    featured: true,
-    order: 1,
-  },
-  {
-    slug: "nose-thread-natural",
-    beforeImage: "/images/cases/case-03.jpg",
-    afterImage: "/images/cases/case-04.jpg",
-    treatmentSlug: "nose-thread-lift",
-    subcategorySlug: "natural-look",
-    title_en: "Natural look",
-    title_th: "ทรงธรรมชาติ",
-    doctor: "Dr. Jing",
-    order: 2,
-  },
-];
+/**
+ * Before/after slider pairs from WordPress (wp-admin → Reveals), in drag
+ * order. Cache tags: "reveal" + "doctor".
+ *
+ * Same Categories taxonomy as cases: top-level term = treatment (must match a
+ * service slug), first child term = sub-category.
+ *
+ * A reveal needs two single-shot photos of ONE patient with matched framing,
+ * lighting and crop — the slider wipes one over the other, so mismatched
+ * shots misalign at the handle.
+ *
+ * Without WP_API_URL (local dev) the in-code list is served instead.
+ */
 
-function toReveal(item: (typeof DATA)[number], isTH: boolean): Reveal {
+type WpReveal = WpCaseCommon & {
+  date_gmt: string;
+  before_image: { url: string } | null;
+  after_image: { url: string } | null;
+  title_th: string;
+  title_en: string;
+  featured: boolean;
+};
+
+type Source = RevealSource & { date: string };
+
+const getSources = cache(async (): Promise<Source[]> => {
+  if (!wpConfigured()) return MOCK_REVEALS.map((r) => ({ ...r, date: "" }));
+  const all = await wpFetch<WpReveal[]>(
+    "/wp/v2/reveal?per_page=100&orderby=menu_order&order=asc" +
+      "&_fields=slug,menu_order,date_gmt,before_image,after_image,title_th,title_en,featured,treatment,subcategories,doctor_name",
+    ["reveal", "doctor"],
+  );
+  return all.flatMap((r) => {
+    const common = fromWpCommon(r);
+    // Both photos and a treatment, or it can't be shown.
+    if (!common || !r.before_image?.url || !r.after_image?.url) return [];
+    return [
+      {
+        ...common,
+        beforeImage: r.before_image.url,
+        afterImage: r.after_image.url,
+        title: bi(r.title_th, r.title_en),
+        featured: !!r.featured,
+        date: r.date_gmt,
+      },
+    ];
+  });
+});
+
+function toReveal(r: Source, isTH: boolean): Reveal {
+  const pick = (b: { th: string; en: string }) => (isTH ? b.th : b.en);
   return {
-    slug: item.slug,
-    beforeImage: item.beforeImage,
-    afterImage: item.afterImage,
-    treatmentSlug: item.treatmentSlug,
-    subcategorySlug: item.subcategorySlug,
-    title: isTH ? item.title_th : item.title_en,
-    doctor: item.doctor,
-    featured: item.featured,
-    order: item.order,
+    slug: r.slug,
+    beforeImage: r.beforeImage,
+    afterImage: r.afterImage,
+    treatmentSlug: r.treatment.slug,
+    subcategorySlug: r.subcategories[0]?.slug,
+    title: pick(r.title) || undefined,
+    doctor: r.doctor ? pick(r.doctor) : undefined,
+    featured: r.featured || undefined,
+    order: r.order,
   };
 }
 
@@ -64,10 +85,11 @@ export async function getFeaturedReveal(
   locale: string,
 ): Promise<Reveal | null> {
   const isTH = locale === "th";
-  const flagged = DATA.filter((r) => r.featured);
+  const flagged = (await getSources()).filter((r) => r.featured);
   if (!flagged.length) return null;
-  // "Newest" = last in source order here; with WP this is by date desc.
-  return toReveal(flagged[flagged.length - 1], isTH);
+  // Newest by publish date; ties (and the mock) → last in list order.
+  const newest = flagged.reduce((a, b) => (b.date >= a.date ? b : a));
+  return toReveal(newest, isTH);
 }
 
 /** All reveals for one treatment, ordered. Used by /before-after/[treatment]. */
@@ -76,8 +98,8 @@ export async function getRevealsByTreatment(
   treatmentSlug: string,
 ): Promise<Reveal[]> {
   const isTH = locale === "th";
-  return DATA.filter((r) => r.treatmentSlug === treatmentSlug)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  return (await getSources())
+    .filter((r) => r.treatment.slug === treatmentSlug)
     .map((r) => toReveal(r, isTH));
 }
 
@@ -91,11 +113,9 @@ export async function getRevealsForService(
   slug: string,
 ): Promise<Reveal[]> {
   const isTH = locale === "th";
-  return DATA.filter(
-    (r) =>
-      r.treatmentSlug === slug ||
-      ("subcategorySlug" in r && r.subcategorySlug === slug),
-  )
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  return (await getSources())
+    .filter(
+      (r) => r.treatment.slug === slug || r.subcategories[0]?.slug === slug,
+    )
     .map((r) => toReveal(r, isTH));
 }

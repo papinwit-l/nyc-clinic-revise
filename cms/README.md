@@ -212,6 +212,7 @@ it doesn't hold are left alone.
 |---|---|
 | `nyc-import.zip` | 19 services, 54 FAQs |
 | `nyc-import-doctors.zip` | 4 doctors (linked to services, so import Services first), 6 awards |
+| `nyc-import-cases.zip` | Categories: Nose Thread Lift + 3 draft sub-categories; 9 cases, 1 reveal (all Dr. Jing, so import Doctors first) |
 
 1. Upload the zip to the CMS webspace's **home folder** (one level above
    `httpdocs`, so it's never reachable from the web) and extract it there. Each
@@ -222,6 +223,19 @@ it doesn't hold are left alone.
 Running it again is safe: entries that already exist (same slug) are skipped,
 so edits made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
 overwrites them with the imported content instead.
+
+### Before & After rules (for marketing)
+
+- Only real photos of the treatment named. The import holds Nose Thread Lift
+  only; other treatments stay off Before & After until their own photos exist.
+- **Categories**: a top-level category is a treatment and its slug must equal
+  the service's slug (`nose-thread-lift`), or its cases show nowhere. Child
+  categories are sub-categories; drag to order. A case's first sub-category
+  decides its group; cases with none collect under "More cases".
+- The sub-categories Natural look / European look / Tip extension are drafts —
+  replace with the clinic's real list.
+- **Reveals** need two single shots of one patient, same framing and light.
+  Tick "Featured" on the one for the homepage (several ticked → newest wins).
 
 ## 4. Changing the content model
 

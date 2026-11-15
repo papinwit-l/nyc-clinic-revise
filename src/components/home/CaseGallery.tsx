@@ -167,12 +167,14 @@ export default function CaseGallery({
               </div>
             )}
 
-            <p
-              className="mt-5 text-center text-sm text-[var(--color-on-primary-muted)]"
-              style={{ fontFamily: bodyFont, fontWeight: 300 }}
-            >
-              {tCommon.by} {open.doctor}
-            </p>
+            {open.doctor && (
+              <p
+                className="mt-5 text-center text-sm text-[var(--color-on-primary-muted)]"
+                style={{ fontFamily: bodyFont, fontWeight: 300 }}
+              >
+                {tCommon.by} {open.doctor}
+              </p>
+            )}
           </>
         )}
       </Lightbox>

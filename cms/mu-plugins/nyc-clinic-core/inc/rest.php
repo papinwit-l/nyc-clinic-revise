@@ -201,3 +201,92 @@ function nyc_settings_values( string $pod ): array {
 	}
 	return $out;
 }
+
+// ── Cases + Reveals: category terms and doctor, resolved ────────────────────
+// Core REST gives term IDs and a doctor ID; the gallery needs labels in both
+// languages and the sub-category ORDER (Categories screen drag order).
+//
+//   treatment       top-level term = the service it belongs to (slug must
+//                   match the service's slug)
+//   subcategories   child terms, in drag order; the first one is the group
+//   doctor_name     { th, en } of the linked Doctor
+add_action(
+	'rest_api_init',
+	static function () {
+		foreach ( array( 'case', 'reveal' ) as $type ) {
+			register_rest_field(
+				$type,
+				'treatment',
+				array( 'get_callback' => static fn( array $post ) => nyc_case_terms( (int) $post['id'] )['treatment'] )
+			);
+			register_rest_field(
+				$type,
+				'subcategories',
+				array( 'get_callback' => static fn( array $post ) => nyc_case_terms( (int) $post['id'] )['subcategories'] )
+			);
+			register_rest_field(
+				$type,
+				'doctor_name',
+				array(
+					'get_callback' => static function ( array $post ) {
+						$id = nyc_rel_ids( (int) $post['id'], 'doctor' )[0] ?? 0;
+						if ( ! $id || 'doctor' !== get_post_type( $id ) || 'publish' !== get_post_status( $id ) ) {
+							return null;
+						}
+						return array(
+							'th' => trim( (string) get_post_meta( $id, 'name_th', true ) ),
+							'en' => trim( (string) get_post_meta( $id, 'name_en', true ) ),
+						);
+					},
+				)
+			);
+		}
+	}
+);
+
+/** { slug, name_en, name_th } for a case_treatment term. */
+function nyc_case_term( WP_Term $term ): array {
+	return array(
+		'slug'    => $term->slug,
+		'name_en' => $term->name,
+		'name_th' => trim( (string) get_term_meta( $term->term_id, 'name_th', true ) ),
+	);
+}
+
+/**
+ * A case's (or reveal's) treatment + ordered sub-categories.
+ * Ticking only a sub-category still counts for its treatment.
+ */
+function nyc_case_terms( int $post_id ): array {
+	static $memo = array();
+	if ( isset( $memo[ $post_id ] ) ) {
+		return $memo[ $post_id ];
+	}
+	$terms = wp_get_object_terms( $post_id, 'case_treatment' );
+	$terms = is_wp_error( $terms ) ? array() : $terms;
+
+	$root = static function ( WP_Term $t ): WP_Term {
+		$ancestors = get_ancestors( $t->term_id, 'case_treatment', 'taxonomy' );
+		return $ancestors ? get_term( end( $ancestors ), 'case_treatment' ) : $t;
+	};
+	$top      = null;
+	$children = array();
+	foreach ( $terms as $t ) {
+		if ( 0 === (int) $t->parent ) {
+			$top = $top ?? $t;
+		} else {
+			$children[] = $t;
+			$top        = $top ?? $root( $t );
+		}
+	}
+	// Only sub-categories of the chosen treatment; drag order (SCPO term_order), then name.
+	$children = array_values( array_filter( $children, static fn( $t ) => $top && $root( $t )->term_id === $top->term_id ) );
+	usort(
+		$children,
+		static fn( $a, $b ) => [ (int) ( $a->term_order ?? 0 ), $a->name ] <=> [ (int) ( $b->term_order ?? 0 ), $b->name ]
+	);
+	return $memo[ $post_id ] = array(
+		'treatment'     => $top ? nyc_case_term( $top ) : null,
+		'subcategories' => array_map( 'nyc_case_term', $children ),
+	);
+}

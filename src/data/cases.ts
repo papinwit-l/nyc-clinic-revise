@@ -1,24 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────
-// TODO — BEFORE THIS SECTION GOES TO CLIENT / MARKETING REVIEW
-//
-// 1. IMAGERY MISMATCH. All six images are Nose Thread Lift composites. The
-//    treatments below (Facial Thread Lift, Surgery) are placeholders used to
-//    exercise the layout against mixed services. The photos do NOT show the
-//    treatment named. Must not ship as-is.
-//
-// 2. SUB-CATEGORY TERMS UNVERIFIED. Values below are drafted, not supplied by
-//    the clinic. Marketing owes the real term list per treatment AND its
-//    deliberate order — order is functional: the FIRST child term on a case
-//    decides which group it renders in (project reference §5).
-//
-// 3. WP FETCH. Replace with:
-//    const res = await fetch(`${WP_API}/wp/v2/case?per_page=${limit}`);
-//    REST returns term IDs only — fetch /wp/v2/case_treatment separately for
-//    terms + their `parent`, and assemble the grouping here, not in the page.
-//    Also needs ?orderby=menu_order&order=asc plus the
-//    rest_case_collection_params filter (project reference §5).
-// ─────────────────────────────────────────────────────────────────────────
-
+import { cache } from "react";
 import {
   CaseCard,
   SubcategoryGroup,
@@ -26,253 +6,113 @@ import {
   UNGROUPED_SLUG,
 } from "@/types/case";
 import { getServices } from "@/data/services";
+import { wpConfigured, wpFetch } from "@/lib/wp";
+import { MOCK_CASES } from "./mock/cases";
 
-const DATA = [
-  {
-    slug: "nose-thread-natural-look",
-    image: "/images/cases/case-nose-thread-natural.jpg",
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "natural-look",
-    subcategory_en: "Natural look",
-    subcategory_th: "ทรงธรรมชาติ",
-    doctor: "Dr. Jing",
-    order: 1,
-  },
-  {
-    slug: "nose-thread-european-look",
-    image: "/images/cases/case-nose-thread-european.jpg",
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "european-look",
-    subcategory_en: "European look",
-    subcategory_th: "ทรงยุโรป",
-    doctor: "Dr. Jing",
-    order: 2,
-  },
-  {
-    slug: "facial-thread-v-shape",
-    image: "/images/cases/case-facial-thread.jpg",
-    treatmentSlug: "facial-thread-lift",
-    treatment_en: "Facial Thread Lift",
-    treatment_th: "ร้อยไหมหน้า",
-    subcategorySlug: "v-shape",
-    subcategory_en: "V-shape lifting",
-    subcategory_th: "ยกกระชับรูปหน้าวี",
-    doctor: "Dr. Jing",
-    order: 3,
-  },
-  {
-    slug: "nose-thread-tip-extension",
-    image: "/images/cases/case-01.jpg",
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "tip-extension",
-    subcategory_en: "Tip extension",
-    subcategory_th: "ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
-    order: 4,
-  },
-  {
-    slug: "rhinoplasty-profile",
-    image: "/images/cases/case-05.jpg",
-    treatmentSlug: "surgery",
-    treatment_en: "Surgery",
-    treatment_th: "ศัลยกรรม",
-    subcategorySlug: "rhinoplasty",
-    subcategory_en: "Rhinoplasty",
-    subcategory_th: "เสริมจมูก",
-    doctor: "Dr. Beer",
-    order: 5,
-  },
-  {
-    slug: "blepharoplasty-double-eyelid",
-    image: "/images/cases/case-06.jpg",
-    treatmentSlug: "surgery",
-    treatment_en: "Surgery",
-    treatment_th: "ศัลยกรรม",
-    subcategorySlug: "blepharoplasty",
-    subcategory_en: "Double eyelid",
-    subcategory_th: "ตาสองชั้น",
-    doctor: "Dr. Lulu",
-    order: 6,
-  },
-];
+/**
+ * Before & After cases from WordPress (wp-admin → Cases), in drag order.
+ * Cache tags: "case" + "doctor" (the caption shows the doctor's name).
+ *
+ * Grouping comes from the Categories taxonomy (case_treatment):
+ *   top-level term   the treatment — its slug MUST match a top-level service
+ *                    slug, or the case shows nowhere
+ *   child terms      sub-categories, drag-ordered; the FIRST decides the group
+ *
+ * Without WP_API_URL (local dev) the in-code list is served instead.
+ */
 
-// ─────────────────────────────────────────────────────────────────────────
-// VOLUME PADDING — DELETE BEFORE LAUNCH
-//
-// The six real entries above aren't enough to exercise the gallery: no group
-// exceeds one page, so pagination never triggers and the index blocks never
-// show their "view all" link. The generated cases below give realistic volume
-// so the layouts can be judged.
-//
-// ⚠ EVERY PADDED CASE REUSES A NOSE-THREAD IMAGE. public/images/cases holds
-//   nose-thread photography only, so a padded "Rhinoplasty" or "Sculptra" case
-//   shows a nose thread result. These must not reach the client, and the whole
-//   block should be deleted — not edited — once real cases arrive.
-// ─────────────────────────────────────────────────────────────────────────
+type Bi = { th: string; en: string };
+type Term = { slug: string } & Bi;
 
-const PAD_IMAGES = [
-  "/images/cases/case-01.jpg",
-  "/images/cases/case-02.jpg",
-  "/images/cases/case-03.jpg",
-  "/images/cases/case-04.jpg",
-  "/images/cases/case-05.jpg",
-  "/images/cases/case-06.jpg",
-];
-
-type PadSpec = {
-  treatmentSlug: string;
-  treatment_en: string;
-  treatment_th: string;
-  subcategorySlug: string;
-  subcategory_en: string;
-  subcategory_th: string;
-  doctor: string;
-  count: number;
+/** A case in both languages — what WordPress and the mock both reduce to. */
+export type CaseSource = {
+  slug: string;
+  image: string;
+  treatment: Term;
+  subcategories: Term[];
+  doctor: Bi | null;
+  order: number;
 };
 
-const PAD_SPECS: PadSpec[] = [
-  // Nose thread — the signature service, so the deepest gallery.
-  {
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "natural-look",
-    subcategory_en: "Natural look",
-    subcategory_th: "ทรงธรรมชาติ",
-    doctor: "Dr. Jing",
-    count: 9,
-  },
-  {
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "european-look",
-    subcategory_en: "European look",
-    subcategory_th: "ทรงยุโรป",
-    doctor: "Dr. Jing",
-    count: 7,
-  },
-  {
-    treatmentSlug: "nose-thread-lift",
-    treatment_en: "Nose Thread Lift",
-    treatment_th: "ร้อยไหมจมูก",
-    subcategorySlug: "tip-extension",
-    subcategory_en: "Tip extension",
-    subcategory_th: "ยืดปลายพุ่ง",
-    doctor: "Dr. Jing",
-    count: 4,
-  },
+/** A reveal in both languages (shared with src/data/reveal.ts). */
+export type RevealSource = Omit<CaseSource, "image"> & {
+  beforeImage: string;
+  afterImage: string;
+  title: Bi;
+  featured: boolean;
+};
 
-  {
-    treatmentSlug: "facial-thread-lift",
-    treatment_en: "Facial Thread Lift",
-    treatment_th: "ร้อยไหมหน้า",
-    subcategorySlug: "v-shape",
-    subcategory_en: "V-shape lifting",
-    subcategory_th: "ยกกระชับรูปหน้าวี",
-    doctor: "Dr. Jing",
-    count: 5,
-  },
+export type WpTerm = { slug: string; name_en: string; name_th: string };
+export type WpCaseCommon = {
+  slug: string;
+  menu_order: number;
+  treatment: WpTerm | null;
+  subcategories: WpTerm[] | null;
+  doctor_name: Bi | null;
+};
 
-  {
-    treatmentSlug: "surgery",
-    treatment_en: "Surgery",
-    treatment_th: "ศัลยกรรม",
-    subcategorySlug: "rhinoplasty",
-    subcategory_en: "Rhinoplasty",
-    subcategory_th: "เสริมจมูก",
-    doctor: "Dr. Beer",
-    count: 6,
-  },
-  {
-    treatmentSlug: "surgery",
-    treatment_en: "Surgery",
-    treatment_th: "ศัลยกรรม",
-    subcategorySlug: "blepharoplasty",
-    subcategory_en: "Double eyelid",
-    subcategory_th: "ตาสองชั้น",
-    doctor: "Dr. Lulu",
-    count: 4,
-  },
+const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
-  {
-    treatmentSlug: "facial-design",
-    treatment_en: "Facial Design",
-    treatment_th: "ปรับรูปหน้า",
-    subcategorySlug: "filler",
-    subcategory_en: "Filler",
-    subcategory_th: "ฟิลเลอร์",
-    doctor: "Dr. Jing",
-    count: 3,
-  },
+/** English falls back to Thai, and vice versa. */
+export const bi = (th: unknown, en: unknown): Bi => {
+  const t = str(th);
+  const e = str(en);
+  return { th: t || e, en: e || t };
+};
 
-  {
-    treatmentSlug: "skin-treatments",
-    treatment_en: "Skin Treatments",
-    treatment_th: "ฟื้นฟูผิว",
-    subcategorySlug: "sculptra",
-    subcategory_en: "Sculptra",
-    subcategory_th: "Sculptra",
-    doctor: "Dr. Jing",
-    count: 3,
-  },
-];
+const term = (t: WpTerm): Term => ({ slug: t.slug, ...bi(t.name_th, t.name_en) });
 
-const PADDED = PAD_SPECS.flatMap((spec, si) =>
-  Array.from({ length: spec.count }, (_, i) => ({
-    slug: `${spec.subcategorySlug}-pad-${i + 1}`,
-    image: PAD_IMAGES[(si + i) % PAD_IMAGES.length],
-    treatmentSlug: spec.treatmentSlug,
-    treatment_en: spec.treatment_en,
-    treatment_th: spec.treatment_th,
-    subcategorySlug: spec.subcategorySlug,
-    subcategory_en: spec.subcategory_en,
-    subcategory_th: spec.subcategory_th,
-    doctor: spec.doctor,
-    order: 100 + si * 20 + i,
-  })),
-);
+/** Shared WP → source mapping. Null when no treatment is ticked (shows nowhere). */
+export function fromWpCommon(c: WpCaseCommon) {
+  if (!c.treatment) return null;
+  const doctor = c.doctor_name ? bi(c.doctor_name.th, c.doctor_name.en) : null;
+  return {
+    slug: c.slug,
+    treatment: term(c.treatment),
+    subcategories: (c.subcategories ?? []).map(term),
+    doctor: doctor && (doctor.th || doctor.en) ? doctor : null,
+    order: c.menu_order,
+  };
+}
 
-// Two cases with NO sub-category, so the "More cases" bucket renders and its
-// always-last / drop-when-alone behaviour can be seen.
-const PADDED_UNGROUPED = [1, 2].map((n) => ({
-  slug: `nose-thread-other-${n}`,
-  image: PAD_IMAGES[n],
-  treatmentSlug: "nose-thread-lift",
-  treatment_en: "Nose Thread Lift",
-  treatment_th: "ร้อยไหมจมูก",
-  subcategorySlug: undefined as string | undefined,
-  subcategory_en: undefined as string | undefined,
-  subcategory_th: undefined as string | undefined,
-  doctor: "Dr. Jing",
-  order: 900 + n,
-}));
+type WpCase = WpCaseCommon & { image: { url: string } | null };
 
-const ALL = [...DATA, ...PADDED, ...PADDED_UNGROUPED];
+const getSources = cache(async (): Promise<CaseSource[]> => {
+  if (!wpConfigured()) return MOCK_CASES;
+  const all = await wpFetch<WpCase[]>(
+    "/wp/v2/case?per_page=100&orderby=menu_order&order=asc" +
+      "&_fields=slug,menu_order,image,treatment,subcategories,doctor_name",
+    ["case", "doctor"],
+  );
+  return all.flatMap((c) => {
+    const common = fromWpCommon(c);
+    // No photo or no treatment → nothing to show.
+    return common && c.image?.url ? [{ ...common, image: c.image.url }] : [];
+  });
+});
+
+function toCard(c: CaseSource, isTH: boolean): CaseCard {
+  const pick = (b: Bi) => (isTH ? b.th : b.en);
+  const [first, ...rest] = c.subcategories;
+  return {
+    slug: c.slug,
+    image: c.image,
+    treatment: pick(c.treatment),
+    treatmentSlug: c.treatment.slug,
+    subcategory: first ? pick(first) : undefined,
+    subcategorySlug: first?.slug,
+    tags: rest.length ? rest.map(pick) : undefined,
+    doctor: c.doctor ? pick(c.doctor) : "",
+    order: c.order,
+  };
+}
 
 export async function getCases(
   locale: string,
   opts?: { limit?: number },
 ): Promise<CaseCard[]> {
-  const limit = opts?.limit ?? ALL.length;
-  const isTH = locale === "th";
-
-  return ALL.slice(0, limit).map((item) => ({
-    slug: item.slug,
-    image: item.image,
-    treatment: isTH ? item.treatment_th : item.treatment_en,
-    treatmentSlug: item.treatmentSlug,
-    subcategory: isTH ? item.subcategory_th : item.subcategory_en,
-    subcategorySlug: item.subcategorySlug,
-    doctor: item.doctor,
-    order: item.order,
-  }));
+  const all = await getSources();
+  return all.slice(0, opts?.limit ?? all.length).map((c) => toCard(c, locale === "th"));
 }
 
 /**
@@ -282,14 +122,8 @@ export async function getCases(
  *   treatmentSlug     the top-level service   ("surgery")
  *   subcategorySlug   the child service       ("rhinoplasty")
  *
- * So /services/surgery picks up every surgical case, and
- * /services/rhinoplasty picks up only its own. Matching treatmentSlug alone
- * meant child pages found nothing even when a matching case existed.
- *
- * ⚠ This depends on sub-category terms being named the same as child service
- * slugs. They are today. When both move to WP, `case_treatment`'s child terms
- * and the service CPT's child slugs have to stay in step, or these pages go
- * quietly empty.
+ * ⚠ So a sub-category only shows on a child service page when its term slug
+ * equals that service's slug.
  */
 export async function getCasesForService(
   locale: string,
@@ -307,8 +141,7 @@ export async function getCasesForService(
  *
  * The ungrouped bucket always sorts last and is dropped when it is the only
  * group — see SubcategoryGroup. Everything else keeps the order cases arrive
- * in, which is `order` (menu_order), so the term list's own sequence is what
- * decides group order.
+ * in (menu_order).
  */
 function groupBySubcategory(
   cases: CaseCard[],

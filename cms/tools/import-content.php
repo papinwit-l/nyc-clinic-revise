@@ -8,6 +8,7 @@
  *
  *   services, faqs   (nyc-import.zip)          — Services + FAQ round
  *   doctors, awards  (nyc-import-doctors.zip)  — Doctors + Awards round
+ *   case_terms, cases, reveals  (nyc-import-cases.zip)  — Before & After round
  *
  * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
@@ -43,6 +44,8 @@ $nyc_sections = array(
 	'faqs'     => 'faq',
 	'doctors'  => 'doctor',
 	'awards'   => 'award',
+	'cases'    => 'case',
+	'reveals'  => 'reveal',
 );
 foreach ( $nyc_sections as $nyc_key => $nyc_type ) {
 	if ( isset( $nyc_data[ $nyc_key ] ) && ( ! post_type_exists( $nyc_type ) || ! function_exists( 'pods' ) ) ) {
@@ -239,6 +242,95 @@ foreach ( $nyc_data['awards'] ?? array() as $nyc_a ) {
 	$nyc_fields['image'] = nyc_import_image( $nyc_dir, $nyc_a['image'] );
 	[ , $nyc_action ]    = nyc_import_entry( 'award', $nyc_a, 0, $nyc_fields, $nyc_update );
 	$nyc_count( 'award', $nyc_action );
+}
+
+// ── Before & After: categories (taxonomy terms), then cases and reveals ─────
+// Terms are matched by slug and never renamed or re-ordered once they exist
+// (unless "update"), so wp-admin edits stay.
+$nyc_term_ids = array();
+foreach ( $nyc_data['case_terms'] ?? array() as $nyc_t ) {
+	$nyc_parent = '' === $nyc_t['parent'] ? 0 : ( $nyc_term_ids[ $nyc_t['parent'] ] ?? 0 );
+	$nyc_found  = get_term_by( 'slug', $nyc_t['slug'], 'case_treatment' );
+	if ( $nyc_found && ! $nyc_update ) {
+		$nyc_term_ids[ $nyc_t['slug'] ] = (int) $nyc_found->term_id;
+		$nyc_count( 'category', 'skipped' );
+		continue;
+	}
+	$nyc_args = array( 'slug' => $nyc_t['slug'], 'parent' => $nyc_parent );
+	$nyc_res  = $nyc_found
+		? wp_update_term( $nyc_found->term_id, 'case_treatment', $nyc_args + array( 'name' => $nyc_t['name_en'] ) )
+		: wp_insert_term( $nyc_t['name_en'], 'case_treatment', $nyc_args );
+	if ( is_wp_error( $nyc_res ) ) {
+		WP_CLI::warning( "Category {$nyc_t['slug']}: " . $nyc_res->get_error_message() );
+		$nyc_count( 'category', 'failed' );
+		continue;
+	}
+	$nyc_tid = (int) $nyc_res['term_id'];
+	update_term_meta( $nyc_tid, 'name_th', $nyc_t['name_th'] );
+	// Drag order (Simple Custom Post Order adds this column).
+	global $wpdb;
+	if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->terms} LIKE 'term_order'" ) ) {
+		$wpdb->update( $wpdb->terms, array( 'term_order' => (int) $nyc_t['order'] ), array( 'term_id' => $nyc_tid ) );
+	}
+	$nyc_term_ids[ $nyc_t['slug'] ] = $nyc_tid;
+	$nyc_count( 'category', $nyc_found ? 'updated' : 'created' );
+}
+
+/** Term IDs for slugs: created in this run, or already in WordPress. */
+$nyc_case_terms = static function ( array $slugs ) use ( &$nyc_term_ids ): array {
+	$ids = array();
+	foreach ( $slugs as $slug ) {
+		$term = $nyc_term_ids[ $slug ] ?? ( get_term_by( 'slug', $slug, 'case_treatment' )->term_id ?? 0 );
+		if ( $term ) {
+			$ids[] = (int) $term;
+		} else {
+			WP_CLI::warning( "Category '{$slug}' not found." );
+		}
+	}
+	return $ids;
+};
+$nyc_doctor_id = static function ( string $slug ): int {
+	if ( '' === $slug ) {
+		return 0;
+	}
+	$id = nyc_import_find( 'doctor', $slug );
+	if ( ! $id ) {
+		WP_CLI::warning( "Doctor '{$slug}' not found — import Doctors first." );
+	}
+	return $id;
+};
+
+foreach ( $nyc_data['cases'] ?? array() as $nyc_c ) {
+	$nyc_fields           = $nyc_c['fields'];
+	$nyc_fields['image']  = nyc_import_image( $nyc_dir, $nyc_c['image'] );
+	$nyc_fields['doctor'] = $nyc_doctor_id( $nyc_c['doctor'] );
+	$nyc_terms            = $nyc_case_terms( $nyc_c['terms'] );
+	[ , $nyc_action ]     = nyc_import_entry(
+		'case',
+		$nyc_c,
+		0,
+		$nyc_fields,
+		$nyc_update,
+		static fn( int $id ) => wp_set_object_terms( $id, $nyc_terms, 'case_treatment' )
+	);
+	$nyc_count( 'case', $nyc_action );
+}
+
+foreach ( $nyc_data['reveals'] ?? array() as $nyc_r ) {
+	$nyc_fields                 = $nyc_r['fields'];
+	$nyc_fields['before_image'] = nyc_import_image( $nyc_dir, $nyc_r['before_image'] );
+	$nyc_fields['after_image']  = nyc_import_image( $nyc_dir, $nyc_r['after_image'] );
+	$nyc_fields['doctor']       = $nyc_doctor_id( $nyc_r['doctor'] );
+	$nyc_terms                  = $nyc_case_terms( $nyc_r['terms'] );
+	[ , $nyc_action ]           = nyc_import_entry(
+		'reveal',
+		$nyc_r,
+		0,
+		$nyc_fields,
+		$nyc_update,
+		static fn( int $id ) => wp_set_object_terms( $id, $nyc_terms, 'case_treatment' )
+	);
+	$nyc_count( 'reveal', $nyc_action );
 }
 
 foreach ( $nyc_counts as $nyc_type => $nyc_by_action ) {
