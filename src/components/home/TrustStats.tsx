@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Dictionary } from "@/i18n/get-dictionary";
+import type { TrustStat as Stat } from "@/data/home";
 
 /**
  * Stats strip — the one place on the homepage where the guide's "rose-gold
@@ -20,15 +20,9 @@ import type { Dictionary } from "@/i18n/get-dictionary";
  */
 
 type Props = {
-  t: Dictionary["home"]["trust"];
+  /** From getHome() — Page Manage → Home → Trust Bar. */
+  stats: Stat[];
   locale: string;
-};
-
-type Stat = {
-  to: number;
-  suffix?: string;
-  unit?: string;
-  label: string;
 };
 
 const GRADIENT =
@@ -119,7 +113,7 @@ function StatItem({
   );
 }
 
-export default function TrustStats({ t, locale }: Props) {
+export default function TrustStats({ stats, locale }: Props) {
   const isTH = locale === "th";
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
@@ -139,12 +133,6 @@ export default function TrustStats({ t, locale }: Props) {
     io.observe(el);
     return () => io.disconnect();
   }, [active]);
-
-  const stats: Stat[] = [
-    { to: 20, suffix: "+", unit: isTH ? "ปี" : "yrs", label: t.experience },
-    { to: 50000, suffix: "+", label: t.cases },
-    { to: 4, label: t.specialists },
-  ];
 
   return (
     <div className="bg-[var(--color-primary)] border-y border-[var(--color-accent-border)]">

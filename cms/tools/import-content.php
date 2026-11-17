@@ -11,6 +11,7 @@
  *   case_terms, cases, reveals  (nyc-import-cases.zip)  — Before & After round
  *   about            (nyc-import-about.zip)    — Page Manage → About
  *   hero_slides, home_video  (nyc-import-hero.zip)  — Hero Slides + Home intro video
+ *   home             (nyc-import-home.zip)     — Page Manage → Home: Trust Bar + clinic intro
  *
  * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
@@ -371,6 +372,18 @@ if ( isset( $nyc_data['home_video'] ) ) {
 	} else {
 		pods( 'nyc_home' )->save( array( 'hero_video' => nyc_import_image( $nyc_dir, $nyc_data['home_video'] ) ) );
 		$nyc_count( 'home video', $nyc_has ? 'updated' : 'created' );
+	}
+}
+
+// ── Page Manage → Home: Trust Bar + clinic intro ────────────────────────────
+// Left alone when either part already has content (unless "update").
+if ( isset( $nyc_data['home'] ) ) {
+	$nyc_has = '' !== (string) get_option( 'nyc_home_stat_1_value', '' ) || '' !== trim( (string) get_option( 'nyc_home_quote_th', '' ) );
+	if ( $nyc_has && ! $nyc_update ) {
+		$nyc_count( 'home', 'skipped' );
+	} else {
+		pods( 'nyc_home' )->save( $nyc_data['home'] );
+		$nyc_count( 'home', $nyc_has ? 'updated' : 'created' );
 	}
 }
 

@@ -105,7 +105,7 @@ export default async function ServiceDetailPage({
         lineUrl={site.lineUrl}
         slides={hero.serviceSlides}
       />
-      <TrustBar t={t.home.trust} locale={locale} />
+      <TrustBar locale={locale} />
 
       {parent && (
         <div className="bg-[var(--color-surface)] pt-8">

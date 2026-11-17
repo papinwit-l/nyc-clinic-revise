@@ -1,21 +1,20 @@
-import type { Dictionary } from "@/i18n/get-dictionary";
 import AwardsShelf from "@/components/shared/AwardsShelf";
 import { getAwards } from "@/data/awards";
+import { getHome } from "@/data/home";
 import TrustStats from "./TrustStats";
 
 type Props = {
-  t: Dictionary["home"]["trust"];
   locale: string;
 };
 
-export default async function TrustBar({ t, locale }: Props) {
-  const awards = await getAwards();
+export default async function TrustBar({ locale }: Props) {
+  const [awards, { stats }] = await Promise.all([getAwards(), getHome(locale)]);
   return (
     <section>
       {/* Stats strip — own client component: the count-up needs an
           IntersectionObserver, and keeping it isolated leaves the rest of
           TrustBar on the server. */}
-      <TrustStats t={t} locale={locale} />
+      <TrustStats stats={stats} locale={locale} />
 
       {/* ── Industry recognition (white band) ──
           Replaces the certificate marquee. Those SVGs were invented

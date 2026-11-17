@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Dictionary } from "@/i18n/get-dictionary";
+import type { HomeAbout } from "@/data/home";
 import SectionHeader from "@/components/shared/SectionHeader";
 import InView from "@/components/shared/InView";
 import Image from "next/image";
@@ -16,7 +16,8 @@ const aboutImage = aboutImageSrc[0];
 const showNavyBlock = true;
 
 type Props = {
-  t: Dictionary["home"]["about"];
+  /** From getHome() — Page Manage → Home → Clinic intro. */
+  t: HomeAbout;
   locale: string;
 };
 

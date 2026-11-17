@@ -215,6 +215,7 @@ it doesn't hold are left alone.
 | `nyc-import-cases.zip` | Categories: Nose Thread Lift + 3 draft sub-categories; 9 cases, 1 reveal (all Dr. Jing, so import Doctors first) |
 | `nyc-import-about.zip` | Page Manage → About: story (3 paragraphs TH + EN) and 6 facility photos. Skipped if the story already has text. |
 | `nyc-import-hero.zip` | Hero Slides: the 2 current banners (desktop only), and the intro video (re-encoded to H.264) on Page Manage → Home. |
+| `nyc-import-home.zip` | Page Manage → Home: 3 Trust Bar stats and the clinic intro (quote, bio, 3 pillars), from the current site text. Skipped if either already has content. |
 
 1. Upload the zip to the CMS webspace's **home folder** (one level above
    `httpdocs`, so it's never reachable from the web) and extract it there. Each

@@ -23,6 +23,7 @@ import ServicesOverview from "@/components/home/ServicesOverview";
 import { getFeaturedReveal } from "@/data/reveal";
 import { getSiteSettings } from "@/data/site-settings";
 import { getHero } from "@/data/hero";
+import { getHome } from "@/data/home";
 
 export default async function HomePage({
   params,
@@ -45,6 +46,7 @@ export default async function HomePage({
     allFaqs,
     site,
     hero,
+    home,
   ] = await Promise.all([
     getServices(locale),
     getCases(locale, { limit: 6 }),
@@ -58,13 +60,14 @@ export default async function HomePage({
     getFaqs(locale),
     getSiteSettings(),
     getHero(),
+    getHome(locale),
   ]);
 
   return (
     <>
       <Hero t={t.home.hero} locale={locale} lineUrl={site.lineUrl} hero={hero} />
-      <TrustBar t={t.home.trust} locale={locale} />
-      <About t={t.home.about} locale={locale} />
+      <TrustBar locale={locale} />
+      <About t={home.about} locale={locale} />
       <Doctors t={t.home.doctors} locale={locale} data={doctors} />
       <ServicesOverview
         t={t.home.services}
