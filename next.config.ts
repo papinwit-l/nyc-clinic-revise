@@ -21,7 +21,11 @@ const nextConfig: NextConfig = {
         pathname: "/wp-content/uploads/**",
       },
     ],
-    unoptimized: true,
+    // Resized + WebP per screen size by `next start` (sharp), cached in
+    // .next/cache/images. WP uploads get a new URL when replaced, so a long
+    // cache is safe.
+    formats: ["image/webp"],
+    minimumCacheTTL: 2678400, // 31 days
   },
 };
 
