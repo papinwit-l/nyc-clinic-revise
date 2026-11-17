@@ -1,4 +1,6 @@
-import { alternatesFor } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+import { serviceLd } from "@/lib/structured-data";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,11 +55,11 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const service = await getService(locale, slug);
   if (!service) return {};
-  return {
-    title: `${service.title} — NYC Clinic`,
-    description: service.summary,
-    alternates: alternatesFor(locale, `/services/${slug}`),
-  };
+  return pageMeta(locale, `/services/${slug}`, {
+    title: service.seoTitle || service.title,
+    description: service.seoDesc || service.summary,
+    image: service.image || undefined,
+  });
 }
 
 export default async function ServiceDetailPage({
@@ -96,9 +98,16 @@ export default async function ServiceDetailPage({
     : null;
   const detail = service.detail;
   const showcase = detail?.showcase ?? [];
+  const structured = serviceLd(service, locale, [
+    { name: t.nav.home, path: "" },
+    { name: t.nav.services, path: "/services" },
+    ...(parent ? [{ name: parent.title, path: `/services/${parent.slug}` }] : []),
+    { name: service.title, path: `/services/${service.slug}` },
+  ]);
 
   return (
     <>
+      <JsonLd data={structured} />
       <PageHeaderEnhance
         label={service.subtitle}
         heading={service.title}

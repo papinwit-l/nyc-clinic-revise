@@ -1,4 +1,4 @@
-import { alternatesFor } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import { getLegalPage, type LegalSlug } from "@/data/legal";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -18,10 +18,9 @@ export async function legalMetadata(
 ): Promise<Metadata> {
   const page = await getLegalPage(locale, slug);
   return {
-    title: `${page.title} — NYC Clinic`,
+    ...(await pageMeta(locale, `/${slug}`, { title: page.title })),
     // Keep placeholder skeletons out of search results.
     robots: page.draft ? { index: false, follow: true } : undefined,
-    alternates: alternatesFor(locale, `/${slug}`),
   };
 }
 

@@ -43,6 +43,9 @@ type Source = {
     summary: string;
     points: string[];
     detail?: ServiceDetail;
+    /** SEO overrides; empty = page falls back to title / summary. */
+    seoTitle?: string;
+    seoDesc?: string;
   }>;
 };
 
@@ -58,14 +61,14 @@ type WpService = {
   facts: { label_th: string; label_en: string; value_th: string; value_en: string }[];
   showcase: { title_th: string; title_en: string; image: WpImage }[];
 } & Record<
-  `${"title" | "desc" | "summary" | "intro"}_${Lang}`,
+  `${"title" | "desc" | "summary" | "intro" | "seo_title" | "seo_desc"}_${Lang}`,
   string
 > &
   Record<`${"points" | "good_for" | "benefits" | "areas"}_${Lang}`, string[] | null>;
 
 const FIELDS = [
   "id,slug,parent,image,signature,facts,showcase",
-  ...["title", "desc", "summary", "intro", "points", "good_for", "benefits", "areas"].flatMap(
+  ...["title", "desc", "summary", "intro", "points", "good_for", "benefits", "areas", "seo_title", "seo_desc"].flatMap(
     (f) => [`${f}_th`, `${f}_en`],
   ),
 ].join(",");
@@ -82,7 +85,7 @@ const pick = <T,>(want: T, other: T, empty: (x: T) => boolean) =>
 function fromWp(s: WpService, slugById: Map<number, string>): Source {
   const lang = (l: Lang) => {
     const o: Lang = l === "th" ? "en" : "th";
-    const t = (f: "title" | "desc" | "summary" | "intro") =>
+    const t = (f: "title" | "desc" | "summary" | "intro" | "seo_title" | "seo_desc") =>
       pick(str(s[`${f}_${l}`]), str(s[`${f}_${o}`]), (x) => !x);
     const l2 = (f: "points" | "good_for" | "benefits" | "areas") =>
       pick(list(s[`${f}_${l}`]), list(s[`${f}_${o}`]), (x) => !x.length);
@@ -117,6 +120,8 @@ function fromWp(s: WpService, slugById: Map<number, string>): Source {
       summary: t("summary"),
       points: l2("points"),
       detail: Object.keys(detail).length ? detail : undefined,
+      seoTitle: t("seo_title") || undefined,
+      seoDesc: t("seo_desc") || undefined,
     };
   };
   return {
@@ -194,6 +199,8 @@ async function toCard(src: Source, locale: string): Promise<ServiceCard> {
     signature: src.signature || undefined,
     parent: src.parent || undefined,
     detail,
+    seoTitle: own.seoTitle,
+    seoDesc: own.seoDesc,
   };
 }
 

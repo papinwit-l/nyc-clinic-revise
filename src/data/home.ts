@@ -88,3 +88,35 @@ export const getHome = cache(async (locale: string): Promise<HomeContent> => {
     },
   };
 });
+
+/** Default homepage title + description (also the layout's). */
+export const HOME_DEFAULT_TITLE = "NYC Clinic — New York Clinic, GR";
+const HOME_DEFAULT_DESC = {
+  th: "ศูนย์ความงามครบวงจร ร้อยไหมจมูก ศัลยกรรม ฟิลเลอร์ โบท็อกซ์ โดยทีมแพทย์ผู้เชี่ยวชาญกว่า 15 ปี — NYC Clinic กรุงเทพฯ",
+  en: "Aesthetic clinic in Thonglor, Bangkok — nose thread lift, facial design, cosmetic surgery and skin treatments by specialist doctors.",
+};
+
+/**
+ * Page Manage → Home → Search & sharing. Each part optional: no title →
+ * the default above; no description → the built-in one; no image → the
+ * default share image (src/lib/seo.ts).
+ */
+export const getHomeSeo = cache(
+  async (locale: string): Promise<{ title?: string; description: string; image?: string }> => {
+    const isTH = locale === "th";
+    const fallback = { description: isTH ? HOME_DEFAULT_DESC.th : HOME_DEFAULT_DESC.en };
+    if (!wpConfigured()) return fallback;
+    const { home = {} } = await getSitePayload();
+    const pick = (base: string) => {
+      const th = str(home[`${base}_th`]);
+      const en = str(home[`${base}_en`]);
+      return isTH ? th || en : en || th;
+    };
+    const img = home.share_image as { url?: string } | null | undefined;
+    return {
+      title: pick("seo_title") || undefined,
+      description: pick("seo_desc") || fallback.description,
+      image: img?.url || undefined,
+    };
+  },
+);

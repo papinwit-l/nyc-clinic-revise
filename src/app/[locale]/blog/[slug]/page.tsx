@@ -1,4 +1,4 @@
-import { alternatesFor } from "@/lib/seo";
+import { alternatesFor, pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,20 +47,17 @@ export async function generateMetadata({
   const otherPost = await getPostBySlug(other, slug);
   const bilingual = !!otherPost && otherPost.lang !== post.lang;
 
-  return {
-    title: `${post.title} — NYC Clinic`,
+  return pageMeta(locale, `/blog/${slug}`, {
+    title: post.title,
     description: post.excerpt,
+    // WP cover is an absolute URL; a mock one is a path (metadataBase resolves it).
+    image: post.image || undefined,
+    type: "article",
+    publishedTime: post.date,
     alternates: bilingual
       ? alternatesFor(locale, `/blog/${slug}`)
       : { canonical: `${SITE_URL}/${canonicalLocale}/blog/${slug}` },
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.excerpt,
-      publishedTime: post.date,
-      images: [{ url: `${SITE_URL}${post.image}` }],
-    },
-  };
+  });
 }
 
 export default async function BlogPostPage({

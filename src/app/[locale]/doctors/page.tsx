@@ -1,4 +1,6 @@
-import { alternatesFor } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+import { doctorsLd } from "@/lib/structured-data";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import { getDoctors } from "@/data/doctors";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -16,11 +18,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getDictionary(locale as Locale);
-  return {
-    title: `${t.doctor.hero.heading} — NYC Clinic`,
+  return pageMeta(locale, "/doctors", {
+    title: `${t.doctor.hero.heading}`,
     description: t.doctor.hero.description,
-    alternates: alternatesFor(locale, "/doctors"),
-  };
+  });
 }
 
 export default async function DoctorsPage({
@@ -43,6 +44,7 @@ export default async function DoctorsPage({
 
   return (
     <>
+      <JsonLd data={doctorsLd(doctors, locale)} />
       <PageHeader
         label={t.doctor.hero.label}
         heading={t.doctor.hero.heading}

@@ -66,4 +66,7 @@ export type ServiceCard = {
   /** Resolved at fetch time — the top-level service's children. */
   children?: ServiceCard[];
   detail?: ServiceDetail;
+  /** WP "Search (SEO)" overrides — empty means title / summary. */
+  seoTitle?: string;
+  seoDesc?: string;
 };

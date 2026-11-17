@@ -12,6 +12,7 @@
  *   about            (nyc-import-about.zip)    — Page Manage → About
  *   hero_slides, home_video  (nyc-import-hero.zip)  — Hero Slides + Home intro video
  *   home             (nyc-import-home.zip)     — Page Manage → Home: Trust Bar + clinic intro
+ *   share_image      (nyc-import-seo.zip)      — Site Settings → Default share image
  *
  * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
@@ -384,6 +385,17 @@ if ( isset( $nyc_data['home'] ) ) {
 	} else {
 		pods( 'nyc_home' )->save( $nyc_data['home'] );
 		$nyc_count( 'home', $nyc_has ? 'updated' : 'created' );
+	}
+}
+
+// ── Site Settings → Default share image ─────────────────────────────────────
+if ( isset( $nyc_data['share_image'] ) ) {
+	$nyc_has = (bool) get_option( 'nyc_site_share_image', '' );
+	if ( $nyc_has && ! $nyc_update ) {
+		$nyc_count( 'share image', 'skipped' );
+	} else {
+		pods( 'nyc_site' )->save( array( 'share_image' => nyc_import_image( $nyc_dir, $nyc_data['share_image'] ) ) );
+		$nyc_count( 'share image', $nyc_has ? 'updated' : 'created' );
 	}
 }
 

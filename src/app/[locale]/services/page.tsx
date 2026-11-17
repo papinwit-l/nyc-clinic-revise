@@ -1,4 +1,4 @@
-import { alternatesFor } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import { getServices } from "@/data/services";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -23,11 +23,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getDictionary(locale as Locale);
-  return {
-    title: `${t.services.hero.heading} — NYC Clinic`,
+  return pageMeta(locale, "/services", {
+    title: `${t.services.hero.heading}`,
     description: t.services.hero.description,
-    alternates: alternatesFor(locale, "/services"),
-  };
+  });
 }
 
 export default async function ServicesPage({

@@ -1015,6 +1015,53 @@
        "repeatable_format": "default"
       }
      ]
+    },
+    {
+     "name": "service_seo",
+     "label": "Search (SEO)",
+     "description": "Optional. The share image is the service image above.",
+     "fields": [
+      {
+       "name": "seo_title_th",
+       "label": "SEO title (TH)",
+       "type": "text",
+       "description": "Shown as the Google result title. About 60 characters. \" | NYC Clinic\" is added automatically. Empty: the service title.",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "seo_title_en",
+       "label": "SEO title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "seo_desc_th",
+       "label": "SEO description (TH)",
+       "type": "paragraph",
+       "description": "Shown under the Google result title. About 150 characters. Empty: the summary.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "seo_desc_en",
+       "label": "SEO description (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      }
+     ]
     }
    ]
   },
@@ -1485,6 +1532,31 @@
        "website_clickable": "0"
       }
      ]
+    },
+    {
+     "name": "site_share",
+     "label": "Sharing",
+     "description": "",
+     "fields": [
+      {
+       "name": "share_image",
+       "label": "Default share image",
+       "type": "file",
+       "description": "The preview picture when a page is shared on LINE, Facebook etc. 1200 × 630 JPG, under 1 MB; keep the logo and text away from the edges. Used by every page without its own (services use their image, articles their cover). Empty: the built-in image.",
+       "required": "0",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
+      }
+     ]
     }
    ]
   },
@@ -1530,7 +1602,7 @@
     {
      "name": "home_trust",
      "label": "Trust Bar",
-     "description": "Leave a stat's number empty to hide it.",
+     "description": "Leave a stat's number empty to use the built-in one.",
      "fields": [
       {
        "name": "stat_1_value",
@@ -1687,6 +1759,71 @@
        "description": "",
        "required": "0",
        "text_max_length": "255"
+      }
+     ]
+    },
+    {
+     "name": "home_seo",
+     "label": "Search & sharing",
+     "description": "Optional.",
+     "fields": [
+      {
+       "name": "seo_title_th",
+       "label": "SEO title (TH)",
+       "type": "text",
+       "description": "Google result title for the homepage. About 60 characters. Empty: \"NYC Clinic — New York Clinic, GR\".",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "seo_title_en",
+       "label": "SEO title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "seo_desc_th",
+       "label": "SEO description (TH)",
+       "type": "paragraph",
+       "description": "About 150 characters. Empty: the built-in description.",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "seo_desc_en",
+       "label": "SEO description (EN)",
+       "type": "paragraph",
+       "description": "",
+       "required": "0",
+       "paragraph_allow_html": "0",
+       "paragraph_wpautop": "0",
+       "paragraph_wptexturize": "0",
+       "paragraph_convert_chars": "0",
+       "paragraph_max_length": "0"
+      },
+      {
+       "name": "share_image",
+       "label": "Share image",
+       "type": "file",
+       "description": "Optional, 1200 × 630. Empty: the default share image (Site Settings).",
+       "required": "0",
+       "file_format_type": "single",
+       "file_uploader": "attachment",
+       "file_attachment_tab": "upload",
+       "file_type": "images",
+       "file_edit_title": "0",
+       "file_show_edit_link": "1",
+       "file_limit": "0",
+       "file_field_template": "rows",
+       "file_add_button": "Select image",
+       "file_modal_title": "Select image",
+       "file_modal_add_button": "Use image"
       }
      ]
     },

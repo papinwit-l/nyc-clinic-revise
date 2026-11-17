@@ -216,6 +216,7 @@ it doesn't hold are left alone.
 | `nyc-import-about.zip` | Page Manage → About: story (3 paragraphs TH + EN) and 6 facility photos. Skipped if the story already has text. |
 | `nyc-import-hero.zip` | Hero Slides: the 2 current banners (desktop only), and the intro video (re-encoded to H.264) on Page Manage → Home. |
 | `nyc-import-home.zip` | Page Manage → Home: 3 Trust Bar stats and the clinic intro (quote, bio, 3 pillars), from the current site text. Skipped if either already has content. |
+| `nyc-import-seo.zip` | Site Settings → Default share image (the 1200 × 630 reception image). Skipped if one is already set. |
 
 1. Upload the zip to the CMS webspace's **home folder** (one level above
    `httpdocs`, so it's never reachable from the web) and extract it there. Each
@@ -226,6 +227,20 @@ it doesn't hold are left alone.
 Running it again is safe: entries that already exist (same slug) are skipped,
 so edits made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
 overwrites them with the imported content instead.
+
+### SEO & sharing (for marketing / the SEO person)
+
+- **Services → Search (SEO)** and **Page Manage → Home → Search & sharing**:
+  SEO title (about 60 characters — " | NYC Clinic" is added automatically)
+  and SEO description (about 150). Empty = the page's own title / summary.
+- **Share images** (the picture on LINE / Facebook link previews):
+  Site Settings → Default share image for every page; Home has its own
+  optional one; services use their image, articles their cover.
+  1200 × 630 JPG under 1 MB, logo and text away from the edges.
+- Canonical, hreflang, sitemap.xml, robots.txt and structured data
+  (clinic, doctors, service + breadcrumb) are automatic.
+- Before launch the whole site is noindex. Launch: `SITE_INDEXABLE=true` in
+  the app's env, rebuild, submit `/sitemap.xml` in Google Search Console.
 
 ### Hero rules (for marketing)
 

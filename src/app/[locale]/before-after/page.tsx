@@ -1,4 +1,4 @@
-import { alternatesFor } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCaseGroups } from "@/data/cases";
@@ -32,11 +32,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getDictionary(locale as Locale);
-  return {
-    title: `${t.beforeAfter.hero.heading} — NYC Clinic`,
+  return pageMeta(locale, "/before-after", {
+    title: `${t.beforeAfter.hero.heading}`,
     description: t.beforeAfter.hero.description,
-    alternates: alternatesFor(locale, "/before-after"),
-  };
+  });
 }
 
 export default async function BeforeAfterPage({

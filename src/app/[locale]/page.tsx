@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { alternatesFor } from "@/lib/seo";
+import { getDefaultShareImage, pageMeta } from "@/lib/seo";
+import JsonLd from "@/components/shared/JsonLd";
+import { clinicLd } from "@/lib/structured-data";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { getServices } from "@/data/services";
@@ -25,7 +27,7 @@ import ServicesOverview from "@/components/home/ServicesOverview";
 import { getFeaturedReveal } from "@/data/reveal";
 import { getSiteSettings } from "@/data/site-settings";
 import { getHero } from "@/data/hero";
-import { getHome } from "@/data/home";
+import { getHome, getHomeSeo, HOME_DEFAULT_TITLE } from "@/data/home";
 
 export async function generateMetadata({
   params,
@@ -33,7 +35,13 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return { alternates: alternatesFor(locale, "") };
+  const seo = await getHomeSeo(locale);
+  return pageMeta(locale, "", {
+    title: seo.title,
+    shareTitle: HOME_DEFAULT_TITLE,
+    description: seo.description,
+    image: seo.image,
+  });
 }
 
 export default async function HomePage({
@@ -74,8 +82,11 @@ export default async function HomePage({
     getHome(locale),
   ]);
 
+  const clinic = clinicLd(site, locale, (await getDefaultShareImage()).url);
+
   return (
     <>
+      <JsonLd data={clinic} />
       <Hero t={t.home.hero} locale={locale} lineUrl={site.lineUrl} hero={hero} />
       <TrustBar locale={locale} />
       <About t={home.about} locale={locale} />

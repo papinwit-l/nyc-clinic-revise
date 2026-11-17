@@ -1,4 +1,4 @@
-import { alternatesFor } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -45,11 +45,10 @@ export async function generateMetadata({
     ungroupedTitle: t.beforeAfter.ungrouped,
   });
   if (!group) return {};
-  return {
-    title: `${group.title} — ${t.beforeAfter.hero.heading} | NYC Clinic`,
+  return pageMeta(locale, `/before-after/${treatment}`, {
+    title: `${group.title} — ${t.beforeAfter.hero.heading}`,
     description: t.beforeAfter.hero.description,
-    alternates: alternatesFor(locale, `/before-after/${treatment}`),
-  };
+  });
 }
 
 export default async function TreatmentGalleryPage({

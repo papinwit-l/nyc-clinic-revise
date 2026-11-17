@@ -1,4 +1,4 @@
-import { alternatesFor } from "@/lib/seo";
+import { pageMeta } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { daysLeft, getActivePromotions } from "@/data/promotions";
@@ -38,11 +38,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getDictionary(locale as Locale);
-  return {
-    title: `${t.promotions.hero.heading} — NYC Clinic`,
+  return pageMeta(locale, "/promotions", {
+    title: `${t.promotions.hero.heading}`,
     description: t.promotions.hero.description,
-    alternates: alternatesFor(locale, "/promotions"),
-  };
+  });
 }
 
 export default async function PromotionsPage({
