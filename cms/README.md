@@ -232,7 +232,9 @@ overwrites them with the imported content instead.
   required; mobile image 1080 × 1920 (9:16), optional. Below 1024px wide the
   mobile image is used; without one, phones crop the desktop image. Keep faces
   and details in the middle — the logo and buttons sit over the centre.
-- Used by the homepage hero and the service page headers.
+- "Show on" ticks per slide: homepage and/or service page headers (both on by
+  default). If no slide is ticked for service pages, they use the homepage
+  slides.
 - **Intro video** (Page Manage → Home, optional): MP4 in **H.264** (not HEVC —
   Firefox and many Windows PCs can't play HEVC), 1920 × 1080, no sound,
   5–10 seconds, under 5 MB. Desktop only, plays once, then the slides.

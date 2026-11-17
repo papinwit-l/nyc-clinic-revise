@@ -2,7 +2,10 @@
 
 import HeroSlideImage from "./HeroSlideImage";
 import type { HeroSlide } from "@/data/hero";
-import { Fragment, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
+
+/** Matches the homepage hero. */
+const SLIDE_INTERVAL_MS = 6000;
 import HeroLogo from "./HeroLogo";
 import { LineIcon } from "./SocialIcons";
 import Link from "next/link";
@@ -65,6 +68,16 @@ export default function PageHeaderEnhance({
   const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
 
   const [slideIndex, setSlideIndex] = useState(0);
+
+  // Same rotation as the homepage hero.
+  useEffect(() => {
+    if (slides.length < 2) return;
+    const id = setInterval(
+      () => setSlideIndex((i) => (i + 1) % slides.length),
+      SLIDE_INTERVAL_MS,
+    );
+    return () => clearInterval(id);
+  }, [slides.length]);
 
   return (
     <section className="relative h-svh min-h-[600px] flex items-center justify-center overflow-hidden bg-[var(--color-primary)]">

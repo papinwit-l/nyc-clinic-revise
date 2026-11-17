@@ -743,6 +743,28 @@
        "file_add_button": "Select image",
        "file_modal_title": "Select image",
        "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "show_home",
+       "label": "Show on homepage",
+       "type": "boolean",
+       "description": "",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Show on homepage",
+       "boolean_no_label": "",
+       "default": "1"
+      },
+      {
+       "name": "show_service",
+       "label": "Show on service pages",
+       "type": "boolean",
+       "description": "If no slide has this ticked, service pages use the homepage slides.",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Show on service pages",
+       "boolean_no_label": "",
+       "default": "1"
       }
      ]
     }

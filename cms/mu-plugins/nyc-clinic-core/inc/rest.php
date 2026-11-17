@@ -290,3 +290,22 @@ function nyc_case_terms( int $post_id ): array {
 		'subcategories' => array_map( 'nyc_case_term', $children ),
 	);
 }
+
+// ── Hero Slides: placement ticks default to ON ──────────────────────────────
+// Slides saved before the "Show on" ticks existed have no meta for them;
+// treat missing as ticked so they keep showing everywhere.
+add_filter(
+	'rest_prepare_hero_slide',
+	static function ( WP_REST_Response $response, WP_Post $post ) {
+		$data = $response->get_data();
+		foreach ( array( 'show_home', 'show_service' ) as $key ) {
+			if ( array_key_exists( $key, $data ) && ! metadata_exists( 'post', $post->ID, $key ) ) {
+				$data[ $key ] = true;
+			}
+		}
+		$response->set_data( $data );
+		return $response;
+	},
+	20,
+	2
+);

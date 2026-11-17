@@ -103,7 +103,7 @@ export default async function ServiceDetailPage({
         description={service.summary}
         locale={locale}
         lineUrl={site.lineUrl}
-        slides={hero.slides}
+        slides={hero.serviceSlides}
       />
       <TrustBar t={t.home.trust} locale={locale} />
 
