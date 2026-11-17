@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
+import { INDEXABLE } from "@/lib/seo";
 import {
   Playfair_Display,
   Montserrat,
@@ -101,6 +103,10 @@ export function generateStaticParams() {
 // ─── Metadata ───────────────────────────────────────
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  // Pre-launch: whole site noindex (src/lib/seo.ts). Pages that set their own
+  // robots (draft legal pages) keep theirs.
+  robots: INDEXABLE ? undefined : { index: false, follow: true },
   title: {
     default: "NYC Clinic — New York Clinic, GR",
     template: "%s | NYC Clinic",

@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { daysLeft, getActivePromotions } from "@/data/promotions";
@@ -40,6 +41,7 @@ export async function generateMetadata({
   return {
     title: `${t.promotions.hero.heading} — NYC Clinic`,
     description: t.promotions.hero.description,
+    alternates: alternatesFor(locale, "/promotions"),
   };
 }
 

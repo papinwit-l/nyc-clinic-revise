@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
@@ -24,6 +25,7 @@ export async function generateMetadata({
   return {
     title: `${t.about.hero.heading} — NYC Clinic`,
     description: t.about.hero.description,
+    alternates: alternatesFor(locale, "/about"),
   };
 }
 

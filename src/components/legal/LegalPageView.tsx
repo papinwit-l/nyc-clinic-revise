@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import { getLegalPage, type LegalSlug } from "@/data/legal";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -20,6 +21,7 @@ export async function legalMetadata(
     title: `${page.title} — NYC Clinic`,
     // Keep placeholder skeletons out of search results.
     robots: page.draft ? { index: false, follow: true } : undefined,
+    alternates: alternatesFor(locale, `/${slug}`),
   };
 }
 

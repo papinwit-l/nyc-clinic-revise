@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCaseGroups } from "@/data/cases";
@@ -34,6 +35,7 @@ export async function generateMetadata({
   return {
     title: `${t.beforeAfter.hero.heading} — NYC Clinic`,
     description: t.beforeAfter.hero.description,
+    alternates: alternatesFor(locale, "/before-after"),
   };
 }
 

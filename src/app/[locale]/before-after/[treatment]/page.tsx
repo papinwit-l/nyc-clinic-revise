@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -47,6 +48,7 @@ export async function generateMetadata({
   return {
     title: `${group.title} — ${t.beforeAfter.hero.heading} | NYC Clinic`,
     description: t.beforeAfter.hero.description,
+    alternates: alternatesFor(locale, `/before-after/${treatment}`),
   };
 }
 

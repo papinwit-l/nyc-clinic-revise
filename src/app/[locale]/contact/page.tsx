@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getFeaturedFaqs } from "@/data/faq";
@@ -50,6 +51,7 @@ export async function generateMetadata({
   return {
     title: `${t.contact.hero.heading} — NYC Clinic`,
     description: t.contact.hero.description,
+    alternates: alternatesFor(locale, "/contact"),
   };
 }
 

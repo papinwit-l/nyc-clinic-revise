@@ -14,7 +14,7 @@
 
 /** Absolute site origin — used for canonical URLs. Set NEXT_PUBLIC_SITE_URL in the environment. */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://nycclinic.net"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://nyc-clinic.com"
 ).replace(/\/$/, "");
 
 type Bilingual = { th: string; en: string };

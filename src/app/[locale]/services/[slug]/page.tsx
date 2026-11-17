@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,6 +56,7 @@ export async function generateMetadata({
   return {
     title: `${service.title} — NYC Clinic`,
     description: service.summary,
+    alternates: alternatesFor(locale, `/services/${slug}`),
   };
 }
 

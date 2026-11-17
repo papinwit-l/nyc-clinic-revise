@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { alternatesFor } from "@/lib/seo";
 import { getDictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { getServices } from "@/data/services";
@@ -24,6 +26,15 @@ import { getFeaturedReveal } from "@/data/reveal";
 import { getSiteSettings } from "@/data/site-settings";
 import { getHero } from "@/data/hero";
 import { getHome } from "@/data/home";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: alternatesFor(locale, "") };
+}
 
 export default async function HomePage({
   params,

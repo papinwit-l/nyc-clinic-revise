@@ -1,3 +1,4 @@
+import { alternatesFor } from "@/lib/seo";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,13 +42,17 @@ export async function generateMetadata({
   // exists in only one language is the same document on /th and /en, so both
   // URLs point at that language's and don't compete.
   const canonicalLocale = post.lang;
+  // hreflang only when the article really exists in both languages.
+  const other = locale === "th" ? "en" : "th";
+  const otherPost = await getPostBySlug(other, slug);
+  const bilingual = !!otherPost && otherPost.lang !== post.lang;
 
   return {
     title: `${post.title} — NYC Clinic`,
     description: post.excerpt,
-    alternates: {
-      canonical: `${SITE_URL}/${canonicalLocale}/blog/${slug}`,
-    },
+    alternates: bilingual
+      ? alternatesFor(locale, `/blog/${slug}`)
+      : { canonical: `${SITE_URL}/${canonicalLocale}/blog/${slug}` },
     openGraph: {
       type: "article",
       title: post.title,
