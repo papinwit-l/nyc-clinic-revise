@@ -256,6 +256,37 @@ overwrites them with the imported content instead.
 - Before launch the whole site is noindex. Launch: `SITE_INDEXABLE=true` in
   the app's env, rebuild, submit `/sitemap.xml` in Google Search Console.
 
+### Tracking — Google Tag Manager (hand-over for the SEO team)
+
+Off until a container ID is set: **Page Manage → Site Settings → Tracking →
+Google Tag Manager ID** (`GTM-…`). Empty = no GTM, no cookie banner, no cookies.
+
+Once set, the site handles:
+- **GTM** on every page.
+- **Consent Mode v2.** Defaults are *denied* for `ad_storage`, `analytics_storage`,
+  `ad_user_data` and `ad_personalization`, set before gtm.js loads. Use tags that
+  honour consent (GA4 and Google Ads do natively); give other tags (Meta Pixel,
+  TikTok, LINE Tag) the built-in consent checks in GTM, or a trigger on
+  `consent_update`.
+- **Cookie banner** (TH/EN): Accept / Decline, remembered per browser. Visitors
+  can change their mind with **Cookie settings** in the footer (PDPA).
+- **dataLayer events for triggers / conversions:**
+
+  | event | fires on | parameters |
+  |---|---|---|
+  | `line_click` | any link to LINE (lin.ee, line.me) | `link_url`, `page_path`, `link_text` |
+  | `phone_click` | any `tel:` link | same |
+  | `consent_update` | Accept / Decline | `consent`: `granted` / `denied` |
+
+  LINE is the clinic's booking channel, so `line_click` is the main conversion.
+
+Not handled by the site:
+- **Privacy Policy:** list the tools you add (Pages → Privacy Policy, section on cookies).
+- **Search Console:** verify with a **DNS TXT record in Cloudflare** (domain
+  property), not through GTM.
+- The whole site is noindex until launch (`SITE_INDEXABLE`), so Search
+  Console only becomes useful after launch.
+
 ### Hero rules (for marketing)
 
 - **Hero Slides** (own menu, drag to order): desktop image 1920 × 1080 (16:9),

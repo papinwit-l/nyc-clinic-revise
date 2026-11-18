@@ -28,6 +28,8 @@ export type SiteSettings = {
   phoneHref: string;
   /** Empty string = the clinic has no account there; components skip it. */
   social: { facebook: string; instagram: string; tiktok: string; youtube: string };
+  /** Google Tag Manager container ("GTM-…"); "" = no tracking, no cookie banner. */
+  gtmId: string;
   clinic: {
     /** Brand name — not CMS content. */
     name: string;
@@ -61,6 +63,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
     tiktok: "https://www.tiktok.com/@nycclinic",
     youtube: "https://www.youtube.com/user/nycnewyorkclinic",
   },
+  gtmId: "",
   clinic: {
     name: "NYC Clinic (New York Clinic, GR)",
     branch: { th: "สาขาทองหล่อ", en: "Thonglor" },

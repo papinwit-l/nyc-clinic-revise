@@ -30,6 +30,13 @@ const en = {
     terms: "Terms",
     ctaLine: "Add LINE for Free Consult",
   },
+  consent: {
+    text: "We use cookies to understand how the site is used and to improve our service. You choose whether to allow them, and can change your mind any time via \"Cookie settings\" at the bottom of the page.",
+    accept: "Accept",
+    decline: "Decline",
+    policy: "Privacy Policy",
+    settings: "Cookie settings",
+  },
   legal: {
     label: "Legal",
     updated: "Last updated",

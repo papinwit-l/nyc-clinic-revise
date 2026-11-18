@@ -1630,6 +1630,21 @@
      ]
     },
     {
+     "name": "site_tracking",
+     "label": "Tracking",
+     "description": "",
+     "fields": [
+      {
+       "name": "gtm_id",
+       "label": "Google Tag Manager ID",
+       "type": "text",
+       "description": "e.g. GTM-ABC1234. Empty: no tracking and no cookie banner. When set, visitors see a cookie banner; GA4, ads and other tags are added inside GTM, and wait for the visitor's consent (Consent Mode v2). List the tools you add in the Privacy Policy.",
+       "required": "0",
+       "text_max_length": "255"
+      }
+     ]
+    },
+    {
      "name": "site_share",
      "label": "Sharing",
      "description": "",

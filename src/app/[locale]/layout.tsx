@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/site";
 import { INDEXABLE } from "@/lib/seo";
+import Tracking from "@/components/tracking/Tracking";
 import {
   Playfair_Display,
   Montserrat,
@@ -149,8 +150,16 @@ export default async function LocaleLayout({
       <body>
         <Header locale={locale as Locale} t={t.nav} />
         <main>{children}</main>
-        <Footer locale={locale as Locale} t={t.footer} navT={t.nav} />
+        <Footer
+          locale={locale as Locale}
+          t={t.footer}
+          navT={t.nav}
+          cookieSettings={site.gtmId ? t.consent.settings : undefined}
+        />
         <ContactWidget locale={locale} site={site} />
+        {site.gtmId && (
+          <Tracking gtmId={site.gtmId} t={t.consent} privacyHref={`/${locale}/privacy-policy`} />
+        )}
       </body>
     </html>
   );

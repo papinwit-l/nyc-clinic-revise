@@ -39,6 +39,7 @@ type RawSiteSettings = {
   instagram: string;
   tiktok: string;
   youtube: string;
+  gtm_id: string;
 };
 
 /** Trimmed text; Windows line breaks from the textarea become plain spaces. */
@@ -78,6 +79,7 @@ function toSiteSettings(raw: Partial<RawSiteSettings>): SiteSettings {
       tiktok: clean(raw.tiktok),
       youtube: clean(raw.youtube),
     },
+    gtmId: /^GTM-[A-Z0-9]{4,}$/i.test(clean(raw.gtm_id)) ? clean(raw.gtm_id).toUpperCase() : "",
     clinic: {
       name: d.clinic.name,
       branch: d.clinic.branch,

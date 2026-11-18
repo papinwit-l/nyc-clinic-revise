@@ -1,5 +1,6 @@
 import { getSiteSettings } from "@/data/site-settings";
 import Link from "next/link";
+import CookieSettingsLink from "@/components/tracking/CookieSettingsLink";
 import { Phone } from "lucide-react";
 import Logo from "@/components/shared/Logo";
 import {
@@ -25,9 +26,11 @@ type Props = {
   locale: Locale;
   t: Dictionary["footer"];
   navT: Dictionary["nav"];
+  /** Label for the "Cookie settings" link — only when tracking is on. */
+  cookieSettings?: string;
 };
 
-export default async function Footer({ locale, t, navT }: Props) {
+export default async function Footer({ locale, t, navT, cookieSettings }: Props) {
   const site = await getSiteSettings();
   const socials = SOCIALS.map((s) => ({ ...s, href: site.social[s.key] })).filter(
     (s) => s.href,
@@ -186,6 +189,16 @@ export default async function Footer({ locale, t, navT }: Props) {
             >
               {t.terms}
             </Link>
+            {cookieSettings && (
+              <>
+                <span className="w-px h-3 bg-white/20" />
+                <CookieSettingsLink
+                  label={cookieSettings}
+                  className="hover:text-white transition-colors"
+                  style={{ fontFamily: localeFont }}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
