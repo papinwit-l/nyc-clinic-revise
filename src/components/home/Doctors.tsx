@@ -79,7 +79,7 @@ export default function Doctors({ t, locale, data }: Props) {
             >
               {featured.fullNameEn}
             </h3>
-            0{/* TH name — always Anuphan */}
+            {/* TH name — always Anuphan */}
             <p
               className="text-[var(--color-accent)] text-base sm:text-lg mt-1.5"
               style={{ fontFamily: "var(--font-thai-head)", fontWeight: 500 }}
