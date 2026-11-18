@@ -13,6 +13,7 @@
  *   hero_slides, home_video  (nyc-import-hero.zip)  — Hero Slides + Home intro video
  *   home             (nyc-import-home.zip)     — Page Manage → Home: Trust Bar + clinic intro
  *   share_image      (nyc-import-seo.zip)      — Site Settings → Default share image
+ *   pages            (nyc-import-legal.zip)    — Pages: privacy-policy, terms
  *
  * Package layout (built from the codebase):
  *   nyc-import/import.php    this file
@@ -51,6 +52,7 @@ $nyc_sections = array(
 	'cases'    => 'case',
 	'reveals'  => 'reveal',
 	'hero_slides' => 'hero_slide',
+	'pages'    => 'page',
 );
 foreach ( $nyc_sections as $nyc_key => $nyc_type ) {
 	if ( isset( $nyc_data[ $nyc_key ] ) && ( ! post_type_exists( $nyc_type ) || ! function_exists( 'pods' ) ) ) {
@@ -397,6 +399,17 @@ if ( isset( $nyc_data['share_image'] ) ) {
 		pods( 'nyc_site' )->save( array( 'share_image' => nyc_import_image( $nyc_dir, $nyc_data['share_image'] ) ) );
 		$nyc_count( 'share image', $nyc_has ? 'updated' : 'created' );
 	}
+}
+
+// ── Pages: legal pages ──────────────────────────────────────────────────────
+// WordPress creates its own draft "Privacy Policy" page on install, with the
+// same slug. A page without our Thai content is taken over (filled and
+// published) even without "update"; a page someone has filled is left alone.
+foreach ( $nyc_data['pages'] ?? array() as $nyc_pg ) {
+	$nyc_id    = nyc_import_find( 'page', $nyc_pg['slug'] );
+	$nyc_ours  = $nyc_id && '' !== trim( wp_strip_all_tags( (string) get_post_meta( $nyc_id, 'content_th', true ) ) );
+	[ , $nyc_action ] = nyc_import_entry( 'page', $nyc_pg, 0, $nyc_pg['fields'], $nyc_update || ( $nyc_id && ! $nyc_ours ) );
+	$nyc_count( 'page', $nyc_action );
 }
 
 foreach ( $nyc_counts as $nyc_type => $nyc_by_action ) {

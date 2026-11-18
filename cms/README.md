@@ -217,6 +217,7 @@ it doesn't hold are left alone.
 | `nyc-import-hero.zip` | Hero Slides: the 2 current banners (desktop only), and the intro video (re-encoded to H.264) on Page Manage → Home. |
 | `nyc-import-home.zip` | Page Manage → Home: 3 Trust Bar stats and the clinic intro (quote, bio, 3 pillars), from the current site text. Skipped if either already has content. |
 | `nyc-import-seo.zip` | Site Settings → Default share image (the 1200 × 630 reception image). Skipped if one is already set. |
+| `nyc-import-legal.zip` | Pages: Privacy Policy + Terms (the Oct 2026 drafts, TH + EN, "Not reviewed yet" on). Takes over WordPress's own empty draft "Privacy Policy" page; a page already filled is left alone. |
 
 1. Upload the zip to the CMS webspace's **home folder** (one level above
    `httpdocs`, so it's never reachable from the web) and extract it there. Each
@@ -227,6 +228,19 @@ it doesn't hold are left alone.
 Running it again is safe: entries that already exist (same slug) are skipped,
 so edits made in wp-admin are kept. `eval-file ../nyc-import/import.php update`
 overwrites them with the imported content instead.
+
+### Legal pages (Pages → Privacy Policy / Terms)
+
+- Thai and English editors; empty English = the English page shows Thai.
+- Type `{clinic}`, `{address}`, `{phone}`, `{line}` anywhere — filled from
+  Site Settings, so contact details never go stale.
+- `[bracketed]` text = facts the clinic must supply (company name, email,
+  DPO, retention periods, licence number). Drafts, not legal advice.
+- **Not reviewed yet** (on): page is noindex and left out of the sitemap.
+  Untick after the clinic and its lawyer approve the text.
+- **Last updated**: set by hand when the text changes.
+- Keep the slugs `privacy-policy` and `terms`. If a page is deleted or
+  emptied, the site falls back to the built-in draft.
 
 ### SEO & sharing (for marketing / the SEO person)
 

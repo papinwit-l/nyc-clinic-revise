@@ -167,6 +167,10 @@ add_action(
 		remove_post_type_support( 'post', 'custom-fields' );
 		remove_post_type_support( 'post', 'post-formats' );
 		unregister_taxonomy_for_object_type( 'post_tag', 'post' );
+		// Pages (legal pages): the TH/EN editors replace the core one.
+		remove_post_type_support( 'page', 'editor' );
+		remove_post_type_support( 'page', 'custom-fields' );
+		remove_post_type_support( 'page', 'comments' );
 	},
 	100
 );

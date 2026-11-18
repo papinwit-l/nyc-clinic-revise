@@ -54,7 +54,7 @@ export default async function LegalPageView({
             >
               {t.legal.updated} {updated}
             </p>
-            <ArticleBody html={page.html} lang={isTH ? "th" : "en"} />
+            <ArticleBody html={page.html} lang={page.lang} />
           </div>
         </div>
       </section>

@@ -90,6 +90,12 @@ add_filter(
 	10,
 	2
 );
+add_filter(
+	'page_link',
+	'nyc_frontend_permalink',
+	10,
+	2
+);
 
 /** Map a post to its URL on the Next.js site (Thai is the primary locale). */
 function nyc_frontend_permalink( $link, $post ) {
@@ -101,6 +107,8 @@ function nyc_frontend_permalink( $link, $post ) {
 	switch ( $post->post_type ) {
 		case 'post':
 			return "{$base}/blog/{$post->post_name}";
+		case 'page':
+			return "{$base}/{$post->post_name}";
 		case 'service':
 			return "{$base}/services/{$post->post_name}";
 		case 'promotion':

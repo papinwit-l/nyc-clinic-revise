@@ -97,6 +97,102 @@
    ]
   },
   {
+   "name": "page",
+   "label": "Pages",
+   "type": "post_type",
+   "storage": "meta",
+   "object": "page",
+   "rest_enable": "1",
+   "read_all": "1",
+   "groups": [
+    {
+     "name": "page_main",
+     "label": "Page",
+     "description": "The slug must stay privacy-policy or terms — that's the address the page fills.",
+     "fields": [
+      {
+       "name": "title_th",
+       "label": "Title (TH)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "title_en",
+       "label": "Title (EN)",
+       "type": "text",
+       "description": "",
+       "required": "0",
+       "text_max_length": "255"
+      },
+      {
+       "name": "updated",
+       "label": "Last updated",
+       "type": "date",
+       "description": "Shown as \"Last updated\" on the page. Change it when the text changes — not for typo fixes.",
+       "required": "0",
+       "date_type": "format",
+       "date_format": "y_m_d",
+       "date_allow_empty": "1",
+       "date_html5": "1"
+      },
+      {
+       "name": "not_reviewed",
+       "label": "Not reviewed yet",
+       "type": "boolean",
+       "description": "Keeps the page out of Google and the sitemap. Untick once the clinic and its lawyer have approved the text.",
+       "required": "0",
+       "boolean_format_type": "checkbox",
+       "boolean_yes_label": "Not reviewed yet",
+       "boolean_no_label": "",
+       "default": "1"
+      }
+     ]
+    },
+    {
+     "name": "page_th",
+     "label": "Thai",
+     "description": "",
+     "fields": [
+      {
+       "name": "content_th",
+       "label": "Content (TH)",
+       "type": "wysiwyg",
+       "description": "Paste from Word here. You can type {clinic}, {address}, {phone} and {line} anywhere in the text — the site fills them in from Site Settings, so they never go out of date.",
+       "required": "0",
+       "wysiwyg_editor": "tinymce",
+       "wysiwyg_media_buttons": "1",
+       "wysiwyg_editor_height": "400",
+       "wysiwyg_wpautop": "1",
+       "wysiwyg_oembed": "0",
+       "wysiwyg_allow_shortcode": "0"
+      }
+     ]
+    },
+    {
+     "name": "page_en",
+     "label": "English",
+     "description": "",
+     "fields": [
+      {
+       "name": "content_en",
+       "label": "Content (EN)",
+       "type": "wysiwyg",
+       "description": "Empty: the English page shows the Thai text. You can type {clinic}, {address}, {phone} and {line} anywhere in the text — the site fills them in from Site Settings, so they never go out of date.",
+       "required": "0",
+       "wysiwyg_editor": "tinymce",
+       "wysiwyg_media_buttons": "1",
+       "wysiwyg_editor_height": "400",
+       "wysiwyg_wpautop": "1",
+       "wysiwyg_oembed": "0",
+       "wysiwyg_allow_shortcode": "0"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "name": "faq",
    "label": "FAQ",
    "label_singular": "FAQ",
