@@ -75,8 +75,8 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   // const cases = await getCasesForService(locale, slug, 3);
-  const [cases, reveals, promos, igPosts, doctors, reviews, site, hero] = await Promise.all(
-    [
+  const [cases, reveals, promos, igPosts, doctors, reviews, site, hero] =
+    await Promise.all([
       getCasesForService(locale, slug, 3),
       getRevealsForService(locale, slug),
       getActivePromotions(locale),
@@ -85,8 +85,7 @@ export default async function ServiceDetailPage({
       getGoogleReviews(locale),
       getSiteSettings(),
       getHero(),
-    ],
-  );
+    ]);
 
   const bodyFont = isTH ? "var(--font-thai-body)" : "var(--font-body)";
   const titleFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
@@ -101,7 +100,9 @@ export default async function ServiceDetailPage({
   const structured = serviceLd(service, locale, [
     { name: t.nav.home, path: "" },
     { name: t.nav.services, path: "/services" },
-    ...(parent ? [{ name: parent.title, path: `/services/${parent.slug}` }] : []),
+    ...(parent
+      ? [{ name: parent.title, path: `/services/${parent.slug}` }]
+      : []),
     { name: service.title, path: `/services/${service.slug}` },
   ]);
 
@@ -117,6 +118,9 @@ export default async function ServiceDetailPage({
         slides={hero.serviceSlides}
       />
       <TrustBar locale={locale} />
+
+      {/* Doctors */}
+      <ServicesDoctor t={t.home.doctors} locale={locale} data={doctors} />
 
       {parent && (
         <div className="bg-[var(--color-surface)] pt-8">
@@ -508,9 +512,6 @@ export default async function ServiceDetailPage({
         data={promos[0] ?? null}
         total={promos.length}
       />
-
-      {/* Doctors */}
-      <ServicesDoctor t={t.home.doctors} locale={locale} data={doctors} />
 
       {/* Reviews */}
       <GoogleReviews t={t.home.reviews} locale={locale} data={reviews} />
