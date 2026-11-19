@@ -106,6 +106,8 @@ export default async function ServiceDetailPage({
     { name: service.title, path: `/services/${service.slug}` },
   ]);
 
+  const headFont = isTH ? "var(--font-thai-head)" : "var(--font-display)";
+
   return (
     <>
       <JsonLd data={structured} />
@@ -449,6 +451,14 @@ export default async function ServiceDetailPage({
                   reveals.length > 0 ? "mt-14" : ""
                 }`}
               >
+                <p
+                  className={`text-[var(--color-primary)] mt-3 ${
+                    isTH ? "text-[1.35rem]" : "text-[1.5rem]"
+                  }`}
+                  style={{ fontFamily: headFont, fontWeight: isTH ? 600 : 500 }}
+                >
+                  {isTH ? "ช่วยอะไรได้บ้าง" : "Benefit"}
+                </p>
                 {showcase.map((item, i) => (
                   <InView key={item.title} variant="rise" index={i % 3}>
                     <div className="relative aspect-[4/3] overflow-hidden radius-soft bg-[var(--color-surface-dim)] ring-1 ring-[var(--color-border)]">
