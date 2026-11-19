@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ServiceCover from "@/components/shared/ServiceCover";
 import Link from "next/link";
 import type { ServiceCard } from "@/types/service";
 import InView from "@/components/shared/InView";
@@ -36,11 +36,12 @@ export default function ServiceCardItem({
           href={`/${locale}/services/${service.slug}`}
           className="group relative aspect-[4/3] block overflow-hidden"
         >
-          <Image
+          <ServiceCover
             src={service.image}
-            alt={service.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            alt={service.imageAlt || service.title}
+            fit={service.coverFit}
+            position={service.coverPosition}
+            className="transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           {service.signature && (

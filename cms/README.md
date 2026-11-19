@@ -256,6 +256,18 @@ overwrites them with the imported content instead.
 - Before launch the whole site is noindex. Launch: `SITE_INDEXABLE=true` in
   the app's env, rebuild, submit `/sitemap.xml` in Google Search Console.
 
+### Service images (for marketing)
+
+- **4:3**, text in the image is fine.
+- **Image display:** *Fill* crops to the card (default); *Fit* shows the whole
+  image with a blurred fill around it — use Fit for images with text. Only
+  matters where a card isn't 4:3 (the homepage Signature card).
+- **Image position:** Fill → which part stays visible; Fit → where the image
+  sits. Signature card with a text image: **Fit + Top** (title sits below).
+- **Alt Text** (Media Library → the image → Alt Text): write the key words,
+  e.g. "เสริมจมูกไร้ซิลิโคน ร้อยไหมจมูก Semi Surgery – NYC Clinic". Google
+  reads this, not the text drawn in the image. Empty = the service name.
+
 ### Tracking — Google Tag Manager (hand-over for the SEO team)
 
 Off until a container ID is set: **Page Manage → Site Settings → Tracking →

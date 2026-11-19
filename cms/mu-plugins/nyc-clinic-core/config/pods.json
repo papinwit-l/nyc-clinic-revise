@@ -988,7 +988,7 @@
        "name": "image",
        "label": "Image",
        "type": "file",
-       "description": "",
+       "description": "4:3. Text in the image is fine — for Google, also write the key words in the image's Alt Text (Media Library) and in Search (SEO) below.",
        "required": "1",
        "file_format_type": "single",
        "file_uploader": "attachment",
@@ -1001,6 +1001,28 @@
        "file_add_button": "Select image",
        "file_modal_title": "Select image",
        "file_modal_add_button": "Use image"
+      },
+      {
+       "name": "cover_fit",
+       "label": "Image display",
+       "type": "pick",
+       "description": "Matters where a card isn't 4:3 (the homepage Signature card). Fit for images with text in them.",
+       "required": "0",
+       "pick_object": "custom-simple",
+       "pick_custom": "fill|Fill (crop to the card)\nfit|Fit (no crop — whole image, blurred fill around it)",
+       "pick_format_type": "single",
+       "pick_format_single": "dropdown"
+      },
+      {
+       "name": "cover_position",
+       "label": "Image position",
+       "type": "pick",
+       "description": "Fill: which part stays visible. Fit: where the whole image sits in the card.",
+       "required": "0",
+       "pick_object": "custom-simple",
+       "pick_custom": "center|Center\ntop|Top\nbottom|Bottom\nleft|Left\nright|Right",
+       "pick_format_type": "single",
+       "pick_format_single": "dropdown"
       },
       {
        "name": "signature",

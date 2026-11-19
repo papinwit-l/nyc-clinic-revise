@@ -1,5 +1,5 @@
 import { cache } from "react";
-import type { ServiceCard, ServiceDetail } from "@/types/service";
+import type { CoverFit, CoverPosition, ServiceCard, ServiceDetail } from "@/types/service";
 import { wpConfigured, wpFetch } from "@/lib/wp";
 import { getServiceFaqs } from "./faq";
 import { MOCK_SERVICES } from "./mock/services";
@@ -36,6 +36,9 @@ type Source = {
   slug: string;
   parent: string;
   image: string;
+  imageAlt: string;
+  coverFit: CoverFit;
+  coverPosition: CoverPosition;
   signature: boolean;
   text: Record<Lang, {
     title: string;
@@ -51,12 +54,14 @@ type Source = {
 
 // ── WordPress ──────────────────────────────────────────────────────────────
 
-type WpImage = { url: string } | null;
+type WpImage = { url: string; alt?: string } | null;
 type WpService = {
   id: number;
   slug: string;
   parent: number;
   image: WpImage;
+  cover_fit: string;
+  cover_position: string;
   signature: boolean;
   facts: { label_th: string; label_en: string; value_th: string; value_en: string }[];
   showcase: { title_th: string; title_en: string; image: WpImage }[];
@@ -67,7 +72,7 @@ type WpService = {
   Record<`${"points" | "good_for" | "benefits" | "areas"}_${Lang}`, string[] | null>;
 
 const FIELDS = [
-  "id,slug,parent,image,signature,facts,showcase",
+  "id,slug,parent,image,cover_fit,cover_position,signature,facts,showcase",
   ...["title", "desc", "summary", "intro", "points", "good_for", "benefits", "areas", "seo_title", "seo_desc"].flatMap(
     (f) => [`${f}_th`, `${f}_en`],
   ),
@@ -129,6 +134,9 @@ function fromWp(s: WpService, slugById: Map<number, string>): Source {
     slug: s.slug,
     parent: s.parent ? (slugById.get(s.parent) ?? "") : "",
     image: s.image?.url ?? "",
+    imageAlt: (s.image?.alt ?? "").trim(),
+    coverFit: s.cover_fit === "fit" ? "fit" : "fill",
+    coverPosition: (["top", "bottom", "left", "right"] as const).find((p) => p === s.cover_position) ?? "center",
     signature: !!s.signature,
     text: { th: lang("th"), en: lang("en") },
   };
@@ -142,6 +150,9 @@ function fromMock(m: (typeof MOCK_SERVICES)[number]): Source {
     slug: m.slug,
     parent: "parent" in m ? (m.parent as string) : "",
     image: m.image,
+    imageAlt: "",
+    coverFit: "fill",
+    coverPosition: "center",
     signature: "signature" in m ? !!m.signature : false,
     text: {
       th: {
@@ -190,6 +201,9 @@ async function toCard(src: Source, locale: string): Promise<ServiceCard> {
   return {
     slug: src.slug,
     image: src.image,
+    imageAlt: src.imageAlt || undefined,
+    coverFit: src.coverFit,
+    coverPosition: src.coverPosition,
     title: own.title,
     // The subtitle is the same name in the other language.
     subtitle: other.title,

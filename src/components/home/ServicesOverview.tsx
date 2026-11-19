@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ServiceCover from "@/components/shared/ServiceCover";
 import Link from "next/link";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { ServiceCard } from "@/types/service";
@@ -41,11 +41,12 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
             href={`/${locale}/services/${hero.slug}`}
             className="group relative lg:col-span-2 aspect-[4/5] lg:aspect-auto overflow-hidden radius-soft bg-[var(--color-surface-dim)]"
           >
-            <Image
+            <ServiceCover
               src={hero.image}
-              alt={hero.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              alt={hero.imageAlt || hero.title}
+              fit={hero.coverFit}
+              position={hero.coverPosition}
+              className="transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             {/* navy gradient — lightened; the flagship photo is already dark
@@ -94,18 +95,19 @@ export default function ServicesOverview({ t, tCommon, locale, data }: Props) {
 
           {/* ── The rest — clean image-top cards in a 2×2 ── */}
           <div className="lg:col-span-2 grid grid-cols-2 gap-5">
-            {rest.map(({ slug, image, title, subtitle, desc }) => (
+            {rest.map(({ slug, image, imageAlt, coverFit, coverPosition, title, subtitle, desc }) => (
               <Link
                 key={slug}
                 href={`/${locale}/services/${slug}`}
                 className="group relative flex flex-col overflow-hidden bg-white radius-soft transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
+                  <ServiceCover
                     src={image}
-                    alt={title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    alt={imageAlt || title}
+                    fit={coverFit}
+                    position={coverPosition}
+                    className="transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 1024px) 50vw, 25vw"
                   />
                 </div>

@@ -46,9 +46,18 @@ export type ServiceDetail = {
  * a treatment inside it. Two top-level services (nose-thread-lift,
  * facial-thread-lift) have no children — they ARE single treatments.
  */
+/** How a service image sits in a card whose shape differs from the image. */
+export type CoverFit = "fill" | "fit";
+export type CoverPosition = "center" | "top" | "bottom" | "left" | "right";
+
 export type ServiceCard = {
   slug: string;
   image: string;
+  /** WP Media Library alt text; empty → the card uses the title. */
+  imageAlt?: string;
+  /** WP "Image display" / "Image position"; default fill + center. */
+  coverFit?: CoverFit;
+  coverPosition?: CoverPosition;
   title: string;
   subtitle: string;
   /** Homepage card — a list of what's inside. */
