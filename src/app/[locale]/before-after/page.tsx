@@ -109,7 +109,7 @@ export default async function BeforeAfterPage({
                   className="shrink-0 text-sm text-[var(--color-text-muted)] mb-[0.2em]"
                   style={{ fontFamily: bodyFont }}
                 >
-                  {group.total} {t.beforeAfter.cases}
+                  {/* {group.total} {t.beforeAfter.cases} */}
                 </span>
               </div>
 
@@ -153,7 +153,8 @@ export default async function BeforeAfterPage({
                       ...(isTH ? { letterSpacing: 0, fontSize: "0.9rem" } : {}),
                     }}
                   >
-                    {t.beforeAfter.viewAll} {group.total} {t.beforeAfter.cases}
+                    {t.beforeAfter.viewAll}
+                    {/* {t.beforeAfter.viewAll} {group.total} {t.beforeAfter.cases} */}
                     <span aria-hidden>&rarr;</span>
                   </Link>
                 </div>

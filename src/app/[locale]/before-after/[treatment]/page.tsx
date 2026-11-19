@@ -73,7 +73,7 @@ export default async function TreatmentGalleryPage({
       <PageHeader
         label={t.beforeAfter.hero.label}
         heading={group.title}
-        description={`${group.total} ${t.beforeAfter.cases}`}
+        // description={`${group.total} ${t.beforeAfter.cases}`}
         locale={locale}
       />
 
