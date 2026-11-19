@@ -98,9 +98,28 @@ function nyc_import_image( string $dir, string $name ): int {
 		WP_CLI::warning( "Image not found in package: {$name}" );
 		return 0;
 	}
-	$tmp = wp_tempnam( $name );
+	$tmp    = wp_tempnam( $name );
+	$upload = $name;
 	copy( $src, $tmp ); // media_handle_sideload moves the file; keep the package intact.
-	$id = media_handle_sideload( array( 'name' => $name, 'tmp_name' => $tmp ), 0 );
+
+	// Large photos (e.g. 8 MB PNG exports from design tools) → JPG, max 1920 px.
+	// Keeps uploads and backups small; the site serves resized WebP anyway.
+	// PNGs that need transparency (awards) are small and skip this.
+	if ( preg_match( '/\.png$/i', $name ) && filesize( $tmp ) > 1500000 ) {
+		$editor = wp_get_image_editor( $tmp );
+		if ( ! is_wp_error( $editor ) ) {
+			$editor->resize( 1920, 1920, false );
+			$editor->set_quality( 85 );
+			$jpg   = preg_replace( '/\.png$/i', '.jpg', $tmp );
+			$saved = $editor->save( $jpg, 'image/jpeg' );
+			if ( ! is_wp_error( $saved ) ) {
+				@unlink( $tmp );
+				$tmp    = $saved['path'];
+				$upload = preg_replace( '/\.png$/i', '.jpg', $name );
+			}
+		}
+	}
+	$id = media_handle_sideload( array( 'name' => $upload, 'tmp_name' => $tmp ), 0 );
 	if ( is_wp_error( $id ) ) {
 		WP_CLI::warning( "Upload failed for {$name}: " . $id->get_error_message() );
 		return 0;
