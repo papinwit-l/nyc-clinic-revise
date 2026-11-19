@@ -453,7 +453,7 @@ export default async function ServiceDetailPage({
                   }`}
                   style={{ fontFamily: headFont, fontWeight: isTH ? 600 : 500 }}
                 >
-                  {isTH ? "ช่วยอะไรได้บ้าง" : "Benefit"}
+                  {isTH ? "ช่วยอะไรได้บ้าง" : "Key Benefits"}
                 </p>
                 <div
                   className={`grid grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-10 ${
