@@ -200,6 +200,11 @@ export default function ContactWidget({ locale, site }: Props) {
             width={1216}
             height={1860}
             sizes="(max-width: 640px) 120px, 170px"
+            // On screen from the first paint on every page, and on mobile it
+            // is often the largest image PageSpeed sees (LCP) — so load it
+            // now, not lazily. It is ~20 KB after resizing.
+            preload
+            fetchPriority="high"
             className="w-[120px] sm:w-[170px] h-auto select-none drop-shadow-[0_10px_24px_rgba(26,31,58,0.18)]"
           />
 
