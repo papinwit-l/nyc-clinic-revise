@@ -127,6 +127,7 @@ export default async function BeforeAfterPage({
                     locale={locale}
                     index={i}
                     aspect="4/3"
+                    priority={i === 0}
                   />
                 </div>
               )}

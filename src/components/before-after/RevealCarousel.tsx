@@ -32,12 +32,15 @@ type Props = {
   locale: string;
   /** Fallback alt/label when a reveal has no title of its own. */
   treatmentTitle: string;
+  /** Set when the carousel is at the top of the page (LCP image). */
+  priority?: boolean;
 };
 
 export default function RevealCarousel({
   reveals,
   locale,
   treatmentTitle,
+  priority = false,
 }: Props) {
   const isTH = locale === "th";
   const [current, setCurrent] = useState(0);
@@ -79,6 +82,7 @@ export default function RevealCarousel({
             locale={locale}
             index={current}
             aspect="4/3"
+            priority={priority && current === 0}
           />
         </div>
 

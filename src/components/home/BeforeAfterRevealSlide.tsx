@@ -11,6 +11,8 @@ type Props = {
   index: number;
   /** Frame aspect ratio. Defaults to square. */
   aspect?: "square" | "4/3" | "3/4" | "16/9";
+  /** First thing on the page: load now, high priority (it is the LCP). */
+  priority?: boolean;
 };
 
 const ASPECT: Record<NonNullable<Props["aspect"]>, string> = {
@@ -26,6 +28,7 @@ export default function BeforeAfterRevealSlide({
   locale,
   index,
   aspect = "square",
+  priority = false,
 }: Props) {
   const isTH = locale === "th";
   const beforeLabel = isTH ? "ก่อน" : "Before";
@@ -91,6 +94,8 @@ export default function BeforeAfterRevealSlide({
         alt={afterImage.alt}
         fill
         draggable={false}
+        preload={priority}
+        fetchPriority={priority ? "high" : undefined}
         className="object-cover pointer-events-none select-none"
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 780px"
       />
@@ -105,6 +110,8 @@ export default function BeforeAfterRevealSlide({
           alt={beforeImage.alt}
           fill
           draggable={false}
+          preload={priority}
+          fetchPriority={priority ? "high" : undefined}
           className="object-cover pointer-events-none select-none"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 780px"
         />

@@ -101,6 +101,7 @@ export default async function TreatmentGalleryPage({
               reveals={reveals}
               locale={locale}
               treatmentTitle={group.title}
+              priority
             />
           </div>
         </section>
