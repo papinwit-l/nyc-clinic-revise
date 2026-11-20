@@ -21,11 +21,17 @@ import "../globals.css";
 
 // ─── Fonts ──────────────────────────────────────────
 
+// preload: false on every font. With preload on, each page downloads every
+// weight × subset of all 8 families (Thai + Latin, ~40 files) at high
+// priority before the main photo — on a slow phone that pushed LCP to ~6.5s.
+// Without it the browser fetches only the files the page actually uses;
+// display: swap shows fallback text meanwhile.
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-display",
   display: "swap",
+  preload: false,
 });
 
 const montserrat = Montserrat({
@@ -33,6 +39,7 @@ const montserrat = Montserrat({
   weight: ["200", "300", "400", "500", "600", "700"],
   variable: "--font-body",
   display: "swap",
+  preload: false,
 });
 
 // ─── Logo faces (PINNED) ────────────────────────────
@@ -45,6 +52,7 @@ const playfairLogo = Playfair_Display({
   weight: ["400", "700"],
   variable: "--font-logo",
   display: "swap",
+  preload: false,
 });
 
 const montserratLogo = Montserrat({
@@ -53,6 +61,7 @@ const montserratLogo = Montserrat({
   weight: ["300", "400"],
   variable: "--font-logo-sub",
   display: "swap",
+  preload: false,
 });
 
 const cormorant = Cormorant_Garamond({
@@ -61,6 +70,7 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
   variable: "--font-accent",
   display: "swap",
+  preload: false,
 });
 
 // Thai headings — pairs with Playfair Display
@@ -69,6 +79,7 @@ const anuphan = Anuphan({
   weight: ["400", "500", "600", "700"],
   variable: "--font-thai-head",
   display: "swap",
+  preload: false,
 });
 
 // Thai taglines / pull quotes — pairs with Cormorant Garamond
@@ -77,6 +88,7 @@ const mitr = Mitr({
   weight: ["200", "300", "400"],
   variable: "--font-thai-serif",
   display: "swap",
+  preload: false,
 });
 
 const prompt = Prompt({
@@ -84,6 +96,7 @@ const prompt = Prompt({
   weight: ["200", "300", "400", "500", "600", "700"],
   variable: "--font-thai-body",
   display: "swap",
+  preload: false,
 });
 
 /**
